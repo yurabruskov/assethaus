@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Institutional Infrastructure</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #f9fafb;
+      --light-gray: #e5e7eb;
+      --gray: #9ca3af;
+      --dark-gray: #4b5563;
+      --charcoal: #1f2937;
+      --accent: #3b82f6;
+
+      --font: 'Inter', -apple-system, system-ui, sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header - Максимальный воздух */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    nav {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 32px 80px;
+    }
+
+    .logo {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--charcoal);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 48px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--dark-gray);
+      text-decoration: none;
+      font-weight: 400;
+      font-size: 15px;
+      transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero - Дыхание и пространство */
+    .hero {
+      margin-top: 120px;
+      padding: 120px 80px 160px;
+      max-width: 1400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    .badge {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--gray);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 32px;
+      display: block;
+    }
+
+    h1 {
+      font-size: clamp(48px, 7vw, 88px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      letter-spacing: -2px;
+      color: var(--charcoal);
+    }
+
+    .hero-desc {
+      font-size: 21px;
+      line-height: 1.7;
+      color: var(--dark-gray);
+      max-width: 650px;
+      margin-bottom: 64px;
+      font-weight: 300;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 16px 40px;
+      background: var(--charcoal);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border-radius: 2px;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+    }
+
+    /* Networks - Простота и ясность */
+    .networks {
+      background: var(--off-white);
+      padding: 120px 80px;
+      border-top: 1px solid var(--light-gray);
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .networks-header {
+      max-width: 600px;
+      margin-bottom: 80px;
+    }
+
+    .networks-header h2 {
+      font-size: 36px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+      color: var(--charcoal);
+    }
+
+    .networks-header p {
+      font-size: 17px;
+      color: var(--dark-gray);
+      line-height: 1.7;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1px;
+      background: var(--light-gray);
+      border: 1px solid var(--light-gray);
+    }
+
+    .network-item {
+      background: var(--white);
+      padding: 48px 32px;
+      text-align: center;
+      font-weight: 400;
+      font-size: 15px;
+      color: var(--dark-gray);
+    }
+
+    /* Capabilities - Вертикальный ритм */
+    .capabilities {
+      padding: 160px 80px;
+    }
+
+    .section-title {
+      font-size: 14px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gray);
+      margin-bottom: 80px;
+    }
+
+    .capability {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      padding: 80px 0;
+      border-bottom: 1px solid var(--light-gray);
+    }
+
+    .capability:first-child {
+      padding-top: 0;
+    }
+
+    .capability:last-child {
+      border-bottom: none;
+    }
+
+    .capability-number {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--gray);
+      letter-spacing: 1px;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      font-weight: 500;
+      margin-bottom: 24px;
+      letter-spacing: -1px;
+      color: var(--charcoal);
+    }
+
+    .capability p {
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--dark-gray);
+      max-width: 560px;
+    }
+
+    /* Approach - Минималистичная структура */
+    .approach {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 160px 80px;
+    }
+
+    .approach .section-title {
+      color: var(--gray);
+      margin-bottom: 120px;
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 80px;
+    }
+
+    .approach-step {
+      padding: 0;
+    }
+
+    .approach-number {
+      font-size: 56px;
+      font-weight: 300;
+      margin-bottom: 32px;
+      color: rgba(255,255,255,0.3);
+      line-height: 1;
+    }
+
+    .approach-step h3 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      letter-spacing: -0.5px;
+    }
+
+    .approach-step p {
+      font-size: 16px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.7);
+      font-weight: 300;
+    }
+
+    /* CTA - Дыхание */
+    .cta {
+      padding: 200px 80px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 48px;
+      font-weight: 400;
+      margin-bottom: 32px;
+      letter-spacing: -1px;
+      color: var(--charcoal);
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: var(--dark-gray);
+      margin-bottom: 56px;
+    }
+
+    /* Footer - Воздух и простота */
+    footer {
+      background: var(--off-white);
+      padding: 100px 80px 60px;
+      border-top: 1px solid var(--light-gray);
+    }
+
+    .footer-grid {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 80px;
+      margin-bottom: 80px;
+    }
+
+    .footer-brand h4 {
+      font-size: 18px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      color: var(--charcoal);
+    }
+
+    .footer-brand p {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--dark-gray);
+      max-width: 320px;
+    }
+
+    .footer-col h4 {
+      font-size: 13px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 24px;
+      color: var(--gray);
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 16px;
+    }
+
+    .footer-col a {
+      color: var(--dark-gray);
+      text-decoration: none;
+      font-size: 15px;
+      transition: color 0.3s ease;
+      font-weight: 300;
+    }
+
+    .footer-col a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding-top: 40px;
+      border-top: 1px solid var(--light-gray);
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .footer-bottom a {
+      color: var(--gray);
+      text-decoration: none;
+      margin-left: 32px;
+      transition: color 0.3s ease;
+    }
+
+    .footer-bottom a:hover {
+      color: var(--accent);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      nav, .hero, .networks, .capabilities, .approach, .cta, footer {
+        padding-left: 40px;
+        padding-right: 40px;
+      }
+
+      .capability {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .approach-grid {
+        grid-template-columns: 1fr;
+        gap: 80px;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      nav, .hero, .networks, .capabilities, .approach, .cta, footer {
+        padding-left: 24px;
+        padding-right: 24px;
+      }
+
+      .nav-links {
+        display: none;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+
+      .networks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-bottom {
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .footer-bottom a {
+        margin-left: 0;
+        margin-top: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#" class="logo">Asset Haus</a>
+      <ul class="nav-links">
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="badge">Institutional Infrastructure</span>
+      <h1>Asset Tokenization Infrastructure</h1>
+      <p class="hero-desc">
+        Comprehensive solutions for digital asset transformation
+        and institutional deployment.
+      </p>
+      <a href="#contact" class="btn">Request Consultation</a>
+    </div>
+  </section>
+
+  <!-- Networks -->
+  <section class="networks">
+    <div class="container">
+      <div class="networks-header">
+        <h2>Trusted Infrastructure</h2>
+        <p>
+          Built on Industry-Leading Networks. Asset Haus integrates with 14+ blockchain
+          networks to provide secure, scalable tokenization infrastructure.
+        </p>
+      </div>
+
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Bitcoin</div>
+      </div>
+
+      <p style="margin-top: 48px; font-size: 15px; color: var(--gray); max-width: 600px;">
+        Supporting 14+ EVM networks including Ethereum, Polygon, Arbitrum,
+        Optimism, Base, and more
+      </p>
+    </div>
+  </section>
+
+  <!-- Capabilities -->
+  <section class="capabilities" id="capabilities">
+    <div class="container">
+      <div class="section-title">Capabilities</div>
+
+      <div class="capability">
+        <div class="capability-number">01</div>
+        <div>
+          <h3>Strategic Advisory</h3>
+          <p>
+            Comprehensive guidance on asset tokenization strategy, structure,
+            and execution for institutional portfolios.
+          </p>
+        </div>
+      </div>
+
+      <div class="capability">
+        <div class="capability-number">02</div>
+        <div>
+          <h3>Legal Architecture</h3>
+          <p>
+            Cross-jurisdictional regulatory frameworks and compliance structures
+            for digital asset issuance.
+          </p>
+        </div>
+      </div>
+
+      <div class="capability">
+        <div class="capability-number">03</div>
+        <div>
+          <h3>Technical Infrastructure</h3>
+          <p>
+            Institutional-grade smart contracts and blockchain implementation
+            with comprehensive security protocols.
+          </p>
+        </div>
+      </div>
+
+      <div class="capability">
+        <div class="capability-number">04</div>
+        <div>
+          <h3>Platform Solutions</h3>
+          <p>
+            Bespoke tokenization platforms with complete operational
+            and technical infrastructure.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="approach" id="approach">
+    <div class="container">
+      <div class="section-title">Our Approach</div>
+
+      <div class="approach-grid">
+        <div class="approach-step">
+          <div class="approach-number">01</div>
+          <h3>Consultation</h3>
+          <p>Assessment of requirements and strategic objectives</p>
+        </div>
+
+        <div class="approach-step">
+          <div class="approach-number">02</div>
+          <h3>Architecture</h3>
+          <p>Custom structuring across legal, technical and operational domains</p>
+        </div>
+
+        <div class="approach-step">
+          <div class="approach-number">03</div>
+          <h3>Implementation</h3>
+          <p>Complete execution with ongoing support</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <div class="container">
+      <h2>Get Started</h2>
+      <p>Discuss your requirements with our team</p>
+      <a href="#" class="btn">Request Access</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <h4>Asset Haus</h4>
+        <p>
+          By Restifi. Enterprise-grade tokenization infrastructure
+          for digital asset transformation.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#">Overview</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Quick Start</a></li>
+          <li><a href="#">Request Demo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="#">Real Estate</a></li>
+          <li><a href="#">Private Equity</a></li>
+          <li><a href="#">Stablecoins</a></li>
+          <li><a href="#">View All</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 Asset Haus by Restifi</div>
+      <div>
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
