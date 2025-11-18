@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Institutional Infrastructure</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #000000;
+      --white: #ffffff;
+      --red: #e1261c;
+      --blue: #005ca9;
+      --yellow: #ffd500;
+      --gray: #f5f5f5;
+
+      --font: 'IBM Plex Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--white);
+      color: var(--black);
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* Header - Геометрическая строгость */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      background: var(--black);
+      color: var(--white);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      border-bottom: 3px solid var(--red);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 1px;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--yellow);
+    }
+
+    /* Hero - Асимметричная композиция */
+    .hero {
+      margin-top: 80px;
+      min-height: calc(100vh - 80px);
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      position: relative;
+    }
+
+    .hero-main {
+      background: var(--black);
+      color: var(--white);
+      padding: 100px 60px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .hero-main::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 200px;
+      height: 200px;
+      background: var(--red);
+      clip-path: circle(50%);
+    }
+
+    .hero-accent {
+      background: var(--yellow);
+      padding: 60px 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .hero-accent::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: var(--black);
+    }
+
+    .badge {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      padding: 8px 20px;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 40px;
+      width: fit-content;
+    }
+
+    h1 {
+      font-size: 72px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+      letter-spacing: -2px;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      line-height: 1.6;
+      max-width: 600px;
+      margin-bottom: 50px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 40px;
+      background: var(--red);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 2px;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      width: fit-content;
+    }
+
+    .btn:hover {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border: 3px solid var(--black);
+      color: var(--black);
+    }
+
+    .btn-outline:hover {
+      background: var(--black);
+      color: var(--white);
+    }
+
+    /* Networks Section - Горизонтальная лента */
+    .networks {
+      background: var(--blue);
+      color: var(--white);
+      padding: 60px 0;
+      border-top: 4px solid var(--yellow);
+      border-bottom: 4px solid var(--yellow);
+    }
+
+    .networks-header {
+      text-align: center;
+      margin-bottom: 50px;
+      padding: 0 40px;
+    }
+
+    .networks-header h2 {
+      font-size: 36px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 0;
+      border-top: 2px solid rgba(255,255,255,0.2);
+    }
+
+    .network-item {
+      padding: 30px 20px;
+      text-align: center;
+      border-right: 2px solid rgba(255,255,255,0.2);
+      border-bottom: 2px solid rgba(255,255,255,0.2);
+      font-weight: 600;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    /* Capabilities - Модульная сетка */
+    .capabilities {
+      padding: 100px 40px;
+      background: var(--white);
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 80px;
+      position: relative;
+      padding-left: 20px;
+      letter-spacing: -1px;
+    }
+
+    .section-title::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 8px;
+      background: var(--red);
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    }
+
+    .capability {
+      padding: 60px;
+      border: 2px solid var(--black);
+      position: relative;
+      min-height: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .capability:nth-child(1) {
+      background: var(--yellow);
+    }
+
+    .capability:nth-child(2) {
+      background: var(--white);
+    }
+
+    .capability:nth-child(3) {
+      background: var(--white);
+      grid-column: 1 / -1;
+      background: var(--gray);
+    }
+
+    .capability:nth-child(4) {
+      background: var(--blue);
+      color: var(--white);
+    }
+
+    .capability-number {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      font-size: 120px;
+      font-weight: 700;
+      opacity: 0.1;
+      line-height: 1;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .capability p {
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 500px;
+    }
+
+    /* Approach - Ступенчатая структура */
+    .approach {
+      background: var(--black);
+      color: var(--white);
+      padding: 100px 40px;
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 80px;
+    }
+
+    .approach-step {
+      padding: 80px 40px;
+      border: 2px solid var(--white);
+      position: relative;
+    }
+
+    .approach-step:nth-child(1) {
+      background: var(--red);
+      margin-top: 0;
+    }
+
+    .approach-step:nth-child(2) {
+      background: var(--yellow);
+      color: var(--black);
+      margin-top: 40px;
+    }
+
+    .approach-step:nth-child(3) {
+      background: var(--blue);
+      margin-top: 80px;
+    }
+
+    .approach-step h3 {
+      font-size: 36px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      letter-spacing: -1px;
+    }
+
+    .approach-step p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    /* CTA Section */
+    .cta {
+      background: var(--gray);
+      padding: 100px 40px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 48px;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+      letter-spacing: -1px;
+    }
+
+    .cta p {
+      font-size: 18px;
+      margin-bottom: 50px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--black);
+      color: var(--white);
+      padding: 80px 40px 40px;
+      border-top: 4px solid var(--red);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      margin-bottom: 60px;
+    }
+
+    .footer-col h4 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 20px;
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 12px;
+    }
+
+    .footer-col a {
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--yellow);
+    }
+
+    .footer-bottom {
+      padding-top: 40px;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+      }
+
+      .capabilities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .approach-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .approach-step {
+        margin-top: 0 !important;
+      }
+
+      .networks-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 48px;
+      }
+
+      .networks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <a href="#" class="logo">Asset Haus</a>
+      <ul class="nav-links">
+        <li><a href="#capabilities">Capabilities</a></li>
+        <li><a href="#approach">Approach</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-main">
+      <div class="badge">Institutional Infrastructure</div>
+      <h1>Asset<br>Tokenization<br>Infrastructure</h1>
+      <p class="hero-desc">
+        Comprehensive solutions for digital asset transformation
+        and institutional deployment.
+      </p>
+      <a href="#contact" class="btn">Request Consultation</a>
+    </div>
+    <div class="hero-accent">
+      <h3 style="font-size: 24px; font-weight: 700; text-transform: uppercase; margin-bottom: 20px;">
+        Trusted Infrastructure
+      </h3>
+      <p style="font-size: 16px; line-height: 1.6; color: var(--black);">
+        Built on Industry-Leading Networks. Asset Haus integrates with 14+ blockchain
+        networks to provide secure, scalable tokenization infrastructure.
+      </p>
+    </div>
+  </section>
+
+  <!-- Networks -->
+  <section class="networks">
+    <div class="networks-header">
+      <h2>14+ Blockchain Networks</h2>
+      <p style="font-size: 16px; opacity: 0.9;">
+        Supporting EVM networks including Ethereum, Polygon, Arbitrum, Optimism, Base, and more
+      </p>
+    </div>
+    <div class="networks-grid">
+      <div class="network-item">Ethereum</div>
+      <div class="network-item">Polygon</div>
+      <div class="network-item">Arbitrum</div>
+      <div class="network-item">Optimism</div>
+      <div class="network-item">Avalanche</div>
+      <div class="network-item">BNB Chain</div>
+      <div class="network-item">Base</div>
+      <div class="network-item">Bitcoin</div>
+    </div>
+  </section>
+
+  <!-- Capabilities -->
+  <section class="capabilities" id="capabilities">
+    <h2 class="section-title">Capabilities</h2>
+    <div class="capabilities-grid">
+      <div class="capability">
+        <div class="capability-number">01</div>
+        <div>
+          <h3>Strategic Advisory</h3>
+          <p>
+            Comprehensive guidance on asset tokenization strategy, structure,
+            and execution for institutional portfolios.
+          </p>
+        </div>
+      </div>
+
+      <div class="capability">
+        <div class="capability-number">02</div>
+        <div>
+          <h3>Legal Architecture</h3>
+          <p>
+            Cross-jurisdictional regulatory frameworks and compliance structures
+            for digital asset issuance.
+          </p>
+        </div>
+      </div>
+
+      <div class="capability">
+        <div class="capability-number">03</div>
+        <div style="max-width: 100%;">
+          <h3>Technical Infrastructure</h3>
+          <p style="max-width: 100%;">
+            Institutional-grade smart contracts and blockchain implementation
+            with comprehensive security protocols.
+          </p>
+        </div>
+      </div>
+
+      <div class="capability">
+        <div class="capability-number">04</div>
+        <div>
+          <h3>Platform Solutions</h3>
+          <p>
+            Bespoke tokenization platforms with complete operational
+            and technical infrastructure.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Approach -->
+  <section class="approach" id="approach">
+    <h2 class="section-title" style="color: var(--white);">Our Approach</h2>
+    <p style="font-size: 18px; max-width: 800px; margin-bottom: 40px;">
+      Comprehensive solutions tailored to your requirements
+    </p>
+
+    <div class="approach-grid">
+      <div class="approach-step">
+        <h3>01<br>Consultation</h3>
+        <p>Assessment of requirements and strategic objectives</p>
+      </div>
+
+      <div class="approach-step">
+        <h3>02<br>Architecture</h3>
+        <p>Custom structuring across legal, technical and operational domains</p>
+      </div>
+
+      <div class="approach-step">
+        <h3>03<br>Implementation</h3>
+        <p>Complete execution with ongoing support</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta" id="contact">
+    <h2>Get Started</h2>
+    <p>Discuss your requirements with our team</p>
+    <a href="#" class="btn">Request Access</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Asset Haus</h4>
+        <p style="color: rgba(255,255,255,0.7); font-size: 14px; line-height: 1.6; margin-top: 20px;">
+          By Restifi. Enterprise-grade tokenization infrastructure
+          for digital asset transformation.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#">Overview</a></li>
+          <li><a href="#">How It Works</a></li>
+          <li><a href="#">Quick Start</a></li>
+          <li><a href="#">Request Demo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="#">Real Estate</a></li>
+          <li><a href="#">Private Equity</a></li>
+          <li><a href="#">Stablecoins</a></li>
+          <li><a href="#">View All</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Partners</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div>© 2025 Asset Haus by Restifi. All rights reserved.</div>
+      <div>
+        <a href="#" style="color: rgba(255,255,255,0.5); margin-right: 20px;">Privacy Policy</a>
+        <a href="#" style="color: rgba(255,255,255,0.5);">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
