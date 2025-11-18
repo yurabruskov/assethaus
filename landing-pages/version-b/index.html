@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset.haus - Access Property Value Without Selling</title>
+  <meta name="description" content="Turn your property into liquid capital while keeping ownership. Tokenize 10-50% and maintain full control.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="#" class="logo">asset.haus</a>
+        <ul class="nav-links">
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#calculator">Calculator</a></li>
+          <li><a href="#demo" class="btn btn-primary">Get Started</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Turn Your Property Into <span class="hero-highlight">Liquid Capital</span><br>Without Selling</h1>
+        <p class="hero-subhead">
+          Unlock 10-50% of your property value in cash while keeping ownership and control.
+          No refinancing. No banks. Just fast, transparent liquidity through tokenization.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#calculator" class="btn btn-primary btn-large">Calculate My Value</a>
+          <a href="#how-it-works" class="btn btn-secondary btn-large">Watch 2-Min Video</a>
+        </div>
+
+        <div class="trust-badges">
+          <div class="trust-badge">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>Keep Full Control</span>
+          </div>
+          <div class="trust-badge">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>4-6 Week Timeline</span>
+          </div>
+          <div class="trust-badge">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>No Hidden Fees</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">From Property to Cash in 4 Weeks</h2>
+        <p class="section-subtitle">Simple, transparent, and you stay in control the entire time.</p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Property Valuation</h3>
+          <p class="step-desc">Submit property details. Our AI analyzes market data and provides instant valuation estimate.</p>
+          <span class="step-time">1-2 days</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Choose Your %</h3>
+          <p class="step-desc">Decide how much to tokenize (10-50%). You keep majority ownership and full management rights.</p>
+          <span class="step-time">Same day</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <h3 class="step-title">List & Raise</h3>
+          <p class="step-desc">We tokenize your property and list on our investor marketplace. Global investors buy tokens.</p>
+          <span class="step-time">2-4 weeks</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <h3 class="step-title">Get Cash & Manage</h3>
+          <p class="step-desc">Receive funds directly. Continue managing property. Automated dividend distribution to token holders.</p>
+          <span class="step-time">Ongoing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculator Section -->
+  <section id="calculator">
+    <div class="container">
+      <div class="calculator">
+        <h3>How Much Can You Unlock?</h3>
+
+        <div class="calculator-grid">
+          <div class="calculator-inputs">
+            <div class="input-group">
+              <label for="propertyValue">Property Value</label>
+              <input type="range" id="propertyValue" min="500000" max="50000000" step="500000" value="5000000">
+              <div class="input-display" id="propertyValueDisplay">$5,000,000</div>
+            </div>
+
+            <div class="input-group">
+              <label for="tokenizePercent">% to Tokenize</label>
+              <input type="range" id="tokenizePercent" min="10" max="50" step="5" value="25">
+              <div class="input-display" id="tokenizePercentDisplay">25%</div>
+            </div>
+
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 1rem;">
+              💡 Most owners tokenize 20-30% to maintain clear majority control
+            </p>
+          </div>
+
+          <div class="calculator-results">
+            <div class="result-item">
+              <span class="result-label">Total Raised</span>
+              <span class="result-value" id="fundingNeeded">$1,250,000</span>
+            </div>
+
+            <div class="result-item">
+              <span class="result-label">Platform Fee (2%)</span>
+              <span class="result-value" id="platformFee">$25,000</span>
+            </div>
+
+            <div class="result-item">
+              <span class="result-label">Your Ownership</span>
+              <span class="result-value"><span id="ownershipPercent">75</span>%</span>
+            </div>
+
+            <div class="result-highlight">
+              <div class="result-item">
+                <span class="result-label">Cash You Receive</span>
+                <span class="result-value" id="netProceeds">$1,225,000</span>
+              </div>
+              <div class="result-item" style="border: none; padding-top: 0.5rem;">
+                <span class="result-label">Timeline</span>
+                <span class="result-value" id="timeline" style="font-size: 1.25rem;">4-6 weeks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Comparison Section -->
+  <section class="social-proof">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Traditional vs. Tokenization</h2>
+        <p class="section-subtitle">See the difference at a glance</p>
+      </div>
+
+      <div style="overflow-x: auto;">
+        <table style="width: 100%; max-width: 800px; margin: 2rem auto; background: white; border-radius: 12px; border-collapse: collapse; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+          <thead>
+            <tr style="background: var(--bg-light);">
+              <th style="padding: 1.25rem; text-align: left; font-weight: 700; color: var(--text-dark);">Method</th>
+              <th style="padding: 1.25rem; text-align: left; font-weight: 700; color: var(--text-dark);">Traditional Refinancing</th>
+              <th style="padding: 1.25rem; text-align: left; font-weight: 700; color: var(--accent);">Asset.haus Tokenization</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem; font-weight: 600;">Timeline</td>
+              <td style="padding: 1rem; color: var(--text-medium);">3-6 months</td>
+              <td style="padding: 1rem; color: var(--success); font-weight: 600;">4-6 weeks</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem; font-weight: 600;">Approval Process</td>
+              <td style="padding: 1rem; color: var(--text-medium);">Bank approval required</td>
+              <td style="padding: 1rem; color: var(--success); font-weight: 600;">No approval needed</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem; font-weight: 600;">Fees</td>
+              <td style="padding: 1rem; color: var(--text-medium);">3-5% + monthly interest</td>
+              <td style="padding: 1rem; color: var(--success); font-weight: 600;">2% one-time fee</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border);">
+              <td style="padding: 1rem; font-weight: 600;">Ownership</td>
+              <td style="padding: 1rem; color: var(--text-medium);">Keep 100% (but debt burden)</td>
+              <td style="padding: 1rem; color: var(--success); font-weight: 600;">Keep 50-90% (no debt)</td>
+            </tr>
+            <tr>
+              <td style="padding: 1rem; font-weight: 600;">Control</td>
+              <td style="padding: 1rem; color: var(--text-medium);">Bank restrictions possible</td>
+              <td style="padding: 1rem; color: var(--success); font-weight: 600;">Full control maintained</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Section -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Why Property Owners Love Asset.haus</h2>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">🏠</div>
+          <h3 class="benefit-title">No Full Sale Required</h3>
+          <p class="benefit-desc">Tokenize just 10-50%. Keep majority ownership. Perfect for when you need cash but love your property.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <h3 class="benefit-title">Fast Liquidity</h3>
+          <p class="benefit-desc">Get cash in 4-6 weeks vs 3-6 months for refinancing. No bank approval or credit checks.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🎯</div>
+          <h3 class="benefit-title">You Stay in Control</h3>
+          <p class="benefit-desc">Full management rights. You make all decisions: tenants, renovations, operations. Token holders are passive.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">💰</div>
+          <h3 class="benefit-title">No Debt, No Interest</h3>
+          <p class="benefit-desc">This isn't a loan. You sell a minority stake but keep control. No monthly payments or interest rates.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🌍</div>
+          <h3 class="benefit-title">Global Buyer Pool</h3>
+          <p class="benefit-desc">15,000+ investors worldwide. Much larger pool than local buyers. Often better valuations.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">📊</div>
+          <h3 class="benefit-title">Automated Everything</h3>
+          <p class="benefit-desc">Dividend distribution, reporting, compliance — all handled automatically. Save time and admin costs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study Section -->
+  <section>
+    <div class="container">
+      <div class="case-study">
+        <div class="case-study-header">
+          <h3 class="case-study-title">Seattle Commercial Building</h3>
+          <span class="case-study-badge">Office Building</span>
+        </div>
+        <p class="case-study-quote">
+          "I needed $2M for a new investment opportunity but didn't want to sell my Seattle property.
+          Asset.haus helped me tokenize 30% and raise the capital in 5 weeks. I still manage the building
+          and the token holders get their dividends automatically. Win-win."
+        </p>
+        <div class="case-study-metrics">
+          <div class="metric">
+            <div class="metric-value">$2M</div>
+            <div class="metric-label">Raised</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">5 weeks</div>
+            <div class="metric-label">Timeline</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">30%</div>
+            <div class="metric-label">Tokenized</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">70%</div>
+            <div class="metric-label">Kept Control</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section>
+    <div class="container">
+      <div class="cta-section" id="demo">
+        <h2>Ready to Unlock Your Property Value?</h2>
+        <p>Talk to our team about your property and goals. No commitment required.</p>
+        <div class="hero-cta">
+          <a href="#" class="btn btn-primary btn-large" style="background: white; color: var(--primary);">Schedule Consultation</a>
+          <a href="#calculator" class="btn btn-secondary btn-large" style="border-color: white; color: white;">Try Calculator Again</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h4>asset.haus</h4>
+          <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 0.5rem;">
+            Unlock property value.<br>Keep control.
+          </p>
+        </div>
+
+        <div class="footer-column">
+          <h4>Product</h4>
+          <ul class="footer-links">
+            <li><a href="#">How It Works</a></li>
+            <li><a href="#">Pricing</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Calculator</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Property Types</h4>
+          <ul class="footer-links">
+            <li><a href="#">Commercial Buildings</a></li>
+            <li><a href="#">Residential Properties</a></li>
+            <li><a href="#">Mixed-Use</a></li>
+            <li><a href="#">Land</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Compliance</a></li>
+            <li><a href="#">Legal</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Asset.haus. All rights reserved. | SEC Registered Platform | SOC 2 Type II Certified</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calculator.js"></script>
+  <script>
+    // Update ownership percentage display
+    document.getElementById('tokenizePercent')?.addEventListener('input', (e) => {
+      const tokenized = parseInt(e.target.value);
+      const ownership = 100 - tokenized;
+      const ownershipEl = document.getElementById('ownershipPercent');
+      if (ownershipEl) ownershipEl.textContent = ownership;
+    });
+  </script>
+</body>
+</html>
