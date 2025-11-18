@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Scandi Organic</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #faf8f3;
+      --sand: #e8e4db;
+      --sage: #a8b5a0;
+      --clay: #c19a7b;
+      --forest: #3d5a47;
+      --charcoal: #2c2c2c;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    /* Organic blob background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -10%;
+      right: -5%;
+      width: 60%;
+      height: 60%;
+      background: radial-gradient(circle, var(--sand) 0%, transparent 70%);
+      border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+      opacity: 0.4;
+      z-index: 0;
+      animation: morph 20s ease-in-out infinite;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -10%;
+      left: -5%;
+      width: 50%;
+      height: 50%;
+      background: radial-gradient(circle, rgba(168, 181, 160, 0.2) 0%, transparent 70%);
+      border-radius: 38% 62% 43% 57% / 48% 39% 61% 52%;
+      opacity: 0.5;
+      z-index: 0;
+      animation: morph 25s ease-in-out infinite reverse;
+    }
+
+    @keyframes morph {
+      0%, 100% { border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%; }
+      25% { border-radius: 40% 60% 70% 30% / 50% 60% 40% 50%; }
+      50% { border-radius: 54% 46% 38% 62% / 49% 60% 40% 51%; }
+      75% { border-radius: 70% 30% 50% 50% / 43% 50% 50% 57%; }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header - Floating organic */
+    header {
+      padding: 50px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Crimson Pro', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    nav {
+      display: flex;
+      gap: 40px;
+    }
+
+    nav a {
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--sage);
+    }
+
+    /* Hero - Organic shapes */
+    .hero {
+      padding: 80px 80px 120px;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 100px;
+      align-items: center;
+    }
+
+    h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: clamp(52px, 6vw, 72px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      color: var(--forest);
+    }
+
+    .subtitle {
+      font-size: 19px;
+      line-height: 1.8;
+      color: var(--charcoal);
+      margin-bottom: 50px;
+      opacity: 0.8;
+    }
+
+    /* Organic card */
+    .info-card {
+      background: var(--sand);
+      padding: 50px;
+      border-radius: 40% 60% 50% 50% / 60% 40% 60% 40%;
+      position: relative;
+    }
+
+    .info-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--sage);
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .info-value {
+      font-family: 'Crimson Pro', serif;
+      font-size: 42px;
+      font-weight: 600;
+      color: var(--forest);
+      line-height: 1;
+      margin-bottom: 15px;
+    }
+
+    .info-desc {
+      font-size: 14px;
+      color: var(--charcoal);
+      opacity: 0.7;
+    }
+
+    /* Factoid - Organic */
+    .factoid {
+      background: var(--sage);
+      color: var(--cream);
+      padding: 40px;
+      border-radius: 30px;
+      margin: 50px 0;
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .factoid-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 15px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 45px;
+      background: var(--forest);
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 50px;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: var(--sage);
+      transform: translateY(-2px);
+    }
+
+    /* Networks - Flowing grid */
+    .networks {
+      padding: 100px 80px;
+      background: linear-gradient(180deg, transparent 0%, var(--sand) 50%, transparent 100%);
+    }
+
+    .section-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 42px;
+      font-weight: 300;
+      margin-bottom: 60px;
+      color: var(--forest);
+      text-align: center;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .network-item {
+      background: var(--cream);
+      padding: 40px 30px;
+      text-align: center;
+      border-radius: 20px;
+      font-size: 15px;
+      transition: all 0.3s;
+    }
+
+    .network-item:hover {
+      background: var(--sage);
+      color: var(--cream);
+      transform: translateY(-5px);
+    }
+
+    /* Capabilities - Organic flow */
+    .capabilities {
+      padding: 120px 80px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      gap: 60px;
+    }
+
+    .capability {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 50px;
+      align-items: start;
+    }
+
+    .capability-icon {
+      width: 100px;
+      height: 100px;
+      background: var(--clay);
+      border-radius: 40% 60% 50% 50% / 60% 40% 60% 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Crimson Pro', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    .capability h3 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--forest);
+    }
+
+    .capability p {
+      font-size: 16px;
+      line-height: 1.9;
+      color: var(--charcoal);
+      opacity: 0.8;
+      max-width: 700px;
+    }
+
+    /* Approach - Flowing steps */
+    .approach {
+      padding: 100px 80px;
+      background: var(--sand);
+      border-radius: 80px 80px 0 0;
+    }
+
+    .approach-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px;
+      margin-top: 80px;
+    }
+
+    .approach-step {
+      text-align: center;
+    }
+
+    .step-circle {
+      width: 120px;
+      height: 120px;
+      background: var(--sage);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 30px;
+      font-family: 'Crimson Pro', serif;
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--cream);
+    }
+
+    .approach-step h3 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 15px;
+      color: var(--forest);
+    }
+
+    .approach-step p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--charcoal);
+      opacity: 0.7;
+    }
+
+    /* CTA */
+    .cta {
+      padding: 120px 80px;
+      text-align: center;
+      background: var(--sand);
+    }
+
+    .cta h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 52px;
+      font-weight: 300;
+      margin-bottom: 30px;
+      color: var(--forest);
+    }
+
+    .cta p {
+      font-size: 18px;
+      margin-bottom: 50px;
+      opacity: 0.8;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--forest);
+      color: var(--cream);
+      padding: 60px 80px;
+      text-align: center;
+      font-size: 14px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero, .capabilities-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .approach-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .networks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#">Capabilities</a>
+        <a href="#">Approach</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>Asset Tokenization Infrastructure</h1>
+        <p class="subtitle">
+          Comprehensive solutions for digital asset transformation
+          and institutional deployment. Built with nature in mind.
+        </p>
+
+        <div class="factoid">
+          <div class="factoid-title">Organic Growth</div>
+          <div class="factoid-text">
+            Like nature, our infrastructure grows with your needs.
+            Scalable, sustainable, and built for the long term across
+            14+ blockchain ecosystems.
+          </div>
+        </div>
+
+        <a href="#" class="btn">Request Consultation</a>
+      </div>
+
+      <div style="display: grid; gap: 30px;">
+        <div class="info-card">
+          <div class="info-label">Networks</div>
+          <div class="info-value">14+</div>
+          <div class="info-desc">Blockchain ecosystems</div>
+        </div>
+
+        <div class="info-card" style="border-radius: 50% 50% 40% 60% / 40% 60% 40% 60%;">
+          <div class="info-label">Security</div>
+          <div class="info-value">100%</div>
+          <div class="info-desc">Enterprise-grade</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks">
+      <h2 class="section-title">Trusted Networks</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Bitcoin</div>
+      </div>
+    </section>
+
+    <section class="capabilities">
+      <h2 class="section-title">Capabilities</h2>
+
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-icon">01</div>
+          <div>
+            <h3>Strategic Advisory</h3>
+            <p>
+              Comprehensive guidance on asset tokenization strategy, structure,
+              and execution for institutional portfolios.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability-icon" style="border-radius: 50% 50% 40% 60% / 40% 60% 40% 60%; background: var(--sage);">02</div>
+          <div>
+            <h3>Legal Architecture</h3>
+            <p>
+              Cross-jurisdictional regulatory frameworks and compliance structures
+              for digital asset issuance.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability-icon" style="border-radius: 60% 40% 50% 50% / 40% 60% 40% 60%; background: var(--forest);">03</div>
+          <div>
+            <h3>Technical Infrastructure</h3>
+            <p>
+              Institutional-grade smart contracts and blockchain implementation
+              with comprehensive security protocols.
+            </p>
+          </div>
+        </div>
+
+        <div class="capability">
+          <div class="capability-icon" style="background: var(--clay);">04</div>
+          <div>
+            <h3>Platform Solutions</h3>
+            <p>
+              Bespoke tokenization platforms with complete operational
+              and technical infrastructure.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="approach">
+      <h2 class="section-title">Our Approach</h2>
+
+      <div class="approach-grid">
+        <div class="approach-step">
+          <div class="step-circle">01</div>
+          <h3>Consultation</h3>
+          <p>
+            Assessment of requirements and strategic objectives
+          </p>
+        </div>
+
+        <div class="approach-step">
+          <div class="step-circle" style="background: var(--clay);">02</div>
+          <h3>Architecture</h3>
+          <p>
+            Custom structuring across legal, technical and operational domains
+          </p>
+        </div>
+
+        <div class="approach-step">
+          <div class="step-circle" style="background: var(--forest);">03</div>
+          <h3>Implementation</h3>
+          <p>
+            Complete execution with ongoing support
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta">
+      <h2>Get Started</h2>
+      <p>Discuss your requirements with our team</p>
+      <a href="#" class="btn">Request Access</a>
+    </div>
+
+    <footer>
+      <div>© 2025 Asset Haus by Restifi</div>
+      <div style="margin-top: 15px; opacity: 0.7;">
+        SEC Registered Platform
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

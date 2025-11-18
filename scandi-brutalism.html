@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Scandi Brutalism</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Work+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #fafaf9;
+      --concrete: #e7e5e4;
+      --stone: #a8a29e;
+      --charcoal: #292524;
+      --accent: #000000;
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--off-white);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* Brutalist Background Pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image:
+        linear-gradient(0deg, transparent 24%, var(--concrete) 25%, var(--concrete) 26%, transparent 27%, transparent 74%, var(--concrete) 75%, var(--concrete) 76%, transparent 77%, transparent),
+        linear-gradient(90deg, transparent 24%, var(--concrete) 25%, var(--concrete) 26%, transparent 27%, transparent 74%, var(--concrete) 75%, var(--concrete) 76%, transparent 77%, transparent);
+      background-size: 50px 50px;
+      opacity: 0.3;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header - Floating brutal block */
+    header {
+      background: var(--accent);
+      color: var(--white);
+      padding: 40px;
+      margin: 60px 60px 0;
+      box-shadow: 12px 12px 0 var(--concrete);
+    }
+
+    .logo {
+      font-family: 'Space Mono', monospace;
+      font-size: 32px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+    }
+
+    /* Hero - Offset blocks */
+    .hero {
+      padding: 100px 60px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: start;
+    }
+
+    .hero-block {
+      background: var(--white);
+      padding: 60px;
+      box-shadow: 16px 16px 0 var(--concrete);
+      position: relative;
+      transform: translateY(-40px);
+    }
+
+    h1 {
+      font-size: 56px;
+      font-weight: 600;
+      line-height: 1;
+      margin-bottom: 40px;
+      letter-spacing: -2px;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--stone);
+      margin-bottom: 40px;
+    }
+
+    /* Factoid - Brutalist style */
+    .factoid {
+      background: var(--accent);
+      color: var(--white);
+      padding: 30px;
+      margin: 40px 0;
+      position: relative;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+    }
+
+    .factoid::before {
+      content: '//';
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      font-size: 24px;
+      opacity: 0.3;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 20px 40px;
+      background: var(--accent);
+      color: var(--white);
+      text-decoration: none;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      box-shadow: 8px 8px 0 var(--concrete);
+      transition: all 0.2s;
+      font-weight: 700;
+    }
+
+    .btn:hover {
+      transform: translate(4px, 4px);
+      box-shadow: 4px 4px 0 var(--concrete);
+    }
+
+    /* Sidebar - Protruding blocks */
+    .stats-sidebar {
+      position: relative;
+    }
+
+    .stat-block {
+      background: var(--white);
+      padding: 40px;
+      margin-bottom: 30px;
+      box-shadow: 8px 8px 0 var(--concrete);
+      position: relative;
+    }
+
+    .stat-block:nth-child(2) {
+      margin-left: 40px;
+    }
+
+    .stat-block:nth-child(3) {
+      margin-left: 20px;
+    }
+
+    .stat-value {
+      font-family: 'Space Mono', monospace;
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--stone);
+    }
+
+    /* Networks - Brutal grid */
+    .networks {
+      padding: 100px 60px;
+      background: var(--concrete);
+    }
+
+    .networks-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 60px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      background: var(--charcoal);
+    }
+
+    .network-item {
+      background: var(--white);
+      padding: 40px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    /* Capabilities - Offset cards */
+    .capabilities {
+      padding: 100px 60px;
+      background: var(--off-white);
+    }
+
+    .capability {
+      background: var(--white);
+      padding: 50px;
+      margin-bottom: 40px;
+      box-shadow: 12px 12px 0 var(--concrete);
+      max-width: 800px;
+      position: relative;
+    }
+
+    .capability:nth-child(even) {
+      margin-left: auto;
+      margin-right: 60px;
+    }
+
+    .capability:nth-child(odd) {
+      margin-left: 60px;
+    }
+
+    .capability-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 80px;
+      font-weight: 700;
+      position: absolute;
+      top: -20px;
+      right: 30px;
+      color: var(--concrete);
+      line-height: 1;
+    }
+
+    .capability h3 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .capability p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--stone);
+    }
+
+    /* CTA - Centered brutal block */
+    .cta {
+      padding: 100px 60px;
+      background: var(--accent);
+      color: var(--white);
+      text-align: center;
+      margin: 100px 60px;
+      box-shadow: 20px 20px 0 var(--concrete);
+    }
+
+    .cta h2 {
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 30px;
+    }
+
+    .cta .btn {
+      background: var(--white);
+      color: var(--accent);
+    }
+
+    /* Footer */
+    footer {
+      background: var(--charcoal);
+      color: var(--white);
+      padding: 60px;
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+    }
+
+    @media (max-width: 1024px) {
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 60px 30px;
+      }
+
+      header, .cta {
+        margin: 30px 30px;
+      }
+
+      .capability:nth-child(even),
+      .capability:nth-child(odd) {
+        margin-left: 30px;
+        margin-right: 30px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <header>
+      <div class="logo">Asset Haus</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-block">
+        <h1>Asset<br>Tokenization<br>Infrastructure</h1>
+        <p class="subtitle">
+          Comprehensive solutions for digital asset transformation
+          and institutional deployment.
+        </p>
+
+        <div class="factoid">
+          INSTITUTIONAL INFRASTRUCTURE // Built on 14+ blockchain networks.
+          Secure. Scalable. Enterprise-grade.
+        </div>
+
+        <a href="#" class="btn">Request Consultation</a>
+      </div>
+
+      <div class="stats-sidebar">
+        <div class="stat-block">
+          <div class="stat-value">14+</div>
+          <div class="stat-label">Networks</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Security</div>
+        </div>
+        <div class="stat-block">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks">
+      <div class="networks-title">Blockchain Networks</div>
+      <div class="networks-grid">
+        <div class="network-item">ETHEREUM</div>
+        <div class="network-item">POLYGON</div>
+        <div class="network-item">ARBITRUM</div>
+        <div class="network-item">OPTIMISM</div>
+        <div class="network-item">AVALANCHE</div>
+        <div class="network-item">BNB CHAIN</div>
+        <div class="network-item">BASE</div>
+        <div class="network-item">BITCOIN</div>
+      </div>
+    </section>
+
+    <section class="capabilities">
+      <div class="capability">
+        <div class="capability-num">01</div>
+        <h3>Strategic Advisory</h3>
+        <p>
+          Comprehensive guidance on asset tokenization strategy, structure,
+          and execution for institutional portfolios.
+        </p>
+      </div>
+
+      <div class="capability">
+        <div class="capability-num">02</div>
+        <h3>Legal Architecture</h3>
+        <p>
+          Cross-jurisdictional regulatory frameworks and compliance structures
+          for digital asset issuance.
+        </p>
+      </div>
+
+      <div class="capability">
+        <div class="capability-num">03</div>
+        <h3>Technical Infrastructure</h3>
+        <p>
+          Institutional-grade smart contracts and blockchain implementation
+          with comprehensive security protocols.
+        </p>
+      </div>
+
+      <div class="capability">
+        <div class="capability-num">04</div>
+        <h3>Platform Solutions</h3>
+        <p>
+          Bespoke tokenization platforms with complete operational
+          and technical infrastructure.
+        </p>
+      </div>
+    </section>
+
+    <div class="cta">
+      <h2>Get Started</h2>
+      <p style="margin-bottom: 40px; opacity: 0.9;">
+        Discuss your requirements with our team
+      </p>
+      <a href="#" class="btn">Request Access</a>
+    </div>
+
+    <footer>
+      <div>© 2025 ASSET HAUS BY RESTIFI</div>
+      <div style="margin-top: 20px; opacity: 0.6;">
+        SEC REGISTERED PLATFORM
+      </div>
+    </footer>
+  </div>
+
+</body>
+</html>

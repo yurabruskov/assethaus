@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Scandi Color</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --white: #ffffff;
+      --cream: #fffef9;
+      --blue: #4a90e2;
+      --coral: #ff6b6b;
+      --mint: #51cf66;
+      --lavender: #7950f2;
+      --peach: #ff8787;
+      --sage: #8ce99a;
+      --charcoal: #2d3748;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+    /* Colorful gradient background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, 
+        rgba(74, 144, 226, 0.05) 0%,
+        rgba(255, 107, 107, 0.05) 25%,
+        rgba(81, 207, 102, 0.05) 50%,
+        rgba(121, 80, 242, 0.05) 75%,
+        rgba(140, 228, 154, 0.05) 100%);
+      z-index: 0;
+    }
+    .content { position: relative; z-index: 1; }
+    header { padding: 50px 80px; display: flex; justify-content: space-between; }
+    .logo { font-size: 28px; font-weight: 700; background: linear-gradient(135deg, var(--blue), var(--lavender)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    nav { display: flex; gap: 40px; align-items: center; }
+    nav a { color: var(--charcoal); text-decoration: none; font-size: 15px; transition: color 0.2s; }
+    nav a:hover { color: var(--blue); }
+    /* Hero with color blocks */
+    .hero { padding: 80px 80px 120px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+    h1 { font-size: clamp(52px, 6vw, 72px); font-weight: 700; line-height: 1.05; margin-bottom: 40px; letter-spacing: -2px; }
+    .subtitle { font-size: 19px; line-height: 1.8; margin-bottom: 50px; opacity: 0.8; }
+    /* Color factoids */
+    .factoid { padding: 40px; margin: 40px 0; font-size: 15px; line-height: 1.8; border-radius: 20px; }
+    .factoid-blue { background: linear-gradient(135deg, var(--blue), #5b9fe8); color: white; }
+    .factoid-coral { background: linear-gradient(135deg, var(--coral), var(--peach)); color: white; }
+    .factoid-mint { background: linear-gradient(135deg, var(--mint), var(--sage)); color: white; }
+    .factoid-lavender { background: linear-gradient(135deg, var(--lavender), #8b63f5); color: white; }
+    .factoid-title { font-weight: 700; font-size: 16px; margin-bottom: 12px; opacity: 0.95; }
+    .btn { display: inline-block; padding: 18px 45px; background: linear-gradient(135deg, var(--blue), var(--lavender)); color: white; text-decoration: none; font-weight: 600; font-size: 15px; border-radius: 50px; transition: transform 0.2s; }
+    .btn:hover { transform: translateY(-2px); }
+    /* Color stat cards */
+    .stats { display: grid; gap: 20px; }
+    .stat-card { padding: 40px; border-radius: 20px; text-align: center; }
+    .stat-card-1 { background: linear-gradient(135deg, var(--blue), #5b9fe8); color: white; }
+    .stat-card-2 { background: linear-gradient(135deg, var(--coral), var(--peach)); color: white; }
+    .stat-card-3 { background: linear-gradient(135deg, var(--mint), var(--sage)); color: white; }
+    .stat-value { font-size: 48px; font-weight: 700; line-height: 1; margin-bottom: 10px; }
+    .stat-label { font-size: 13px; opacity: 0.9; }
+    /* Networks with color */
+    .networks { padding: 100px 80px; }
+    .section-title { font-size: 48px; font-weight: 700; margin-bottom: 60px; text-align: center; }
+    .networks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .network-item { padding: 40px; text-align: center; border-radius: 15px; font-weight: 500; font-size: 15px; transition: transform 0.2s; }
+    .network-item:nth-child(1) { background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(74, 144, 226, 0.05)); }
+    .network-item:nth-child(2) { background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.05)); }
+    .network-item:nth-child(3) { background: linear-gradient(135deg, rgba(81, 207, 102, 0.15), rgba(81, 207, 102, 0.05)); }
+    .network-item:nth-child(4) { background: linear-gradient(135deg, rgba(121, 80, 242, 0.15), rgba(121, 80, 242, 0.05)); }
+    .network-item:nth-child(5) { background: linear-gradient(135deg, rgba(255, 135, 135, 0.15), rgba(255, 135, 135, 0.05)); }
+    .network-item:nth-child(6) { background: linear-gradient(135deg, rgba(140, 228, 154, 0.15), rgba(140, 228, 154, 0.05)); }
+    .network-item:nth-child(7) { background: linear-gradient(135deg, rgba(74, 144, 226, 0.15), rgba(74, 144, 226, 0.05)); }
+    .network-item:nth-child(8) { background: linear-gradient(135deg, rgba(255, 107, 107, 0.15), rgba(255, 107, 107, 0.05)); }
+    .network-item:hover { transform: translateY(-5px); }
+    /* Capabilities with colors */
+    .capabilities { padding: 120px 80px; }
+    .capabilities-grid { display: grid; gap: 30px; max-width: 1200px; margin: 0 auto; }
+    .capability { padding: 50px; border-radius: 20px; display: grid; grid-template-columns: 80px 1fr; gap: 40px; }
+    .capability:nth-child(1) { background: linear-gradient(135deg, rgba(74, 144, 226, 0.1), transparent); }
+    .capability:nth-child(2) { background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), transparent); }
+    .capability:nth-child(3) { background: linear-gradient(135deg, rgba(81, 207, 102, 0.1), transparent); }
+    .capability:nth-child(4) { background: linear-gradient(135deg, rgba(121, 80, 242, 0.1), transparent); }
+    .capability-icon { width: 80px; height: 80px; border-radius: 15px; display: flex; align-items: center; justify-content: center; font-size: 32px; font-weight: 700; color: white; }
+    .capability:nth-child(1) .capability-icon { background: linear-gradient(135deg, var(--blue), #5b9fe8); }
+    .capability:nth-child(2) .capability-icon { background: linear-gradient(135deg, var(--coral), var(--peach)); }
+    .capability:nth-child(3) .capability-icon { background: linear-gradient(135deg, var(--mint), var(--sage)); }
+    .capability:nth-child(4) .capability-icon { background: linear-gradient(135deg, var(--lavender), #8b63f5); }
+    .capability h3 { font-size: 28px; font-weight: 700; margin-bottom: 15px; }
+    .capability p { font-size: 16px; line-height: 1.8; opacity: 0.8; }
+    /* CTA */
+    .cta { padding: 100px 80px; text-align: center; background: linear-gradient(135deg, var(--blue), var(--lavender)); color: white; border-radius: 40px; margin: 0 80px 100px; }
+    .cta h2 { font-size: 52px; font-weight: 700; margin-bottom: 30px; }
+    .cta .btn { background: white; color: var(--blue); }
+    /* Footer */
+    footer { padding: 60px 80px; text-align: center; font-size: 14px; opacity: 0.7; }
+    @media (max-width: 1024px) {
+      .hero, .capability { grid-template-columns: 1fr; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#">Capabilities</a>
+        <a href="#">Approach</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>Asset Tokenization Infrastructure</h1>
+        <p class="subtitle">Comprehensive solutions for digital asset transformation and institutional deployment.</p>
+        <div class="factoid factoid-blue">
+          <div class="factoid-title">Vibrant Infrastructure</div>
+          Like color brings life to design, our infrastructure brings liquidity to assets. Built across 14+ blockchain networks with diverse capabilities.
+        </div>
+        <a href="#" class="btn">Request Consultation</a>
+      </div>
+      <div class="stats">
+        <div class="stat-card stat-card-1">
+          <div class="stat-value">14+</div>
+          <div class="stat-label">Networks</div>
+        </div>
+        <div class="stat-card stat-card-2">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Security</div>
+        </div>
+        <div class="stat-card stat-card-3">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks">
+      <h2 class="section-title">Trusted Networks</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Bitcoin</div>
+      </div>
+    </section>
+
+    <section class="capabilities">
+      <h2 class="section-title">Capabilities</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-icon">01</div>
+          <div>
+            <h3>Strategic Advisory</h3>
+            <p>Comprehensive guidance on asset tokenization strategy, structure, and execution for institutional portfolios.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">02</div>
+          <div>
+            <h3>Legal Architecture</h3>
+            <p>Cross-jurisdictional regulatory frameworks and compliance structures for digital asset issuance.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">03</div>
+          <div>
+            <h3>Technical Infrastructure</h3>
+            <p>Institutional-grade smart contracts and blockchain implementation with comprehensive security protocols.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">04</div>
+          <div>
+            <h3>Platform Solutions</h3>
+            <p>Bespoke tokenization platforms with complete operational and technical infrastructure.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="cta">
+      <h2>Get Started</h2>
+      <p style="margin-bottom: 40px; opacity: 0.95; font-size: 18px;">Discuss your requirements with our team</p>
+      <a href="#" class="btn">Request Access</a>
+    </div>
+
+    <footer>
+      <div>© 2025 Asset Haus by Restifi — SEC Registered Platform</div>
+    </footer>
+  </div>
+</body>
+</html>
