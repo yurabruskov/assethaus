@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Scandi Grid</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --white: #ffffff;
+      --ice: #f8f9fa;
+      --frost: #e9ecef;
+      --steel: #6c757d;
+      --charcoal: #212529;
+      --accent: #0066cc;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--charcoal);
+      line-height: 1.6;
+      font-weight: 300;
+      position: relative;
+    }
+
+    /* Dot grid background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(circle, var(--frost) 1px, transparent 1px);
+      background-size: 30px 30px;
+      opacity: 0.5;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Container with 12-column grid */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 60px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 30px;
+    }
+
+    /* Header - spans full 12 columns */
+    header {
+      padding: 60px 0;
+      border-bottom: 1px solid var(--frost);
+    }
+
+    .header-grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 30px;
+      align-items: center;
+    }
+
+    .logo {
+      grid-column: 1 / 4;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+
+    nav {
+      grid-column: 10 / 13;
+      display: flex;
+      gap: 40px;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      color: var(--steel);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero - 8 columns for text, 4 for stats */
+    .hero {
+      padding: 100px 0;
+    }
+
+    .hero-text {
+      grid-column: 1 / 9;
+    }
+
+    h1 {
+      font-size: 64px;
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 40px;
+      letter-spacing: -2px;
+    }
+
+    .subtitle {
+      font-size: 20px;
+      line-height: 1.7;
+      color: var(--steel);
+      margin-bottom: 50px;
+      max-width: 600px;
+    }
+
+    /* Factoid - precise grid alignment */
+    .factoid {
+      background: var(--ice);
+      padding: 40px;
+      margin: 50px 0;
+      border-left: 4px solid var(--accent);
+      font-size: 15px;
+      line-height: 1.8;
+    }
+
+    .factoid-title {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 15px;
+      color: var(--accent);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: var(--charcoal);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 14px;
+      transition: all 0.2s;
+    }
+
+    .btn:hover {
+      background: var(--accent);
+    }
+
+    /* Stats sidebar - 4 columns */
+    .hero-stats {
+      grid-column: 9 / 13;
+      display: grid;
+      gap: 30px;
+      align-content: start;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border: 1px solid var(--frost);
+      padding: 40px;
+      text-align: center;
+    }
+
+    .stat-value {
+      font-size: 48px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 12px;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--steel);
+    }
+
+    /* Networks - 12 columns with precise grid */
+    .networks {
+      padding: 100px 0;
+      background: var(--ice);
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 60px;
+      grid-column: 1 / 13;
+    }
+
+    .networks-grid {
+      grid-column: 1 / 13;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .network-item {
+      background: var(--white);
+      border: 1px solid var(--frost);
+      padding: 40px 30px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .network-item:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+    }
+
+    /* Capabilities - alternating 6-column layouts */
+    .capabilities {
+      padding: 100px 0;
+    }
+
+    .capability {
+      margin-bottom: 60px;
+      padding: 50px;
+      background: var(--white);
+      border: 1px solid var(--frost);
+      display: flex;
+      gap: 40px;
+    }
+
+    .capability:nth-child(1) {
+      grid-column: 1 / 7;
+    }
+
+    .capability:nth-child(2) {
+      grid-column: 7 / 13;
+    }
+
+    .capability:nth-child(3) {
+      grid-column: 1 / 7;
+    }
+
+    .capability:nth-child(4) {
+      grid-column: 7 / 13;
+    }
+
+    .capability-num {
+      font-size: 72px;
+      font-weight: 700;
+      color: var(--frost);
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .capability-content h3 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .capability-content p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--steel);
+    }
+
+    /* CTA - centered 8 columns */
+    .cta-section {
+      padding: 100px 0;
+      background: var(--ice);
+    }
+
+    .cta {
+      grid-column: 3 / 11;
+      text-align: center;
+      padding: 80px 60px;
+      background: var(--charcoal);
+      color: var(--white);
+    }
+
+    .cta h2 {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 30px;
+    }
+
+    .cta p {
+      font-size: 18px;
+      margin-bottom: 50px;
+      opacity: 0.9;
+    }
+
+    .cta .btn {
+      background: var(--white);
+      color: var(--charcoal);
+    }
+
+    .cta .btn:hover {
+      background: var(--accent);
+      color: var(--white);
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      border-top: 1px solid var(--frost);
+      text-align: center;
+      font-size: 14px;
+      color: var(--steel);
+    }
+
+    @media (max-width: 1024px) {
+      .container {
+        padding: 0 30px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .hero-text,
+      .hero-stats,
+      .capability,
+      .cta {
+        grid-column: 1 / -1;
+      }
+
+      .networks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <div class="container">
+      <header>
+        <div class="header-grid">
+          <div class="logo">Asset Haus</div>
+          <nav>
+            <a href="#">Capabilities</a>
+            <a href="#">Approach</a>
+            <a href="#">Contact</a>
+          </nav>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="grid">
+          <div class="hero-text">
+            <h1>Asset Tokenization Infrastructure</h1>
+            <p class="subtitle">
+              Comprehensive solutions for digital asset transformation
+              and institutional deployment.
+            </p>
+
+            <div class="factoid">
+              <div class="factoid-title">Grid Precision</div>
+              <div class="factoid-text">
+                Every element aligned to a strict 12-column grid system.
+                Our infrastructure delivers the same precision across
+                14+ blockchain networks.
+              </div>
+            </div>
+
+            <a href="#" class="btn">Request Consultation</a>
+          </div>
+
+          <div class="hero-stats">
+            <div class="stat-card">
+              <div class="stat-value">14+</div>
+              <div class="stat-label">Networks</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">100%</div>
+              <div class="stat-label">Security</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-value">24/7</div>
+              <div class="stat-label">Support</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="networks">
+        <div class="container">
+          <div class="grid">
+            <h2 class="section-title">Trusted Networks</h2>
+            <div class="networks-grid">
+              <div class="network-item">Ethereum</div>
+              <div class="network-item">Polygon</div>
+              <div class="network-item">Arbitrum</div>
+              <div class="network-item">Optimism</div>
+              <div class="network-item">Avalanche</div>
+              <div class="network-item">BNB Chain</div>
+              <div class="network-item">Base</div>
+              <div class="network-item">Bitcoin</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="capabilities">
+        <div class="grid">
+          <div class="capability">
+            <div class="capability-num">01</div>
+            <div class="capability-content">
+              <h3>Strategic Advisory</h3>
+              <p>
+                Comprehensive guidance on asset tokenization strategy, structure,
+                and execution for institutional portfolios.
+              </p>
+            </div>
+          </div>
+
+          <div class="capability">
+            <div class="capability-num">02</div>
+            <div class="capability-content">
+              <h3>Legal Architecture</h3>
+              <p>
+                Cross-jurisdictional regulatory frameworks and compliance structures
+                for digital asset issuance.
+              </p>
+            </div>
+          </div>
+
+          <div class="capability">
+            <div class="capability-num">03</div>
+            <div class="capability-content">
+              <h3>Technical Infrastructure</h3>
+              <p>
+                Institutional-grade smart contracts and blockchain implementation
+                with comprehensive security protocols.
+              </p>
+            </div>
+          </div>
+
+          <div class="capability">
+            <div class="capability-num">04</div>
+            <div class="capability-content">
+              <h3>Platform Solutions</h3>
+              <p>
+                Bespoke tokenization platforms with complete operational
+                and technical infrastructure.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <section class="cta-section">
+      <div class="container">
+        <div class="grid">
+          <div class="cta">
+            <h2>Get Started</h2>
+            <p>Discuss your requirements with our team</p>
+            <a href="#" class="btn">Request Access</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <footer>
+        <div>© 2025 Asset Haus by Restifi — SEC Registered Platform</div>
+      </footer>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Scandi Asymmetric</title>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --white: #ffffff;
+      --snow: #f7f8f9;
+      --ash: #d1d5db;
+      --steel: #6b7280;
+      --ink: #1f2937;
+      --accent: #3b82f6;
+    }
+    body { font-family: 'Manrope', sans-serif; background: var(--white); color: var(--ink); line-height: 1.75; font-weight: 300; overflow-x: hidden; }
+    /* Asymmetric floating shapes */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 10%;
+      right: -100px;
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.08), transparent);
+      border-radius: 40%;
+      transform: rotate(25deg);
+      z-index: 0;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: 15%;
+      left: -80px;
+      width: 350px;
+      height: 350px;
+      background: linear-gradient(225deg, rgba(107, 114, 128, 0.06), transparent);
+      border-radius: 45%;
+      transform: rotate(-20deg);
+      z-index: 0;
+    }
+    .content { position: relative; z-index: 1; }
+    /* Asymmetric header */
+    header { padding: 50px 0 50px 80px; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-right: auto; }
+    nav { display: flex; gap: 50px; margin-right: 120px; }
+    nav a { color: var(--steel); text-decoration: none; font-size: 15px; transition: color 0.2s; }
+    nav a:hover { color: var(--accent); }
+    /* Asymmetric hero */
+    .hero { padding: 60px 0 100px; margin-left: 80px; margin-right: 200px; display: grid; grid-template-columns: 65% 35%; gap: 100px; align-items: start; }
+    h1 { font-size: clamp(56px, 7vw, 82px); font-weight: 800; line-height: 0.95; margin-bottom: 50px; letter-spacing: -3px; }
+    .subtitle { font-size: 20px; line-height: 1.8; margin-bottom: 60px; max-width: 600px; opacity: 0.75; }
+    /* Protruding factoid */
+    .factoid { background: var(--accent); color: white; padding: 45px; margin-left: -120px; margin-right: 80px; margin-bottom: 60px; font-size: 16px; line-height: 1.9; position: relative; }
+    .factoid::before {
+      content: '';
+      position: absolute;
+      top: 20px;
+      right: -40px;
+      width: 80px;
+      height: 80px;
+      background: rgba(59, 130, 246, 0.2);
+      border-radius: 50%;
+    }
+    .factoid-title { font-weight: 700; font-size: 17px; margin-bottom: 15px; opacity: 0.95; }
+    .btn { display: inline-block; padding: 20px 50px; background: var(--ink); color: white; text-decoration: none; font-weight: 600; font-size: 15px; transition: all 0.2s; }
+    .btn:hover { background: var(--accent); transform: translateX(5px); }
+    /* Offset stat cards */
+    .stats { display: grid; gap: 25px; }
+    .stat-card { background: var(--snow); padding: 45px; transform: translateX(40px); }
+    .stat-card:nth-child(2) { transform: translateX(20px); background: var(--accent); color: white; }
+    .stat-card:nth-child(3) { transform: translateX(0); }
+    .stat-value { font-size: 52px; font-weight: 800; line-height: 1; margin-bottom: 12px; }
+    .stat-label { font-size: 13px; font-weight: 500; opacity: 0.7; }
+    /* Networks - flowing layout */
+    .networks { padding: 120px 80px 120px 120px; background: linear-gradient(90deg, transparent 0%, var(--snow) 20%, var(--snow) 80%, transparent 100%); }
+    .section-title { font-size: 52px; font-weight: 800; margin-bottom: 70px; letter-spacing: -1px; transform: translateX(-40px); }
+    .networks-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; margin-right: 100px; }
+    .network-item { padding: 45px 35px; text-align: center; background: var(--white); font-weight: 500; font-size: 15px; transition: all 0.2s; }
+    .network-item:hover { background: var(--accent); color: white; transform: scale(1.05); }
+    /* Capabilities - diagonal flow */
+    .capabilities { padding: 130px 0 130px 80px; }
+    .capability { max-width: 900px; padding: 60px; margin-bottom: 50px; background: var(--snow); }
+    .capability:nth-child(odd) { margin-left: 0; margin-right: auto; }
+    .capability:nth-child(even) { margin-left: auto; margin-right: 100px; background: white; border: 2px solid var(--ash); }
+    .capability:nth-child(3) { margin-left: 80px; }
+    .capability-num { font-size: 96px; font-weight: 800; color: rgba(0,0,0,0.05); line-height: 1; float: right; margin: -20px -20px 20px 20px; }
+    .capability h3 { font-size: 32px; font-weight: 800; margin-bottom: 22px; letter-spacing: -0.5px; }
+    .capability p { font-size: 17px; line-height: 1.85; color: var(--steel); max-width: 650px; }
+    /* CTA - offset block */
+    .cta { padding: 100px 80px 100px 200px; margin: 120px 100px 120px 0; background: var(--ink); color: white; position: relative; }
+    .cta::before {
+      content: '';
+      position: absolute;
+      top: -30px;
+      left: -30px;
+      width: 150px;
+      height: 150px;
+      background: var(--accent);
+      border-radius: 50%;
+      opacity: 0.3;
+    }
+    .cta h2 { font-size: 58px; font-weight: 800; margin-bottom: 35px; letter-spacing: -1px; }
+    .cta p { font-size: 19px; margin-bottom: 55px; opacity: 0.85; max-width: 600px; }
+    .cta .btn { background: white; color: var(--ink); }
+    .cta .btn:hover { background: var(--accent); color: white; }
+    /* Footer */
+    footer { padding: 70px 80px; background: var(--snow); text-align: center; font-size: 14px; color: var(--steel); }
+    @media (max-width: 1024px) {
+      .hero, .capability { grid-template-columns: 1fr; margin-left: 40px; margin-right: 40px; }
+      .factoid { margin-left: 0; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .stat-card { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="content">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#">Capabilities</a>
+        <a href="#">Approach</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>Asset Tokenization Infrastructure</h1>
+        <p class="subtitle">Comprehensive solutions for digital asset transformation and institutional deployment.</p>
+        <div class="factoid">
+          <div class="factoid-title">Asymmetric Advantage</div>
+          Breaking traditional boundaries. Our infrastructure doesn't follow convention — it creates new paths across 14+ blockchain networks for institutional success.
+        </div>
+        <a href="#" class="btn">Request Consultation →</a>
+      </div>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-value">14+</div>
+          <div class="stat-label">Networks</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Security</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks">
+      <h2 class="section-title">Trusted Networks</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Bitcoin</div>
+      </div>
+    </section>
+
+    <section class="capabilities">
+      <h2 class="section-title" style="margin-left: 0; margin-bottom: 80px;">Capabilities</h2>
+      <div class="capability">
+        <div class="capability-num">01</div>
+        <h3>Strategic Advisory</h3>
+        <p>Comprehensive guidance on asset tokenization strategy, structure, and execution for institutional portfolios.</p>
+      </div>
+      <div class="capability">
+        <div class="capability-num">02</div>
+        <h3>Legal Architecture</h3>
+        <p>Cross-jurisdictional regulatory frameworks and compliance structures for digital asset issuance.</p>
+      </div>
+      <div class="capability">
+        <div class="capability-num">03</div>
+        <h3>Technical Infrastructure</h3>
+        <p>Institutional-grade smart contracts and blockchain implementation with comprehensive security protocols.</p>
+      </div>
+      <div class="capability">
+        <div class="capability-num">04</div>
+        <h3>Platform Solutions</h3>
+        <p>Bespoke tokenization platforms with complete operational and technical infrastructure.</p>
+      </div>
+    </section>
+
+    <div class="cta">
+      <h2>Get Started</h2>
+      <p>Discuss your requirements with our team and discover how asymmetric thinking can unlock new opportunities.</p>
+      <a href="#" class="btn">Request Access →</a>
+    </div>
+
+    <footer>
+      <div>© 2025 Asset Haus by Restifi — SEC Registered Platform</div>
+    </footer>
+  </div>
+</body>
+</html>
