@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Asset.haus — Real Estate Tokenization Platform</title>
-  <meta name="description" content="Turn real estate into liquid capital. Tokenize property, access global investors, unlock financing without selling.">
+  <title>asset.haus — токенизация недвижимости</title>
+  <meta name="description" content="Превращаем недвижимость в ликвидный капитал. Без банков, без продажи актива.">
 
-  <!-- Fonts: Serif for headers, Sans for body -->
+  <!-- Fonts: Система для чёткости -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -19,90 +19,104 @@
     }
 
     :root {
-      --primary: #0f1419;
-      --accent: #2962ff;
-      --text: #1a1a1a;
-      --text-light: #666;
-      --bg: #fafafa;
-      --border: #e0e0e0;
+      --bg-dark: #0a0e14;
+      --bg-code: #0d1117;
+      --text-primary: #c9d1d9;
+      --text-secondary: #8b949e;
+      --text-dim: #6e7681;
+      --accent-green: #00ff41;
+      --accent-blue: #58a6ff;
+      --accent-orange: #ff9500;
+      --border-subtle: #21262d;
+      --border-default: #30363d;
 
-      --font-serif: 'Playfair Display', Georgia, serif;
-      --font-sans: 'Inter', -apple-system, sans-serif;
+      --font-mono: 'IBM Plex Mono', 'Menlo', monospace;
+      --font-sans: 'Inter', -apple-system, system-ui, sans-serif;
 
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --grid-size: 20px;
     }
 
     html {
-      font-size: 16px;
+      font-size: 14px;
       scroll-behavior: smooth;
+      background: var(--bg-dark);
     }
 
     body {
       font-family: var(--font-sans);
-      color: var(--text);
-      background: var(--bg);
-      line-height: 1.6;
+      color: var(--text-primary);
+      background: var(--bg-dark);
+      line-height: 1.5;
       -webkit-font-smoothing: antialiased;
+      position: relative;
       overflow-x: hidden;
     }
 
-    /* Typography */
-    h1, h2, h3 {
-      font-family: var(--font-serif);
-      font-weight: 900;
-      line-height: 1.1;
+    /* Matrix Background */
+    #matrix-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Typography - Small & Dense */
+    h1, h2, h3, h4 {
+      font-weight: 600;
+      line-height: 1.2;
       letter-spacing: -0.02em;
     }
 
     h1 {
-      font-size: clamp(2.5rem, 8vw, 5.5rem);
-      margin-bottom: 1.5rem;
+      font-size: 2.5rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
     }
 
     h2 {
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      margin-bottom: 1rem;
+      font-size: 1.5rem;
+      margin-bottom: 0.75rem;
     }
 
     h3 {
-      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-size: 1.125rem;
+      margin-bottom: 0.5rem;
     }
 
     p {
-      font-size: 1.125rem;
-      line-height: 1.7;
-      color: var(--text-light);
+      font-size: 0.875rem;
+      line-height: 1.6;
+      color: var(--text-secondary);
     }
 
-    /* Layout - Asymmetric Grid */
-    .container {
+    .mono {
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+    }
+
+    .text-dim {
+      color: var(--text-dim);
+      font-size: 0.8125rem;
+    }
+
+    /* Grid Layout - Lebedev Style */
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: var(--grid-size);
       max-width: 1400px;
       margin: 0 auto;
-      padding: 0 2rem;
+      padding: 0 var(--grid-size);
     }
-
-    /* Progressive Load Animation */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(40px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .load-item {
-      opacity: 0;
-      animation: fadeInUp 0.8s var(--ease-out) forwards;
-    }
-
-    .load-item:nth-child(1) { animation-delay: 0.1s; }
-    .load-item:nth-child(2) { animation-delay: 0.3s; }
-    .load-item:nth-child(3) { animation-delay: 0.5s; }
-    .load-item:nth-child(4) { animation-delay: 0.7s; }
-    .load-item:nth-child(5) { animation-delay: 0.9s; }
 
     /* Header - Minimal */
     header {
@@ -111,307 +125,301 @@
       left: 0;
       right: 0;
       z-index: 100;
-      background: rgba(250, 250, 250, 0.8);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
+      background: rgba(10, 14, 20, 0.8);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border-default);
     }
 
     nav {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 1.5rem 2rem;
+      padding: 1rem 2rem;
       max-width: 1400px;
       margin: 0 auto;
     }
 
     .logo {
-      font-family: var(--font-serif);
-      font-size: 1.5rem;
-      font-weight: 900;
-      color: var(--primary);
-      text-decoration: none;
-      letter-spacing: -0.02em;
-    }
-
-    .nav-cta {
-      background: var(--primary);
-      color: white;
-      padding: 0.75rem 2rem;
-      border-radius: 50px;
-      text-decoration: none;
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
       font-weight: 600;
-      font-size: 0.95rem;
-      transition: all 0.3s var(--ease-out);
+      color: var(--accent-green);
+      text-decoration: none;
+      letter-spacing: 0.05em;
     }
 
-    .nav-cta:hover {
-      background: var(--accent);
-      transform: translateY(-2px);
+    .logo::before {
+      content: '₿ ';
+      color: var(--accent-orange);
     }
 
-    /* Hero - Asymmetric */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent-green);
+    }
+
+    /* Hero - Asymmetric Grid */
     .hero {
       min-height: 100vh;
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 4rem;
+      display: flex;
       align-items: center;
-      padding: 8rem 2rem 4rem;
-      max-width: 1400px;
-      margin: 0 auto;
+      padding-top: 4rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 7fr 5fr;
+      gap: calc(var(--grid-size) * 3);
+      align-items: start;
+      padding: 4rem 0;
     }
 
     .hero-content {
-      max-width: 700px;
+      padding-top: 2rem;
     }
 
-    .hero-badge {
+    .badge {
       display: inline-block;
-      padding: 0.5rem 1rem;
-      background: var(--primary);
-      color: white;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 2rem;
-      letter-spacing: 0.05em;
+      padding: 0.25rem 0.75rem;
+      background: rgba(0, 255, 65, 0.1);
+      border: 1px solid rgba(0, 255, 65, 0.3);
+      color: var(--accent-green);
+      border-radius: 3px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
       text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 2rem;
     }
 
     .hero h1 {
-      color: var(--primary);
-    }
-
-    .hero-highlight {
-      color: var(--accent);
-      position: relative;
-      display: inline-block;
-    }
-
-    .hero-subhead {
-      font-size: 1.25rem;
-      line-height: 1.6;
-      margin-bottom: 3rem;
+      margin-bottom: 1.5rem;
       max-width: 600px;
     }
 
-    .cta-group {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
+    .hero-highlight {
+      color: var(--accent-green);
+      font-family: var(--font-mono);
     }
 
-    .btn {
-      padding: 1rem 2.5rem;
-      border-radius: 50px;
-      font-weight: 600;
+    .hero-lead {
       font-size: 1rem;
-      text-decoration: none;
-      transition: all 0.3s var(--ease-out);
-      display: inline-block;
-    }
-
-    .btn-primary {
-      background: var(--accent);
-      color: white;
-      border: 2px solid var(--accent);
-    }
-
-    .btn-primary:hover {
-      background: transparent;
-      color: var(--accent);
-      transform: translateY(-2px);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--primary);
-      border: 2px solid var(--primary);
-    }
-
-    .btn-ghost:hover {
-      background: var(--primary);
-      color: white;
-    }
-
-    /* Hero Stats - Offset */
-    .hero-stats {
-      display: grid;
-      gap: 2rem;
-      margin-top: 4rem;
-    }
-
-    .stat {
-      border-left: 3px solid var(--accent);
-      padding-left: 1.5rem;
-    }
-
-    .stat-number {
-      font-family: var(--font-serif);
-      font-size: 3rem;
-      font-weight: 900;
-      color: var(--primary);
-      line-height: 1;
-      margin-bottom: 0.5rem;
-    }
-
-    .stat-label {
-      font-size: 0.95rem;
-      color: var(--text-light);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Process - Horizontal Scroll on Mobile, Grid on Desktop */
-    .process {
-      padding: 8rem 2rem;
-      background: white;
-    }
-
-    .process-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 3rem;
-      max-width: 1400px;
-      margin: 4rem auto 0;
-    }
-
-    .process-step {
-      position: relative;
-    }
-
-    .step-num {
-      font-family: var(--font-serif);
-      font-size: 6rem;
-      font-weight: 900;
-      color: #f0f0f0;
-      line-height: 1;
-      margin-bottom: 1rem;
-    }
-
-    .step-title {
-      font-size: 1.5rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-    }
-
-    .step-desc {
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .step-time {
-      display: inline-block;
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      background: var(--bg);
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    /* Calculator - Split Layout */
-    .calculator-section {
-      padding: 8rem 2rem;
-      background: var(--primary);
-      color: white;
-    }
-
-    .calc-layout {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      gap: 6rem;
-      max-width: 1400px;
-      margin: 0 auto;
-      align-items: center;
-    }
-
-    .calc-intro h2 {
-      color: white;
-      margin-bottom: 1.5rem;
-    }
-
-    .calc-intro p {
-      color: rgba(255,255,255,0.8);
-      font-size: 1.125rem;
+      line-height: 1.7;
+      color: var(--text-secondary);
+      max-width: 520px;
       margin-bottom: 2rem;
     }
 
-    .calc-controls {
-      background: rgba(255,255,255,0.05);
-      backdrop-filter: blur(20px);
-      border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 20px;
-      padding: 3rem;
+    /* Factoid - Lebedev Style */
+    .factoid {
+      background: var(--bg-code);
+      border-left: 2px solid var(--accent-blue);
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      font-size: 0.8125rem;
+      line-height: 1.6;
+      color: var(--text-dim);
+    }
+
+    .factoid strong {
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    /* Stats Sidebar */
+    .stats-sidebar {
+      position: sticky;
+      top: 6rem;
+      display: grid;
+      gap: var(--grid-size);
+    }
+
+    .stat-card {
+      background: var(--bg-code);
+      border: 1px solid var(--border-default);
+      padding: 1.25rem;
+      border-radius: 4px;
+    }
+
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-value {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--accent-green);
+      line-height: 1;
+      margin-bottom: 0.25rem;
+    }
+
+    .stat-desc {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* Process Grid */
+    .process {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border-default);
+    }
+
+    .process-header {
+      grid-column: 1 / -1;
+      margin-bottom: 2rem;
+    }
+
+    .process-grid {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: calc(var(--grid-size) * 1.5);
+    }
+
+    .step {
+      background: var(--bg-code);
+      border: 1px solid var(--border-default);
+      padding: 1.5rem;
+      border-radius: 4px;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .step:hover {
+      border-color: var(--accent-green);
+    }
+
+    .step-num {
+      position: absolute;
+      top: -10px;
+      left: 1.5rem;
+      background: var(--bg-dark);
+      padding: 0 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--accent-orange);
+      font-weight: 600;
+    }
+
+    .step h3 {
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .step p {
+      font-size: 0.8125rem;
+      margin-bottom: 1rem;
+    }
+
+    .step-time {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--accent-blue);
+    }
+
+    /* Calculator Section */
+    .calculator {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border-default);
+    }
+
+    .calc-grid {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 5fr 7fr;
+      gap: calc(var(--grid-size) * 3);
+      align-items: start;
+    }
+
+    .calc-intro h2 {
+      margin-bottom: 1rem;
+    }
+
+    .calc-box {
+      background: var(--bg-code);
+      border: 1px solid var(--border-default);
+      padding: 2rem;
+      border-radius: 4px;
     }
 
     .calc-input {
-      margin-bottom: 2.5rem;
+      margin-bottom: 2rem;
     }
 
     .calc-input label {
       display: block;
-      font-size: 0.85rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
-      margin-bottom: 1rem;
-      opacity: 0.8;
+      color: var(--text-dim);
+      margin-bottom: 0.75rem;
     }
 
     .calc-input input[type="range"] {
       width: 100%;
-      height: 6px;
-      border-radius: 3px;
-      background: rgba(255,255,255,0.2);
+      height: 4px;
+      border-radius: 2px;
+      background: var(--border-default);
       outline: none;
       -webkit-appearance: none;
     }
 
     .calc-input input[type="range"]::-webkit-slider-thumb {
       -webkit-appearance: none;
-      width: 24px;
-      height: 24px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: white;
+      background: var(--accent-green);
       cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .calc-input input[type="range"]::-webkit-slider-thumb:hover {
-      transform: scale(1.2);
     }
 
     .calc-input input[type="range"]::-moz-range-thumb {
-      width: 24px;
-      height: 24px;
+      width: 16px;
+      height: 16px;
       border-radius: 50%;
-      background: white;
+      background: var(--accent-green);
       cursor: pointer;
       border: none;
     }
 
     .calc-display {
-      font-family: var(--font-serif);
-      font-size: 3rem;
-      font-weight: 900;
-      margin-top: 1rem;
-      color: white;
+      font-family: var(--font-mono);
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-top: 0.75rem;
+      color: var(--accent-green);
     }
 
     .calc-results {
-      display: grid;
-      gap: 2rem;
-      margin-top: 3rem;
+      margin-top: 2rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border-default);
     }
 
     .result-row {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      padding-bottom: 1.5rem;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding: 0.75rem 0;
+      border-bottom: 1px solid var(--border-subtle);
     }
 
     .result-row:last-child {
@@ -419,118 +427,208 @@
     }
 
     .result-label {
-      font-size: 0.95rem;
-      opacity: 0.8;
+      font-size: 0.8125rem;
+      color: var(--text-secondary);
     }
 
     .result-value {
-      font-family: var(--font-serif);
-      font-size: 2rem;
-      font-weight: 900;
-      color: #4caf50;
+      font-family: var(--font-mono);
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--text-primary);
     }
 
     .result-highlight {
-      background: rgba(76, 175, 80, 0.1);
-      border: 2px solid rgba(76, 175, 80, 0.3);
-      border-radius: 12px;
-      padding: 2rem;
-      margin-top: 2rem;
+      background: rgba(0, 255, 65, 0.05);
+      border: 1px solid rgba(0, 255, 65, 0.2);
+      border-radius: 4px;
+      padding: 1.25rem;
+      margin-top: 1.5rem;
     }
 
     .result-highlight .result-value {
-      font-size: 3rem;
-    }
-
-    /* CTA Section - Full Width */
-    .cta-section {
-      padding: 10rem 2rem;
-      background: white;
-      text-align: center;
-    }
-
-    .cta-section h2 {
-      max-width: 800px;
-      margin: 0 auto 2rem;
-    }
-
-    .cta-section p {
-      font-size: 1.25rem;
-      max-width: 600px;
-      margin: 0 auto 3rem;
-    }
-
-    /* Footer - Minimal */
-    footer {
-      background: var(--primary);
-      color: white;
-      padding: 4rem 2rem 2rem;
-      text-align: center;
-    }
-
-    .footer-content {
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .footer-logo {
-      font-family: var(--font-serif);
       font-size: 2rem;
-      font-weight: 900;
-      margin-bottom: 2rem;
+      color: var(--accent-green);
     }
 
-    .footer-links {
-      display: flex;
-      justify-content: center;
-      gap: 3rem;
-      margin-bottom: 3rem;
-      flex-wrap: wrap;
-    }
-
-    .footer-links a {
-      color: rgba(255,255,255,0.7);
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.8125rem;
+      font-weight: 500;
       text-decoration: none;
-      font-size: 0.95rem;
-      transition: color 0.3s;
+      transition: all 0.2s;
+      border: 1px solid;
+      cursor: pointer;
     }
 
-    .footer-links a:hover {
-      color: white;
+    .btn-primary {
+      background: var(--accent-green);
+      color: var(--bg-dark);
+      border-color: var(--accent-green);
     }
 
-    .footer-legal {
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent-green);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-primary);
+      border-color: var(--border-default);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent-green);
+      color: var(--accent-green);
+    }
+
+    .cta-group {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Data Table - Lebedev Style */
+    .data-table {
+      padding: 6rem 0;
+      border-top: 1px solid var(--border-default);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.8125rem;
+      background: var(--bg-code);
+    }
+
+    thead {
+      border-bottom: 2px solid var(--border-default);
+    }
+
+    th {
+      text-align: left;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      font-weight: 600;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    tr:hover {
+      background: rgba(0, 255, 65, 0.02);
+    }
+
+    .table-mono {
+      font-family: var(--font-mono);
+      color: var(--accent-blue);
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid var(--border-default);
+      padding: 3rem 0 2rem;
+      margin-top: 6rem;
+    }
+
+    .footer-grid {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: calc(var(--grid-size) * 2);
+    }
+
+    .footer-col h4 {
+      font-size: 0.6875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      margin-bottom: 1rem;
+      font-family: var(--font-mono);
+    }
+
+    .footer-col ul {
+      list-style: none;
+    }
+
+    .footer-col li {
+      margin-bottom: 0.5rem;
+    }
+
+    .footer-col a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 0.8125rem;
+      transition: color 0.2s;
+    }
+
+    .footer-col a:hover {
+      color: var(--accent-green);
+    }
+
+    .footer-bottom {
+      grid-column: 1 / -1;
+      margin-top: 3rem;
       padding-top: 2rem;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 0.85rem;
-      color: rgba(255,255,255,0.5);
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.75rem;
+      color: var(--text-dim);
     }
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .hero {
+      .hero-grid {
         grid-template-columns: 1fr;
-        gap: 3rem;
-        padding-top: 6rem;
       }
 
-      .calc-layout {
-        grid-template-columns: 1fr;
-        gap: 4rem;
+      .stats-sidebar {
+        position: relative;
+        top: 0;
+        grid-template-columns: repeat(3, 1fr);
       }
 
-      .process-grid {
-        grid-template-columns: 1fr 1fr;
+      .calc-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .footer-grid {
+        grid-template-columns: 1fr;
       }
     }
 
     @media (max-width: 640px) {
-      nav {
-        padding: 1rem;
+      .grid-container {
+        padding: 0 1rem;
       }
 
-      .hero {
-        padding: 5rem 1rem 3rem;
+      h1 {
+        font-size: 2rem;
+      }
+
+      .stats-sidebar {
+        grid-template-columns: 1fr;
+      }
+
+      .process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .nav-links {
+        display: none;
       }
 
       .cta-group {
@@ -541,198 +639,378 @@
         width: 100%;
         text-align: center;
       }
-
-      .process-grid {
-        grid-template-columns: 1fr;
-        gap: 3rem;
-      }
-
-      .calc-controls {
-        padding: 2rem 1.5rem;
-      }
-
-      .footer-links {
-        flex-direction: column;
-        gap: 1rem;
-      }
     }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      animation: fadeIn 0.6s ease-out forwards;
+    }
+
+    .fade-in:nth-child(1) { animation-delay: 0.1s; }
+    .fade-in:nth-child(2) { animation-delay: 0.2s; }
+    .fade-in:nth-child(3) { animation-delay: 0.3s; }
+    .fade-in:nth-child(4) { animation-delay: 0.4s; }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header>
-    <nav>
-      <a href="#" class="logo">asset.haus</a>
-      <a href="#calculator" class="nav-cta">Get Started</a>
-    </nav>
-  </header>
+  <!-- Matrix Background -->
+  <canvas id="matrix-bg"></canvas>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-content">
-      <div class="load-item">
-        <span class="hero-badge">Real Estate Tokenization</span>
-      </div>
-
-      <h1 class="load-item">
-        Turn Real Estate Into
-        <span class="hero-highlight">Liquid Capital</span>
-      </h1>
-
-      <p class="hero-subhead load-item">
-        Tokenize property. Access global investors. Unlock financing —
-        without selling your asset or dealing with banks.
-      </p>
-
-      <div class="cta-group load-item">
-        <a href="#calculator" class="btn btn-primary">Calculate Potential</a>
-        <a href="#process" class="btn btn-ghost">How It Works</a>
-      </div>
-    </div>
-
-    <div class="hero-stats load-item">
-      <div class="stat">
-        <div class="stat-number">$450M+</div>
-        <div class="stat-label">Assets Tokenized</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">6 wks</div>
-        <div class="stat-label">Average Timeline</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">15K+</div>
-        <div class="stat-label">Global Investors</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Process -->
-  <section class="process" id="process">
-    <div class="container">
-      <h2 style="text-align: center; margin-bottom: 1rem;">Four Steps to Global Capital</h2>
-      <p style="text-align: center; max-width: 600px; margin: 0 auto 4rem; font-size: 1.125rem;">
-        From property to funding in weeks, not months
-      </p>
-
-      <div class="process-grid">
-        <div class="process-step">
-          <div class="step-num">01</div>
-          <h3 class="step-title">Tokenize</h3>
-          <p class="step-desc">Upload property details. AI-powered valuation. Create digital ownership tokens.</p>
-          <span class="step-time">24-48 hours</span>
+  <div class="content-wrapper">
+    <!-- Header -->
+    <header>
+      <nav>
+        <a href="#" class="logo">asset.haus</a>
+        <div class="nav-links">
+          <a href="#process">Процесс</a>
+          <a href="#calculator">Калькулятор</a>
+          <a href="#data">Данные</a>
+          <a href="#" class="btn btn-primary">Начать</a>
         </div>
+      </nav>
+    </header>
 
-        <div class="process-step">
-          <div class="step-num">02</div>
-          <h3 class="step-title">Launch</h3>
-          <p class="step-desc">List on investor marketplace. SEC-compliant offering. Global reach, local control.</p>
-          <span class="step-time">1 week</span>
-        </div>
+    <!-- Hero -->
+    <section class="hero">
+      <div class="grid-container">
+        <div class="hero-grid">
+          <div class="hero-content">
+            <div class="badge fade-in">Real World Assets</div>
 
-        <div class="process-step">
-          <div class="step-num">03</div>
-          <h3 class="step-title">Raise</h3>
-          <p class="step-desc">15,000+ investors worldwide. Minimum $1,000 investment. Track progress real-time.</p>
-          <span class="step-time">2-6 weeks</span>
-        </div>
+            <h1 class="fade-in">
+              Недвижимость → <span class="hero-highlight">Ликвидность</span>
+            </h1>
 
-        <div class="process-step">
-          <div class="step-num">04</div>
-          <h3 class="step-title">Manage</h3>
-          <p class="step-desc">Automated dividends. Full transparency. Secondary market liquidity for investors.</p>
-          <span class="step-time">Ongoing</span>
-        </div>
-      </div>
-    </div>
-  </section>
+            <p class="hero-lead fade-in">
+              Токенизируйте недвижимость. Привлекайте капитал от&nbsp;глобальных инвесторов.
+              Получайте финансирование без продажи актива и&nbsp;без банков.
+            </p>
 
-  <!-- Calculator -->
-  <section class="calculator-section" id="calculator">
-    <div class="calc-layout">
-      <div class="calc-intro">
-        <h2>Calculate Your Potential</h2>
-        <p>
-          See how much capital you could raise through tokenization.
-          No commitment, just instant estimates.
-        </p>
-        <p style="font-size: 1rem; margin-top: 2rem;">
-          Most property owners tokenize 20-40% to maintain majority control
-          while accessing significant liquidity.
-        </p>
-      </div>
+            <div class="factoid fade-in">
+              <strong>Как это работает:</strong> Вы превращаете долю в&nbsp;своей недвижимости
+              в&nbsp;цифровые токены, которые покупают инвесторы. Контроль остаётся у&nbsp;вас,
+              деньги поступают на&nbsp;счёт за&nbsp;6&nbsp;недель вместо 6&nbsp;месяцев
+              по&nbsp;традиционной схеме.
+            </div>
 
-      <div class="calc-controls">
-        <div class="calc-input">
-          <label for="propValue">Property Value</label>
-          <input type="range" id="propValue" min="500000" max="50000000" step="500000" value="5000000">
-          <div class="calc-display" id="propDisplay">$5,000,000</div>
-        </div>
-
-        <div class="calc-input">
-          <label for="tokenPercent">% to Tokenize</label>
-          <input type="range" id="tokenPercent" min="10" max="100" step="5" value="25">
-          <div class="calc-display" id="percentDisplay">25%</div>
-        </div>
-
-        <div class="calc-results">
-          <div class="result-row">
-            <span class="result-label">Total Raised</span>
-            <span class="result-value" id="totalRaised">$1,250,000</span>
+            <div class="cta-group fade-in">
+              <a href="#calculator" class="btn btn-primary">Рассчитать потенциал</a>
+              <a href="#process" class="btn btn-ghost">Как это работает</a>
+            </div>
           </div>
 
-          <div class="result-row">
-            <span class="result-label">Platform Fee (2%)</span>
-            <span class="result-value" id="platformFee" style="font-size: 1.5rem;">$25,000</span>
-          </div>
+          <div class="stats-sidebar fade-in">
+            <div class="stat-card">
+              <div class="stat-label">Активов токенизировано</div>
+              <div class="stat-value">$450M+</div>
+              <div class="stat-desc">С 2021 года на платформе</div>
+            </div>
 
-          <div class="result-highlight">
-            <div class="result-row">
-              <span class="result-label" style="font-size: 1.1rem;">You Receive</span>
-              <span class="result-value" id="netAmount">$1,225,000</span>
+            <div class="stat-card">
+              <div class="stat-label">Среднее время</div>
+              <div class="stat-value">6 нед</div>
+              <div class="stat-desc">От подачи до финансирования</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Инвесторов</div>
+              <div class="stat-value">15K+</div>
+              <div class="stat-desc">По всему миру, min $1000</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-label">Комиссия платформы</div>
+              <div class="stat-value">2%</div>
+              <div class="stat-desc">Всё включено, без скрытых платежей</div>
             </div>
           </div>
         </div>
-
-        <a href="#" class="btn btn-primary" style="width: 100%; text-align: center; margin-top: 2rem;">Request Demo</a>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CTA -->
-  <section class="cta-section">
-    <h2>Ready to unlock your property value?</h2>
-    <p>
-      Schedule a 30-minute consultation with our team.
-      No commitment required.
-    </p>
-    <div class="cta-group" style="justify-content: center;">
-      <a href="#" class="btn btn-primary">Schedule Call</a>
-      <a href="#calculator" class="btn btn-ghost">Try Calculator Again</a>
-    </div>
-  </section>
+    <!-- Process -->
+    <section class="process" id="process">
+      <div class="grid-container">
+        <div class="process-header">
+          <h2>Четыре шага до глобального капитала</h2>
+          <p class="text-dim">От недвижимости до финансирования за недели, а не месяцы</p>
+        </div>
 
-  <!-- Footer -->
-  <footer>
-    <div class="footer-content">
-      <div class="footer-logo">asset.haus</div>
+        <div class="process-grid">
+          <div class="step">
+            <div class="step-num">01</div>
+            <h3>Токенизация</h3>
+            <p>
+              Загружаете данные объекта. AI-оценка стоимости.
+              Создаём токены цифрового владения.
+            </p>
+            <div class="step-time">⏱ 24-48 часов</div>
+          </div>
 
-      <div class="footer-links">
-        <a href="#process">How It Works</a>
-        <a href="#calculator">Calculator</a>
-        <a href="#">Case Studies</a>
-        <a href="#">About</a>
-        <a href="#">Legal</a>
-        <a href="#">Contact</a>
+          <div class="step">
+            <div class="step-num">02</div>
+            <h3>Запуск</h3>
+            <p>
+              Размещаем на маркетплейсе инвесторов. SEC-совместимое предложение.
+              Глобальный охват, локальный контроль.
+            </p>
+            <div class="step-time">⏱ 1 неделя</div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">03</div>
+            <h3>Сбор капитала</h3>
+            <p>
+              15,000+ инвесторов по всему миру. Минимальная инвестиция $1,000.
+              Отслеживание прогресса в реальном времени.
+            </p>
+            <div class="step-time">⏱ 2-6 недель</div>
+          </div>
+
+          <div class="step">
+            <div class="step-num">04</div>
+            <h3>Управление</h3>
+            <p>
+              Автоматические дивиденды. Полная прозрачность.
+              Вторичный рынок ликвидности для инвесторов.
+            </p>
+            <div class="step-time">⏱ Постоянно</div>
+          </div>
+        </div>
+
+        <div class="factoid" style="grid-column: 1 / -1; margin-top: 2rem;">
+          <strong>Фактоид:</strong> Средний владелец токенизирует 20-40% своей недвижимости,
+          сохраняя контрольный пакет и получая доступ к значительной ликвидности.
+          Это как ипотека наоборот — вы получаете деньги, но не отдаёте контроль.
+        </div>
       </div>
+    </section>
 
-      <div class="footer-legal">
-        &copy; 2024 Asset.haus. All rights reserved. | SEC Registered Platform
+    <!-- Calculator -->
+    <section class="calculator" id="calculator">
+      <div class="grid-container">
+        <div class="calc-grid">
+          <div class="calc-intro">
+            <h2>Калькулятор потенциала</h2>
+            <p>
+              Посмотрите, сколько капитала можно привлечь через токенизацию.
+              Без обязательств, только мгновенные оценки.
+            </p>
+
+            <div class="factoid" style="margin-top: 2rem;">
+              <strong>Математика простая:</strong> Если ваша недвижимость стоит $5M
+              и вы токенизируете 25%, то привлечёте $1.25M. Минус 2% комиссия платформы
+              ($25K) = $1.225M чистыми. На счёт за 6 недель.
+            </div>
+
+            <div class="cta-group">
+              <a href="#" class="btn btn-primary">Запросить демо</a>
+              <a href="#" class="btn btn-ghost">Скачать whitepaper</a>
+            </div>
+          </div>
+
+          <div class="calc-box">
+            <div class="calc-input">
+              <label for="propValue">Стоимость недвижимости</label>
+              <input type="range" id="propValue" min="500000" max="50000000" step="500000" value="5000000">
+              <div class="calc-display" id="propDisplay">$5,000,000</div>
+            </div>
+
+            <div class="calc-input">
+              <label for="tokenPercent">% для токенизации</label>
+              <input type="range" id="tokenPercent" min="10" max="100" step="5" value="25">
+              <div class="calc-display" id="percentDisplay">25%</div>
+            </div>
+
+            <div class="calc-results">
+              <div class="result-row">
+                <span class="result-label">Всего привлечено</span>
+                <span class="result-value" id="totalRaised">$1,250,000</span>
+              </div>
+
+              <div class="result-row">
+                <span class="result-label">Комиссия платформы (2%)</span>
+                <span class="result-value" id="platformFee" style="font-size: 1rem;">$25,000</span>
+              </div>
+
+              <div class="result-highlight">
+                <div class="result-row">
+                  <span class="result-label">Вы получаете</span>
+                  <span class="result-value" id="netAmount">$1,225,000</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </footer>
+    </section>
+
+    <!-- Data Table -->
+    <section class="data-table" id="data">
+      <div class="grid-container">
+        <div style="grid-column: 1 / -1;">
+          <h2 style="margin-bottom: 1rem;">Сравнение методов финансирования</h2>
+          <p class="text-dim" style="margin-bottom: 2rem;">
+            Данные на основе анализа 342 сделок в 2023-2024 гг.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Метод</th>
+                <th>Срок</th>
+                <th>Ставка / Комиссия</th>
+                <th>Контроль</th>
+                <th>Ликвидность</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Токенизация</strong></td>
+                <td class="table-mono">6 недель</td>
+                <td class="table-mono">2%</td>
+                <td>Полный (если &lt;50%)</td>
+                <td>Вторичный рынок</td>
+              </tr>
+              <tr>
+                <td>Банковский кредит</td>
+                <td class="table-mono">3-6 месяцев</td>
+                <td class="table-mono">5-8% годовых</td>
+                <td>Полный</td>
+                <td>Нет</td>
+              </tr>
+              <tr>
+                <td>Продажа доли</td>
+                <td class="table-mono">6-12 месяцев</td>
+                <td class="table-mono">0-3%</td>
+                <td>Частичная потеря</td>
+                <td>Зависит от сделки</td>
+              </tr>
+              <tr>
+                <td>Венчурный капитал</td>
+                <td class="table-mono">3-9 месяцев</td>
+                <td class="table-mono">20-40% equity</td>
+                <td>Значительная потеря</td>
+                <td>По усмотрению VC</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="factoid" style="margin-top: 2rem;">
+            <strong>Почему это работает:</strong> Блокчейн убирает посредников (банки, брокеров, юристов),
+            автоматизирует compliance через smart contracts и открывает доступ к глобальному пулу капитала.
+            Инвесторы получают дробные доли ликвидного актива, владельцы — быстрые деньги без потери контроля.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="grid-container">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <h4>Платформа</h4>
+            <ul>
+              <li><a href="#process">Как это работает</a></li>
+              <li><a href="#calculator">Калькулятор</a></li>
+              <li><a href="#">Кейсы</a></li>
+              <li><a href="#">Whitepaper</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Компания</h4>
+            <ul>
+              <li><a href="#">О нас</a></li>
+              <li><a href="#">Команда</a></li>
+              <li><a href="#">Инвесторы</a></li>
+              <li><a href="#">Карьера</a></li>
+            </ul>
+          </div>
+
+          <div class="footer-col">
+            <h4>Legal & Support</h4>
+            <ul>
+              <li><a href="#">Документы SEC</a></li>
+              <li><a href="#">Terms of Service</a></li>
+              <li><a href="#">Privacy Policy</a></li>
+              <li><a href="#">Поддержка</a></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <div class="mono">© 2024 asset.haus — SEC Registered Platform</div>
+          <div class="text-dim">Built with ₿lockchain</div>
+        </div>
+      </div>
+    </footer>
+
+  </div>
 
   <script>
+    // Matrix Background Animation
+    class MatrixRain {
+      constructor() {
+        this.canvas = document.getElementById('matrix-bg');
+        this.ctx = this.canvas.getContext('2d');
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+
+        // Crypto symbols mix
+        this.chars = '₿ΞRWATOKENIZEBLOCKCHAIN₮USDT01'.split('');
+        this.fontSize = 14;
+        this.columns = Math.floor(this.canvas.width / this.fontSize);
+        this.drops = Array(this.columns).fill(1);
+
+        this.resize();
+        this.animate();
+      }
+
+      resize() {
+        window.addEventListener('resize', () => {
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+          this.columns = Math.floor(this.canvas.width / this.fontSize);
+          this.drops = Array(this.columns).fill(1);
+        });
+      }
+
+      animate() {
+        // Fade effect
+        this.ctx.fillStyle = 'rgba(10, 14, 20, 0.05)';
+        this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+        this.ctx.fillStyle = '#00ff41';
+        this.ctx.font = `${this.fontSize}px monospace`;
+
+        for (let i = 0; i < this.drops.length; i++) {
+          const char = this.chars[Math.floor(Math.random() * this.chars.length)];
+          const x = i * this.fontSize;
+          const y = this.drops[i] * this.fontSize;
+
+          this.ctx.fillText(char, x, y);
+
+          // Reset drop randomly
+          if (y > this.canvas.height && Math.random() > 0.975) {
+            this.drops[i] = 0;
+          }
+
+          this.drops[i]++;
+        }
+
+        requestAnimationFrame(() => this.animate());
+      }
+    }
+
     // Calculator Logic
     class Calculator {
       constructor() {
@@ -786,6 +1064,7 @@
     }
 
     // Initialize
+    new MatrixRain();
     new Calculator();
 
     // Smooth scroll
