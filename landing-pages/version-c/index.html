@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset.haus - Turn Real Estate Into Liquid Capital</title>
+  <meta name="description" content="Tokenize real estate. Access global investors. Get capital in 48 hours without selling your asset.">
+  <link rel="stylesheet" href="../assets/css/style.css">
+  <style>
+    .audience-selector {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 3rem auto 2rem;
+      max-width: 900px;
+    }
+
+    .audience-card {
+      padding: 2rem;
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .audience-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .audience-icon {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .audience-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .audience-desc {
+      color: var(--text-medium);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header">
+    <div class="container">
+      <nav class="nav">
+        <a href="#" class="logo">asset.haus</a>
+        <ul class="nav-links">
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#for-who">Solutions</a></li>
+          <li><a href="#calculator">Calculator</a></li>
+          <li><a href="#demo" class="btn btn-primary">Get Started</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-content">
+        <h1>Turn Your Real Estate Into <span class="hero-highlight">Liquid Capital</span> in 48 Hours</h1>
+        <p class="hero-subhead">
+          Tokenize property, attract global investors, unlock financing —
+          without selling your asset or dealing with banks.
+        </p>
+
+        <div class="hero-cta">
+          <a href="#calculator" class="btn btn-primary btn-large">Calculate Your Potential</a>
+          <a href="#how-it-works" class="btn btn-secondary btn-large">See How It Works</a>
+        </div>
+
+        <div class="trust-badges">
+          <div class="trust-badge">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>SEC Compliant</span>
+          </div>
+          <div class="trust-badge">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>$450M+ Tokenized</span>
+          </div>
+          <div class="trust-badge">
+            <svg fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+            <span>15K+ Global Investors</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Audience Selector -->
+  <section id="for-who" style="background: var(--bg-light); padding: 3rem 0;">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Choose Your Path</h2>
+        <p class="section-subtitle">Different goals, same powerful platform</p>
+      </div>
+
+      <div class="audience-selector">
+        <div class="audience-card">
+          <div class="audience-icon">🏗️</div>
+          <h3 class="audience-title">Developers</h3>
+          <p class="audience-desc">Fund construction projects without banks. Raise capital in 6 weeks.</p>
+          <a href="../version-a/index.html" class="btn btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem;">Learn More</a>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-icon">🏢</div>
+          <h3 class="audience-title">Property Owners</h3>
+          <p class="audience-desc">Unlock property value without selling. Keep ownership & control.</p>
+          <a href="../version-b/index.html" class="btn btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem;">Learn More</a>
+        </div>
+
+        <div class="audience-card">
+          <div class="audience-icon">💰</div>
+          <h3 class="audience-title">Investors</h3>
+          <p class="audience-desc">Own premium real estate from $1,000. Liquid, global, transparent.</p>
+          <a href="#investors" class="btn btn-primary" style="margin-top: 1rem; padding: 0.75rem 1.5rem;">Learn More</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Section -->
+  <section id="how-it-works">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Tokenize. Raise. Manage. Exit.</h2>
+        <p class="section-subtitle">Four steps from property to global capital</p>
+      </div>
+
+      <div class="process-grid">
+        <div class="process-step">
+          <div class="step-number">1</div>
+          <h3 class="step-title">Tokenize</h3>
+          <p class="step-desc">Upload property details. AI valuation. Create digital tokens representing ownership shares.</p>
+          <span class="step-time">24-48 hours</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">2</div>
+          <h3 class="step-title">Raise</h3>
+          <p class="step-desc">Launch on our investor marketplace. 15,000+ global investors. Accept funding from $1,000 minimum.</p>
+          <span class="step-time">2-6 weeks</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">3</div>
+          <h3 class="step-title">Manage</h3>
+          <p class="step-desc">Automated dividend distribution. Real-time reporting. Full compliance. You maintain operational control.</p>
+          <span class="step-time">Ongoing</span>
+        </div>
+
+        <div class="process-step">
+          <div class="step-number">4</div>
+          <h3 class="step-title">Exit</h3>
+          <p class="step-desc">Secondary market liquidity. Buyback options. Token holders can trade shares anytime.</p>
+          <span class="step-time">Anytime</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats Section -->
+  <section class="social-proof">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Trusted by Industry Leaders</h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number">$450M+</div>
+          <div class="stat-label">Assets Tokenized</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">120+</div>
+          <div class="stat-label">Properties</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">15K+</div>
+          <div class="stat-label">Investors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">6</div>
+          <div class="stat-label">Week Avg Timeline</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Calculator Section -->
+  <section id="calculator">
+    <div class="container">
+      <div class="calculator">
+        <h3>Calculate Your Tokenization Potential</h3>
+
+        <div class="calculator-grid">
+          <div class="calculator-inputs">
+            <div class="input-group">
+              <label for="propertyValue">Property / Project Value</label>
+              <input type="range" id="propertyValue" min="500000" max="50000000" step="500000" value="5000000">
+              <div class="input-display" id="propertyValueDisplay">$5,000,000</div>
+            </div>
+
+            <div class="input-group">
+              <label for="tokenizePercent">% to Tokenize</label>
+              <input type="range" id="tokenizePercent" min="10" max="100" step="5" value="25">
+              <div class="input-display" id="tokenizePercentDisplay">25%</div>
+            </div>
+
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 1rem;">
+              💡 Tip: Most owners tokenize 20-40% to maintain control
+            </p>
+          </div>
+
+          <div class="calculator-results">
+            <div class="result-item">
+              <span class="result-label">Total Funding</span>
+              <span class="result-value" id="fundingNeeded">$1,250,000</span>
+            </div>
+
+            <div class="result-item">
+              <span class="result-label">Platform Fee (2%)</span>
+              <span class="result-value" id="platformFee">$25,000</span>
+            </div>
+
+            <div class="result-item">
+              <span class="result-label">Est. Investors</span>
+              <span class="result-value" id="estimatedInvestors">250-500</span>
+            </div>
+
+            <div class="result-highlight">
+              <div class="result-item">
+                <span class="result-label">You Receive</span>
+                <span class="result-value" id="netProceeds">$1,225,000</span>
+              </div>
+              <div class="result-item" style="border: none; padding-top: 0.5rem;">
+                <span class="result-label">Timeline</span>
+                <span class="result-value" id="timeline" style="font-size: 1.25rem;">6 weeks</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Benefits Grid -->
+  <section>
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Why Asset.haus?</h2>
+        <p class="section-subtitle">The modern way to fund and invest in real estate</p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">⚡</div>
+          <h3 class="benefit-title">6 Weeks vs 6 Months</h3>
+          <p class="benefit-desc">Traditional financing takes months. We deliver capital in 4-6 weeks with no bank approval.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🌍</div>
+          <h3 class="benefit-title">Global Access</h3>
+          <p class="benefit-desc">15,000+ investors across 50+ countries. No geographic limits on capital or opportunities.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🎯</div>
+          <h3 class="benefit-title">Full Control</h3>
+          <p class="benefit-desc">Tokenize 10-90%. You maintain operational control and decision-making power.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">✅</div>
+          <h3 class="benefit-title">SEC Compliant</h3>
+          <p class="benefit-desc">Registered broker-dealer. KYC/AML built-in. Legal framework included.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">📊</div>
+          <h3 class="benefit-title">Automated Operations</h3>
+          <p class="benefit-desc">Dividend distribution, reporting, compliance — all handled automatically 24/7.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">💰</div>
+          <h3 class="benefit-title">Lower Fees</h3>
+          <p class="benefit-desc">2% one-time platform fee. No monthly charges, hidden fees, or ongoing interest.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Studies -->
+  <section class="social-proof">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Real Results from Real Properties</h2>
+      </div>
+
+      <div class="case-study">
+        <div class="case-study-header">
+          <h3 class="case-study-title">Marina Bay Mixed-Use Development</h3>
+          <span class="case-study-badge">Developer Case Study</span>
+        </div>
+        <p class="case-study-quote">
+          "We raised $12M in 3 weeks for our waterfront project — 3x faster than traditional funding.
+          The global investor pool gave us access to capital we couldn't find locally."
+        </p>
+        <div class="case-study-metrics">
+          <div class="metric">
+            <div class="metric-value">$12M</div>
+            <div class="metric-label">Raised</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">3 weeks</div>
+            <div class="metric-label">Timeline</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">850+</div>
+            <div class="metric-label">Investors</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">30%</div>
+            <div class="metric-label">Tokenized</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-study" style="margin-top: 2rem;">
+        <div class="case-study-header">
+          <h3 class="case-study-title">Seattle Office Building</h3>
+          <span class="case-study-badge">Property Owner Case Study</span>
+        </div>
+        <p class="case-study-quote">
+          "Needed $2M for a new investment but didn't want to sell. Tokenized 30% in 5 weeks.
+          I still manage everything and token holders get dividends automatically."
+        </p>
+        <div class="case-study-metrics">
+          <div class="metric">
+            <div class="metric-value">$2M</div>
+            <div class="metric-label">Unlocked</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">5 weeks</div>
+            <div class="metric-label">Timeline</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">70%</div>
+            <div class="metric-label">Kept Control</div>
+          </div>
+          <div class="metric">
+            <div class="metric-value">$0</div>
+            <div class="metric-label">Debt</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For Investors Section -->
+  <section id="investors">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">For Investors: Premium Real Estate from $1,000</h2>
+        <p class="section-subtitle">Fractional ownership. Global portfolio. Liquid markets.</p>
+      </div>
+
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">💵</div>
+          <h3 class="benefit-title">Start from $1,000</h3>
+          <p class="benefit-desc">Own pieces of premium properties that traditionally require $100K+ minimum investment.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🔄</div>
+          <h3 class="benefit-title">Secondary Market Liquidity</h3>
+          <p class="benefit-desc">Trade tokens anytime. No 5-10 year lock-ups like traditional real estate funds.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">🌎</div>
+          <h3 class="benefit-title">Global Diversification</h3>
+          <p class="benefit-desc">Invest across cities, countries, and property types from a single platform.</p>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">📈</div>
+          <h3 class="benefit-title">Automated Dividends</h3>
+          <p class="benefit-desc">Receive rental income and profit distributions directly to your wallet. Monthly or quarterly.</p>
+        </div>
+      </div>
+
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="#demo" class="btn btn-primary btn-large">Browse Properties</a>
+        <a href="#" class="btn btn-secondary btn-large">Investor Guide</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section>
+    <div class="container">
+      <div class="cta-section" id="demo">
+        <h2>Ready to Get Started?</h2>
+        <p>Talk to our team about your goals. No commitment required.</p>
+        <div class="hero-cta">
+          <a href="#" class="btn btn-primary btn-large" style="background: white; color: var(--primary);">Schedule Demo</a>
+          <a href="#calculator" class="btn btn-secondary btn-large" style="border-color: white; color: white;">Try Calculator</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h4>asset.haus</h4>
+          <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem; margin-top: 0.5rem;">
+            Modern real estate tokenization.<br>Global access. Local control.
+          </p>
+        </div>
+
+        <div class="footer-column">
+          <h4>Solutions</h4>
+          <ul class="footer-links">
+            <li><a href="../version-a/index.html">For Developers</a></li>
+            <li><a href="../version-b/index.html">For Property Owners</a></li>
+            <li><a href="#investors">For Investors</a></li>
+            <li><a href="#">Pricing</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><a href="#">How It Works</a></li>
+            <li><a href="#">Case Studies</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Documentation</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h4>Company</h4>
+          <ul class="footer-links">
+            <li><a href="#">About</a></li>
+            <li><a href="#">Compliance</a></li>
+            <li><a href="#">Legal</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2024 Asset.haus. All rights reserved. | SEC Registered Platform | SOC 2 Type II Certified</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="../assets/js/calculator.js"></script>
+</body>
+</html>
