@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Organic Cards</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #faf9f6;
+      --sage: #a8b5a0;
+      --clay: #d4a792;
+      --forest: #4a5d4e;
+      --charcoal: #2d3032;
+      --white: #ffffff;
+      --mint: #b8d5cd;
+      --peach: #e6c8b8;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-weight: 300;
+      position: relative;
+    }
+
+    /* Background blobs */
+    body::before,
+    body::after {
+      content: '';
+      position: fixed;
+      z-index: 0;
+      opacity: 0.1;
+    }
+
+    body::before {
+      top: 5%;
+      right: 10%;
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, var(--mint), var(--sage));
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      animation: blob1 25s ease-in-out infinite;
+    }
+
+    body::after {
+      bottom: 10%;
+      left: 5%;
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, var(--clay), var(--peach));
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      animation: blob2 30s ease-in-out infinite;
+    }
+
+    @keyframes blob1 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      }
+      50% {
+        transform: translate(-50px, 50px) rotate(180deg);
+        border-radius: 50% 50% 60% 40% / 60% 40% 50% 50%;
+      }
+    }
+
+    @keyframes blob2 {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+        border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      }
+      50% {
+        transform: translate(50px, -50px) rotate(-180deg);
+        border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      }
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 40px;
+    }
+
+    /* Header */
+    header {
+      padding: 50px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Crimson Pro', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--sage);
+    }
+
+    /* Hero card */
+    .hero-card {
+      background: var(--white);
+      padding: 80px 100px;
+      margin: 60px 0;
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.06);
+      text-align: center;
+      transition: all 0.5s ease;
+    }
+
+    .hero-card:hover {
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+    }
+
+    h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 68px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 25px;
+      color: var(--forest);
+    }
+
+    .subtitle {
+      font-size: 20px;
+      margin-bottom: 40px;
+      color: var(--charcoal);
+      opacity: 0.85;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 50px;
+      background: var(--forest);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--sage);
+      border-radius: 50% 50% 60% 40% / 50% 60% 40% 50%;
+    }
+
+    /* Cards masonry layout */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      padding: 60px 0;
+    }
+
+    .card {
+      background: var(--white);
+      padding: 45px;
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      transition: all 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.08);
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+    }
+
+    .card-tag {
+      display: inline-block;
+      padding: 8px 20px;
+      background: var(--sage);
+      color: var(--white);
+      font-size: 12px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      margin-bottom: 20px;
+    }
+
+    .card.sage .card-tag {
+      background: var(--sage);
+    }
+
+    .card.clay .card-tag {
+      background: var(--clay);
+    }
+
+    .card.mint .card-tag {
+      background: var(--mint);
+    }
+
+    .card.peach .card-tag {
+      background: var(--peach);
+    }
+
+    .card h3 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 18px;
+      color: var(--forest);
+    }
+
+    .card p {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--charcoal);
+      opacity: 0.9;
+    }
+
+    .card.large {
+      grid-column: span 2;
+    }
+
+    /* Factoid card */
+    .factoid-card {
+      background: linear-gradient(135deg, var(--sage), var(--mint));
+      color: var(--white);
+      padding: 60px 80px;
+      margin: 80px 0;
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(168, 181, 160, 0.3);
+    }
+
+    .factoid-card h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 36px;
+      font-weight: 600;
+      margin-bottom: 25px;
+    }
+
+    .factoid-card p {
+      font-size: 18px;
+      line-height: 1.9;
+      opacity: 0.95;
+    }
+
+    /* Network cards */
+    .networks {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 48px;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 50px;
+      color: var(--forest);
+    }
+
+    .network-cards {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .network-card {
+      background: var(--white);
+      padding: 30px 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+      transition: all 0.3s ease;
+    }
+
+    .network-card:hover {
+      background: var(--sage);
+      color: var(--white);
+      transform: scale(1.05);
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+    }
+
+    /* CTA card */
+    .cta-card {
+      background: var(--white);
+      padding: 80px;
+      margin: 80px 0;
+      text-align: center;
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      box-shadow: 0 20px 80px rgba(0,0,0,0.06);
+    }
+
+    .cta-card h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 52px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--forest);
+    }
+
+    .cta-card p {
+      font-size: 18px;
+      margin-bottom: 40px;
+      opacity: 0.85;
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--charcoal);
+      opacity: 0.6;
+    }
+
+    @media (max-width: 1024px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .card.large {
+        grid-column: span 1;
+      }
+
+      .network-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .hero-card {
+        padding: 50px 40px;
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <div class="container">
+      <header>
+        <div class="logo">Asset Haus</div>
+        <nav>
+          <a href="#">About</a>
+          <a href="#">Services</a>
+          <a href="#">Contact</a>
+        </nav>
+      </header>
+
+      <div class="hero-card">
+        <h1>Asset Tokenization<br>Infrastructure</h1>
+        <p class="subtitle">
+          Transform traditional assets into digital securities with
+          comprehensive institutional-grade solutions.
+        </p>
+        <a href="#" class="btn">Explore Services</a>
+      </div>
+
+      <section class="cards-grid">
+        <div class="card large sage">
+          <span class="card-tag">Core Service</span>
+          <h3>Strategic Advisory</h3>
+          <p>
+            Comprehensive guidance on asset tokenization strategy, structure,
+            and execution for institutional portfolios. Our team brings decades
+            of combined experience in traditional finance and blockchain technology.
+          </p>
+        </div>
+
+        <div class="card clay">
+          <span class="card-tag">Legal</span>
+          <h3>Compliance</h3>
+          <p>
+            Cross-jurisdictional regulatory frameworks and compliance structures
+            for digital asset issuance.
+          </p>
+        </div>
+
+        <div class="card mint">
+          <span class="card-tag">Technical</span>
+          <h3>Smart Contracts</h3>
+          <p>
+            Institutional-grade smart contracts with comprehensive security audits
+            and multi-signature capabilities.
+          </p>
+        </div>
+
+        <div class="card peach">
+          <span class="card-tag">Infrastructure</span>
+          <h3>Multi-Chain</h3>
+          <p>
+            Deploy across 14+ blockchain networks with unified infrastructure
+            and consistent security standards.
+          </p>
+        </div>
+
+        <div class="card large mint">
+          <span class="card-tag">Platform</span>
+          <h3>End-to-End Solutions</h3>
+          <p>
+            Bespoke tokenization platforms with complete operational and technical
+            infrastructure. From issuance to secondary trading, we provide
+            comprehensive platform capabilities for institutional clients.
+          </p>
+        </div>
+      </section>
+
+      <div class="factoid-card">
+        <h2>Built for Institutions</h2>
+        <p>
+          Every aspect of our infrastructure is designed for institutional
+          requirements: comprehensive audits, regulatory compliance,
+          multi-signature security, and 24/7 enterprise support.
+        </p>
+      </div>
+
+      <section class="cards-grid">
+        <div class="card sage">
+          <span class="card-tag">Asset Class</span>
+          <h3>Real Estate</h3>
+          <p>
+            Tokenize commercial and residential properties for fractional
+            ownership and improved liquidity.
+          </p>
+        </div>
+
+        <div class="card clay">
+          <span class="card-tag">Asset Class</span>
+          <h3>Private Equity</h3>
+          <p>
+            Transform PE fund interests into digital securities for broader
+            investor access.
+          </p>
+        </div>
+
+        <div class="card mint">
+          <span class="card-tag">Asset Class</span>
+          <h3>Art & Collectibles</h3>
+          <p>
+            Fractionalize high-value art, democratizing access to prestigious
+            asset classes.
+          </p>
+        </div>
+      </section>
+
+      <section class="networks">
+        <h2 class="section-title">Supported Networks</h2>
+        <div class="network-cards">
+          <div class="network-card">Ethereum</div>
+          <div class="network-card">Polygon</div>
+          <div class="network-card">Arbitrum</div>
+          <div class="network-card">Optimism</div>
+          <div class="network-card">Avalanche</div>
+          <div class="network-card">BNB Chain</div>
+          <div class="network-card">Base</div>
+          <div class="network-card">Bitcoin</div>
+          <div class="network-card">Solana</div>
+          <div class="network-card">Cosmos</div>
+          <div class="network-card">Fantom</div>
+          <div class="network-card">Celo</div>
+        </div>
+      </section>
+
+      <div class="cta-card">
+        <h2>Let's Build Together</h2>
+        <p>Ready to tokenize your assets? Let's discuss your needs.</p>
+        <a href="#" class="btn">Schedule Consultation</a>
+      </div>
+
+      <footer>
+        © 2025 Asset Haus by Restifi — SEC Registered Platform
+      </footer>
+    </div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Organic Numbers</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #faf9f6;
+      --sage: #a8b5a0;
+      --clay: #d4a792;
+      --forest: #4a5d4e;
+      --charcoal: #2d3032;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.7;
+      font-weight: 300;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Morphing organic shapes */
+    body::before {
+      content: '';
+      position: fixed;
+      top: -10%;
+      right: -5%;
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, var(--sage), var(--clay));
+      opacity: 0.12;
+      border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+      animation: morph 20s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      bottom: -10%;
+      left: -5%;
+      width: 600px;
+      height: 600px;
+      background: linear-gradient(135deg, var(--clay), var(--forest));
+      opacity: 0.1;
+      border-radius: 54% 46% 38% 62% / 49% 60% 40% 51%;
+      animation: morph 25s ease-in-out infinite reverse;
+      z-index: 0;
+    }
+
+    @keyframes morph {
+      0%, 100% {
+        border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+        transform: rotate(0deg) scale(1);
+      }
+      50% {
+        border-radius: 54% 46% 38% 62% / 49% 60% 40% 51%;
+        transform: rotate(180deg) scale(1.1);
+      }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      padding: 50px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Crimson Pro', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    nav {
+      display: flex;
+      gap: 35px;
+    }
+
+    nav a {
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--sage);
+    }
+
+    /* Hero */
+    .hero {
+      padding: 80px 0 100px;
+      text-align: center;
+    }
+
+    h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 72px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 30px;
+      color: var(--forest);
+    }
+
+    .subtitle {
+      font-size: 22px;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      color: var(--charcoal);
+      opacity: 0.85;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 50px;
+      background: var(--forest);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 15px;
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background: var(--sage);
+      border-radius: 50% 50% 60% 40% / 50% 60% 40% 50%;
+    }
+
+    /* Numbered benefits - BIG NUMBERS */
+    .benefits {
+      padding: 100px 0;
+    }
+
+    .benefit-item {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 60px;
+      margin-bottom: 120px;
+      align-items: start;
+    }
+
+    .benefit-item:nth-child(even) {
+      grid-template-columns: 1fr 200px;
+      direction: rtl;
+    }
+
+    .benefit-item:nth-child(even) .benefit-content {
+      direction: ltr;
+    }
+
+    .benefit-number {
+      font-family: 'Crimson Pro', serif;
+      font-size: 180px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--sage);
+      opacity: 0.4;
+    }
+
+    .benefit-content h3 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 42px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: var(--forest);
+    }
+
+    .benefit-content p {
+      font-size: 18px;
+      line-height: 1.8;
+      color: var(--charcoal);
+      opacity: 0.9;
+      max-width: 600px;
+    }
+
+    /* Organic factoid */
+    .factoid {
+      background: var(--white);
+      padding: 50px 60px;
+      margin: 80px auto;
+      max-width: 800px;
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    }
+
+    .factoid-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--clay);
+    }
+
+    .factoid-text {
+      font-size: 17px;
+      line-height: 1.8;
+    }
+
+    /* Networks cloud */
+    .networks {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .section-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 48px;
+      font-weight: 600;
+      margin-bottom: 60px;
+      color: var(--forest);
+    }
+
+    .networks-cloud {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .network-tag {
+      background: var(--white);
+      padding: 15px 35px;
+      font-size: 15px;
+      font-weight: 400;
+      color: var(--charcoal);
+      border-radius: 50% 40% 60% 50% / 40% 50% 50% 60%;
+      transition: all 0.3s ease;
+    }
+
+    .network-tag:hover {
+      background: var(--sage);
+      color: var(--white);
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+    }
+
+    /* CTA */
+    .cta {
+      padding: 100px 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 56px;
+      font-weight: 600;
+      margin-bottom: 30px;
+      color: var(--forest);
+    }
+
+    .cta p {
+      font-size: 20px;
+      margin-bottom: 50px;
+      opacity: 0.85;
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--charcoal);
+      opacity: 0.6;
+      border-top: 1px solid rgba(0,0,0,0.08);
+    }
+
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 48px;
+      }
+
+      .benefit-item,
+      .benefit-item:nth-child(even) {
+        grid-template-columns: 1fr;
+        gap: 30px;
+        direction: ltr;
+      }
+
+      .benefit-number {
+        font-size: 120px;
+      }
+
+      .benefit-content h3 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#">About</a>
+        <a href="#">Services</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Institutional Asset<br>Tokenization</h1>
+      <p class="subtitle">
+        Transforming traditional assets into digital securities
+        through comprehensive infrastructure solutions.
+      </p>
+      <a href="#" class="btn">Get Started</a>
+    </section>
+
+    <section class="benefits">
+      <div class="benefit-item">
+        <div class="benefit-number">01</div>
+        <div class="benefit-content">
+          <h3>Strategic Advisory</h3>
+          <p>
+            Comprehensive guidance on asset tokenization strategy, structure,
+            and execution for institutional portfolios. Our team brings decades
+            of combined experience in traditional finance and blockchain technology.
+          </p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-number">02</div>
+        <div class="benefit-content">
+          <h3>Legal Architecture</h3>
+          <p>
+            Cross-jurisdictional regulatory frameworks and compliance structures
+            for digital asset issuance. We navigate complex regulatory landscapes
+            to ensure your tokenization project meets all legal requirements.
+          </p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-number">03</div>
+        <div class="benefit-content">
+          <h3>Technical Infrastructure</h3>
+          <p>
+            Institutional-grade smart contracts and blockchain implementation
+            with comprehensive security protocols. Every line of code is audited
+            by leading security firms to protect your assets.
+          </p>
+        </div>
+      </div>
+
+      <div class="benefit-item">
+        <div class="benefit-number">04</div>
+        <div class="benefit-content">
+          <h3>Platform Solutions</h3>
+          <p>
+            Bespoke tokenization platforms with complete operational
+            and technical infrastructure. From issuance to secondary trading,
+            we provide end-to-end platform capabilities.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <div class="factoid">
+      <div class="factoid-title">Organic Growth</div>
+      <div class="factoid-text">
+        Like organic forms in nature, our infrastructure grows and adapts
+        to your needs. We support 14+ blockchain networks with seamless
+        integration and provide 24/7 institutional-grade support.
+      </div>
+    </div>
+
+    <section class="networks">
+      <h2 class="section-title">Supported Networks</h2>
+      <div class="networks-cloud">
+        <div class="network-tag">Ethereum</div>
+        <div class="network-tag">Polygon</div>
+        <div class="network-tag">Arbitrum</div>
+        <div class="network-tag">Optimism</div>
+        <div class="network-tag">Avalanche</div>
+        <div class="network-tag">BNB Chain</div>
+        <div class="network-tag">Base</div>
+        <div class="network-tag">Bitcoin</div>
+        <div class="network-tag">Solana</div>
+        <div class="network-tag">Cosmos</div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Ready to Tokenize?</h2>
+      <p>Let's discuss your asset tokenization needs</p>
+      <a href="#" class="btn">Schedule Consultation</a>
+    </section>
+
+    <footer>
+      © 2025 Asset Haus by Restifi — SEC Registered Platform
+    </footer>
+  </div>
+
+</body>
+</html>
