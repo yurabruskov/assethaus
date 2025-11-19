@@ -334,102 +334,150 @@
   <script>
     const container = document.getElementById('canvas-container');
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setClearColor(0x000000, 1);
     container.appendChild(renderer.domElement);
 
-    // Create buildings along a street
+    // Create city block - square perimeter with buildings
     const buildings = [];
-    const streetLength = 100;
-    const buildingsPerSide = 20;
-    const streetWidth = 20;
+    const blockSize = 80;
+    const streetWidth = 12;
+    const buildingsPerStreet = 15;
 
-    // Left side buildings
-    for (let i = 0; i < buildingsPerSide; i++) {
-      const height = 15 + Math.random() * 35;
-      const width = 4 + Math.random() * 3;
-      const depth = 8 + Math.random() * 6;
+    // Helper function to create buildings along a street
+    function createStreetBuildings(startX, startZ, endX, endZ, side) {
+      for (let i = 0; i < buildingsPerStreet; i++) {
+        const t = i / buildingsPerStreet;
+        const height = 12 + Math.random() * 30;
+        const width = 3 + Math.random() * 2.5;
+        const depth = 6 + Math.random() * 4;
 
-      const geometry = new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(width, height, depth)
-      );
+        const geometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(width, height, depth)
+        );
 
-      const material = new THREE.LineBasicMaterial({
-        color: 0x4fc3f7,
-        transparent: true,
-        opacity: 0.5 + Math.random() * 0.3
-      });
+        const material = new THREE.LineBasicMaterial({
+          color: 0x4fc3f7,
+          transparent: true,
+          opacity: 0.4 + Math.random() * 0.3
+        });
 
-      const building = new THREE.LineSegments(geometry, material);
-      building.position.x = -streetWidth / 2 - width / 2 - 2;
-      building.position.y = height / 2;
-      building.position.z = -i * (streetLength / buildingsPerSide);
+        const building = new THREE.LineSegments(geometry, material);
 
-      scene.add(building);
-      buildings.push(building);
+        // Position along the street
+        const posX = startX + (endX - startX) * t;
+        const posZ = startZ + (endZ - startZ) * t;
+
+        // Offset from street based on side
+        if (side === 'north-inner') {
+          building.position.set(posX, height / 2, posZ + streetWidth / 2);
+        } else if (side === 'north-outer') {
+          building.position.set(posX, height / 2, posZ - streetWidth / 2);
+        } else if (side === 'east-inner') {
+          building.position.set(posX - streetWidth / 2, height / 2, posZ);
+        } else if (side === 'east-outer') {
+          building.position.set(posX + streetWidth / 2, height / 2, posZ);
+        } else if (side === 'south-inner') {
+          building.position.set(posX, height / 2, posZ - streetWidth / 2);
+        } else if (side === 'south-outer') {
+          building.position.set(posX, height / 2, posZ + streetWidth / 2);
+        } else if (side === 'west-inner') {
+          building.position.set(posX + streetWidth / 2, height / 2, posZ);
+        } else if (side === 'west-outer') {
+          building.position.set(posX - streetWidth / 2, height / 2, posZ);
+        }
+
+        scene.add(building);
+        buildings.push(building);
+      }
     }
 
-    // Right side buildings
-    for (let i = 0; i < buildingsPerSide; i++) {
-      const height = 15 + Math.random() * 35;
-      const width = 4 + Math.random() * 3;
-      const depth = 8 + Math.random() * 6;
+    // Create buildings around the square perimeter
+    // North street (west to east)
+    createStreetBuildings(-blockSize/2, -blockSize/2, blockSize/2, -blockSize/2, 'north-outer');
+    createStreetBuildings(-blockSize/2, -blockSize/2, blockSize/2, -blockSize/2, 'north-inner');
 
-      const geometry = new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(width, height, depth)
-      );
+    // East street (north to south)
+    createStreetBuildings(blockSize/2, -blockSize/2, blockSize/2, blockSize/2, 'east-outer');
+    createStreetBuildings(blockSize/2, -blockSize/2, blockSize/2, blockSize/2, 'east-inner');
 
-      const material = new THREE.LineBasicMaterial({
-        color: 0x4fc3f7,
-        transparent: true,
-        opacity: 0.5 + Math.random() * 0.3
-      });
+    // South street (east to west)
+    createStreetBuildings(blockSize/2, blockSize/2, -blockSize/2, blockSize/2, 'south-outer');
+    createStreetBuildings(blockSize/2, blockSize/2, -blockSize/2, blockSize/2, 'south-inner');
 
-      const building = new THREE.LineSegments(geometry, material);
-      building.position.x = streetWidth / 2 + width / 2 + 2;
-      building.position.y = height / 2;
-      building.position.z = -i * (streetLength / buildingsPerSide);
+    // West street (south to north)
+    createStreetBuildings(-blockSize/2, blockSize/2, -blockSize/2, -blockSize/2, 'west-outer');
+    createStreetBuildings(-blockSize/2, blockSize/2, -blockSize/2, -blockSize/2, 'west-inner');
 
-      scene.add(building);
-      buildings.push(building);
-    }
-
-    // Add ground grid for street
-    const gridHelper = new THREE.GridHelper(streetLength, 50, 0x4fc3f7, 0x1a1a1a);
-    gridHelper.material.opacity = 0.2;
+    // Add ground grid
+    const gridHelper = new THREE.GridHelper(blockSize * 1.5, 60, 0x4fc3f7, 0x1a1a1a);
+    gridHelper.material.opacity = 0.15;
     gridHelper.material.transparent = true;
-    gridHelper.rotation.x = 0;
-    gridHelper.position.z = -streetLength / 2;
     scene.add(gridHelper);
 
-    // Camera flies down the street
-    let flightProgress = 0;
-    const flightSpeed = 0.15;
+    // Flight path around the square perimeter
+    let totalProgress = 0;
+    const flightSpeed = 0.0008;
+
+    function getPositionOnSquare(progress) {
+      // Progress from 0 to 4 (each side is 1 unit)
+      const p = progress % 4;
+      const side = Math.floor(p);
+      const t = p - side;
+
+      const halfBlock = blockSize / 2;
+      let x, z, lookX, lookZ;
+
+      if (side === 0) {
+        // North street: west to east
+        x = -halfBlock + t * blockSize;
+        z = -halfBlock;
+        lookX = x + 15;
+        lookZ = z;
+      } else if (side === 1) {
+        // East street: north to south
+        x = halfBlock;
+        z = -halfBlock + t * blockSize;
+        lookX = x;
+        lookZ = z + 15;
+      } else if (side === 2) {
+        // South street: east to west
+        x = halfBlock - t * blockSize;
+        z = halfBlock;
+        lookX = x - 15;
+        lookZ = z;
+      } else {
+        // West street: south to north
+        x = -halfBlock;
+        z = halfBlock - t * blockSize;
+        lookX = x;
+        lookZ = z - 15;
+      }
+
+      return { x, z, lookX, lookZ };
+    }
 
     function animate() {
       requestAnimationFrame(animate);
 
-      flightProgress += flightSpeed;
+      totalProgress += flightSpeed;
 
-      // Camera position flying down the street
-      camera.position.x = 0;
-      camera.position.y = 12 + Math.sin(flightProgress * 0.01) * 2;
-      camera.position.z = -flightProgress;
+      const pos = getPositionOnSquare(totalProgress);
 
-      // Look ahead down the street
-      camera.lookAt(0, 10, -flightProgress - 30);
+      // Bird's eye view - camera higher and angled down
+      camera.position.x = pos.x;
+      camera.position.y = 28 + Math.sin(totalProgress * 2) * 1.5;
+      camera.position.z = pos.z;
 
-      // Reset when reaching end of street
-      if (flightProgress > streetLength) {
-        flightProgress = 0;
-      }
+      // Look ahead in the direction of flight
+      camera.lookAt(pos.lookX, 8, pos.lookZ);
 
       // Gentle building pulse
       buildings.forEach((building, index) => {
-        const pulse = 0.5 + Math.sin(Date.now() * 0.001 + index * 0.1) * 0.2;
+        const pulse = 0.4 + Math.sin(Date.now() * 0.001 + index * 0.15) * 0.25;
         building.material.opacity = pulse;
       });
 

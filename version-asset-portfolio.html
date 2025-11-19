@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Portfolio Visualization</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Outfit', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 30px 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(64, 224, 208, 0.25);
+    }
+
+    .logo {
+      font-size: 31px;
+      font-weight: 800;
+      font-family: 'Roboto Mono', monospace;
+      color: #40e0d0;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1.4px;
+    }
+
+    nav a:hover {
+      color: #40e0d0;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 70px;
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      max-width: 1300px;
+      align-items: center;
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    h1 {
+      font-size: 86px;
+      font-weight: 800;
+      margin-bottom: 30px;
+      line-height: 0.94;
+      color: #ffffff;
+      letter-spacing: -3px;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.73);
+      margin-bottom: 46px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 18px;
+    }
+
+    .btn {
+      padding: 18px 42px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s;
+      font-family: 'Roboto Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: #40e0d0;
+      color: #000000;
+      border: 2px solid #40e0d0;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #40e0d0;
+      box-shadow: 0 0 30px rgba(64, 224, 208, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #40e0d0;
+      color: #40e0d0;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .stat-box {
+      padding: 30px;
+      background: rgba(64, 224, 208, 0.08);
+      border: 1px solid rgba(64, 224, 208, 0.25);
+      border-radius: 8px;
+    }
+
+    .stat-value {
+      font-size: 38px;
+      font-weight: 800;
+      color: #40e0d0;
+      font-family: 'Roboto Mono', monospace;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.65);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .networks {
+      padding: 95px 70px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .section-title {
+      font-size: 52px;
+      font-weight: 800;
+      margin-bottom: 58px;
+      text-align: center;
+    }
+
+    .networks-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    .network-pill {
+      padding: 16px 32px;
+      background: rgba(64, 224, 208, 0.1);
+      border: 1px solid rgba(64, 224, 208, 0.28);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 13px;
+      border-radius: 28px;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .network-pill:hover {
+      background: rgba(64, 224, 208, 0.18);
+      border-color: #40e0d0;
+    }
+
+    .capabilities {
+      padding: 95px 70px;
+    }
+
+    .capabilities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 35px;
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-top: 58px;
+    }
+
+    .capability {
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 38px;
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 4px solid #40e0d0;
+      transition: all 0.3s;
+    }
+
+    .capability:hover {
+      background: rgba(64, 224, 208, 0.06);
+      transform: translateX(8px);
+    }
+
+    .capability-icon {
+      font-size: 56px;
+      line-height: 1;
+    }
+
+    .capability-content h3 {
+      font-size: 28px;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .capability-content p {
+      color: rgba(255, 255, 255, 0.73);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 115px 70px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 64px;
+      margin-bottom: 28px;
+      font-weight: 800;
+    }
+
+    .cta p {
+      font-size: 19px;
+      color: rgba(255, 255, 255, 0.73);
+      margin-bottom: 50px;
+    }
+
+    footer {
+      padding: 60px 70px;
+      text-align: center;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      border-top: 1px solid rgba(64, 224, 208, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 52px; }
+      .hero-layout { grid-template-columns: 1fr; }
+      .capability { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Features</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-layout">
+        <div class="hero-content">
+          <h1>Diversified<br>Digital Assets</h1>
+          <p class="hero-desc">
+            Visualize and manage your entire tokenized real estate portfolio. Track performance across property types, markets, and blockchain networks in real-time.
+          </p>
+          <div class="btn-group">
+            <a href="#" class="btn btn-primary">View Portfolio</a>
+            <a href="#" class="btn btn-outline">Add Assets</a>
+          </div>
+        </div>
+
+        <div class="hero-stats">
+          <div class="stat-box">
+            <div class="stat-value">$8.4M</div>
+            <div class="stat-label">Total Value</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">342</div>
+            <div class="stat-label">Properties</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">12.8%</div>
+            <div class="stat-label">Avg Return</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-value">67</div>
+            <div class="stat-label">Markets</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Cross-Chain Portfolio</h2>
+      <div class="networks-pills">
+        <div class="network-pill">Ethereum</div>
+        <div class="network-pill">Polygon</div>
+        <div class="network-pill">Arbitrum</div>
+        <div class="network-pill">Optimism</div>
+        <div class="network-pill">Base</div>
+        <div class="network-pill">Avalanche</div>
+        <div class="network-pill">BNB Chain</div>
+        <div class="network-pill">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Portfolio Management</h2>
+      <div class="capabilities-list">
+        <div class="capability">
+          <div class="capability-icon">🏢</div>
+          <div class="capability-content">
+            <h3>Asset Diversification</h3>
+            <p>Balance your portfolio across residential, commercial, and industrial properties with automated rebalancing and risk management tools.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">📈</div>
+          <div class="capability-content">
+            <h3>Performance Analytics</h3>
+            <p>Track individual asset and portfolio-wide performance metrics including ROI, appreciation rates, and income generation.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">🌍</div>
+          <div class="capability-content">
+            <h3>Geographic Distribution</h3>
+            <p>Optimize geographic exposure across global markets with heat maps, regional analytics, and market correlation insights.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">⚡</div>
+          <div class="capability-content">
+            <h3>Instant Rebalancing</h3>
+            <p>Buy and sell tokenized property fractions instantly to maintain target allocations and respond to market opportunities.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Build Your Portfolio</h2>
+      <p>Start diversifying with tokenized real estate today</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Portfolio Management Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    const assets = [];
+
+    // Asset types with different geometries and sizes
+    const assetTypes = [
+      { name: 'residential', shape: 'box', sizeRange: [2, 8], count: 15 },
+      { name: 'commercial', shape: 'octahedron', sizeRange: [3, 12], count: 10 },
+      { name: 'industrial', shape: 'cylinder', sizeRange: [4, 10], count: 8 }
+    ];
+
+    // Create portfolio assets
+    assetTypes.forEach((type, typeIndex) => {
+      for (let i = 0; i < type.count; i++) {
+        const size = type.sizeRange[0] + Math.random() * (type.sizeRange[1] - type.sizeRange[0]);
+
+        let geometry;
+        if (type.shape === 'box') {
+          geometry = new THREE.EdgesGeometry(
+            new THREE.BoxGeometry(size, size, size)
+          );
+        } else if (type.shape === 'octahedron') {
+          geometry = new THREE.EdgesGeometry(
+            new THREE.OctahedronGeometry(size * 0.6)
+          );
+        } else if (type.shape === 'cylinder') {
+          geometry = new THREE.EdgesGeometry(
+            new THREE.CylinderGeometry(size * 0.4, size * 0.4, size, 8)
+          );
+        }
+
+        const material = new THREE.LineBasicMaterial({
+          color: 0x40e0d0,
+          transparent: true,
+          opacity: 0
+        });
+
+        const asset = new THREE.LineSegments(geometry, material);
+
+        // Position in 3D space based on type
+        const angle = (i / type.count) * Math.PI * 2;
+        const radiusFromCenter = 15 + typeIndex * 12;
+
+        asset.position.x = Math.cos(angle) * radiusFromCenter;
+        asset.position.y = (Math.random() - 0.5) * 20;
+        asset.position.z = Math.sin(angle) * radiusFromCenter;
+
+        asset.userData = {
+          targetOpacity: 0.35 + Math.random() * 0.35,
+          rotationSpeed: {
+            x: (Math.random() - 0.5) * 0.015,
+            y: (Math.random() - 0.5) * 0.015,
+            z: (Math.random() - 0.5) * 0.015
+          },
+          floatSpeed: 0.005 + Math.random() * 0.01,
+          floatOffset: Math.random() * Math.PI * 2,
+          size: size
+        };
+
+        scene.add(asset);
+        assets.push(asset);
+      }
+    });
+
+    // Camera setup
+    camera.position.set(55, 35, 55);
+    camera.lookAt(0, 0, 0);
+
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      time += 1;
+
+      // Update assets
+      assets.forEach((asset, index) => {
+        // Fade in
+        if (asset.material.opacity < asset.userData.targetOpacity) {
+          asset.material.opacity += 0.006;
+        }
+
+        // Rotate
+        asset.rotation.x += asset.userData.rotationSpeed.x;
+        asset.rotation.y += asset.userData.rotationSpeed.y;
+        asset.rotation.z += asset.userData.rotationSpeed.z;
+
+        // Float up and down
+        const baseY = asset.position.y;
+        asset.position.y += Math.sin(time * asset.userData.floatSpeed + asset.userData.floatOffset) * 0.05;
+
+        // Gentle pulsing opacity
+        const pulse = Math.sin(time * 0.02 + index * 0.1) * 0.1;
+        asset.material.opacity = Math.min(
+          asset.userData.targetOpacity + pulse,
+          0.8
+        );
+      });
+
+      // Rotate camera around portfolio
+      const radius = 68;
+      camera.position.x = Math.cos(time * 0.0018) * radius;
+      camera.position.z = Math.sin(time * 0.0018) * radius;
+      camera.position.y = 32 + Math.sin(time * 0.001) * 10;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

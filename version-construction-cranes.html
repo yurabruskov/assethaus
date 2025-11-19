@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Under Construction</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;600;700;800&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 30px 65px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 184, 0, 0.25);
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 800;
+      font-family: 'Courier Prime', monospace;
+      color: #ffb800;
+    }
+
+    nav {
+      display: flex;
+      gap: 36px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    nav a:hover {
+      color: #ffb800;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 65px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 750px;
+    }
+
+    h1 {
+      font-size: 84px;
+      font-weight: 800;
+      margin-bottom: 30px;
+      line-height: 0.96;
+      color: #ffffff;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 50px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 18px 44px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-family: 'Courier Prime', monospace;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: #ffb800;
+      color: #000000;
+      border: 2px solid #ffb800;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #ffb800;
+      box-shadow: 0 0 25px rgba(255, 184, 0, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #ffb800;
+      color: #ffb800;
+    }
+
+    .networks {
+      padding: 95px 65px;
+      background: rgba(0, 0, 0, 0.7);
+    }
+
+    .section-title {
+      font-size: 50px;
+      font-weight: 800;
+      margin-bottom: 55px;
+      text-align: center;
+    }
+
+    .networks-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .network-badge {
+      padding: 16px 30px;
+      background: rgba(255, 184, 0, 0.1);
+      border: 1px solid rgba(255, 184, 0, 0.3);
+      font-family: 'Courier Prime', monospace;
+      font-size: 13px;
+      border-radius: 25px;
+      transition: all 0.3s;
+      font-weight: 700;
+    }
+
+    .network-badge:hover {
+      background: rgba(255, 184, 0, 0.2);
+      border-color: #ffb800;
+    }
+
+    .capabilities {
+      padding: 95px 65px;
+    }
+
+    .capabilities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+      max-width: 900px;
+      margin: 0 auto;
+      margin-top: 55px;
+    }
+
+    .capability {
+      text-align: center;
+      padding: 45px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 184, 0, 0.2);
+      transition: all 0.3s;
+    }
+
+    .capability:hover {
+      background: rgba(255, 184, 0, 0.05);
+      border-color: #ffb800;
+    }
+
+    .capability-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #ffb800;
+    }
+
+    .capability h3 {
+      font-size: 28px;
+      margin-bottom: 16px;
+      font-weight: 700;
+    }
+
+    .capability p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 115px 65px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 62px;
+      margin-bottom: 26px;
+      font-weight: 800;
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 48px;
+    }
+
+    footer {
+      padding: 58px 65px;
+      text-align: center;
+      font-family: 'Courier Prime', monospace;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      border-top: 1px solid rgba(255, 184, 0, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Features</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Building the<br>Digital Future</h1>
+        <p class="hero-desc">
+          Active construction of tokenized real estate infrastructure. Watch as properties are assembled, verified, and deployed to the blockchain in real-time.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Start Building</a>
+          <a href="#" class="btn btn-outline">View Projects</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Deployment Networks</h2>
+      <div class="networks-list">
+        <div class="network-badge">Ethereum</div>
+        <div class="network-badge">Polygon</div>
+        <div class="network-badge">Arbitrum</div>
+        <div class="network-badge">Optimism</div>
+        <div class="network-badge">Base</div>
+        <div class="network-badge">Avalanche</div>
+        <div class="network-badge">BNB Chain</div>
+        <div class="network-badge">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Construction Pipeline</h2>
+      <div class="capabilities-list">
+        <div class="capability">
+          <div class="capability-icon">🏗️</div>
+          <h3>Active Development</h3>
+          <p>Properties under construction are tokenized progressively, with automated updates as each building phase completes and value increases.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">⚙️</div>
+          <h3>Smart Deployment</h3>
+          <p>Automated contract deployment and verification across multiple chains as construction milestones are achieved and documented.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">📊</div>
+          <h3>Progress Tracking</h3>
+          <p>Real-time monitoring of construction status, budget utilization, and timeline adherence with blockchain-verified transparency.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-icon">🔐</div>
+          <h3>Quality Assurance</h3>
+          <p>Multi-signature approval gates at each construction phase ensuring compliance, quality standards, and investor protection.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Join the Build</h2>
+      <p>Participate in the construction of digital real estate infrastructure</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Construction Tokenization Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    const constructionSites = [];
+    const cranes = [];
+
+    // Create 5 construction sites
+    for (let i = 0; i < 5; i++) {
+      const siteX = (i - 2) * 20;
+
+      // Building being constructed
+      const building = {
+        x: siteX,
+        targetHeight: 20 + Math.random() * 25,
+        currentFloor: 0,
+        floors: [],
+        floorHeight: 3
+      };
+
+      // Crane for this site
+      const crane = {
+        x: siteX + 8,
+        building: building,
+        hook: null,
+        hookY: 40,
+        hookTarget: 0,
+        block: null,
+        state: 'lowering' // lowering, lifting, placing
+      };
+
+      // Crane structure
+      const craneGeometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(1, 45, 1)
+      );
+      const craneMaterial = new THREE.LineBasicMaterial({
+        color: 0xffb800,
+        transparent: true,
+        opacity: 0.5
+      });
+      const craneMesh = new THREE.LineSegments(craneGeometry, craneMaterial);
+      craneMesh.position.set(crane.x, 22.5, 0);
+      scene.add(craneMesh);
+
+      // Crane arm
+      const armGeometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(20, 0.8, 0.8)
+      );
+      const armMesh = new THREE.LineSegments(armGeometry, craneMaterial);
+      armMesh.position.set(crane.x - 5, 44, 0);
+      scene.add(armMesh);
+
+      // Crane hook (small cube)
+      const hookGeometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(0.5, 0.5, 0.5)
+      );
+      const hookMaterial = new THREE.LineBasicMaterial({
+        color: 0xffb800,
+        transparent: true,
+        opacity: 0.7
+      });
+      const hookMesh = new THREE.LineSegments(hookGeometry, hookMaterial);
+      hookMesh.position.set(crane.x - 10, crane.hookY, 0);
+      scene.add(hookMesh);
+      crane.hook = hookMesh;
+
+      constructionSites.push(building);
+      cranes.push(crane);
+    }
+
+    // Add ground grid
+    const gridHelper = new THREE.GridHelper(120, 60, 0xffb800, 0x1a1a1a);
+    gridHelper.material.opacity = 0.2;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+
+    // Camera setup
+    camera.position.set(50, 30, 60);
+    camera.lookAt(0, 15, 0);
+
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      time += 1;
+
+      // Update cranes
+      cranes.forEach((crane, index) => {
+        const building = crane.building;
+        const maxFloors = Math.floor(building.targetHeight / building.floorHeight);
+
+        if (building.currentFloor < maxFloors) {
+          // Crane animation states
+          if (crane.state === 'lowering') {
+            crane.hookY -= 0.15;
+            crane.hook.position.y = crane.hookY;
+
+            if (crane.hookY <= 1) {
+              crane.state = 'lifting';
+
+              // Create block to lift
+              const blockGeometry = new THREE.EdgesGeometry(
+                new THREE.BoxGeometry(4, building.floorHeight - 0.2, 4)
+              );
+              const blockMaterial = new THREE.LineBasicMaterial({
+                color: 0xffb800,
+                transparent: true,
+                opacity: 0.6
+              });
+              const blockMesh = new THREE.LineSegments(blockGeometry, blockMaterial);
+              blockMesh.position.set(crane.x - 10, crane.hookY, 0);
+              scene.add(blockMesh);
+              crane.block = blockMesh;
+            }
+          } else if (crane.state === 'lifting') {
+            crane.hookY += 0.12;
+            crane.hook.position.y = crane.hookY;
+
+            if (crane.block) {
+              crane.block.position.y = crane.hookY;
+            }
+
+            if (crane.hookY >= 45) {
+              crane.state = 'placing';
+              crane.hookTarget = building.currentFloor * building.floorHeight + building.floorHeight / 2;
+            }
+          } else if (crane.state === 'placing') {
+            // Move block to building position
+            if (crane.block) {
+              crane.block.position.x += (building.x - crane.block.position.x) * 0.05;
+              crane.block.position.y += (crane.hookTarget - crane.block.position.y) * 0.05;
+
+              // Check if block is in place
+              if (Math.abs(crane.block.position.x - building.x) < 0.1 &&
+                  Math.abs(crane.block.position.y - crane.hookTarget) < 0.1) {
+                // Place block permanently
+                building.floors.push(crane.block);
+                building.currentFloor++;
+                crane.block = null;
+                crane.state = 'lowering';
+                crane.hookY = 44;
+                crane.hook.position.y = crane.hookY;
+              }
+            }
+          }
+        }
+      });
+
+      // Rotate camera
+      const radius = 70;
+      camera.position.x = Math.cos(time * 0.002) * radius;
+      camera.position.z = Math.sin(time * 0.002) * radius;
+      camera.position.y = 28 + Math.sin(time * 0.001) * 5;
+      camera.lookAt(0, 12, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
