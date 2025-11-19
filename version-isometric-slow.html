@@ -434,10 +434,9 @@
       requestAnimationFrame(animate);
 
       buildings.forEach((building) => {
-        building.userData.buildProgress += building.userData.buildSpeed;
-
-        if (building.userData.buildProgress >= 1) {
-          building.userData.buildProgress = 0;
+        // Only build up to 1, then stop
+        if (building.userData.buildProgress < 1) {
+          building.userData.buildProgress += building.userData.buildSpeed;
         }
 
         const totalBlocks = building.children.length;
@@ -454,16 +453,17 @@
 
           if (block.userData.isVisible) {
             const targetY = block.userData.targetY;
-            block.userData.currentY += (targetY - block.userData.currentY) * 0.05; // Slower rise
+            block.userData.currentY += (targetY - block.userData.currentY) * 0.05;
             block.position.y = block.userData.currentY;
 
-            block.material.opacity = Math.min(0.7, blockProgress);
-          } else {
-            block.material.opacity = 0;
+            // Keep opacity at max once built
+            if (block.material.opacity < 0.7) {
+              block.material.opacity += 0.01;
+            }
           }
         });
 
-        building.rotation.y += 0.0003; // Slower rotation
+        building.rotation.y += 0.0003;
       });
 
       renderer.render(scene, camera);

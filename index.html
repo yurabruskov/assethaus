@@ -5,9 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asset Haus — Design Variations</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
   <style>
     * {
@@ -16,939 +14,193 @@
       box-sizing: border-box;
     }
 
-    :root {
-      --bg: #0a0e14;
-      --surface: #151b26;
-      --text: #e6edf3;
-      --text-secondary: #8b949e;
-      --accent: #58a6ff;
-      --accent-green: #3fb950;
-      --accent-orange: #ff9500;
-      --accent-red: #f85149;
-      --border: #30363d;
-    }
-
     body {
-      font-family: 'Inter', -apple-system, sans-serif;
-      background: var(--bg);
-      color: var(--text);
+      font-family: 'Inter', sans-serif;
+      background: #fafafa;
+      color: #1a1a1a;
       line-height: 1.6;
-      min-height: 100vh;
-      padding: 40px 20px;
-      background-image:
-        radial-gradient(circle at 20% 50%, rgba(88, 166, 255, 0.1) 0%, transparent 50%),
-        radial-gradient(circle at 80% 80%, rgba(63, 185, 80, 0.08) 0%, transparent 50%);
-    }
-
-    .container {
-      max-width: 1400px;
+      padding: 60px 40px;
+      max-width: 800px;
       margin: 0 auto;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-
-    .logo {
-      font-family: 'Space Grotesk', sans-serif;
+    h1 {
       font-size: 48px;
-      font-weight: 700;
-      margin-bottom: 16px;
-      background: linear-gradient(135deg, var(--accent) 0%, var(--accent-green) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      font-weight: 300;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
     }
 
     .subtitle {
-      font-size: 18px;
-      color: var(--text-secondary);
-      font-weight: 300;
-    }
-
-    .intro {
-      max-width: 720px;
-      margin: 0 auto 60px;
-      text-align: center;
-      padding: 32px;
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
-
-    .intro h2 {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 16px;
-      color: var(--text);
-    }
-
-    .intro p {
       font-size: 16px;
-      color: var(--text-secondary);
-      line-height: 1.7;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 32px;
+      font-weight: 300;
+      color: #666;
       margin-bottom: 60px;
     }
 
-    .card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .card-header {
-      padding: 24px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .card-badge {
-      display: inline-block;
-      padding: 4px 12px;
-      background: rgba(88, 166, 255, 0.15);
-      color: var(--accent);
-      font-size: 12px;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      border-radius: 4px;
-      margin-bottom: 12px;
-    }
-
-    .card-badge.bauhaus { background: rgba(225, 38, 28, 0.15); color: #ff6b6b; }
-    .card-badge.scandi { background: rgba(63, 185, 80, 0.15); color: var(--accent-green); }
-    .card-badge.german { background: rgba(255, 149, 0, 0.15); color: var(--accent-orange); }
-    .card-badge.lebedev { background: rgba(0, 102, 204, 0.15); color: #58a6ff; }
-    .card-badge.organic { background: rgba(168, 181, 160, 0.15); color: #a8b5a0; }
-
-    .card h3 {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 28px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: var(--text);
-    }
-
-    .card-desc {
-      font-size: 14px;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-
-    .card-features {
+    .list {
       list-style: none;
-      margin-top: 16px;
     }
 
-    .card-features li {
-      font-size: 13px;
-      color: var(--text-secondary);
-      padding: 6px 0;
-      padding-left: 20px;
-      position: relative;
-    }
-
-    .card-features li::before {
-      content: '→';
-      position: absolute;
-      left: 0;
-      color: var(--accent);
-      font-weight: 700;
-    }
-
-    .card-body {
-      padding: 24px;
-    }
-
-    .tech-stack {
+    .list-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #e0e0e0;
       display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 20px;
+      align-items: center;
     }
 
-    .tech-tag {
-      padding: 4px 10px;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      font-size: 11px;
-      font-family: 'Monaco', monospace;
-      color: var(--text-secondary);
+    .list-item:first-child {
+      border-top: 1px solid #e0e0e0;
     }
 
-    .card-link {
-      display: block;
-      width: 100%;
-      padding: 14px 24px;
-      background: var(--accent);
-      color: var(--bg);
+    .list-item a {
+      color: #1a1a1a;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 14px;
-      text-align: center;
-      border-radius: 6px;
-      border: 2px solid var(--accent);
-    }
-
-    .footer {
-      text-align: center;
-      margin-top: 80px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-    }
-
-    .footer-text {
-      font-size: 14px;
-      color: var(--text-secondary);
-    }
-
-    .footer-links {
-      margin-top: 20px;
-      display: flex;
-      gap: 24px;
-      justify-content: center;
-    }
-
-    .footer-links a {
-      color: var(--text-secondary);
-      text-decoration: none;
-      font-size: 13px;
+      font-size: 15px;
+      font-weight: 400;
+      flex: 1;
       transition: color 0.2s;
     }
 
-    .footer-links a:hover {
-      color: var(--accent);
+    .list-item a:hover {
+      color: #0066cc;
     }
 
-    @media (max-width: 768px) {
-      .logo {
-        font-size: 36px;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .footer-links {
-        flex-direction: column;
-        gap: 12px;
-      }
+    .number {
+      display: inline-block;
+      width: 50px;
+      color: #999;
+      font-size: 13px;
+      font-weight: 300;
     }
 
+    footer {
+      margin-top: 80px;
+      padding-top: 30px;
+      border-top: 1px solid #e0e0e0;
+      font-size: 13px;
+      color: #999;
+      text-align: center;
+    }
   </style>
 </head>
 <body>
+  <h1>Asset Haus</h1>
+  <p class="subtitle">Design Variations</p>
 
-  <div class="container">
-    <header>
-      <h1 class="logo">Asset Haus</h1>
-      <p class="subtitle">Institutional Infrastructure — Design Variations</p>
-    </header>
+  <ul class="list">
+    <li class="list-item">
+      <span class="number">01</span>
+      <a href="version-bauhaus.html">Bauhaus</a>
+    </li>
+    <li class="list-item">
+      <span class="number">02</span>
+      <a href="version-scandinavian.html">Scandinavian</a>
+    </li>
+    <li class="list-item">
+      <span class="number">03</span>
+      <a href="version-german.html">German Practical</a>
+    </li>
+    <li class="list-item">
+      <span class="number">04</span>
+      <a href="version-lebedev.html">Lebedev Studio</a>
+    </li>
+    <li class="list-item">
+      <span class="number">05</span>
+      <a href="scandi-brutalism.html">Scandi Brutalism</a>
+    </li>
+    <li class="list-item">
+      <span class="number">06</span>
+      <a href="scandi-organic.html">Scandi Organic</a>
+    </li>
+    <li class="list-item">
+      <span class="number">07</span>
+      <a href="scandi-grid.html">Scandi Grid</a>
+    </li>
+    <li class="list-item">
+      <span class="number">08</span>
+      <a href="scandi-color.html">Scandi Color</a>
+    </li>
+    <li class="list-item">
+      <span class="number">09</span>
+      <a href="scandi-asymmetric.html">Scandi Asymmetric</a>
+    </li>
+    <li class="list-item">
+      <span class="number">10</span>
+      <a href="scandi-organic-numbers.html">Organic Numbers</a>
+    </li>
+    <li class="list-item">
+      <span class="number">11</span>
+      <a href="scandi-organic-dense.html">Organic Dense</a>
+    </li>
+    <li class="list-item">
+      <span class="number">12</span>
+      <a href="scandi-organic-sparse.html">Organic Sparse</a>
+    </li>
+    <li class="list-item">
+      <span class="number">13</span>
+      <a href="scandi-organic-tech.html">Organic Tech</a>
+    </li>
+    <li class="list-item">
+      <span class="number">14</span>
+      <a href="scandi-organic-symbols.html">Organic Symbols</a>
+    </li>
+    <li class="list-item">
+      <span class="number">15</span>
+      <a href="scandi-organic-cards.html">Organic Cards</a>
+    </li>
+    <li class="list-item">
+      <span class="number">16</span>
+      <a href="creative-isometric.html">Isometric Construction</a>
+    </li>
+    <li class="list-item">
+      <span class="number">17</span>
+      <a href="version-isometric-slow.html">Isometric Architecture</a>
+    </li>
+    <li class="list-item">
+      <span class="number">18</span>
+      <a href="version-particle-network.html">Network Architecture</a>
+    </li>
+    <li class="list-item">
+      <span class="number">19</span>
+      <a href="version-floating-cubes.html">Geometric Framework</a>
+    </li>
+    <li class="list-item">
+      <span class="number">20</span>
+      <a href="version-wave-grid.html">Wave Infrastructure</a>
+    </li>
+    <li class="list-item">
+      <span class="number">21</span>
+      <a href="version-spiral-towers.html">Spiral Architecture</a>
+    </li>
+    <li class="list-item">
+      <span class="number">22</span>
+      <a href="version-digital-rain.html">Digital Matrix</a>
+    </li>
+    <li class="list-item">
+      <span class="number">23</span>
+      <a href="version-flying-city.html">Flying City</a>
+    </li>
+    <li class="list-item">
+      <span class="number">24</span>
+      <a href="version-wave-buildings.html">Wave Buildings</a>
+    </li>
+    <li class="list-item">
+      <span class="number">25</span>
+      <a href="version-growing-cubes.html">Growing Cubes</a>
+    </li>
+    <li class="list-item">
+      <span class="number">26</span>
+      <a href="version-tokenization-network.html">Tokenization Network</a>
+    </li>
+    <li class="list-item">
+      <span class="number">27</span>
+      <a href="version-property-grid.html">Property Grid</a>
+    </li>
+  </ul>
 
-    <div class="intro">
-      <h2>Choose Your Style</h2>
-      <p>
-        Пятнадцать уникальных дизайнов для платформы токенизации активов.
-        Каждый с собственной философией, типографикой и подходом к верстке.
-      </p>
-    </div>
-
-    <div class="grid">
-      <!-- Bauhaus -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge bauhaus">01</span>
-          <h3>Bauhaus</h3>
-          <p class="card-desc">
-            Геометрия, первичные цвета, модульная сетка.
-            Форма следует за функцией.
-          </p>
-          <ul class="card-features">
-            <li>Красный, синий, желтый акценты</li>
-            <li>Асимметричная композиция 2:1</li>
-            <li>Ступенчатая структура</li>
-            <li>IBM Plex Sans, uppercase</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Geometric</span>
-            <span class="tech-tag">Bold</span>
-            <span class="tech-tag">Modular</span>
-          </div>
-          <a href="version-bauhaus.html" class="card-link">View Bauhaus →</a>
-        </div>
-      </div>
-
-      <!-- Scandinavian -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">02</span>
-          <h3>Scandinavian</h3>
-          <p class="card-desc">
-            Максимум воздуха, минимум деталей.
-            Белое пространство как роскошь.
-          </p>
-          <ul class="card-features">
-            <li>Вес шрифта 300, огромные отступы</li>
-            <li>Вертикальный ритм 80-200px</li>
-            <li>Светлая палитра, один акцент</li>
-            <li>Inter, легкость и чистота</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Minimal</span>
-            <span class="tech-tag">Light</span>
-            <span class="tech-tag">Calm</span>
-          </div>
-          <a href="version-scandinavian.html" class="card-link">View Scandinavian →</a>
-        </div>
-      </div>
-
-      <!-- German -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge german">03</span>
-          <h3>German Practical</h3>
-          <p class="card-desc">
-            Порядок, структура, система.
-            8px grid, таблицы данных, точность.
-          </p>
-          <ul class="card-features">
-            <li>Сетка 8px для абсолютной точности</li>
-            <li>Roboto Mono, технические метки</li>
-            <li>Табличная структура</li>
-            <li>Нумерованная иерархия</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Structured</span>
-            <span class="tech-tag">Precise</span>
-            <span class="tech-tag">Technical</span>
-          </div>
-          <a href="version-german.html" class="card-link">View German →</a>
-        </div>
-      </div>
-
-      <!-- Lebedev -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge lebedev">04</span>
-          <h3>Lebedev Studio</h3>
-          <p class="card-desc">
-            Фактоиды, нестандартная сетка 7:5,
-            типографические детали.
-          </p>
-          <ul class="card-features">
-            <li>Асимметричная композиция</li>
-            <li>Фактоиды с синей линией</li>
-            <li>Sticky sidebar с метриками</li>
-            <li>IBM Plex Serif + Sans</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Typography</span>
-            <span class="tech-tag">Asymmetric</span>
-            <span class="tech-tag">Details</span>
-          </div>
-          <a href="version-lebedev.html" class="card-link">View Lebedev →</a>
-        </div>
-      </div>
-
-      <!-- Scandi Brutalism -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">05</span>
-          <h3>Scandi Brutalism</h3>
-          <p class="card-desc">
-            Скандинавская легкость встречается с бетонным брутализмом.
-            Теневые блоки и угловатая геометрия.
-          </p>
-          <ul class="card-features">
-            <li>Бетонная эстетика с shadow boxes</li>
-            <li>Сетка grid pattern на фоне</li>
-            <li>Space Mono + Work Sans</li>
-            <li>Offset positioning</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Brutalist</span>
-            <span class="tech-tag">Concrete</span>
-            <span class="tech-tag">Angular</span>
-          </div>
-          <a href="scandi-brutalism.html" class="card-link">View Scandi Brutalism →</a>
-        </div>
-      </div>
-
-      <!-- Scandi Organic -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">06</span>
-          <h3>Scandi Organic</h3>
-          <p class="card-desc">
-            Органические формы, morphing blob-анимации,
-            природные цвета и текучие композиции.
-          </p>
-          <ul class="card-features">
-            <li>Morphing blob backgrounds</li>
-            <li>Rounded borders (40% 60% style)</li>
-            <li>Sage, clay, forest palette</li>
-            <li>Crimson Pro + Inter</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Organic</span>
-            <span class="tech-tag">Natural</span>
-            <span class="tech-tag">Flowing</span>
-          </div>
-          <a href="scandi-organic.html" class="card-link">View Scandi Organic →</a>
-        </div>
-      </div>
-
-      <!-- Scandi Grid -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">07</span>
-          <h3>Scandi Grid</h3>
-          <p class="card-desc">
-            Строгая 12-колоночная сетка, dot grid background,
-            математическая точность в каждом элементе.
-          </p>
-          <ul class="card-features">
-            <li>12-column grid system</li>
-            <li>Dot grid на фоне (30px)</li>
-            <li>DM Sans typography</li>
-            <li>Точное выравнивание</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Grid</span>
-            <span class="tech-tag">Precise</span>
-            <span class="tech-tag">Mathematical</span>
-          </div>
-          <a href="scandi-grid.html" class="card-link">View Scandi Grid →</a>
-        </div>
-      </div>
-
-      <!-- Scandi Color -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">08</span>
-          <h3>Scandi Color</h3>
-          <p class="card-desc">
-            Яркие градиенты, цветные factoid-блоки,
-            жизнерадостная палитра на скандинавской основе.
-          </p>
-          <ul class="card-features">
-            <li>Blue, coral, mint, lavender градиенты</li>
-            <li>Цветные factoid cards</li>
-            <li>Plus Jakarta Sans</li>
-            <li>Gradient backgrounds</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Colorful</span>
-            <span class="tech-tag">Gradient</span>
-            <span class="tech-tag">Vibrant</span>
-          </div>
-          <a href="scandi-color.html" class="card-link">View Scandi Color →</a>
-        </div>
-      </div>
-
-      <!-- Scandi Asymmetric -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">09</span>
-          <h3>Scandi Asymmetric</h3>
-          <p class="card-desc">
-            Асимметричные раскладки, выступающие элементы,
-            диагональные потоки и неожиданные позиции.
-          </p>
-          <ul class="card-features">
-            <li>Protruding elements</li>
-            <li>Diagonal flow capabilities</li>
-            <li>Manrope font family</li>
-            <li>Floating shapes</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Asymmetric</span>
-            <span class="tech-tag">Diagonal</span>
-            <span class="tech-tag">Bold</span>
-          </div>
-          <a href="scandi-asymmetric.html" class="card-link">View Scandi Asymmetric →</a>
-        </div>
-      </div>
-
-      <!-- Organic Numbers -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">10</span>
-          <h3>Organic Numbers</h3>
-          <p class="card-desc">
-            Большие числа 01, 02, 03 с описаниями преимуществ.
-            Органические формы, morphing blob backgrounds.
-          </p>
-          <ul class="card-features">
-            <li>Огромные цифры 180px</li>
-            <li>Alternating grid layout</li>
-            <li>Crimson Pro + Inter</li>
-            <li>Morphing backgrounds</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Numbers</span>
-            <span class="tech-tag">Organic</span>
-            <span class="tech-tag">Elegant</span>
-          </div>
-          <a href="scandi-organic-numbers.html" class="card-link">View Organic Numbers →</a>
-        </div>
-      </div>
-
-      <!-- Organic Dense -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">11</span>
-          <h3>Organic Dense</h3>
-          <p class="card-desc">
-            Плотная информация, двухколоночные layouts,
-            максимум контента на странице.
-          </p>
-          <ul class="card-features">
-            <li>Two-column layouts</li>
-            <li>Dense feature boxes</li>
-            <li>Small 12-14px typography</li>
-            <li>Multi-column services list</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Dense</span>
-            <span class="tech-tag">Information-rich</span>
-            <span class="tech-tag">Compact</span>
-          </div>
-          <a href="scandi-organic-dense.html" class="card-link">View Organic Dense →</a>
-        </div>
-      </div>
-
-      <!-- Organic Sparse -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">12</span>
-          <h3>Organic Sparse</h3>
-          <p class="card-desc">
-            Максимально разреженная верстка с огромными отступами,
-            минимум контента, максимум воздуха.
-          </p>
-          <ul class="card-features">
-            <li>Огромные 200-250px отступы</li>
-            <li>Font weight 200</li>
-            <li>Breathing organic shapes</li>
-            <li>Minimal content strategy</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Sparse</span>
-            <span class="tech-tag">Minimal</span>
-            <span class="tech-tag">Breathing</span>
-          </div>
-          <a href="scandi-organic-sparse.html" class="card-link">View Organic Sparse →</a>
-        </div>
-      </div>
-
-      <!-- Organic Tech -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">13</span>
-          <h3>Organic Tech</h3>
-          <p class="card-desc">
-            Современные tech эффекты: glassmorphism, gradient mesh,
-            анимированные градиенты и backdrop blur.
-          </p>
-          <ul class="card-features">
-            <li>Glassmorphism cards</li>
-            <li>Animated gradient mesh</li>
-            <li>Backdrop-filter blur</li>
-            <li>Modern CSS animations</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Glassmorphism</span>
-            <span class="tech-tag">Gradients</span>
-            <span class="tech-tag">Modern</span>
-          </div>
-          <a href="scandi-organic-tech.html" class="card-link">View Organic Tech →</a>
-        </div>
-      </div>
-
-      <!-- Organic Symbols -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">14</span>
-          <h3>Organic Symbols</h3>
-          <p class="card-desc">
-            Плавающие символы домов и крипто-иконок (₿, Ξ, 🏠)
-            динамически парят на фоне.
-          </p>
-          <ul class="card-features">
-            <li>Floating crypto symbols</li>
-            <li>House icons animation</li>
-            <li>30s float keyframes</li>
-            <li>Emoji-based iconography</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Symbols</span>
-            <span class="tech-tag">Floating</span>
-            <span class="tech-tag">Animated</span>
-          </div>
-          <a href="scandi-organic-symbols.html" class="card-link">View Organic Symbols →</a>
-        </div>
-      </div>
-
-      <!-- Organic Cards -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">15</span>
-          <h3>Organic Cards</h3>
-          <p class="card-desc">
-            Card-based masonry layout с органическими формами,
-            разноцветные теги и плавные переходы.
-          </p>
-          <ul class="card-features">
-            <li>Masonry card grid</li>
-            <li>Color-coded tags (sage, clay, mint)</li>
-            <li>Large hero card</li>
-            <li>Morphing blob backgrounds</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Cards</span>
-            <span class="tech-tag">Masonry</span>
-            <span class="tech-tag">Colorful</span>
-          </div>
-          <a href="scandi-organic-cards.html" class="card-link">View Organic Cards →</a>
-        </div>
-      </div>
-
-      <!-- Minimal Houses -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">16</span>
-          <h3>Minimal Houses</h3>
-          <p class="card-desc">
-            Полный минимализм с Three.js фоном.
-            Line-art дома строятся бесконечно.
-          </p>
-          <ul class="card-features">
-            <li>Three.js background animation</li>
-            <li>Простой список версий</li>
-            <li>Line-art wireframe houses</li>
-            <li>Infinite building loop</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Three.js</span>
-            <span class="tech-tag">Minimal</span>
-            <span class="tech-tag">3D</span>
-          </div>
-          <a href="minimal-houses.html" class="card-link">View Minimal Houses →</a>
-        </div>
-      </div>
-
-      <!-- Geometric Buildings -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge bauhaus">17</span>
-          <h3>Geometric Buildings</h3>
-          <p class="card-desc">
-            Геометрические небоскрёбы строятся этаж за этажом.
-            Киберпанк эстетика и neon highlights.
-          </p>
-          <ul class="card-features">
-            <li>Skyscraper construction animation</li>
-            <li>Neon green accents</li>
-            <li>Space Mono typography</li>
-            <li>Floor-by-floor building</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Cyberpunk</span>
-            <span class="tech-tag">Geometric</span>
-            <span class="tech-tag">3D</span>
-          </div>
-          <a href="creative-geometric.html" class="card-link">View Geometric →</a>
-        </div>
-      </div>
-
-      <!-- Abstract Architecture -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">18</span>
-          <h3>Abstract Architecture</h3>
-          <p class="card-desc">
-            Абстрактные архитектурные wireframes.
-            Плавные кривые и flowing structures.
-          </p>
-          <ul class="card-features">
-            <li>Catmull-Rom curve wireframes</li>
-            <li>Flowing organic structures</li>
-            <li>Crimson Pro typography</li>
-            <li>Abstract construction</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Abstract</span>
-            <span class="tech-tag">Flowing</span>
-            <span class="tech-tag">Elegant</span>
-          </div>
-          <a href="creative-abstract.html" class="card-link">View Abstract →</a>
-        </div>
-      </div>
-
-      <!-- Isometric Construction -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge german">19</span>
-          <h3>Isometric Construction</h3>
-          <p class="card-desc">
-            Изометрические блоки строятся снизу вверх.
-            Техническая эстетика и hex нумерация.
-          </p>
-          <ul class="card-features">
-            <li>Isometric block animation</li>
-            <li>Block-by-block construction</li>
-            <li>IBM Plex Mono typography</li>
-            <li>Hexadecimal numbering</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Isometric</span>
-            <span class="tech-tag">Technical</span>
-            <span class="tech-tag">3D</span>
-          </div>
-          <a href="creative-isometric.html" class="card-link">View Isometric →</a>
-        </div>
-      </div>
-
-      <!-- Isometric Slow -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge german">20</span>
-          <h3>Isometric Architecture</h3>
-          <p class="card-desc">
-            Полная страница Asset Haus с медленной изометрической анимацией.
-            Темный tech дизайн с Three.js фоном.
-          </p>
-          <ul class="card-features">
-            <li>Slow isometric building animation</li>
-            <li>Full Asset Haus page content</li>
-            <li>IBM Plex Mono + Space Grotesk</li>
-            <li>Blue glow effects</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">3D Isometric</span>
-            <span class="tech-tag">Dark Tech</span>
-            <span class="tech-tag">Full Page</span>
-          </div>
-          <a href="version-isometric-slow.html" class="card-link">View Isometric Architecture →</a>
-        </div>
-      </div>
-
-      <!-- Particle Network -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">21</span>
-          <h3>Network Architecture</h3>
-          <p class="card-desc">
-            Анимированная сеть частиц с динамическими связями.
-            Чёрный фон с неоново-зелёными акцентами.
-          </p>
-          <ul class="card-features">
-            <li>100 animated particles</li>
-            <li>Dynamic network connections</li>
-            <li>Inter + Roboto Mono fonts</li>
-            <li>Gradient buttons</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Particles</span>
-            <span class="tech-tag">Network</span>
-            <span class="tech-tag">Dynamic</span>
-          </div>
-          <a href="version-particle-network.html" class="card-link">View Network →</a>
-        </div>
-      </div>
-
-      <!-- Floating Cubes -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge bauhaus">22</span>
-          <h3>Geometric Framework</h3>
-          <p class="card-desc">
-            Парящие геометрические кубы с вращением.
-            Space Mono типографика и красные акценты.
-          </p>
-          <ul class="card-features">
-            <li>25 floating wireframe cubes</li>
-            <li>Rotation and floating motion</li>
-            <li>Space Mono + Work Sans</li>
-            <li>Cyberpunk red aesthetic</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Geometric</span>
-            <span class="tech-tag">Floating</span>
-            <span class="tech-tag">Cyberpunk</span>
-          </div>
-          <a href="version-floating-cubes.html" class="card-link">View Geometric →</a>
-        </div>
-      </div>
-
-      <!-- Wave Grid -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge organic">23</span>
-          <h3>Wave Infrastructure</h3>
-          <p class="card-desc">
-            Волновая сетка 50x50 с синусоидальной анимацией.
-            Фиолетовые тона и плавные переходы.
-          </p>
-          <ul class="card-features">
-            <li>50x50 animated wave grid</li>
-            <li>Sine wave mathematics</li>
-            <li>DM Sans + JetBrains Mono</li>
-            <li>Purple gradient theme</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Wave</span>
-            <span class="tech-tag">Grid</span>
-            <span class="tech-tag">Mathematical</span>
-          </div>
-          <a href="version-wave-grid.html" class="card-link">View Wave Grid →</a>
-        </div>
-      </div>
-
-      <!-- Spiral Towers -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge scandi">24</span>
-          <h3>Spiral Architecture</h3>
-          <p class="card-desc">
-            4 спиральные башни строятся сегмент за сегментом.
-            Nordik палитра и плавная анимация.
-          </p>
-          <ul class="card-features">
-            <li>4 spiral towers with 60 segments each</li>
-            <li>Segment-by-segment building</li>
-            <li>Outfit + Fira Code fonts</li>
-            <li>Nordic color palette</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Spiral</span>
-            <span class="tech-tag">Nordic</span>
-            <span class="tech-tag">Elegant</span>
-          </div>
-          <a href="version-spiral-towers.html" class="card-link">View Spiral →</a>
-        </div>
-      </div>
-
-      <!-- Digital Rain -->
-      <div class="card">
-        <div class="card-header">
-          <span class="card-badge german">25</span>
-          <h3>Digital Matrix</h3>
-          <p class="card-desc">
-            Matrix-style digital rain эффект.
-            Зелёная монохромная эстетика и монопространственный шрифт.
-          </p>
-          <ul class="card-features">
-            <li>Matrix digital rain animation</li>
-            <li>Canvas-based rendering</li>
-            <li>Courier Prime + Ubuntu</li>
-            <li>Green monochrome theme</li>
-          </ul>
-        </div>
-        <div class="card-body">
-          <div class="tech-stack">
-            <span class="tech-tag">Matrix</span>
-            <span class="tech-tag">Canvas</span>
-            <span class="tech-tag">Monochrome</span>
-          </div>
-          <a href="version-digital-rain.html" class="card-link">View Matrix →</a>
-        </div>
-      </div>
-    </div>
-
-    <footer class="footer">
-      <p class="footer-text">
-        © 2025 Asset Haus Design Variations — Created with ❤️ for typography and layout
-      </p>
-      <div class="footer-links">
-        <a href="https://github.com/yurabruskov/assethaus">GitHub</a>
-        <a href="version-bauhaus.html">Bauhaus</a>
-        <a href="version-scandinavian.html">Scandinavian</a>
-        <a href="version-german.html">German</a>
-        <a href="version-lebedev.html">Lebedev</a>
-        <a href="scandi-brutalism.html">Scandi Brutalism</a>
-        <a href="scandi-organic.html">Scandi Organic</a>
-        <a href="scandi-grid.html">Scandi Grid</a>
-        <a href="scandi-color.html">Scandi Color</a>
-        <a href="scandi-asymmetric.html">Scandi Asymmetric</a>
-        <a href="scandi-organic-numbers.html">Organic Numbers</a>
-        <a href="scandi-organic-dense.html">Organic Dense</a>
-        <a href="scandi-organic-sparse.html">Organic Sparse</a>
-        <a href="scandi-organic-tech.html">Organic Tech</a>
-        <a href="scandi-organic-symbols.html">Organic Symbols</a>
-        <a href="scandi-organic-cards.html">Organic Cards</a>
-        <a href="minimal-houses.html">Minimal Houses</a>
-        <a href="creative-geometric.html">Geometric Buildings</a>
-        <a href="creative-abstract.html">Abstract Architecture</a>
-        <a href="creative-isometric.html">Isometric Construction</a>
-        <a href="version-isometric-slow.html">Isometric Architecture</a>
-        <a href="version-particle-network.html">Network Architecture</a>
-        <a href="version-floating-cubes.html">Geometric Framework</a>
-        <a href="version-wave-grid.html">Wave Infrastructure</a>
-        <a href="version-spiral-towers.html">Spiral Architecture</a>
-        <a href="version-digital-rain.html">Digital Matrix</a>
-      </div>
-    </footer>
-  </div>
-
+  <footer>
+    © 2025 Asset Haus — Design Variations
+  </footer>
 </body>
 </html>

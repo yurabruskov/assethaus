@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Flying City</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 40px 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(15px);
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 700;
+      font-family: 'Share Tech Mono', monospace;
+      color: #4fc3f7;
+      text-shadow: 0 0 20px rgba(79, 195, 247, 0.6);
+    }
+
+    nav {
+      display: flex;
+      gap: 45px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.8);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #4fc3f7;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 70px;
+    }
+
+    .hero-content {
+      max-width: 850px;
+    }
+
+    h1 {
+      font-size: 82px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      line-height: 1;
+      color: #ffffff;
+      text-shadow: 0 0 40px rgba(79, 195, 247, 0.4);
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 52px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 22px;
+    }
+
+    .btn {
+      padding: 20px 48px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-family: 'Share Tech Mono', monospace;
+    }
+
+    .btn-primary {
+      background: #4fc3f7;
+      color: #000000;
+      border: 2px solid #4fc3f7;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #4fc3f7;
+      box-shadow: 0 0 30px rgba(79, 195, 247, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #4fc3f7;
+      color: #4fc3f7;
+    }
+
+    .networks {
+      padding: 140px 70px;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .section-title {
+      font-size: 54px;
+      font-weight: 700;
+      margin-bottom: 75px;
+      text-align: center;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+
+    .network-item {
+      background: rgba(79, 195, 247, 0.05);
+      border: 1px solid rgba(79, 195, 247, 0.2);
+      padding: 38px;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      transition: all 0.3s;
+      border-radius: 4px;
+    }
+
+    .network-item:hover {
+      background: rgba(79, 195, 247, 0.15);
+      border-color: #4fc3f7;
+      transform: translateY(-4px);
+    }
+
+    .capabilities {
+      padding: 140px 70px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+      margin-top: 75px;
+    }
+
+    .capability {
+      background: rgba(0, 0, 0, 0.5);
+      border: 1px solid rgba(79, 195, 247, 0.2);
+      padding: 58px;
+      border-radius: 6px;
+    }
+
+    .capability-number {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 16px;
+      color: #4fc3f7;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .capability p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 140px 70px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 64px;
+      margin-bottom: 30px;
+    }
+
+    .cta p {
+      font-size: 19px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 58px;
+    }
+
+    footer {
+      padding: 75px;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 50px; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET_HAUS</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Urban Digital Infrastructure</h1>
+        <p class="hero-desc">
+          Transform physical real estate into blockchain-native tokens. Enterprise platform with multi-chain deployment and institutional-grade custody solutions.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Launch Platform</a>
+          <a href="#" class="btn btn-outline">Documentation</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Network Infrastructure</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Platform Capabilities</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">// 01</div>
+          <h3>Real Estate Tokenization</h3>
+          <p>Convert properties into digital tokens with full regulatory compliance. Support for residential, commercial, and mixed-use assets.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">// 02</div>
+          <h3>Multi-Chain Architecture</h3>
+          <p>Deploy across 15+ blockchain networks with unified API. Automatic bridging and cross-chain synchronization.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">// 03</div>
+          <h3>Compliance Framework</h3>
+          <p>Integrated KYC/AML verification, accredited investor checks, transfer restrictions, and automated reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">// 04</div>
+          <h3>Institutional Custody</h3>
+          <p>Bank-grade custody with multi-signature wallets, hardware security modules, and insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Ready to Tokenize?</h2>
+      <p>Join institutions managing billions in tokenized real estate</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Real Estate Tokenization Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    // Create city grid
+    const buildings = [];
+    const gridSize = 8;
+    const spacing = 15;
+
+    for (let x = 0; x < gridSize; x++) {
+      for (let z = 0; z < gridSize; z++) {
+        const height = 10 + Math.random() * 30;
+        const width = 3 + Math.random() * 2;
+        const depth = 3 + Math.random() * 2;
+
+        const geometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(width, height, depth)
+        );
+
+        const material = new THREE.LineBasicMaterial({
+          color: 0x4fc3f7,
+          transparent: true,
+          opacity: 0.4 + Math.random() * 0.3
+        });
+
+        const building = new THREE.LineSegments(geometry, material);
+        building.position.x = (x - gridSize / 2) * spacing;
+        building.position.y = height / 2;
+        building.position.z = (z - gridSize / 2) * spacing;
+
+        scene.add(building);
+        buildings.push(building);
+      }
+    }
+
+    // Add ground grid
+    const gridHelper = new THREE.GridHelper(gridSize * spacing, gridSize * 2, 0x4fc3f7, 0x1a1a1a);
+    gridHelper.material.opacity = 0.3;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+
+    // Camera flight path
+    let time = 0;
+    const flightRadius = 50;
+    const flightHeight = 25;
+    const flightSpeed = 0.0003;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      time += flightSpeed;
+
+      // Smooth circular flight path
+      camera.position.x = Math.sin(time) * flightRadius;
+      camera.position.z = Math.cos(time) * flightRadius;
+      camera.position.y = flightHeight + Math.sin(time * 2) * 5;
+
+      // Look at center with slight variation
+      const lookAtX = Math.sin(time * 0.5) * 10;
+      const lookAtZ = Math.cos(time * 0.5) * 10;
+      camera.lookAt(lookAtX, 5, lookAtZ);
+
+      // Gentle building pulse
+      buildings.forEach((building, index) => {
+        const pulseSpeed = 0.001 + (index % 10) * 0.0001;
+        building.material.opacity = 0.5 + Math.sin(Date.now() * pulseSpeed + index) * 0.2;
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

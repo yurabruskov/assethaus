@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Property Grid</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Oswald:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: #1a1a2e;
+      color: #eaeaea;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 40px 68px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(26, 26, 46, 0.85);
+      backdrop-filter: blur(14px);
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      font-family: 'Oswald', sans-serif;
+      color: #16a085;
+      text-shadow: 0 0 18px rgba(22, 160, 133, 0.6);
+    }
+
+    nav {
+      display: flex;
+      gap: 46px;
+    }
+
+    nav a {
+      color: rgba(234, 234, 234, 0.8);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    nav a:hover {
+      color: #16a085;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 68px;
+    }
+
+    .hero-content {
+      max-width: 870px;
+    }
+
+    h1 {
+      font-size: 81px;
+      font-weight: 700;
+      margin-bottom: 27px;
+      line-height: 1.03;
+      font-family: 'Oswald', sans-serif;
+      color: #eaeaea;
+      text-shadow: 0 0 33px rgba(22, 160, 133, 0.3);
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      color: rgba(234, 234, 234, 0.75);
+      margin-bottom: 51px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 21px;
+    }
+
+    .btn {
+      padding: 19px 47px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      background: #16a085;
+      color: #1a1a2e;
+      border: 2px solid #16a085;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #16a085;
+      box-shadow: 0 0 28px rgba(22, 160, 133, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #eaeaea;
+      border: 2px solid rgba(234, 234, 234, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #16a085;
+      color: #16a085;
+    }
+
+    .networks {
+      padding: 139px 68px;
+    }
+
+    .section-title {
+      font-size: 54px;
+      font-weight: 700;
+      margin-bottom: 74px;
+      text-align: center;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+
+    .network-item {
+      background: rgba(22, 160, 133, 0.06);
+      border: 1px solid rgba(22, 160, 133, 0.25);
+      padding: 38px;
+      text-align: center;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.3s;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .network-item:hover {
+      background: rgba(22, 160, 133, 0.14);
+      border-color: #16a085;
+      transform: translateY(-4px);
+    }
+
+    .capabilities {
+      padding: 139px 68px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+      margin-top: 74px;
+    }
+
+    .capability {
+      background: rgba(30, 30, 48, 0.6);
+      border: 1px solid rgba(22, 160, 133, 0.25);
+      padding: 58px;
+      border-radius: 8px;
+    }
+
+    .capability-number {
+      font-family: 'Oswald', sans-serif;
+      font-size: 16px;
+      color: #16a085;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .capability p {
+      color: rgba(234, 234, 234, 0.75);
+      line-height: 1.75;
+      font-size: 15px;
+    }
+
+    .cta {
+      padding: 139px 68px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 64px;
+      margin-bottom: 29px;
+      font-family: 'Oswald', sans-serif;
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: rgba(234, 234, 234, 0.75);
+      margin-bottom: 57px;
+    }
+
+    footer {
+      padding: 74px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(234, 234, 234, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 49px; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Property Portfolio</h1>
+        <p class="hero-desc">
+          Manage and tokenize your entire real estate portfolio. Enterprise platform with multi-property support, blockchain integration, and institutional custody.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Start Tokenizing</a>
+          <a href="#" class="btn btn-outline">View Portfolio</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Supported Networks</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Platform Capabilities</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">01.</div>
+          <h3>Portfolio Tokenization</h3>
+          <p>Tokenize multiple properties simultaneously. Support for residential units, commercial buildings, and mixed-use developments.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">02.</div>
+          <h3>Multi-Chain Support</h3>
+          <p>Deploy your portfolio across 15+ blockchain networks with unified management interface.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">03.</div>
+          <h3>Compliance Framework</h3>
+          <p>Integrated KYC/AML verification, investor accreditation, transfer restrictions, and reporting automation.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">04.</div>
+          <h3>Institutional Custody</h3>
+          <p>Bank-grade custody solutions with multi-signature wallets, hardware security, and insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Build Your Portfolio</h2>
+      <p>Join institutions managing tokenized real estate portfolios</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Real Estate Portfolio Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x1a1a2e, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(30, 35, 30);
+    camera.lookAt(0, 0, 0);
+
+    // Create isometric property grid
+    const gridSize = 12;
+    const spacing = 4;
+    const properties = [];
+
+    for (let x = 0; x < gridSize; x++) {
+      for (let z = 0; z < gridSize; z++) {
+        const floors = 1 + Math.floor(Math.random() * 4);
+        const floorHeight = 1.5;
+        const totalHeight = floors * floorHeight;
+
+        const geometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(3, totalHeight, 3)
+        );
+
+        const material = new THREE.LineBasicMaterial({
+          color: 0x16a085,
+          transparent: true,
+          opacity: 0.6
+        });
+
+        const property = new THREE.LineSegments(geometry, material);
+        property.position.x = (x - gridSize / 2) * spacing;
+        property.position.z = (z - gridSize / 2) * spacing;
+        property.position.y = totalHeight / 2;
+
+        property.userData = {
+          floors: floors,
+          isTokenized: Math.random() > 0.5,
+          pulseOffset: Math.random() * Math.PI * 2
+        };
+
+        // Different color for tokenized properties
+        if (property.userData.isTokenized) {
+          property.material.color.setHex(0x1abc9c);
+        }
+
+        scene.add(property);
+        properties.push(property);
+      }
+    }
+
+    // Add grid lines on ground
+    const gridHelper = new THREE.GridHelper(gridSize * spacing, gridSize, 0x16a085, 0x2a2a3e);
+    gridHelper.material.opacity = 0.2;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const time = Date.now() * 0.001;
+
+      properties.forEach((property, index) => {
+        // Pulsing effect for tokenized properties
+        if (property.userData.isTokenized) {
+          const pulse = 0.6 + Math.sin(time * 2 + property.userData.pulseOffset) * 0.15;
+          property.material.opacity = pulse;
+        }
+
+        // Gentle rotation
+        property.rotation.y += 0.002;
+      });
+
+      // Slow camera orbit
+      const radius = 50;
+      camera.position.x = Math.sin(time * 0.1) * radius;
+      camera.position.z = Math.cos(time * 0.1) * radius;
+      camera.lookAt(0, 5, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
