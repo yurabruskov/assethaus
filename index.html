@@ -102,14 +102,7 @@
       border: 1px solid var(--border);
       border-radius: 12px;
       overflow: hidden;
-      transition: all 0.3s ease;
       position: relative;
-    }
-
-    .card:hover {
-      border-color: var(--accent);
-      box-shadow: 0 8px 32px rgba(88, 166, 255, 0.2);
-      transform: translateY(-4px);
     }
 
     .card-header {
@@ -204,14 +197,7 @@
       font-size: 14px;
       text-align: center;
       border-radius: 6px;
-      transition: all 0.2s ease;
       border: 2px solid var(--accent);
-    }
-
-    .card-link:hover {
-      background: transparent;
-      color: var(--accent);
-      transform: translateY(-2px);
     }
 
     .footer {
@@ -259,37 +245,6 @@
       }
     }
 
-    /* Preview animation */
-    @keyframes fadeInUp {
-      from {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    .card {
-      animation: fadeInUp 0.6s ease-out backwards;
-    }
-
-    .card:nth-child(1) { animation-delay: 0.1s; }
-    .card:nth-child(2) { animation-delay: 0.2s; }
-    .card:nth-child(3) { animation-delay: 0.3s; }
-    .card:nth-child(4) { animation-delay: 0.4s; }
-    .card:nth-child(5) { animation-delay: 0.5s; }
-    .card:nth-child(6) { animation-delay: 0.6s; }
-    .card:nth-child(7) { animation-delay: 0.7s; }
-    .card:nth-child(8) { animation-delay: 0.8s; }
-    .card:nth-child(9) { animation-delay: 0.9s; }
-    .card:nth-child(10) { animation-delay: 1.0s; }
-    .card:nth-child(11) { animation-delay: 1.1s; }
-    .card:nth-child(12) { animation-delay: 1.2s; }
-    .card:nth-child(13) { animation-delay: 1.3s; }
-    .card:nth-child(14) { animation-delay: 1.4s; }
-    .card:nth-child(15) { animation-delay: 1.5s; }
   </style>
 </head>
 <body>
@@ -698,6 +653,110 @@
           <a href="scandi-organic-cards.html" class="card-link">View Organic Cards →</a>
         </div>
       </div>
+
+      <!-- Minimal Houses -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-badge scandi">16</span>
+          <h3>Minimal Houses</h3>
+          <p class="card-desc">
+            Полный минимализм с Three.js фоном.
+            Line-art дома строятся бесконечно.
+          </p>
+          <ul class="card-features">
+            <li>Three.js background animation</li>
+            <li>Простой список версий</li>
+            <li>Line-art wireframe houses</li>
+            <li>Infinite building loop</li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tech-stack">
+            <span class="tech-tag">Three.js</span>
+            <span class="tech-tag">Minimal</span>
+            <span class="tech-tag">3D</span>
+          </div>
+          <a href="minimal-houses.html" class="card-link">View Minimal Houses →</a>
+        </div>
+      </div>
+
+      <!-- Geometric Buildings -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-badge bauhaus">17</span>
+          <h3>Geometric Buildings</h3>
+          <p class="card-desc">
+            Геометрические небоскрёбы строятся этаж за этажом.
+            Киберпанк эстетика и neon highlights.
+          </p>
+          <ul class="card-features">
+            <li>Skyscraper construction animation</li>
+            <li>Neon green accents</li>
+            <li>Space Mono typography</li>
+            <li>Floor-by-floor building</li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tech-stack">
+            <span class="tech-tag">Cyberpunk</span>
+            <span class="tech-tag">Geometric</span>
+            <span class="tech-tag">3D</span>
+          </div>
+          <a href="creative-geometric.html" class="card-link">View Geometric →</a>
+        </div>
+      </div>
+
+      <!-- Abstract Architecture -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-badge organic">18</span>
+          <h3>Abstract Architecture</h3>
+          <p class="card-desc">
+            Абстрактные архитектурные wireframes.
+            Плавные кривые и flowing structures.
+          </p>
+          <ul class="card-features">
+            <li>Catmull-Rom curve wireframes</li>
+            <li>Flowing organic structures</li>
+            <li>Crimson Pro typography</li>
+            <li>Abstract construction</li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tech-stack">
+            <span class="tech-tag">Abstract</span>
+            <span class="tech-tag">Flowing</span>
+            <span class="tech-tag">Elegant</span>
+          </div>
+          <a href="creative-abstract.html" class="card-link">View Abstract →</a>
+        </div>
+      </div>
+
+      <!-- Isometric Construction -->
+      <div class="card">
+        <div class="card-header">
+          <span class="card-badge german">19</span>
+          <h3>Isometric Construction</h3>
+          <p class="card-desc">
+            Изометрические блоки строятся снизу вверх.
+            Техническая эстетика и hex нумерация.
+          </p>
+          <ul class="card-features">
+            <li>Isometric block animation</li>
+            <li>Block-by-block construction</li>
+            <li>IBM Plex Mono typography</li>
+            <li>Hexadecimal numbering</li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tech-stack">
+            <span class="tech-tag">Isometric</span>
+            <span class="tech-tag">Technical</span>
+            <span class="tech-tag">3D</span>
+          </div>
+          <a href="creative-isometric.html" class="card-link">View Isometric →</a>
+        </div>
+      </div>
     </div>
 
     <footer class="footer">
@@ -721,6 +780,10 @@
         <a href="scandi-organic-tech.html">Organic Tech</a>
         <a href="scandi-organic-symbols.html">Organic Symbols</a>
         <a href="scandi-organic-cards.html">Organic Cards</a>
+        <a href="minimal-houses.html">Minimal Houses</a>
+        <a href="creative-geometric.html">Geometric Buildings</a>
+        <a href="creative-abstract.html">Abstract Architecture</a>
+        <a href="creative-isometric.html">Isometric Construction</a>
       </div>
     </footer>
   </div>
