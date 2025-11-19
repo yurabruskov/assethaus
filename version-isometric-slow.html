@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Isometric Architecture</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #0f1419;
+      --surface: #1a1f2e;
+      --text: #e6edf3;
+      --text-muted: #8b949e;
+      --accent: #58a6ff;
+      --accent-glow: rgba(88, 166, 255, 0.3);
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header */
+    header {
+      padding: 30px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 20, 25, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(88, 166, 255, 0.1);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--accent);
+      text-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    nav {
+      display: flex;
+      gap: 40px;
+    }
+
+    nav a {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: color 0.3s;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 60px;
+    }
+
+    .hero-content {
+      max-width: 800px;
+      background: rgba(26, 31, 46, 0.6);
+      backdrop-filter: blur(20px);
+      padding: 80px;
+      border: 1px solid rgba(88, 166, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    h1 {
+      font-size: 72px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      line-height: 1.1;
+      background: linear-gradient(135deg, #58a6ff 0%, #79c0ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      color: var(--text-muted);
+      margin-bottom: 50px;
+      line-height: 1.8;
+      font-family: 'IBM Plex Mono', monospace;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 18px 40px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: var(--bg);
+      border: 2px solid var(--accent);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--accent);
+      box-shadow: 0 0 20px var(--accent-glow);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 2px solid rgba(230, 237, 243, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    /* Networks */
+    .networks {
+      padding: 120px 60px;
+      background: rgba(26, 31, 46, 0.4);
+      backdrop-filter: blur(10px);
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 2px;
+      background: rgba(88, 166, 255, 0.1);
+      padding: 2px;
+    }
+
+    .network-item {
+      background: var(--surface);
+      padding: 30px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+      transition: all 0.3s;
+    }
+
+    .network-item:hover {
+      background: rgba(88, 166, 255, 0.1);
+      color: var(--accent);
+    }
+
+    /* Capabilities */
+    .capabilities {
+      padding: 120px 60px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: 40px;
+      margin-top: 80px;
+    }
+
+    .capability {
+      background: rgba(26, 31, 46, 0.6);
+      backdrop-filter: blur(10px);
+      padding: 50px;
+      border: 1px solid rgba(88, 166, 255, 0.2);
+      border-radius: 4px;
+    }
+
+    .capability-number {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+      color: var(--accent);
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .capability h3 {
+      font-size: 28px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .capability p {
+      color: var(--text-muted);
+      line-height: 1.8;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 14px;
+    }
+
+    /* CTA */
+    .cta {
+      padding: 120px 60px;
+      text-align: center;
+      background: rgba(26, 31, 46, 0.6);
+      backdrop-filter: blur(20px);
+      border-top: 1px solid rgba(88, 166, 255, 0.2);
+      border-bottom: 1px solid rgba(88, 166, 255, 0.2);
+    }
+
+    .cta h2 {
+      font-size: 56px;
+      margin-bottom: 30px;
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: var(--text-muted);
+      margin-bottom: 50px;
+      font-family: 'IBM Plex Mono', monospace;
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 48px; }
+      .hero-content { padding: 40px; }
+      .section-title { font-size: 36px; }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#security">Security</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Institutional Infrastructure for Digital Assets</h1>
+        <p class="hero-desc">
+          Enterprise-grade tokenization platform. Multi-chain support.
+          Bank-level security. Built for institutions managing real-world assets on blockchain.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Start Building</a>
+          <a href="#" class="btn btn-outline">View Documentation</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Supported Networks</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Core Capabilities</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">0x01</div>
+          <h3>Asset Tokenization</h3>
+          <p>Convert real-world assets into digital tokens with full regulatory compliance. Support for equity, debt, real estate, and commodities.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">0x02</div>
+          <h3>Multi-Chain Deployment</h3>
+          <p>Deploy across 15+ blockchain networks with unified API. Automatic bridging and cross-chain compatibility.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">0x03</div>
+          <h3>Compliance Engine</h3>
+          <p>Built-in KYC/AML verification, accredited investor checks, transfer restrictions, and regulatory reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">0x04</div>
+          <h3>Custody Solutions</h3>
+          <p>Institutional-grade custody with multi-sig wallets, hardware security modules, and insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Ready to Tokenize?</h2>
+      <p>Join leading institutions building on Asset Haus infrastructure</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus. Institutional Digital Asset Infrastructure.</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x0f1419, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(15, 15, 15);
+    camera.lookAt(0, 0, 0);
+
+    function createIsometricBlock(x, y, z, color) {
+      const geometry = new THREE.EdgesGeometry(new THREE.BoxGeometry(1, 1, 1));
+      const material = new THREE.LineBasicMaterial({
+        color: color,
+        transparent: true,
+        opacity: 0.7
+      });
+
+      const edges = new THREE.LineSegments(geometry, material);
+      edges.position.set(x, y, z);
+      edges.userData = {
+        targetY: y,
+        currentY: -10,
+        delay: 0,
+        isVisible: false
+      };
+
+      return edges;
+    }
+
+    function createIsometricBuilding(baseX, baseZ, width, depth, height, color) {
+      const group = new THREE.Group();
+      let blockIndex = 0;
+
+      for (let y = 0; y < height; y++) {
+        for (let x = 0; x < width; x++) {
+          for (let z = 0; z < depth; z++) {
+            const block = createIsometricBlock(baseX + x, y * 1, baseZ + z, color);
+            block.userData.delay = blockIndex * 0.015; // Slower delay
+            block.userData.blockIndex = blockIndex;
+            group.add(block);
+            blockIndex++;
+          }
+        }
+      }
+
+      return group;
+    }
+
+    const buildings = [];
+    const colors = [0x58a6ff, 0x79c0ff, 0x388bfd, 0x1f6feb];
+
+    const building1 = createIsometricBuilding(-4, -4, 3, 3, 8, colors[0]);
+    building1.userData = { buildProgress: 0, buildSpeed: 0.0008 }; // Much slower
+    scene.add(building1);
+    buildings.push(building1);
+
+    const building2 = createIsometricBuilding(2, -3, 2, 2, 12, colors[1]);
+    building2.userData = { buildProgress: 0.2, buildSpeed: 0.0006 };
+    scene.add(building2);
+    buildings.push(building2);
+
+    const building3 = createIsometricBuilding(-2, 2, 4, 2, 6, colors[2]);
+    building3.userData = { buildProgress: 0.4, buildSpeed: 0.0009 };
+    scene.add(building3);
+    buildings.push(building3);
+
+    const building4 = createIsometricBuilding(3, 3, 2, 3, 10, colors[3]);
+    building4.userData = { buildProgress: 0.6, buildSpeed: 0.0007 };
+    scene.add(building4);
+    buildings.push(building4);
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      buildings.forEach((building) => {
+        building.userData.buildProgress += building.userData.buildSpeed;
+
+        if (building.userData.buildProgress >= 1) {
+          building.userData.buildProgress = 0;
+        }
+
+        const totalBlocks = building.children.length;
+
+        building.children.forEach((block) => {
+          const blockProgress = Math.max(0, Math.min(1,
+            (building.userData.buildProgress - block.userData.delay) * 2
+          ));
+
+          if (blockProgress > 0 && !block.userData.isVisible) {
+            block.userData.isVisible = true;
+            block.userData.currentY = -5;
+          }
+
+          if (block.userData.isVisible) {
+            const targetY = block.userData.targetY;
+            block.userData.currentY += (targetY - block.userData.currentY) * 0.05; // Slower rise
+            block.position.y = block.userData.currentY;
+
+            block.material.opacity = Math.min(0.7, blockProgress);
+          } else {
+            block.material.opacity = 0;
+          }
+        });
+
+        building.rotation.y += 0.0003; // Slower rotation
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
