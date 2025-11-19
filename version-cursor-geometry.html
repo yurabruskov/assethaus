@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Interactive Geometry</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Electrolize&family=Michroma&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Electrolize', sans-serif;
+      background: #0d0d0d;
+      color: #f0f0f0;
+      line-height: 1.7;
+      overflow-x: hidden;
+      cursor: none;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .cursor {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      border: 2px solid #ff3366;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s;
+      box-shadow: 0 0 15px rgba(255, 51, 102, 0.6);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 30px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(13, 13, 13, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      font-family: 'Michroma', sans-serif;
+      color: #ff3366;
+      letter-spacing: 3px;
+    }
+
+    nav {
+      display: flex;
+      gap: 35px;
+    }
+
+    nav a {
+      color: rgba(240, 240, 240, 0.8);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+      transition: color 0.3s;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    nav a:hover {
+      color: #ff3366;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 60px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 68px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      line-height: 1.1;
+      font-family: 'Michroma', sans-serif;
+      color: #f0f0f0;
+      letter-spacing: -1px;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: rgba(240, 240, 240, 0.7);
+      margin-bottom: 45px;
+      line-height: 1.8;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 16px 40px;
+      font-size: 13px;
+      font-weight: 400;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: #ff3366;
+      color: #0d0d0d;
+      border: 2px solid #ff3366;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #ff3366;
+      box-shadow: 0 0 20px rgba(255, 51, 102, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #f0f0f0;
+      border: 2px solid rgba(240, 240, 240, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #ff3366;
+      color: #ff3366;
+    }
+
+    .networks {
+      padding: 80px 60px;
+    }
+
+    .section-title {
+      font-size: 42px;
+      font-weight: 700;
+      margin-bottom: 50px;
+      text-align: center;
+      font-family: 'Michroma', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .networks-flex {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .network-item {
+      padding: 15px 30px;
+      background: rgba(255, 51, 102, 0.08);
+      border: 1px solid rgba(255, 51, 102, 0.3);
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: all 0.3s;
+    }
+
+    .network-item:hover {
+      background: rgba(255, 51, 102, 0.15);
+      border-color: #ff3366;
+      transform: scale(1.05);
+    }
+
+    .capabilities {
+      padding: 80px 60px;
+    }
+
+    .capabilities-columns {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px;
+      margin-top: 50px;
+      max-width: 1100px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .capability {
+      padding: 35px;
+      background: rgba(20, 20, 20, 0.6);
+      border-left: 3px solid #ff3366;
+    }
+
+    .capability-number {
+      font-family: 'Michroma', sans-serif;
+      font-size: 14px;
+      color: #ff3366;
+      margin-bottom: 18px;
+      letter-spacing: 2px;
+    }
+
+    .capability h3 {
+      font-size: 24px;
+      margin-bottom: 15px;
+      font-weight: 700;
+    }
+
+    .capability p {
+      color: rgba(240, 240, 240, 0.7);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .cta {
+      padding: 100px 60px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 52px;
+      margin-bottom: 22px;
+      font-family: 'Michroma', sans-serif;
+    }
+
+    .cta p {
+      font-size: 16px;
+      color: rgba(240, 240, 240, 0.7);
+      margin-bottom: 45px;
+    }
+
+    footer {
+      padding: 50px;
+      text-align: center;
+      font-size: 12px;
+      color: rgba(240, 240, 240, 0.5);
+      letter-spacing: 1px;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 42px; }
+      .capabilities-columns { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div class="cursor"></div>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Interactive Digital Assets</h1>
+        <p class="hero-desc">
+          Transform real estate into responsive digital tokens. Move your cursor to interact with the geometric visualization of our tokenization infrastructure.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Explore Platform</a>
+          <a href="#" class="btn btn-outline">Documentation</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Blockchain Networks</h2>
+      <div class="networks-flex">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Platform Features</h2>
+      <div class="capabilities-columns">
+        <div class="capability">
+          <div class="capability-number">FEATURE_01</div>
+          <h3>Asset Tokenization</h3>
+          <p>Convert real estate into blockchain tokens with full regulatory compliance and institutional-grade security protocols.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">FEATURE_02</div>
+          <h3>Multi-Chain Support</h3>
+          <p>Deploy across 15+ blockchain networks with unified API and automatic cross-chain synchronization.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">FEATURE_03</div>
+          <h3>Compliance Engine</h3>
+          <p>Integrated KYC/AML verification, investor accreditation, and automated regulatory reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">FEATURE_04</div>
+          <h3>Secure Custody</h3>
+          <p>Bank-grade custody with multi-signature wallets, HSM integration, and insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Join Asset Haus</h2>
+      <p>Build on institutional digital asset infrastructure</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 ASSET HAUS — INTERACTIVE TOKENIZATION PLATFORM</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Custom cursor
+    const cursor = document.querySelector('.cursor');
+    let mouseX = 0;
+    let mouseY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursor.style.left = mouseX - 10 + 'px';
+      cursor.style.top = mouseY - 10 + 'px';
+    });
+
+    // Three.js scene
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x0d0d0d, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.z = 50;
+
+    // Create interactive geometric shapes
+    const shapes = [];
+    const shapeCount = 30;
+
+    for (let i = 0; i < shapeCount; i++) {
+      const size = 1 + Math.random() * 2;
+      const geometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(size, size, size)
+      );
+
+      const material = new THREE.LineBasicMaterial({
+        color: 0xff3366,
+        transparent: true,
+        opacity: 0.6
+      });
+
+      const shape = new THREE.LineSegments(geometry, material);
+
+      shape.position.x = (Math.random() - 0.5) * 80;
+      shape.position.y = (Math.random() - 0.5) * 60;
+      shape.position.z = (Math.random() - 0.5) * 40;
+
+      shape.userData = {
+        originalX: shape.position.x,
+        originalY: shape.position.y,
+        originalZ: shape.position.z,
+        rotationSpeed: {
+          x: (Math.random() - 0.5) * 0.02,
+          y: (Math.random() - 0.5) * 0.02,
+          z: (Math.random() - 0.5) * 0.02
+        }
+      };
+
+      scene.add(shape);
+      shapes.push(shape);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      // Convert mouse position to 3D space
+      const mouseXNorm = (mouseX / window.innerWidth) * 2 - 1;
+      const mouseYNorm = -(mouseY / window.innerHeight) * 2 + 1;
+
+      shapes.forEach((shape) => {
+        // Calculate distance from mouse to shape
+        const distX = shape.position.x / 40 - mouseXNorm;
+        const distY = shape.position.y / 30 - mouseYNorm;
+        const distance = Math.sqrt(distX * distX + distY * distY);
+
+        // Shapes react to cursor proximity
+        if (distance < 0.5) {
+          const pushForce = (0.5 - distance) * 20;
+          shape.position.x += distX * pushForce * 0.1;
+          shape.position.y += distY * pushForce * 0.1;
+
+          // Increase opacity when near cursor
+          shape.material.opacity = 0.9;
+          cursor.style.transform = 'scale(1.5)';
+        } else {
+          // Return to original position
+          shape.position.x += (shape.userData.originalX - shape.position.x) * 0.02;
+          shape.position.y += (shape.userData.originalY - shape.position.y) * 0.02;
+
+          shape.material.opacity = 0.6;
+          cursor.style.transform = 'scale(1)';
+        }
+
+        // Rotation
+        shape.rotation.x += shape.userData.rotationSpeed.x;
+        shape.rotation.y += shape.userData.rotationSpeed.y;
+        shape.rotation.z += shape.userData.rotationSpeed.z;
+
+        // Gentle floating
+        const time = Date.now() * 0.001;
+        shape.position.z = shape.userData.originalZ + Math.sin(time + shape.position.x) * 2;
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

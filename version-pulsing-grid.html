@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Pulsing Grid</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Source+Sans+Pro:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Source Sans Pro', sans-serif;
+      background: #05050a;
+      color: #f5f5ff;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 28px 50px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 5, 10, 0.9);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      font-family: 'Syncopate', sans-serif;
+      color: #9d4edd;
+      letter-spacing: 5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 35px;
+    }
+
+    nav a {
+      color: rgba(245, 245, 255, 0.75);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover {
+      color: #9d4edd;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 0 50px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 72px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      line-height: 1.1;
+      font-family: 'Syncopate', sans-serif;
+      color: #f5f5ff;
+      letter-spacing: -2px;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      color: rgba(245, 245, 255, 0.7);
+      margin-bottom: 42px;
+      line-height: 1.7;
+      max-width: 650px;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 15px 35px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: #9d4edd;
+      color: #05050a;
+      border: 2px solid #9d4edd;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #9d4edd;
+      box-shadow: 0 0 25px rgba(157, 78, 221, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #f5f5ff;
+      border: 2px solid rgba(245, 245, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #9d4edd;
+      color: #9d4edd;
+    }
+
+    .info-section {
+      padding: 70px 50px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      font-size: 44px;
+      font-weight: 700;
+      margin-bottom: 45px;
+      font-family: 'Syncopate', sans-serif;
+      text-align: center;
+      letter-spacing: 2px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .info-card {
+      padding: 32px;
+      background: rgba(157, 78, 221, 0.06);
+      border: 1px solid rgba(157, 78, 221, 0.2);
+    }
+
+    .info-card h3 {
+      font-size: 26px;
+      margin-bottom: 12px;
+      font-weight: 600;
+      font-family: 'Syncopate', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .info-card p {
+      color: rgba(245, 245, 255, 0.7);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    .networks-section {
+      padding: 70px 50px;
+      background: rgba(10, 10, 20, 0.6);
+    }
+
+    .networks-wrap {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 35px;
+    }
+
+    .network-pill {
+      padding: 11px 24px;
+      background: rgba(157, 78, 221, 0.12);
+      border: 1px solid rgba(157, 78, 221, 0.4);
+      font-size: 13px;
+      letter-spacing: 1px;
+      border-radius: 25px;
+      transition: all 0.3s;
+    }
+
+    .network-pill:hover {
+      background: rgba(157, 78, 221, 0.2);
+      border-color: #9d4edd;
+      transform: translateY(-2px);
+    }
+
+    .cta-section {
+      padding: 90px 50px;
+      text-align: center;
+    }
+
+    .cta-section h2 {
+      font-size: 58px;
+      margin-bottom: 20px;
+      font-family: 'Syncopate', sans-serif;
+      letter-spacing: 1px;
+    }
+
+    .cta-section p {
+      font-size: 18px;
+      color: rgba(245, 245, 255, 0.7);
+      margin-bottom: 38px;
+    }
+
+    footer {
+      padding: 45px;
+      text-align: center;
+      font-size: 13px;
+      color: rgba(245, 245, 255, 0.5);
+      font-family: 'Syncopate', sans-serif;
+      letter-spacing: 2px;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 44px; }
+      .two-column { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#info">INFO</a>
+        <a href="#networks">NETWORKS</a>
+        <a href="#contact">CONTACT</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>DIGITAL ASSET<br>INFRASTRUCTURE</h1>
+      <p class="hero-desc">
+        Blockchain-native platform for tokenizing real estate assets with institutional-grade security and multi-chain deployment capabilities.
+      </p>
+      <div class="btn-group">
+        <a href="#" class="btn btn-primary">EXPLORE</a>
+        <a href="#" class="btn btn-outline">LEARN</a>
+      </div>
+    </section>
+
+    <section class="info-section" id="info">
+      <h2 class="section-header">PLATFORM FEATURES</h2>
+      <div class="two-column">
+        <div class="info-card">
+          <h3>TOKENIZATION</h3>
+          <p>Convert real estate properties into blockchain tokens with full regulatory compliance and institutional-grade security protocols.</p>
+        </div>
+        <div class="info-card">
+          <h3>MULTI-CHAIN</h3>
+          <p>Deploy across 15+ blockchain networks with unified API interface and automatic cross-chain synchronization capabilities.</p>
+        </div>
+        <div class="info-card">
+          <h3>COMPLIANCE</h3>
+          <p>Integrated KYC/AML verification, accredited investor checks, transfer restrictions, and automated regulatory reporting.</p>
+        </div>
+        <div class="info-card">
+          <h3>CUSTODY</h3>
+          <p>Bank-grade asset custody with multi-signature wallets, hardware security modules, and comprehensive insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks-section" id="networks">
+      <h2 class="section-header">BLOCKCHAIN NETWORKS</h2>
+      <div class="networks-wrap">
+        <div class="network-pill">ETHEREUM</div>
+        <div class="network-pill">POLYGON</div>
+        <div class="network-pill">ARBITRUM</div>
+        <div class="network-pill">OPTIMISM</div>
+        <div class="network-pill">BASE</div>
+        <div class="network-pill">AVALANCHE</div>
+        <div class="network-pill">BNB CHAIN</div>
+        <div class="network-pill">SOLANA</div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+      <h2>GET STARTED</h2>
+      <p>Join institutions tokenizing real estate on Asset Haus</p>
+      <a href="#" class="btn btn-primary">LAUNCH PLATFORM</a>
+    </section>
+
+    <footer>
+      <p>© 2025 ASSET HAUS</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x05050a, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(0, 25, 45);
+    camera.lookAt(0, 0, 0);
+
+    // Create pulsing geometric grid
+    const gridSize = 15;
+    const spacing = 4;
+    const cells = [];
+
+    for (let x = 0; x < gridSize; x++) {
+      for (let z = 0; z < gridSize; z++) {
+        const baseHeight = 1;
+        const geometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(3, baseHeight, 3)
+        );
+
+        const material = new THREE.LineBasicMaterial({
+          color: 0x9d4edd,
+          transparent: true,
+          opacity: 0.6
+        });
+
+        const cell = new THREE.LineSegments(geometry, material);
+        cell.position.x = (x - gridSize / 2) * spacing;
+        cell.position.z = (z - gridSize / 2) * spacing;
+        cell.position.y = baseHeight / 2;
+
+        cell.userData = {
+          baseX: x,
+          baseZ: z,
+          baseHeight: baseHeight,
+          pulseOffset: (x + z) * 0.2
+        };
+
+        scene.add(cell);
+        cells.push(cell);
+      }
+    }
+
+    // Add grid lines
+    const gridHelper = new THREE.GridHelper(gridSize * spacing, gridSize, 0x9d4edd, 0x1a1a2a);
+    gridHelper.material.opacity = 0.15;
+    gridHelper.material.transparent = true;
+    scene.add(gridHelper);
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const time = Date.now() * 0.001;
+
+      cells.forEach((cell) => {
+        const x = cell.userData.baseX;
+        const z = cell.userData.baseZ;
+
+        // Distance from center
+        const centerX = gridSize / 2;
+        const centerZ = gridSize / 2;
+        const distance = Math.sqrt(
+          Math.pow(x - centerX, 2) +
+          Math.pow(z - centerZ, 2)
+        );
+
+        // Pulsing wave from center
+        const wave = Math.sin(distance * 0.5 - time * 2) * 0.5 + 0.5;
+        const height = cell.userData.baseHeight + wave * 4;
+
+        // Update geometry
+        cell.geometry.dispose();
+        cell.geometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(3, height, 3)
+        );
+
+        cell.position.y = height / 2;
+
+        // Pulsing opacity
+        cell.material.opacity = 0.4 + wave * 0.4;
+
+        // Color shift based on height
+        const colorValue = Math.floor(157 + wave * 50);
+        cell.material.color.setRGB(colorValue / 255, 78 / 255, 221 / 255);
+      });
+
+      // Gentle camera rotation
+      camera.position.x = Math.sin(time * 0.1) * 45;
+      camera.position.z = Math.cos(time * 0.1) * 45;
+      camera.lookAt(0, 5, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
