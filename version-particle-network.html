@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Network Architecture</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 40px 80px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 700;
+      background: linear-gradient(90deg, #00ff88, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    nav {
+      display: flex;
+      gap: 50px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #00ff88;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 80px;
+    }
+
+    .hero-content {
+      max-width: 900px;
+    }
+
+    h1 {
+      font-size: 84px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      line-height: 1;
+      background: linear-gradient(135deg, #ffffff 0%, rgba(255, 255, 255, 0.5) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 22px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 60px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 20px 50px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 50px;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: linear-gradient(90deg, #00ff88, #00d4ff);
+      color: #000000;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #00ff88;
+      color: #00ff88;
+    }
+
+    .networks {
+      padding: 150px 80px;
+    }
+
+    .section-title {
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 80px;
+      text-align: center;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+    }
+
+    .network-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 255, 136, 0.2);
+      padding: 40px;
+      text-align: center;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      transition: all 0.3s;
+      border-radius: 8px;
+    }
+
+    .network-item:hover {
+      background: rgba(0, 255, 136, 0.1);
+      border-color: #00ff88;
+      color: #00ff88;
+    }
+
+    .capabilities {
+      padding: 150px 80px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 50px;
+      margin-top: 80px;
+    }
+
+    .capability {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 60px;
+      border-radius: 12px;
+    }
+
+    .capability-number {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 16px;
+      color: #00ff88;
+      margin-bottom: 25px;
+      font-weight: 600;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .capability p {
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 150px 80px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 64px;
+      margin-bottom: 30px;
+    }
+
+    .cta p {
+      font-size: 20px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 60px;
+    }
+
+    footer {
+      padding: 80px;
+      text-align: center;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.4);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 48px; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Decentralized Asset Infrastructure</h1>
+        <p class="hero-desc">
+          Connect real-world assets to blockchain networks. Institutional-grade tokenization with multi-chain support and enterprise security.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Launch Platform</a>
+          <a href="#" class="btn btn-outline">Documentation</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Multi-Chain Network</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Platform Features</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">[01]</div>
+          <h3>Real Asset Tokenization</h3>
+          <p>Transform physical assets into digital tokens with full legal compliance. Support for real estate, equity, commodities, and more.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">[02]</div>
+          <h3>Cross-Chain Deployment</h3>
+          <p>Deploy to 15+ blockchains with a single API call. Automatic bridging and multi-chain state synchronization.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">[03]</div>
+          <h3>Regulatory Compliance</h3>
+          <p>Built-in KYC/AML, accredited investor verification, transfer restrictions, and automated regulatory reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">[04]</div>
+          <h3>Enterprise Custody</h3>
+          <p>Bank-grade custody with multi-signature wallets, HSM integration, and full insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Build on Asset Haus</h2>
+      <p>Join institutions tokenizing billions in real-world assets</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Institutional Digital Asset Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.z = 50;
+
+    // Create particle network
+    const particleCount = 100;
+    const particles = [];
+    const connections = [];
+
+    const particleGeometry = new THREE.SphereGeometry(0.3, 8, 8);
+    const particleMaterial = new THREE.MeshBasicMaterial({
+      color: 0x00ff88,
+      transparent: true,
+      opacity: 0.8
+    });
+
+    for (let i = 0; i < particleCount; i++) {
+      const particle = new THREE.Mesh(particleGeometry, particleMaterial.clone());
+
+      particle.position.x = (Math.random() - 0.5) * 100;
+      particle.position.y = (Math.random() - 0.5) * 100;
+      particle.position.z = (Math.random() - 0.5) * 50;
+
+      particle.userData = {
+        velocity: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.02,
+          (Math.random() - 0.5) * 0.02,
+          (Math.random() - 0.5) * 0.02
+        )
+      };
+
+      scene.add(particle);
+      particles.push(particle);
+    }
+
+    function updateConnections() {
+      // Remove old connections
+      connections.forEach(line => scene.remove(line));
+      connections.length = 0;
+
+      const maxDistance = 15;
+
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const distance = particles[i].position.distanceTo(particles[j].position);
+
+          if (distance < maxDistance) {
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array([
+              particles[i].position.x, particles[i].position.y, particles[i].position.z,
+              particles[j].position.x, particles[j].position.y, particles[j].position.z
+            ]);
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const opacity = 1 - (distance / maxDistance);
+            const material = new THREE.LineBasicMaterial({
+              color: 0x00d4ff,
+              transparent: true,
+              opacity: opacity * 0.3
+            });
+
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+            connections.push(line);
+          }
+        }
+      }
+    }
+
+    let frameCount = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      particles.forEach(particle => {
+        particle.position.add(particle.userData.velocity);
+
+        // Bounce off boundaries
+        if (Math.abs(particle.position.x) > 50) particle.userData.velocity.x *= -1;
+        if (Math.abs(particle.position.y) > 50) particle.userData.velocity.y *= -1;
+        if (Math.abs(particle.position.z) > 25) particle.userData.velocity.z *= -1;
+
+        // Gentle pulsing
+        const scale = 1 + Math.sin(Date.now() * 0.001 + particle.position.x) * 0.2;
+        particle.scale.set(scale, scale, scale);
+      });
+
+      // Update connections every 2 frames for performance
+      if (frameCount % 2 === 0) {
+        updateConnections();
+      }
+      frameCount++;
+
+      camera.position.x = Math.sin(Date.now() * 0.0001) * 5;
+      camera.position.y = Math.cos(Date.now() * 0.0001) * 5;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

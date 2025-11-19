@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Geometric Framework</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Work+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: #0d0d0d;
+      color: #f0f0f0;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 35px 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(13, 13, 13, 0.7);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 700;
+      font-family: 'Space Mono', monospace;
+      color: #ff6b6b;
+    }
+
+    nav {
+      display: flex;
+      gap: 45px;
+    }
+
+    nav a {
+      color: rgba(240, 240, 240, 0.7);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover {
+      color: #ff6b6b;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 70px;
+    }
+
+    .hero-content {
+      max-width: 850px;
+      background: rgba(20, 20, 20, 0.5);
+      backdrop-filter: blur(15px);
+      padding: 70px;
+      border-left: 4px solid #ff6b6b;
+    }
+
+    h1 {
+      font-size: 76px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      line-height: 1.1;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      color: rgba(240, 240, 240, 0.7);
+      margin-bottom: 50px;
+      line-height: 1.8;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 18px 45px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .btn-primary {
+      background: #ff6b6b;
+      color: #0d0d0d;
+      border: 2px solid #ff6b6b;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #ff6b6b;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #f0f0f0;
+      border: 2px solid rgba(240, 240, 240, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+
+    .networks {
+      padding: 130px 70px;
+      background: rgba(20, 20, 20, 0.3);
+    }
+
+    .section-title {
+      font-size: 50px;
+      font-weight: 700;
+      margin-bottom: 70px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 25px;
+    }
+
+    .network-item {
+      background: rgba(255, 107, 107, 0.05);
+      border: 2px solid rgba(255, 107, 107, 0.2);
+      padding: 35px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      transition: all 0.3s;
+    }
+
+    .network-item:hover {
+      background: rgba(255, 107, 107, 0.1);
+      border-color: #ff6b6b;
+      transform: translateY(-5px);
+    }
+
+    .capabilities {
+      padding: 130px 70px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 45px;
+      margin-top: 70px;
+    }
+
+    .capability {
+      background: rgba(20, 20, 20, 0.4);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      padding: 55px;
+      transition: all 0.3s;
+    }
+
+    .capability:hover {
+      border-color: #ff6b6b;
+      background: rgba(20, 20, 20, 0.6);
+    }
+
+    .capability-number {
+      font-family: 'Space Mono', monospace;
+      font-size: 15px;
+      color: #ff6b6b;
+      margin-bottom: 22px;
+      font-weight: 700;
+    }
+
+    .capability h3 {
+      font-size: 30px;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    .capability p {
+      color: rgba(240, 240, 240, 0.7);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .cta {
+      padding: 130px 70px;
+      text-align: center;
+      background: rgba(255, 107, 107, 0.05);
+    }
+
+    .cta h2 {
+      font-size: 60px;
+      margin-bottom: 28px;
+      font-family: 'Space Mono', monospace;
+    }
+
+    .cta p {
+      font-size: 19px;
+      color: rgba(240, 240, 240, 0.7);
+      margin-bottom: 55px;
+    }
+
+    footer {
+      padding: 70px;
+      text-align: center;
+      font-family: 'Space Mono', monospace;
+      font-size: 13px;
+      color: rgba(240, 240, 240, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 48px; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Tokenization Platform</h1>
+        <p class="hero-desc">
+          Enterprise blockchain infrastructure for real-world asset tokenization. Multi-chain deployment with institutional-grade security and compliance.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Get Started</a>
+          <a href="#" class="btn btn-outline">Read Docs</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Blockchain Support</h2>
+      <div class="networks-grid">
+        <div class="network-item">ETHEREUM</div>
+        <div class="network-item">POLYGON</div>
+        <div class="network-item">ARBITRUM</div>
+        <div class="network-item">OPTIMISM</div>
+        <div class="network-item">BASE</div>
+        <div class="network-item">AVALANCHE</div>
+        <div class="network-item">BNB CHAIN</div>
+        <div class="network-item">SOLANA</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Core Features</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">//01</div>
+          <h3>Asset Tokenization</h3>
+          <p>Convert real-world assets into blockchain tokens with full regulatory compliance. Support for real estate, equity, debt instruments, and commodities.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">//02</div>
+          <h3>Multi-Chain Support</h3>
+          <p>Deploy to 15+ blockchain networks with unified API. Automatic bridging, cross-chain transfers, and state synchronization.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">//03</div>
+          <h3>Compliance Suite</h3>
+          <p>Integrated KYC/AML verification, accredited investor checks, transfer restrictions, and automated regulatory reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">//04</div>
+          <h3>Secure Custody</h3>
+          <p>Enterprise-grade asset custody with multi-signature wallets, hardware security modules, and comprehensive insurance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Ready to Launch?</h2>
+      <p>Join leading institutions building on Asset Haus</p>
+      <a href="#" class="btn btn-primary">Contact Sales</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Enterprise Asset Tokenization Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x0d0d0d, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.z = 40;
+
+    // Create floating cubes
+    const cubes = [];
+    const cubeCount = 25;
+
+    for (let i = 0; i < cubeCount; i++) {
+      const size = 1 + Math.random() * 2;
+      const geometry = new THREE.BoxGeometry(size, size, size);
+      const edges = new THREE.EdgesGeometry(geometry);
+      const material = new THREE.LineBasicMaterial({
+        color: 0xff6b6b,
+        transparent: true,
+        opacity: 0.6
+      });
+
+      const cube = new THREE.LineSegments(edges, material);
+
+      cube.position.x = (Math.random() - 0.5) * 60;
+      cube.position.y = (Math.random() - 0.5) * 60;
+      cube.position.z = (Math.random() - 0.5) * 40;
+
+      cube.userData = {
+        rotationSpeed: {
+          x: (Math.random() - 0.5) * 0.01,
+          y: (Math.random() - 0.5) * 0.01,
+          z: (Math.random() - 0.5) * 0.01
+        },
+        floatSpeed: 0.0005 + Math.random() * 0.001,
+        floatOffset: Math.random() * Math.PI * 2,
+        originalY: cube.position.y
+      };
+
+      scene.add(cube);
+      cubes.push(cube);
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      cubes.forEach((cube, index) => {
+        // Rotation
+        cube.rotation.x += cube.userData.rotationSpeed.x;
+        cube.rotation.y += cube.userData.rotationSpeed.y;
+        cube.rotation.z += cube.userData.rotationSpeed.z;
+
+        // Floating motion
+        const time = Date.now() * cube.userData.floatSpeed + cube.userData.floatOffset;
+        cube.position.y = cube.userData.originalY + Math.sin(time) * 3;
+
+        // Pulsing opacity
+        cube.material.opacity = 0.4 + Math.sin(time * 2) * 0.2;
+
+        // Slight drift
+        cube.position.x += Math.sin(time * 0.5) * 0.01;
+        cube.position.z += Math.cos(time * 0.5) * 0.01;
+      });
+
+      // Gentle camera movement
+      camera.position.x = Math.sin(Date.now() * 0.0002) * 3;
+      camera.position.y = Math.cos(Date.now() * 0.0002) * 3;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

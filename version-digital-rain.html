@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Digital Matrix</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Ubuntu', sans-serif;
+      background: #000000;
+      color: #00ff41;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 42px 72px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .logo {
+      font-size: 34px;
+      font-weight: 700;
+      font-family: 'Courier Prime', monospace;
+      color: #00ff41;
+      text-shadow: 0 0 10px rgba(0, 255, 65, 0.7);
+    }
+
+    nav {
+      display: flex;
+      gap: 48px;
+    }
+
+    nav a {
+      color: rgba(0, 255, 65, 0.7);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: all 0.3s;
+      font-family: 'Courier Prime', monospace;
+    }
+
+    nav a:hover {
+      color: #00ff41;
+      text-shadow: 0 0 8px rgba(0, 255, 65, 0.8);
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 72px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 880px;
+      background: rgba(0, 20, 0, 0.7);
+      backdrop-filter: blur(20px);
+      padding: 80px;
+      border: 2px solid rgba(0, 255, 65, 0.3);
+      box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+    }
+
+    h1 {
+      font-size: 82px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      line-height: 1.05;
+      font-family: 'Courier Prime', monospace;
+      color: #00ff41;
+      text-shadow: 0 0 20px rgba(0, 255, 65, 0.8);
+    }
+
+    .hero-desc {
+      font-size: 19px;
+      color: rgba(0, 255, 65, 0.8);
+      margin-bottom: 55px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 24px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 20px 50px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: all 0.3s;
+      font-family: 'Courier Prime', monospace;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: #00ff41;
+      color: #000000;
+      border: 2px solid #00ff41;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #00ff41;
+      box-shadow: 0 0 30px rgba(0, 255, 65, 0.7);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #00ff41;
+      border: 2px solid rgba(0, 255, 65, 0.5);
+    }
+
+    .btn-outline:hover {
+      border-color: #00ff41;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.5);
+    }
+
+    .networks {
+      padding: 140px 72px;
+      background: rgba(0, 20, 0, 0.3);
+    }
+
+    .section-title {
+      font-size: 54px;
+      font-weight: 700;
+      margin-bottom: 75px;
+      text-align: center;
+      font-family: 'Courier Prime', monospace;
+      text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+
+    .network-item {
+      background: rgba(0, 255, 65, 0.05);
+      border: 2px solid rgba(0, 255, 65, 0.3);
+      padding: 38px;
+      text-align: center;
+      font-family: 'Courier Prime', monospace;
+      font-size: 14px;
+      color: rgba(0, 255, 65, 0.9);
+      transition: all 0.3s;
+    }
+
+    .network-item:hover {
+      background: rgba(0, 255, 65, 0.1);
+      border-color: #00ff41;
+      box-shadow: 0 0 20px rgba(0, 255, 65, 0.4);
+      transform: translateY(-3px);
+    }
+
+    .capabilities {
+      padding: 140px 72px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+      margin-top: 75px;
+    }
+
+    .capability {
+      background: rgba(0, 20, 0, 0.5);
+      border: 2px solid rgba(0, 255, 65, 0.3);
+      padding: 58px;
+      transition: all 0.3s;
+    }
+
+    .capability:hover {
+      border-color: #00ff41;
+      background: rgba(0, 20, 0, 0.7);
+      box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
+    }
+
+    .capability-number {
+      font-family: 'Courier Prime', monospace;
+      font-size: 17px;
+      color: #00ff41;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      font-family: 'Courier Prime', monospace;
+    }
+
+    .capability p {
+      color: rgba(0, 255, 65, 0.8);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .cta {
+      padding: 140px 72px;
+      text-align: center;
+      background: rgba(0, 255, 65, 0.05);
+      border-top: 2px solid rgba(0, 255, 65, 0.3);
+      border-bottom: 2px solid rgba(0, 255, 65, 0.3);
+    }
+
+    .cta h2 {
+      font-size: 64px;
+      margin-bottom: 30px;
+      font-family: 'Courier Prime', monospace;
+      text-shadow: 0 0 15px rgba(0, 255, 65, 0.6);
+    }
+
+    .cta p {
+      font-size: 19px;
+      color: rgba(0, 255, 65, 0.8);
+      margin-bottom: 58px;
+    }
+
+    footer {
+      padding: 75px;
+      text-align: center;
+      font-family: 'Courier Prime', monospace;
+      font-size: 14px;
+      color: rgba(0, 255, 65, 0.6);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 50px; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET_HAUS</div>
+      <nav>
+        <a href="#capabilities">&gt; CAPABILITIES</a>
+        <a href="#networks">&gt; NETWORKS</a>
+        <a href="#contact">&gt; CONTACT</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>DIGITAL_INFRASTRUCTURE</h1>
+        <p class="hero-desc">
+          Transform real-world assets into blockchain tokens. Enterprise-grade platform with multi-chain support and institutional security protocols.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">&gt; INITIALIZE</a>
+          <a href="#" class="btn btn-outline">&gt; DOCUMENTATION</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">NETWORK_SUPPORT</h2>
+      <div class="networks-grid">
+        <div class="network-item">ETHEREUM</div>
+        <div class="network-item">POLYGON</div>
+        <div class="network-item">ARBITRUM</div>
+        <div class="network-item">OPTIMISM</div>
+        <div class="network-item">BASE</div>
+        <div class="network-item">AVALANCHE</div>
+        <div class="network-item">BNB_CHAIN</div>
+        <div class="network-item">SOLANA</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">CORE_MODULES</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">&gt; MODULE_01</div>
+          <h3>TOKENIZATION_ENGINE</h3>
+          <p>Convert real-world assets into blockchain tokens with full regulatory compliance. Support for real estate, equity, debt instruments, and commodities.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">&gt; MODULE_02</div>
+          <h3>MULTICHAIN_DEPLOY</h3>
+          <p>Deploy across 15+ blockchain networks with unified API interface. Automatic bridging and cross-chain state synchronization.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">&gt; MODULE_03</div>
+          <h3>COMPLIANCE_SYSTEM</h3>
+          <p>Integrated KYC/AML verification, accredited investor checks, transfer restrictions, and automated regulatory reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">&gt; MODULE_04</div>
+          <h3>CUSTODY_PROTOCOL</h3>
+          <p>Enterprise-grade asset custody with multi-signature wallets, hardware security modules, and comprehensive insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>READY_TO_DEPLOY?</h2>
+      <p>Join institutions managing billions in tokenized assets</p>
+      <a href="#" class="btn btn-primary">&gt; EXECUTE</a>
+    </section>
+
+    <footer>
+      <p>© 2025 ASSET_HAUS — DIGITAL_ASSET_INFRASTRUCTURE</p>
+    </footer>
+  </div>
+
+  <script>
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    document.getElementById('canvas-container').appendChild(canvas);
+
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+    const fontSize = 14;
+    const columns = canvas.width / fontSize;
+
+    const drops = [];
+    for (let i = 0; i < columns; i++) {
+      drops[i] = Math.random() * canvas.height / fontSize;
+    }
+
+    function draw() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00ff41';
+      ctx.font = fontSize + 'px monospace';
+
+      for (let i = 0; i < drops.length; i++) {
+        const char = chars[Math.floor(Math.random() * chars.length)];
+        const x = i * fontSize;
+        const y = drops[i] * fontSize;
+
+        // Brighter head
+        ctx.fillStyle = '#00ff41';
+        ctx.fillText(char, x, y);
+
+        // Fading trail
+        if (y > fontSize) {
+          ctx.fillStyle = 'rgba(0, 255, 65, 0.5)';
+          ctx.fillText(chars[Math.floor(Math.random() * chars.length)], x, y - fontSize);
+        }
+
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+
+        drops[i]++;
+      }
+    }
+
+    setInterval(draw, 35);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+  </script>
+</body>
+</html>

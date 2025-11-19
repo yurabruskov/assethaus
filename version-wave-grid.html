@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Wave Infrastructure</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #050810;
+      color: #e0e6ed;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 38px 75px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(5, 8, 16, 0.8);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+    }
+
+    .logo {
+      font-size: 31px;
+      font-weight: 700;
+      color: #8b5cf6;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 48px;
+    }
+
+    nav a {
+      color: rgba(224, 230, 237, 0.7);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #8b5cf6;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 75px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 950px;
+    }
+
+    h1 {
+      font-size: 88px;
+      font-weight: 700;
+      margin-bottom: 32px;
+      line-height: 1.05;
+      letter-spacing: -2px;
+      background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      font-size: 21px;
+      color: rgba(224, 230, 237, 0.7);
+      margin-bottom: 55px;
+      line-height: 1.75;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 22px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 20px 48px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: #8b5cf6;
+      color: #050810;
+      border: 2px solid #8b5cf6;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #8b5cf6;
+      box-shadow: 0 8px 30px rgba(139, 92, 246, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #e0e6ed;
+      border: 2px solid rgba(224, 230, 237, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #8b5cf6;
+      color: #8b5cf6;
+    }
+
+    .networks {
+      padding: 140px 75px;
+    }
+
+    .section-title {
+      font-size: 54px;
+      font-weight: 700;
+      margin-bottom: 75px;
+      text-align: center;
+      letter-spacing: -1px;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
+    }
+
+    .network-item {
+      background: rgba(139, 92, 246, 0.05);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      padding: 38px;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: rgba(224, 230, 237, 0.8);
+      transition: all 0.3s;
+      border-radius: 8px;
+    }
+
+    .network-item:hover {
+      background: rgba(139, 92, 246, 0.12);
+      border-color: #8b5cf6;
+      color: #8b5cf6;
+      transform: translateY(-4px);
+    }
+
+    .capabilities {
+      padding: 140px 75px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 48px;
+      margin-top: 75px;
+    }
+
+    .capability {
+      background: rgba(10, 16, 32, 0.5);
+      border: 1px solid rgba(139, 92, 246, 0.2);
+      padding: 58px;
+      border-radius: 10px;
+      transition: all 0.3s;
+    }
+
+    .capability:hover {
+      border-color: #8b5cf6;
+      background: rgba(10, 16, 32, 0.7);
+    }
+
+    .capability-number {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 16px;
+      color: #8b5cf6;
+      margin-bottom: 24px;
+      font-weight: 600;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .capability p {
+      color: rgba(224, 230, 237, 0.7);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 140px 75px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 66px;
+      margin-bottom: 30px;
+      letter-spacing: -1px;
+    }
+
+    .cta p {
+      font-size: 20px;
+      color: rgba(224, 230, 237, 0.7);
+      margin-bottom: 58px;
+    }
+
+    footer {
+      padding: 75px;
+      text-align: center;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: rgba(224, 230, 237, 0.5);
+      border-top: 1px solid rgba(139, 92, 246, 0.15);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 52px; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Digital Asset Infrastructure</h1>
+        <p class="hero-desc">
+          Institutional platform for real-world asset tokenization. Multi-chain deployment with enterprise-grade security and full regulatory compliance.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Start Building</a>
+          <a href="#" class="btn btn-outline">View Docs</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Multi-Chain Network</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Platform Capabilities</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">01.</div>
+          <h3>Asset Tokenization</h3>
+          <p>Transform real-world assets into blockchain tokens with full legal compliance. Support for real estate, equity, debt, and commodities.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">02.</div>
+          <h3>Cross-Chain Deployment</h3>
+          <p>Deploy to 15+ blockchain networks with unified API. Automatic bridging and cross-chain state synchronization.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">03.</div>
+          <h3>Compliance Framework</h3>
+          <p>Integrated KYC/AML verification, accredited investor checks, transfer restrictions, and automated reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">04.</div>
+          <h3>Enterprise Custody</h3>
+          <p>Bank-grade custody with multi-signature wallets, hardware security modules, and comprehensive insurance coverage.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Build with Asset Haus</h2>
+      <p>Join institutions managing billions in tokenized assets</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Enterprise Digital Asset Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x050810, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(0, 30, 50);
+    camera.lookAt(0, 0, 0);
+
+    // Create wave grid
+    const gridSize = 50;
+    const spacing = 2;
+    const points = [];
+
+    for (let x = 0; x < gridSize; x++) {
+      for (let z = 0; z < gridSize; z++) {
+        const vertex = new THREE.Vector3(
+          (x - gridSize / 2) * spacing,
+          0,
+          (z - gridSize / 2) * spacing
+        );
+        points.push(vertex);
+      }
+    }
+
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+    const material = new THREE.PointsMaterial({
+      color: 0x8b5cf6,
+      size: 0.3,
+      transparent: true,
+      opacity: 0.8
+    });
+
+    const pointCloud = new THREE.Points(geometry, material);
+    scene.add(pointCloud);
+
+    // Create grid lines
+    const lineGeometry = new THREE.BufferGeometry();
+    const lineVertices = [];
+
+    // Horizontal lines
+    for (let z = 0; z < gridSize; z++) {
+      for (let x = 0; x < gridSize - 1; x++) {
+        const index1 = z * gridSize + x;
+        const index2 = z * gridSize + (x + 1);
+        lineVertices.push(
+          points[index1].x, points[index1].y, points[index1].z,
+          points[index2].x, points[index2].y, points[index2].z
+        );
+      }
+    }
+
+    // Vertical lines
+    for (let x = 0; x < gridSize; x++) {
+      for (let z = 0; z < gridSize - 1; z++) {
+        const index1 = z * gridSize + x;
+        const index2 = (z + 1) * gridSize + x;
+        lineVertices.push(
+          points[index1].x, points[index1].y, points[index1].z,
+          points[index2].x, points[index2].y, points[index2].z
+        );
+      }
+    }
+
+    lineGeometry.setAttribute('position', new THREE.Float32BufferAttribute(lineVertices, 3));
+    const lineMaterial = new THREE.LineBasicMaterial({
+      color: 0x8b5cf6,
+      transparent: true,
+      opacity: 0.15
+    });
+
+    const lines = new THREE.LineSegments(lineGeometry, lineMaterial);
+    scene.add(lines);
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const time = Date.now() * 0.0005;
+      const positions = geometry.attributes.position.array;
+      const linePositions = lineGeometry.attributes.position.array;
+
+      let posIndex = 0;
+      let lineIndex = 0;
+
+      for (let x = 0; x < gridSize; x++) {
+        for (let z = 0; z < gridSize; z++) {
+          const distance = Math.sqrt(
+            Math.pow(x - gridSize / 2, 2) +
+            Math.pow(z - gridSize / 2, 2)
+          );
+
+          const wave1 = Math.sin(distance * 0.3 - time * 2) * 3;
+          const wave2 = Math.cos(distance * 0.2 - time * 1.5) * 2;
+          const y = wave1 + wave2;
+
+          points[posIndex / 3].y = y;
+          positions[posIndex + 1] = y;
+          posIndex += 3;
+        }
+      }
+
+      // Update line positions
+      posIndex = 0;
+
+      // Horizontal lines
+      for (let z = 0; z < gridSize; z++) {
+        for (let x = 0; x < gridSize - 1; x++) {
+          const index1 = z * gridSize + x;
+          const index2 = z * gridSize + (x + 1);
+
+          linePositions[lineIndex++] = points[index1].x;
+          linePositions[lineIndex++] = points[index1].y;
+          linePositions[lineIndex++] = points[index1].z;
+          linePositions[lineIndex++] = points[index2].x;
+          linePositions[lineIndex++] = points[index2].y;
+          linePositions[lineIndex++] = points[index2].z;
+        }
+      }
+
+      // Vertical lines
+      for (let x = 0; x < gridSize; x++) {
+        for (let z = 0; z < gridSize - 1; z++) {
+          const index1 = z * gridSize + x;
+          const index2 = (z + 1) * gridSize + x;
+
+          linePositions[lineIndex++] = points[index1].x;
+          linePositions[lineIndex++] = points[index1].y;
+          linePositions[lineIndex++] = points[index1].z;
+          linePositions[lineIndex++] = points[index2].x;
+          linePositions[lineIndex++] = points[index2].y;
+          linePositions[lineIndex++] = points[index2].z;
+        }
+      }
+
+      geometry.attributes.position.needsUpdate = true;
+      lineGeometry.attributes.position.needsUpdate = true;
+
+      // Gentle camera rotation
+      camera.position.x = Math.sin(time * 0.2) * 15;
+      camera.position.z = 50 + Math.cos(time * 0.2) * 10;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
