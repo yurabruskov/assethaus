@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Rotating Blocks</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Gruppo&family=Teko:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Teko', sans-serif;
+      background: #0f0f1a;
+      color: #e0e0ff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 25px 55px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15, 15, 26, 0.85);
+      backdrop-filter: blur(8px);
+    }
+
+    .logo {
+      font-size: 36px;
+      font-weight: 700;
+      font-family: 'Gruppo', cursive;
+      color: #00ff9f;
+      letter-spacing: 4px;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: rgba(224, 224, 255, 0.8);
+      text-decoration: none;
+      font-size: 18px;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #00ff9f;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 0 55px;
+      gap: 60px;
+    }
+
+    .hero-left h1 {
+      font-size: 92px;
+      font-weight: 700;
+      margin-bottom: 18px;
+      line-height: 0.95;
+      color: #e0e0ff;
+    }
+
+    .hero-left p {
+      font-size: 20px;
+      color: rgba(224, 224, 255, 0.7);
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    .stat {
+      padding: 25px;
+      background: rgba(0, 255, 159, 0.05);
+      border-left: 4px solid #00ff9f;
+    }
+
+    .stat-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: #00ff9f;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 16px;
+      color: rgba(224, 224, 255, 0.7);
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 15px;
+    }
+
+    .btn {
+      padding: 14px 38px;
+      font-size: 18px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 1px;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: #00ff9f;
+      color: #0f0f1a;
+      border: 2px solid #00ff9f;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #00ff9f;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #e0e0ff;
+      border: 2px solid rgba(224, 224, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #00ff9f;
+      color: #00ff9f;
+    }
+
+    .networks {
+      padding: 60px 55px;
+      background: rgba(20, 20, 30, 0.6);
+    }
+
+    .section-title {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 40px;
+    }
+
+    .networks-inline {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .network-badge {
+      padding: 10px 20px;
+      background: rgba(0, 255, 159, 0.1);
+      border: 1px solid rgba(0, 255, 159, 0.3);
+      font-size: 14px;
+      transition: all 0.3s;
+    }
+
+    .network-badge:hover {
+      background: rgba(0, 255, 159, 0.2);
+      border-color: #00ff9f;
+    }
+
+    .capabilities {
+      padding: 60px 55px;
+    }
+
+    .capabilities-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      margin-top: 40px;
+      background: rgba(0, 255, 159, 0.2);
+    }
+
+    .capability {
+      padding: 40px;
+      background: #0f0f1a;
+      display: flex;
+      gap: 30px;
+    }
+
+    .capability-num {
+      font-size: 72px;
+      font-weight: 700;
+      color: rgba(0, 255, 159, 0.3);
+      line-height: 1;
+      min-width: 100px;
+    }
+
+    .capability-text h3 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+
+    .capability-text p {
+      color: rgba(224, 224, 255, 0.7);
+      font-size: 17px;
+    }
+
+    .cta {
+      padding: 80px 55px;
+      text-align: center;
+      background: rgba(0, 255, 159, 0.05);
+    }
+
+    .cta h2 {
+      font-size: 64px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .cta p {
+      font-size: 20px;
+      color: rgba(224, 224, 255, 0.7);
+      margin-bottom: 35px;
+    }
+
+    footer {
+      padding: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: rgba(224, 224, 255, 0.5);
+    }
+
+    @media (max-width: 968px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-left h1 { font-size: 56px; }
+      .capability { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Features</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-left">
+        <h1>TOKENIZE REAL ESTATE</h1>
+        <p>
+          Enterprise platform for converting physical properties into blockchain-native digital assets with institutional-grade infrastructure.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">LAUNCH APP</a>
+          <a href="#" class="btn btn-outline">LEARN MORE</a>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="stat">
+          <div class="stat-number">$2.4B+</div>
+          <div class="stat-label">ASSETS TOKENIZED</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">15+</div>
+          <div class="stat-label">BLOCKCHAIN NETWORKS</div>
+        </div>
+        <div class="stat">
+          <div class="stat-number">500+</div>
+          <div class="stat-label">PROPERTIES MANAGED</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">SUPPORTED NETWORKS</h2>
+      <div class="networks-inline">
+        <div class="network-badge">ETHEREUM</div>
+        <div class="network-badge">POLYGON</div>
+        <div class="network-badge">ARBITRUM</div>
+        <div class="network-badge">OPTIMISM</div>
+        <div class="network-badge">BASE</div>
+        <div class="network-badge">AVALANCHE</div>
+        <div class="network-badge">BNB CHAIN</div>
+        <div class="network-badge">SOLANA</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">CORE CAPABILITIES</h2>
+      <div class="capabilities-stack">
+        <div class="capability">
+          <div class="capability-num">01</div>
+          <div class="capability-text">
+            <h3>PROPERTY TOKENIZATION</h3>
+            <p>Convert real estate assets into blockchain tokens with full regulatory compliance and legal framework support.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">02</div>
+          <div class="capability-text">
+            <h3>MULTI-CHAIN INFRASTRUCTURE</h3>
+            <p>Deploy across 15+ blockchain networks with unified API and automatic cross-chain synchronization.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">03</div>
+          <div class="capability-text">
+            <h3>COMPLIANCE FRAMEWORK</h3>
+            <p>Integrated KYC/AML verification, accredited investor checks, and automated regulatory reporting.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">04</div>
+          <div class="capability-text">
+            <h3>INSTITUTIONAL CUSTODY</h3>
+            <p>Bank-grade custody with multi-signature wallets, hardware security modules, and insurance coverage.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>BUILD WITH US</h2>
+      <p>Join institutions tokenizing billions in real estate</p>
+      <a href="#" class="btn btn-primary">GET STARTED</a>
+    </section>
+
+    <footer>
+      <p>© 2025 ASSET HAUS — REAL ESTATE TOKENIZATION PLATFORM</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x0f0f1a, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(0, 20, 50);
+    camera.lookAt(0, 0, 0);
+
+    // Create rotating blocks in formation
+    const blocks = [];
+    const formations = [
+      { count: 8, radius: 15, height: 0 },
+      { count: 6, radius: 25, height: 10 },
+      { count: 10, radius: 20, height: -8 }
+    ];
+
+    formations.forEach((formation, formIndex) => {
+      for (let i = 0; i < formation.count; i++) {
+        const angle = (i / formation.count) * Math.PI * 2;
+        const size = 2 + Math.random() * 1.5;
+
+        const geometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(size, size, size)
+        );
+
+        const material = new THREE.LineBasicMaterial({
+          color: 0x00ff9f,
+          transparent: true,
+          opacity: 0.7
+        });
+
+        const block = new THREE.LineSegments(geometry, material);
+
+        block.position.x = Math.cos(angle) * formation.radius;
+        block.position.z = Math.sin(angle) * formation.radius;
+        block.position.y = formation.height;
+
+        block.userData = {
+          formationIndex: formIndex,
+          indexInFormation: i,
+          radius: formation.radius,
+          baseHeight: formation.height,
+          rotationSpeed: {
+            x: (Math.random() - 0.5) * 0.03,
+            y: (Math.random() - 0.5) * 0.03,
+            z: (Math.random() - 0.5) * 0.03
+          },
+          orbitSpeed: 0.2 + Math.random() * 0.3
+        };
+
+        scene.add(block);
+        blocks.push(block);
+      }
+    });
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const time = Date.now() * 0.0003;
+
+      blocks.forEach((block) => {
+        // Rotation
+        block.rotation.x += block.userData.rotationSpeed.x;
+        block.rotation.y += block.userData.rotationSpeed.y;
+        block.rotation.z += block.userData.rotationSpeed.z;
+
+        // Orbit around center
+        const formIndex = block.userData.formationIndex;
+        const orbitTime = time * block.userData.orbitSpeed + (formIndex * Math.PI / 3);
+        const angle = (block.userData.indexInFormation / formations[formIndex].count) * Math.PI * 2 + orbitTime;
+
+        block.position.x = Math.cos(angle) * block.userData.radius;
+        block.position.z = Math.sin(angle) * block.userData.radius;
+
+        // Gentle vertical oscillation
+        block.position.y = block.userData.baseHeight + Math.sin(time * 2 + angle) * 2;
+
+        // Pulsing opacity
+        block.material.opacity = 0.5 + Math.sin(time * 3 + angle) * 0.3;
+      });
+
+      // Gentle camera movement
+      camera.position.x = Math.sin(time * 0.5) * 5;
+      camera.position.y = 20 + Math.cos(time * 0.3) * 3;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

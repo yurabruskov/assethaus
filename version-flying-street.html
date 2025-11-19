@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Street Flight</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Rajdhani', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 35px 65px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(79, 195, 247, 0.2);
+    }
+
+    .logo {
+      font-size: 30px;
+      font-weight: 700;
+      font-family: 'Share Tech Mono', monospace;
+      color: #4fc3f7;
+    }
+
+    nav {
+      display: flex;
+      gap: 40px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover {
+      color: #4fc3f7;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0 65px;
+    }
+
+    .hero-content {
+      max-width: 700px;
+    }
+
+    h1 {
+      font-size: 76px;
+      font-weight: 700;
+      margin-bottom: 25px;
+      line-height: 1;
+      color: #ffffff;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 48px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 18px 44px;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.3s;
+      font-family: 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: #4fc3f7;
+      color: #000000;
+      border: 2px solid #4fc3f7;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #4fc3f7;
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #4fc3f7;
+      color: #4fc3f7;
+    }
+
+    .networks {
+      padding: 100px 65px;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 700;
+      margin-bottom: 60px;
+    }
+
+    .networks-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      max-width: 900px;
+    }
+
+    .network-tag {
+      padding: 12px 24px;
+      background: rgba(79, 195, 247, 0.1);
+      border: 1px solid rgba(79, 195, 247, 0.3);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      border-radius: 20px;
+      transition: all 0.3s;
+    }
+
+    .network-tag:hover {
+      background: rgba(79, 195, 247, 0.2);
+      border-color: #4fc3f7;
+    }
+
+    .capabilities {
+      padding: 100px 65px;
+    }
+
+    .capabilities-list {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      max-width: 1000px;
+      margin-top: 60px;
+    }
+
+    .capability {
+      display: flex;
+      gap: 30px;
+      padding: 40px 0;
+      border-bottom: 1px solid rgba(79, 195, 247, 0.2);
+    }
+
+    .capability:last-child {
+      border-bottom: none;
+    }
+
+    .capability-number {
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 24px;
+      color: #4fc3f7;
+      font-weight: 700;
+      min-width: 60px;
+    }
+
+    .capability-content h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      font-weight: 700;
+    }
+
+    .capability-content p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 120px 65px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 58px;
+      margin-bottom: 25px;
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 50px;
+    }
+
+    footer {
+      padding: 60px;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.5);
+      border-top: 1px solid rgba(79, 195, 247, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 48px; }
+      .capability { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Features</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Urban Real Estate<br>Infrastructure</h1>
+        <p class="hero-desc">
+          Transform city properties into blockchain assets. Enterprise tokenization platform with multi-chain deployment and institutional custody solutions.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Launch Platform</a>
+          <a href="#" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Supported Blockchain Networks</h2>
+      <div class="networks-list">
+        <div class="network-tag">Ethereum</div>
+        <div class="network-tag">Polygon</div>
+        <div class="network-tag">Arbitrum</div>
+        <div class="network-tag">Optimism</div>
+        <div class="network-tag">Base</div>
+        <div class="network-tag">Avalanche</div>
+        <div class="network-tag">BNB Chain</div>
+        <div class="network-tag">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Core Capabilities</h2>
+      <div class="capabilities-list">
+        <div class="capability">
+          <div class="capability-number">01</div>
+          <div class="capability-content">
+            <h3>Property Tokenization</h3>
+            <p>Convert urban real estate into digital tokens with full regulatory compliance. Support for residential towers, commercial buildings, and mixed-use developments.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-number">02</div>
+          <div class="capability-content">
+            <h3>Multi-Chain Deployment</h3>
+            <p>Deploy across 15+ blockchain networks with unified API. Automatic bridging and cross-chain state synchronization for global accessibility.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-number">03</div>
+          <div class="capability-content">
+            <h3>Compliance Framework</h3>
+            <p>Integrated KYC/AML verification, accredited investor checks, transfer restrictions, and automated regulatory reporting for all jurisdictions.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-number">04</div>
+          <div class="capability-content">
+            <h3>Institutional Custody</h3>
+            <p>Bank-grade custody with multi-signature wallets, hardware security modules, and comprehensive insurance coverage for digital assets.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Ready to Tokenize?</h2>
+      <p>Join leading institutions building on Asset Haus infrastructure</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Urban Real Estate Tokenization</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    // Create buildings along a street
+    const buildings = [];
+    const streetLength = 100;
+    const buildingsPerSide = 20;
+    const streetWidth = 20;
+
+    // Left side buildings
+    for (let i = 0; i < buildingsPerSide; i++) {
+      const height = 15 + Math.random() * 35;
+      const width = 4 + Math.random() * 3;
+      const depth = 8 + Math.random() * 6;
+
+      const geometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(width, height, depth)
+      );
+
+      const material = new THREE.LineBasicMaterial({
+        color: 0x4fc3f7,
+        transparent: true,
+        opacity: 0.5 + Math.random() * 0.3
+      });
+
+      const building = new THREE.LineSegments(geometry, material);
+      building.position.x = -streetWidth / 2 - width / 2 - 2;
+      building.position.y = height / 2;
+      building.position.z = -i * (streetLength / buildingsPerSide);
+
+      scene.add(building);
+      buildings.push(building);
+    }
+
+    // Right side buildings
+    for (let i = 0; i < buildingsPerSide; i++) {
+      const height = 15 + Math.random() * 35;
+      const width = 4 + Math.random() * 3;
+      const depth = 8 + Math.random() * 6;
+
+      const geometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(width, height, depth)
+      );
+
+      const material = new THREE.LineBasicMaterial({
+        color: 0x4fc3f7,
+        transparent: true,
+        opacity: 0.5 + Math.random() * 0.3
+      });
+
+      const building = new THREE.LineSegments(geometry, material);
+      building.position.x = streetWidth / 2 + width / 2 + 2;
+      building.position.y = height / 2;
+      building.position.z = -i * (streetLength / buildingsPerSide);
+
+      scene.add(building);
+      buildings.push(building);
+    }
+
+    // Add ground grid for street
+    const gridHelper = new THREE.GridHelper(streetLength, 50, 0x4fc3f7, 0x1a1a1a);
+    gridHelper.material.opacity = 0.2;
+    gridHelper.material.transparent = true;
+    gridHelper.rotation.x = 0;
+    gridHelper.position.z = -streetLength / 2;
+    scene.add(gridHelper);
+
+    // Camera flies down the street
+    let flightProgress = 0;
+    const flightSpeed = 0.15;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      flightProgress += flightSpeed;
+
+      // Camera position flying down the street
+      camera.position.x = 0;
+      camera.position.y = 12 + Math.sin(flightProgress * 0.01) * 2;
+      camera.position.z = -flightProgress;
+
+      // Look ahead down the street
+      camera.lookAt(0, 10, -flightProgress - 30);
+
+      // Reset when reaching end of street
+      if (flightProgress > streetLength) {
+        flightProgress = 0;
+      }
+
+      // Gentle building pulse
+      buildings.forEach((building, index) => {
+        const pulse = 0.5 + Math.sin(Date.now() * 0.001 + index * 0.1) * 0.2;
+        building.material.opacity = pulse;
+      });
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
