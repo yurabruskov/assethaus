@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Organic Dense</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --cream: #faf9f6;
+      --sage: #a8b5a0;
+      --clay: #d4a792;
+      --forest: #4a5d4e;
+      --charcoal: #2d3032;
+      --white: #ffffff;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--cream);
+      color: var(--charcoal);
+      line-height: 1.6;
+      font-weight: 300;
+      font-size: 14px;
+      position: relative;
+    }
+
+    /* Subtle organic background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 10%;
+      right: 5%;
+      width: 400px;
+      height: 400px;
+      background: linear-gradient(135deg, var(--sage), var(--clay));
+      opacity: 0.08;
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      animation: float 30s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translate(0, 0) rotate(0deg); }
+      50% { transform: translate(-30px, 30px) rotate(180deg); }
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 0 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Header - compact */
+    header {
+      padding: 30px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+    }
+
+    .logo {
+      font-family: 'Crimson Pro', serif;
+      font-size: 24px;
+      font-weight: 600;
+      color: var(--forest);
+    }
+
+    nav {
+      display: flex;
+      gap: 25px;
+    }
+
+    nav a {
+      color: var(--charcoal);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 400;
+    }
+
+    /* Hero - compact */
+    .hero {
+      padding: 40px 0;
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    h1 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 48px;
+      font-weight: 600;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: var(--forest);
+    }
+
+    .subtitle {
+      font-size: 16px;
+      margin-bottom: 25px;
+      opacity: 0.9;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 12px 32px;
+      background: var(--forest);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 13px;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    }
+
+    /* Stats sidebar */
+    .stats {
+      background: var(--white);
+      padding: 30px;
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+    }
+
+    .stat-item {
+      margin-bottom: 20px;
+    }
+
+    .stat-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .stat-value {
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--sage);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.7;
+      margin-top: 5px;
+    }
+
+    /* Two column layout - dense */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      padding: 40px 0;
+    }
+
+    .section-title {
+      font-family: 'Crimson Pro', serif;
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      color: var(--forest);
+      grid-column: 1 / -1;
+    }
+
+    .feature-box {
+      background: var(--white);
+      padding: 25px;
+      border-radius: 50% 50% 60% 40% / 50% 60% 40% 50%;
+      margin-bottom: 15px;
+    }
+
+    .feature-box h3 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--forest);
+    }
+
+    .feature-box p {
+      font-size: 13px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    .feature-box ul {
+      list-style: none;
+      margin-top: 12px;
+    }
+
+    .feature-box ul li {
+      font-size: 12px;
+      padding-left: 15px;
+      position: relative;
+      margin-bottom: 6px;
+      opacity: 0.85;
+    }
+
+    .feature-box ul li::before {
+      content: '→';
+      position: absolute;
+      left: 0;
+      color: var(--sage);
+    }
+
+    /* Dense info blocks */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      padding: 40px 0;
+    }
+
+    .info-card {
+      background: var(--white);
+      padding: 20px;
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+      font-size: 12px;
+    }
+
+    .info-card-title {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 10px;
+      color: var(--clay);
+    }
+
+    /* Networks - compact grid */
+    .networks {
+      padding: 40px 0;
+      background: var(--white);
+      margin: 40px -30px;
+      padding: 40px 30px;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 15px;
+    }
+
+    .network-item {
+      background: var(--cream);
+      padding: 15px 10px;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 500;
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+    }
+
+    /* Factoids - inline dense */
+    .factoid-inline {
+      background: var(--sage);
+      color: var(--white);
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    /* Services list - dense */
+    .services-list {
+      columns: 2;
+      column-gap: 30px;
+      padding: 30px 0;
+    }
+
+    .service-item {
+      break-inside: avoid;
+      margin-bottom: 20px;
+      background: var(--white);
+      padding: 20px;
+      border-radius: 40% 60% 50% 50% / 50% 60% 40% 50%;
+    }
+
+    .service-item h4 {
+      font-family: 'Crimson Pro', serif;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--forest);
+    }
+
+    .service-item p {
+      font-size: 12px;
+      line-height: 1.6;
+    }
+
+    /* Footer - compact */
+    footer {
+      padding: 30px 0;
+      text-align: center;
+      font-size: 11px;
+      opacity: 0.6;
+      border-top: 1px solid rgba(0,0,0,0.06);
+    }
+
+    @media (max-width: 1024px) {
+      .hero,
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+
+      .info-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .networks-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .services-list {
+        columns: 1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#">Home</a>
+        <a href="#">Services</a>
+        <a href="#">Networks</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div>
+        <h1>Asset Tokenization Infrastructure</h1>
+        <p class="subtitle">
+          Comprehensive digital transformation solutions for institutional assets.
+          We provide end-to-end tokenization services including strategic advisory,
+          legal architecture, technical implementation, and platform development.
+        </p>
+        <a href="#" class="btn">Schedule Consultation</a>
+      </div>
+      <div class="stats">
+        <div class="stat-item">
+          <div class="stat-value">14+</div>
+          <div class="stat-label">Networks</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">100%</div>
+          <div class="stat-label">Security</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">24/7</div>
+          <div class="stat-label">Support</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-value">50+</div>
+          <div class="stat-label">Projects</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="factoid-inline">
+      💡 Asset tokenization represents the future of finance. By transforming traditional assets into blockchain-based tokens, we enable fractional ownership, improved liquidity, and 24/7 global trading capabilities.
+    </div>
+
+    <section class="two-col">
+      <h2 class="section-title">Core Capabilities</h2>
+      
+      <div>
+        <div class="feature-box">
+          <h3>Strategic Advisory</h3>
+          <p>Comprehensive guidance on tokenization strategy and execution.</p>
+          <ul>
+            <li>Asset evaluation & structuring</li>
+            <li>Market analysis & positioning</li>
+            <li>Token economics design</li>
+            <li>Go-to-market strategy</li>
+          </ul>
+        </div>
+
+        <div class="feature-box">
+          <h3>Legal Architecture</h3>
+          <p>Cross-jurisdictional regulatory frameworks.</p>
+          <ul>
+            <li>Securities compliance (SEC, MiFID II)</li>
+            <li>Entity structuring (SPV, Trust)</li>
+            <li>Investor documentation</li>
+            <li>Regulatory filings</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <div class="feature-box">
+          <h3>Technical Infrastructure</h3>
+          <p>Institutional-grade blockchain implementation.</p>
+          <ul>
+            <li>Smart contract development</li>
+            <li>Security audits (Certik, Trail of Bits)</li>
+            <li>Multi-chain deployment</li>
+            <li>Custody integration</li>
+          </ul>
+        </div>
+
+        <div class="feature-box">
+          <h3>Platform Solutions</h3>
+          <p>Complete tokenization and trading platforms.</p>
+          <ul>
+            <li>Issuance platform</li>
+            <li>Secondary marketplace</li>
+            <li>Investor portal</li>
+            <li>Admin dashboard</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks">
+      <div class="container">
+        <h2 class="section-title">Supported Networks</h2>
+        <div class="networks-grid">
+          <div class="network-item">Ethereum</div>
+          <div class="network-item">Polygon</div>
+          <div class="network-item">Arbitrum</div>
+          <div class="network-item">Optimism</div>
+          <div class="network-item">Avalanche</div>
+          <div class="network-item">BNB Chain</div>
+          <div class="network-item">Base</div>
+          <div class="network-item">Bitcoin</div>
+          <div class="network-item">Solana</div>
+          <div class="network-item">Cosmos</div>
+          <div class="network-item">Fantom</div>
+          <div class="network-item">Celo</div>
+        </div>
+      </div>
+    </section>
+
+    <div class="factoid-inline">
+      🔒 Security is paramount. All smart contracts undergo comprehensive audits by leading firms including Certik, Trail of Bits, and OpenZeppelin. We implement multi-signature wallets, time-locks, and emergency pause mechanisms.
+    </div>
+
+    <section class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">Real Estate</div>
+        Tokenize commercial and residential properties for fractional ownership and improved liquidity in traditional real estate markets.
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Private Equity</div>
+        Transform PE fund interests into digital securities, enabling broader investor access and secondary market trading.
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Art & Collectibles</div>
+        Fractionalize high-value art and collectibles, democratizing access to prestigious asset classes.
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Commodities</div>
+        Create blockchain-backed representations of physical commodities like gold, silver, and agricultural products.
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Venture Capital</div>
+        Tokenize VC fund interests and startup equity for enhanced liquidity and broader distribution.
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Debt Instruments</div>
+        Issue tokenized bonds, notes, and other debt securities with automated interest payments and settlement.
+      </div>
+    </section>
+
+    <section>
+      <h2 class="section-title">Comprehensive Services</h2>
+      <div class="services-list">
+        <div class="service-item">
+          <h4>Due Diligence</h4>
+          <p>Asset verification, valuation, and risk assessment to ensure tokenization viability.</p>
+        </div>
+        <div class="service-item">
+          <h4>Token Design</h4>
+          <p>ERC standards selection, governance rights, and dividend distribution mechanisms.</p>
+        </div>
+        <div class="service-item">
+          <h4>KYC/AML Integration</h4>
+          <p>Compliance infrastructure with leading providers like Chainalysis and Elliptic.</p>
+        </div>
+        <div class="service-item">
+          <h4>Market Making</h4>
+          <p>Liquidity provision and market making services for tokenized assets.</p>
+        </div>
+        <div class="service-item">
+          <h4>Custody Solutions</h4>
+          <p>Integration with qualified custodians including Fireblocks, BitGo, and Anchorage.</p>
+        </div>
+        <div class="service-item">
+          <h4>Investor Relations</h4>
+          <p>Communication platforms, reporting tools, and shareholder management systems.</p>
+        </div>
+        <div class="service-item">
+          <h4>Tax Optimization</h4>
+          <p>Jurisdiction selection and structure design for optimal tax efficiency.</p>
+        </div>
+        <div class="service-item">
+          <h4>Corporate Actions</h4>
+          <p>Automated handling of dividends, voting, and other corporate actions on-chain.</p>
+        </div>
+      </div>
+    </section>
+
+    <div class="factoid-inline">
+      🌍 Global reach with local expertise. We operate across 25+ jurisdictions including US, EU, Singapore, Hong Kong, and UAE, with deep knowledge of local regulatory requirements.
+    </div>
+
+    <footer>
+      © 2025 Asset Haus by Restifi — SEC Registered Platform
+    </footer>
+  </div>
+
+</body>
+</html>

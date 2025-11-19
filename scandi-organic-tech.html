@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Organic Tech</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f8f9fa;
+      --glass: rgba(255, 255, 255, 0.7);
+      --accent1: #667eea;
+      --accent2: #764ba2;
+      --accent3: #f093fb;
+      --accent4: #4facfe;
+      --text: #2d3748;
+      --text-light: #718096;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      font-weight: 300;
+      position: relative;
+      overflow-x: hidden;
+    }
+
+    /* Animated gradient mesh background */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        radial-gradient(ellipse at 20% 30%, var(--accent1) 0%, transparent 50%),
+        radial-gradient(ellipse at 80% 20%, var(--accent2) 0%, transparent 50%),
+        radial-gradient(ellipse at 40% 70%, var(--accent3) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 80%, var(--accent4) 0%, transparent 50%);
+      opacity: 0.15;
+      animation: mesh-morph 20s ease-in-out infinite;
+      z-index: 0;
+    }
+
+    @keyframes mesh-morph {
+      0%, 100% {
+        transform: translate(0, 0) scale(1);
+      }
+      33% {
+        transform: translate(5%, -5%) scale(1.1);
+      }
+      66% {
+        transform: translate(-5%, 5%) scale(0.9);
+      }
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Glassmorphism header */
+    header {
+      padding: 30px 0;
+      margin: 30px 0;
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      border: 1px solid rgba(255,255,255,0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 30px 50px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--accent1);
+    }
+
+    /* Hero with glass effect */
+    .hero {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 72px;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradient-shift 8s ease infinite;
+      background-size: 200% 200%;
+    }
+
+    @keyframes gradient-shift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .subtitle {
+      font-size: 20px;
+      max-width: 700px;
+      margin: 0 auto 50px;
+      color: var(--text-light);
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 48px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 15px;
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+      box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+      border-radius: 50% 50% 60% 40% / 50% 60% 40% 50%;
+    }
+
+    /* Glass cards grid */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      padding: 60px 0;
+    }
+
+    .glass-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 40% 60% 50% 50% / 60% 50% 50% 40%;
+      padding: 50px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: -1;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+      border-radius: 50% 50% 60% 40% / 50% 60% 40% 50%;
+    }
+
+    .glass-card:hover::before {
+      opacity: 0.05;
+    }
+
+    .glass-card h3 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .glass-card p {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--text-light);
+    }
+
+    /* Factoid with gradient border */
+    .tech-factoid {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      padding: 60px 80px;
+      margin: 80px auto;
+      max-width: 900px;
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      position: relative;
+      text-align: center;
+    }
+
+    .tech-factoid::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent3), var(--accent4));
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+      z-index: -1;
+      animation: gradient-rotate 8s linear infinite;
+    }
+
+    @keyframes gradient-rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .tech-factoid-content {
+      font-size: 18px;
+      line-height: 1.9;
+      color: var(--text);
+    }
+
+    /* Networks with glass pills */
+    .networks {
+      padding: 60px 0;
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 50px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .network-pill {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 500;
+      border-radius: 60% 40% 50% 50% / 50% 60% 40% 50%;
+      transition: all 0.3s ease;
+      position: relative;
+    }
+
+    .network-pill:hover {
+      transform: scale(1.05);
+      border-radius: 50% 50% 60% 40% / 60% 50% 40% 50%;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2));
+      color: white;
+    }
+
+    /* Stats with gradient */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+      padding: 60px 0;
+    }
+
+    .stat-card {
+      background: var(--glass);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.5);
+      padding: 40px;
+      text-align: center;
+      border-radius: 50% 50% 40% 60% / 40% 50% 60% 50%;
+    }
+
+    .stat-value {
+      font-size: 56px;
+      font-weight: 700;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent1), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-light);
+    }
+
+    /* CTA */
+    .cta {
+      padding: 80px 0;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 56px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      background: linear-gradient(135deg, var(--accent1), var(--accent2), var(--accent3));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .cta p {
+      font-size: 18px;
+      margin-bottom: 50px;
+      color: var(--text-light);
+    }
+
+    /* Footer */
+    footer {
+      padding: 50px 0;
+      text-align: center;
+      font-size: 14px;
+      color: var(--text-light);
+      opacity: 0.7;
+    }
+
+    @media (max-width: 1024px) {
+      .features-grid,
+      .stats {
+        grid-template-columns: 1fr;
+      }
+
+      .networks-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      h1 {
+        font-size: 48px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <header>
+      <div class="logo">Asset Haus</div>
+      <nav>
+        <a href="#">Services</a>
+        <a href="#">Networks</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Next-Gen Asset<br>Tokenization</h1>
+      <p class="subtitle">
+        Transform traditional assets into digital securities with
+        institutional-grade blockchain infrastructure.
+      </p>
+      <a href="#" class="btn">Get Started</a>
+    </section>
+
+    <section class="stats">
+      <div class="stat-card">
+        <div class="stat-value">14+</div>
+        <div class="stat-label">Networks</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">100%</div>
+        <div class="stat-label">Secure</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">24/7</div>
+        <div class="stat-label">Support</div>
+      </div>
+    </section>
+
+    <div class="features-grid">
+      <div class="glass-card">
+        <h3>Strategic Advisory</h3>
+        <p>
+          Comprehensive guidance on asset tokenization strategy, structure,
+          and execution for institutional portfolios.
+        </p>
+      </div>
+
+      <div class="glass-card">
+        <h3>Legal Architecture</h3>
+        <p>
+          Cross-jurisdictional regulatory frameworks and compliance structures
+          for digital asset issuance.
+        </p>
+      </div>
+
+      <div class="glass-card">
+        <h3>Technical Infrastructure</h3>
+        <p>
+          Institutional-grade smart contracts and blockchain implementation
+          with comprehensive security protocols.
+        </p>
+      </div>
+
+      <div class="glass-card">
+        <h3>Platform Solutions</h3>
+        <p>
+          Bespoke tokenization platforms with complete operational
+          and technical infrastructure.
+        </p>
+      </div>
+    </div>
+
+    <div class="tech-factoid">
+      <div class="tech-factoid-content">
+        Powered by cutting-edge blockchain technology, our infrastructure
+        delivers enterprise-grade security, scalability, and compliance
+        across 14+ networks. Every smart contract is audited by leading
+        security firms to ensure institutional standards.
+      </div>
+    </div>
+
+    <section class="networks">
+      <h2 class="section-title">Supported Networks</h2>
+      <div class="networks-grid">
+        <div class="network-pill">Ethereum</div>
+        <div class="network-pill">Polygon</div>
+        <div class="network-pill">Arbitrum</div>
+        <div class="network-pill">Optimism</div>
+        <div class="network-pill">Avalanche</div>
+        <div class="network-pill">BNB Chain</div>
+        <div class="network-pill">Base</div>
+        <div class="network-pill">Bitcoin</div>
+        <div class="network-pill">Solana</div>
+        <div class="network-pill">Cosmos</div>
+        <div class="network-pill">Fantom</div>
+        <div class="network-pill">Celo</div>
+      </div>
+    </section>
+
+    <section class="cta">
+      <h2>Ready to Transform?</h2>
+      <p>Let's discuss your tokenization needs</p>
+      <a href="#" class="btn">Schedule Call</a>
+    </section>
+
+    <footer>
+      © 2025 Asset Haus by Restifi — SEC Registered Platform
+    </footer>
+  </div>
+
+</body>
+</html>
