@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Tokenization Network</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@300;400;600;700&family=Saira:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Saira', sans-serif;
+      background: #0c0c14;
+      color: #d4d4f4;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 41px 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(12, 12, 20, 0.85);
+      backdrop-filter: blur(13px);
+    }
+
+    .logo {
+      font-size: 33px;
+      font-weight: 700;
+      font-family: 'Chakra Petch', sans-serif;
+      color: #00d4aa;
+      text-shadow: 0 0 17px rgba(0, 212, 170, 0.6);
+    }
+
+    nav {
+      display: flex;
+      gap: 47px;
+    }
+
+    nav a {
+      color: rgba(212, 212, 244, 0.8);
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #00d4aa;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 70px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 920px;
+    }
+
+    h1 {
+      font-size: 84px;
+      font-weight: 700;
+      margin-bottom: 29px;
+      line-height: 1.02;
+      font-family: 'Chakra Petch', sans-serif;
+      color: #d4d4f4;
+      text-shadow: 0 0 32px rgba(0, 212, 170, 0.4);
+    }
+
+    .hero-desc {
+      font-size: 20px;
+      color: rgba(212, 212, 244, 0.75);
+      margin-bottom: 54px;
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 23px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 20px 49px;
+      font-size: 15px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: all 0.3s;
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    .btn-primary {
+      background: #00d4aa;
+      color: #0c0c14;
+      border: 2px solid #00d4aa;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #00d4aa;
+      box-shadow: 0 0 29px rgba(0, 212, 170, 0.5);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #d4d4f4;
+      border: 2px solid rgba(212, 212, 244, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #00d4aa;
+      color: #00d4aa;
+    }
+
+    .networks {
+      padding: 142px 70px;
+    }
+
+    .section-title {
+      font-size: 55px;
+      font-weight: 700;
+      margin-bottom: 76px;
+      text-align: center;
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    .networks-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 29px;
+    }
+
+    .network-item {
+      background: rgba(0, 212, 170, 0.06);
+      border: 1px solid rgba(0, 212, 170, 0.25);
+      padding: 39px;
+      text-align: center;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 14px;
+      transition: all 0.3s;
+      border-radius: 7px;
+    }
+
+    .network-item:hover {
+      background: rgba(0, 212, 170, 0.14);
+      border-color: #00d4aa;
+      transform: translateY(-5px);
+    }
+
+    .capabilities {
+      padding: 142px 70px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 49px;
+      margin-top: 76px;
+    }
+
+    .capability {
+      background: rgba(16, 16, 28, 0.6);
+      border: 1px solid rgba(0, 212, 170, 0.25);
+      padding: 59px;
+      border-radius: 9px;
+    }
+
+    .capability-number {
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 17px;
+      color: #00d4aa;
+      margin-bottom: 25px;
+      font-weight: 700;
+    }
+
+    .capability h3 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 700;
+    }
+
+    .capability p {
+      color: rgba(212, 212, 244, 0.75);
+      line-height: 1.8;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 142px 70px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 65px;
+      margin-bottom: 30px;
+      font-family: 'Chakra Petch', sans-serif;
+    }
+
+    .cta p {
+      font-size: 19px;
+      color: rgba(212, 212, 244, 0.75);
+      margin-bottom: 59px;
+    }
+
+    footer {
+      padding: 76px;
+      text-align: center;
+      font-family: 'Chakra Petch', sans-serif;
+      font-size: 14px;
+      color: rgba(212, 212, 244, 0.5);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 51px; }
+      .networks-grid { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Capabilities</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Tokenization Network</h1>
+        <p class="hero-desc">
+          Connect real estate assets to blockchain infrastructure. Institutional platform for property tokenization with multi-chain support and enterprise security.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Start Tokenizing</a>
+          <a href="#" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Blockchain Networks</h2>
+      <div class="networks-grid">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Core Features</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <div class="capability-number">#01</div>
+          <h3>Asset Tokenization</h3>
+          <p>Transform real estate properties into blockchain tokens with full regulatory compliance. Support for apartments, commercial buildings, and land.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">#02</div>
+          <h3>Network Deployment</h3>
+          <p>Deploy across 15+ blockchain networks with unified API. Automatic bridging and cross-chain transactions.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">#03</div>
+          <h3>Compliance Engine</h3>
+          <p>Integrated KYC/AML verification, investor accreditation, transfer restrictions, and automated reporting.</p>
+        </div>
+        <div class="capability">
+          <div class="capability-number">#04</div>
+          <h3>Secure Custody</h3>
+          <p>Institutional-grade custody with multi-signature wallets, hardware security modules, and insurance.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Join the Network</h2>
+      <p>Tokenize real estate with institutional infrastructure</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Tokenization Network Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x0c0c14, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(0, 20, 60);
+    camera.lookAt(0, 0, 0);
+
+    // Create property blocks (representing tokenized real estate)
+    const blocks = [];
+    const blockCount = 40;
+    const connections = [];
+
+    for (let i = 0; i < blockCount; i++) {
+      const size = 1.5 + Math.random() * 1;
+      const geometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(size, size, size)
+      );
+
+      const material = new THREE.LineBasicMaterial({
+        color: 0x00d4aa,
+        transparent: true,
+        opacity: 0.7
+      });
+
+      const block = new THREE.LineSegments(geometry, material);
+
+      block.position.x = (Math.random() - 0.5) * 80;
+      block.position.y = (Math.random() - 0.5) * 40;
+      block.position.z = (Math.random() - 0.5) * 40;
+
+      block.userData = {
+        velocity: new THREE.Vector3(
+          (Math.random() - 0.5) * 0.03,
+          (Math.random() - 0.5) * 0.03,
+          (Math.random() - 0.5) * 0.03
+        ),
+        rotationSpeed: {
+          x: (Math.random() - 0.5) * 0.01,
+          y: (Math.random() - 0.5) * 0.01,
+          z: (Math.random() - 0.5) * 0.01
+        }
+      };
+
+      scene.add(block);
+      blocks.push(block);
+    }
+
+    function updateConnections() {
+      // Remove old connections
+      connections.forEach(line => scene.remove(line));
+      connections.length = 0;
+
+      const maxDistance = 20;
+
+      for (let i = 0; i < blocks.length; i++) {
+        let connectionCount = 0;
+        for (let j = i + 1; j < blocks.length && connectionCount < 3; j++) {
+          const distance = blocks[i].position.distanceTo(blocks[j].position);
+
+          if (distance < maxDistance) {
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array([
+              blocks[i].position.x, blocks[i].position.y, blocks[i].position.z,
+              blocks[j].position.x, blocks[j].position.y, blocks[j].position.z
+            ]);
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const opacity = 1 - (distance / maxDistance);
+            const material = new THREE.LineBasicMaterial({
+              color: 0x00d4aa,
+              transparent: true,
+              opacity: opacity * 0.25
+            });
+
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+            connections.push(line);
+            connectionCount++;
+          }
+        }
+      }
+    }
+
+    let frameCount = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      blocks.forEach((block) => {
+        block.position.add(block.userData.velocity);
+
+        // Bounce off boundaries
+        if (Math.abs(block.position.x) > 40) block.userData.velocity.x *= -1;
+        if (Math.abs(block.position.y) > 20) block.userData.velocity.y *= -1;
+        if (Math.abs(block.position.z) > 20) block.userData.velocity.z *= -1;
+
+        // Rotation
+        block.rotation.x += block.userData.rotationSpeed.x;
+        block.rotation.y += block.userData.rotationSpeed.y;
+        block.rotation.z += block.userData.rotationSpeed.z;
+
+        // Pulsing
+        const scale = 1 + Math.sin(Date.now() * 0.001 + block.position.x) * 0.1;
+        block.scale.set(scale, scale, scale);
+      });
+
+      // Update connections every 3 frames
+      if (frameCount % 3 === 0) {
+        updateConnections();
+      }
+      frameCount++;
+
+      // Gentle camera movement
+      camera.position.x = Math.sin(Date.now() * 0.0001) * 10;
+      camera.position.y = 20 + Math.sin(Date.now() * 0.0002) * 5;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
