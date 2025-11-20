@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Property DNA</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700;800&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Exo 2', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 30px 65px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(144, 238, 144, 0.22);
+    }
+
+    .logo {
+      font-size: 33px;
+      font-weight: 800;
+      font-family: 'Share Tech Mono', monospace;
+      color: #90ee90;
+      letter-spacing: -1px;
+    }
+
+    nav {
+      display: flex;
+      gap: 36px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1.3px;
+    }
+
+    nav a:hover {
+      color: #90ee90;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 65px;
+    }
+
+    .hero-content {
+      max-width: 720px;
+    }
+
+    h1 {
+      font-size: 88px;
+      font-weight: 800;
+      margin-bottom: 32px;
+      line-height: 0.93;
+      color: #ffffff;
+      letter-spacing: -3px;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.72);
+      margin-bottom: 48px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 19px;
+    }
+
+    .btn {
+      padding: 18px 42px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-family: 'Share Tech Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: #90ee90;
+      color: #000000;
+      border: 2px solid #90ee90;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #90ee90;
+      box-shadow: 0 0 28px rgba(144, 238, 144, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #90ee90;
+      color: #90ee90;
+    }
+
+    .networks {
+      padding: 98px 65px;
+      background: rgba(0, 0, 0, 0.72);
+    }
+
+    .section-title {
+      font-size: 51px;
+      font-weight: 800;
+      margin-bottom: 58px;
+    }
+
+    .networks-wrap {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+      max-width: 1050px;
+    }
+
+    .network-item {
+      padding: 20px 26px;
+      background: rgba(144, 238, 144, 0.06);
+      border: 1px solid rgba(144, 238, 144, 0.24);
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 12px;
+      border-radius: 6px;
+      transition: all 0.3s;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    .network-item:hover {
+      background: rgba(144, 238, 144, 0.12);
+      border-color: #90ee90;
+    }
+
+    .capabilities {
+      padding: 98px 65px;
+    }
+
+    .capabilities-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 35px;
+      max-width: 1150px;
+      margin-top: 58px;
+    }
+
+    .capability {
+      padding: 40px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(144, 238, 144, 0.18);
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .capability:hover {
+      background: rgba(144, 238, 144, 0.06);
+      border-color: #90ee90;
+    }
+
+    .capability h3 {
+      font-size: 25px;
+      margin-bottom: 15px;
+      font-weight: 700;
+      color: #90ee90;
+    }
+
+    .capability p {
+      color: rgba(255, 255, 255, 0.72);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .cta {
+      padding: 118px 65px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 63px;
+      margin-bottom: 27px;
+      font-weight: 800;
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.72);
+      margin-bottom: 49px;
+    }
+
+    footer {
+      padding: 59px 65px;
+      text-align: center;
+      font-family: 'Share Tech Mono', monospace;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.43);
+      border-top: 1px solid rgba(144, 238, 144, 0.22);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 53px; }
+      .networks-wrap { grid-template-columns: repeat(2, 1fr); }
+      .capabilities-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Features</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Genetic Code<br>of Property</h1>
+        <p class="hero-desc">
+          Every asset has unique DNA. Our platform decodes property characteristics into digital blueprints, creating standardized tokens while preserving individual property attributes.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Decode Assets</a>
+          <a href="#" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Blockchain Networks</h2>
+      <div class="networks-wrap">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">DNA Analysis</h2>
+      <div class="capabilities-grid">
+        <div class="capability">
+          <h3>Property Genome Mapping</h3>
+          <p>Extract and encode all property characteristics into a standardized digital genome: location, size, type, amenities, and market factors.</p>
+        </div>
+        <div class="capability">
+          <h3>Trait Sequencing</h3>
+          <p>Break down complex real estate attributes into discrete digital traits, enabling precise comparison and valuation algorithms.</p>
+        </div>
+        <div class="capability">
+          <h3>Hereditary Value Transfer</h3>
+          <p>Property improvements and historical performance data are inherited by tokens, creating a complete lineage of value evolution.</p>
+        </div>
+        <div class="capability">
+          <h3>Mutation Detection</h3>
+          <p>Automatically detect and record changes in property DNA over time, from renovations to zoning changes and market shifts.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Decode Your Properties</h2>
+      <p>Transform real estate into digital DNA sequences</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Property Genome Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    // Create DNA helices
+    const helixCount = 3;
+    const helices = [];
+
+    for (let h = 0; h < helixCount; h++) {
+      const helix = {
+        strand1: [],
+        strand2: [],
+        connections: [],
+        offset: h * 25
+      };
+
+      const segments = 60;
+      const radius = 5;
+      const height = 50;
+
+      // Create two strands
+      for (let i = 0; i < segments; i++) {
+        const t = i / segments;
+        const angle = t * Math.PI * 8; // Number of rotations
+        const y = -height / 2 + t * height;
+
+        // Strand 1
+        const x1 = Math.cos(angle) * radius;
+        const z1 = Math.sin(angle) * radius;
+
+        const nodeGeometry1 = new THREE.EdgesGeometry(
+          new THREE.SphereGeometry(0.4, 6, 6)
+        );
+        const nodeMaterial1 = new THREE.LineBasicMaterial({
+          color: 0x90ee90,
+          transparent: true,
+          opacity: 0.7
+        });
+        const node1 = new THREE.LineSegments(nodeGeometry1, nodeMaterial1);
+        node1.position.set(x1, y, z1 + helix.offset);
+        scene.add(node1);
+        helix.strand1.push(node1);
+
+        // Strand 2 (opposite side)
+        const x2 = Math.cos(angle + Math.PI) * radius;
+        const z2 = Math.sin(angle + Math.PI) * radius;
+
+        const nodeGeometry2 = new THREE.EdgesGeometry(
+          new THREE.SphereGeometry(0.4, 6, 6)
+        );
+        const nodeMaterial2 = new THREE.LineBasicMaterial({
+          color: 0x90ee90,
+          transparent: true,
+          opacity: 0.7
+        });
+        const node2 = new THREE.LineSegments(nodeGeometry2, nodeMaterial2);
+        node2.position.set(x2, y, z2 + helix.offset);
+        scene.add(node2);
+        helix.strand2.push(node2);
+
+        // Connection every few nodes
+        if (i % 3 === 0) {
+          const points = [
+            new THREE.Vector3(x1, y, z1 + helix.offset),
+            new THREE.Vector3(x2, y, z2 + helix.offset)
+          ];
+          const geometry = new THREE.BufferGeometry().setFromPoints(points);
+          const material = new THREE.LineBasicMaterial({
+            color: 0x90ee90,
+            transparent: true,
+            opacity: 0.3
+          });
+          const connection = new THREE.Line(geometry, material);
+          scene.add(connection);
+          helix.connections.push({ line: connection, node1, node2 });
+        }
+      }
+
+      // Create backbone connections
+      for (let i = 0; i < segments - 1; i++) {
+        // Strand 1 backbone
+        const points1 = [
+          helix.strand1[i].position.clone(),
+          helix.strand1[i + 1].position.clone()
+        ];
+        const geometry1 = new THREE.BufferGeometry().setFromPoints(points1);
+        const material1 = new THREE.LineBasicMaterial({
+          color: 0x90ee90,
+          transparent: true,
+          opacity: 0.4
+        });
+        const backbone1 = new THREE.Line(geometry1, material1);
+        scene.add(backbone1);
+        helix.connections.push({ line: backbone1, node1: helix.strand1[i], node2: helix.strand1[i + 1] });
+
+        // Strand 2 backbone
+        const points2 = [
+          helix.strand2[i].position.clone(),
+          helix.strand2[i + 1].position.clone()
+        ];
+        const geometry2 = new THREE.BufferGeometry().setFromPoints(points2);
+        const material2 = new THREE.LineBasicMaterial({
+          color: 0x90ee90,
+          transparent: true,
+          opacity: 0.4
+        });
+        const backbone2 = new THREE.Line(geometry2, material2);
+        scene.add(backbone2);
+        helix.connections.push({ line: backbone2, node1: helix.strand2[i], node2: helix.strand2[i + 1] });
+      }
+
+      helices.push(helix);
+    }
+
+    // Camera setup
+    camera.position.set(30, 0, 40);
+    camera.lookAt(0, 0, 12);
+
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 1;
+
+      // Rotate helices
+      helices.forEach((helix, index) => {
+        const rotationSpeed = 0.003 + index * 0.001;
+
+        helix.strand1.forEach(node => {
+          const currentAngle = Math.atan2(node.position.z - helix.offset, node.position.x);
+          const newAngle = currentAngle + rotationSpeed;
+          const radius = Math.sqrt(node.position.x ** 2 + (node.position.z - helix.offset) ** 2);
+
+          node.position.x = Math.cos(newAngle) * radius;
+          node.position.z = Math.sin(newAngle) * radius + helix.offset;
+        });
+
+        helix.strand2.forEach(node => {
+          const currentAngle = Math.atan2(node.position.z - helix.offset, node.position.x);
+          const newAngle = currentAngle + rotationSpeed;
+          const radius = Math.sqrt(node.position.x ** 2 + (node.position.z - helix.offset) ** 2);
+
+          node.position.x = Math.cos(newAngle) * radius;
+          node.position.z = Math.sin(newAngle) * radius + helix.offset;
+        });
+
+        // Update connection lines
+        helix.connections.forEach(conn => {
+          const positions = conn.line.geometry.attributes.position.array;
+          positions[0] = conn.node1.position.x;
+          positions[1] = conn.node1.position.y;
+          positions[2] = conn.node1.position.z;
+          positions[3] = conn.node2.position.x;
+          positions[4] = conn.node2.position.y;
+          positions[5] = conn.node2.position.z;
+          conn.line.geometry.attributes.position.needsUpdate = true;
+        });
+      });
+
+      // Gentle camera movement
+      camera.position.x = 28 + Math.sin(time * 0.001) * 8;
+      camera.position.y = Math.sin(time * 0.0015) * 15;
+      camera.position.z = 40 + Math.cos(time * 0.001) * 8;
+      camera.lookAt(0, 0, 12);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

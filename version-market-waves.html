@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Market Waves</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'JetBrains Mono', monospace;
+      background: #000814;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 26px 58px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 8, 20, 0.88);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 180, 216, 0.25);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 700;
+      color: #00b4d8;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.72);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+
+    nav a:hover {
+      color: #00b4d8;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 58px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 740px;
+    }
+
+    h1 {
+      font-size: 86px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      line-height: 0.92;
+      color: #ffffff;
+      letter-spacing: -3px;
+    }
+
+    .hero-desc {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.66);
+      margin-bottom: 42px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 17px 40px;
+      font-size: 12px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: #00b4d8;
+      color: #000814;
+      border: 2px solid #00b4d8;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #00b4d8;
+      box-shadow: 0 0 26px rgba(0, 180, 216, 0.35);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.28);
+    }
+
+    .btn-outline:hover {
+      border-color: #00b4d8;
+      color: #00b4d8;
+    }
+
+    .metrics {
+      padding: 92px 58px;
+      background: rgba(0, 8, 20, 0.75);
+    }
+
+    .section-title {
+      font-size: 46px;
+      font-weight: 700;
+      margin-bottom: 54px;
+      text-align: center;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+      max-width: 1150px;
+      margin: 0 auto;
+    }
+
+    .metric-card {
+      padding: 28px 24px;
+      background: rgba(0, 180, 216, 0.04);
+      border: 1px solid rgba(0, 180, 216, 0.22);
+      border-radius: 6px;
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .metric-card:hover {
+      background: rgba(0, 180, 216, 0.08);
+      border-color: #00b4d8;
+      transform: translateY(-2px);
+    }
+
+    .metric-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: #00b4d8;
+      margin-bottom: 8px;
+    }
+
+    .metric-label {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .features {
+      padding: 92px 58px;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      max-width: 1050px;
+      margin: 54px auto 0;
+    }
+
+    .feature {
+      padding: 38px;
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(0, 180, 216, 0.18);
+      border-radius: 5px;
+      transition: all 0.3s;
+    }
+
+    .feature:hover {
+      background: rgba(0, 180, 216, 0.05);
+      border-color: #00b4d8;
+    }
+
+    .feature h3 {
+      font-size: 23px;
+      margin-bottom: 13px;
+      font-weight: 600;
+      color: #00b4d8;
+    }
+
+    .feature p {
+      color: rgba(255, 255, 255, 0.66);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .cta {
+      padding: 112px 58px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 60px;
+      margin-bottom: 26px;
+      font-weight: 700;
+    }
+
+    .cta p {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.66);
+      margin-bottom: 46px;
+    }
+
+    footer {
+      padding: 54px 58px;
+      text-align: center;
+      font-size: 10px;
+      color: rgba(255, 255, 255, 0.42);
+      border-top: 1px solid rgba(0, 180, 216, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 50px; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .features-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#metrics">Metrics</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Ride The<br>Market Waves</h1>
+        <p class="hero-desc">
+          Visualize real-time market dynamics for tokenized real estate. Track price movements, volume flows, and sentiment shifts across global property markets with intuitive wave analytics.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">View Markets</a>
+          <a href="#" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="metrics" id="metrics">
+      <h2 class="section-title">Live Market Data</h2>
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value">$2.4B</div>
+          <div class="metric-label">24h Volume</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">+12.3%</div>
+          <div class="metric-label">Market Growth</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">45,782</div>
+          <div class="metric-label">Active Traders</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">$18.7B</div>
+          <div class="metric-label">Total Market Cap</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">3,421</div>
+          <div class="metric-label">Listed Properties</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">0.8s</div>
+          <div class="metric-label">Avg Trade Time</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">128</div>
+          <div class="metric-label">Global Markets</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">99.9%</div>
+          <div class="metric-label">Uptime</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features" id="features">
+      <h2 class="section-title">Wave Analytics</h2>
+      <div class="features-grid">
+        <div class="feature">
+          <h3>Real-Time Wave Patterns</h3>
+          <p>Advanced visualization of market movements using wave dynamics. Identify trends, cycles, and momentum shifts instantly across multiple asset classes.</p>
+        </div>
+        <div class="feature">
+          <h3>Predictive Modeling</h3>
+          <p>Machine learning algorithms analyze wave patterns to forecast potential market movements and identify optimal entry and exit points.</p>
+        </div>
+        <div class="feature">
+          <h3>Volume Flow Analysis</h3>
+          <p>Track capital flows between different property types and geographic markets. Understand where liquidity is moving in real-time.</p>
+        </div>
+        <div class="feature">
+          <h3>Sentiment Indicators</h3>
+          <p>Aggregate on-chain and off-chain data to measure market sentiment. Wave intensity reflects collective investor confidence.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Surf The Market</h2>
+      <p>Access real-time analytics for tokenized real estate markets</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Market Analytics Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(65, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000814, 1);
+    container.appendChild(renderer.domElement);
+
+    // Create wave grids (multiple layers representing different markets)
+    const waves = [];
+    const waveCount = 4;
+    const gridSize = 40;
+    const spacing = 2;
+
+    for (let w = 0; w < waveCount; w++) {
+      const waveData = {
+        points: [],
+        lines: [],
+        offsetY: -20 + w * 15,
+        speed: 0.015 + w * 0.005,
+        amplitude: 3 + w * 0.5,
+        frequency: 0.15 + w * 0.03,
+        color: new THREE.Color().setHSL(0.52 + w * 0.05, 0.85, 0.55)
+      };
+
+      // Create grid of points
+      for (let x = 0; x < gridSize; x++) {
+        for (let z = 0; z < gridSize; z++) {
+          const pointGeometry = new THREE.EdgesGeometry(
+            new THREE.SphereGeometry(0.15, 4, 4)
+          );
+          const pointMaterial = new THREE.LineBasicMaterial({
+            color: waveData.color,
+            transparent: true,
+            opacity: 0.6
+          });
+          const point = new THREE.LineSegments(pointGeometry, pointMaterial);
+
+          const px = (x - gridSize / 2) * spacing;
+          const pz = (z - gridSize / 2) * spacing;
+
+          point.position.set(px, waveData.offsetY, pz);
+          point.userData = {
+            originalX: px,
+            originalZ: pz,
+            gridX: x,
+            gridZ: z
+          };
+
+          scene.add(point);
+          waveData.points.push(point);
+        }
+      }
+
+      // Create connecting lines
+      for (let x = 0; x < gridSize; x++) {
+        for (let z = 0; z < gridSize; z++) {
+          const index = x * gridSize + z;
+
+          // Horizontal line
+          if (z < gridSize - 1) {
+            const p1 = waveData.points[index];
+            const p2 = waveData.points[index + 1];
+            const points = [p1.position.clone(), p2.position.clone()];
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({
+              color: waveData.color,
+              transparent: true,
+              opacity: 0.25
+            });
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+            waveData.lines.push({ line, p1, p2 });
+          }
+
+          // Vertical line
+          if (x < gridSize - 1) {
+            const p1 = waveData.points[index];
+            const p2 = waveData.points[(x + 1) * gridSize + z];
+            const points = [p1.position.clone(), p2.position.clone()];
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const material = new THREE.LineBasicMaterial({
+              color: waveData.color,
+              transparent: true,
+              opacity: 0.25
+            });
+            const line = new THREE.Line(geometry, material);
+            scene.add(line);
+            waveData.lines.push({ line, p1, p2 });
+          }
+        }
+      }
+
+      waves.push(waveData);
+    }
+
+    camera.position.set(45, 35, 45);
+    camera.lookAt(0, 0, 0);
+
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 1;
+
+      // Animate waves
+      waves.forEach((wave, waveIndex) => {
+        const t = time * wave.speed;
+
+        wave.points.forEach(point => {
+          const x = point.userData.originalX;
+          const z = point.userData.originalZ;
+
+          // Multiple wave frequencies
+          const dist = Math.sqrt(x * x + z * z);
+          const wave1 = Math.sin(dist * wave.frequency - t) * wave.amplitude;
+          const wave2 = Math.cos(x * wave.frequency * 0.5 - t * 0.8) * wave.amplitude * 0.5;
+          const wave3 = Math.sin(z * wave.frequency * 0.5 - t * 1.2) * wave.amplitude * 0.5;
+
+          const y = wave.offsetY + wave1 + wave2 + wave3;
+          point.position.y = y;
+        });
+
+        // Update lines
+        wave.lines.forEach(lineData => {
+          const positions = lineData.line.geometry.attributes.position.array;
+          positions[0] = lineData.p1.position.x;
+          positions[1] = lineData.p1.position.y;
+          positions[2] = lineData.p1.position.z;
+          positions[3] = lineData.p2.position.x;
+          positions[4] = lineData.p2.position.y;
+          positions[5] = lineData.p2.position.z;
+          lineData.line.geometry.attributes.position.needsUpdate = true;
+        });
+      });
+
+      // Camera orbit
+      const radius = 50;
+      camera.position.x = Math.cos(time * 0.0004) * radius;
+      camera.position.z = Math.sin(time * 0.0004) * radius;
+      camera.position.y = 32 + Math.sin(time * 0.0006) * 8;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

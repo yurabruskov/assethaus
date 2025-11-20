@@ -374,6 +374,39 @@
       const building = new THREE.LineSegments(geometry, material);
       building.position.set(x, height / 2, z);
       scene.add(building);
+
+      // Add windows
+      const windowCount = type === 'skyscraper' ? 15 : (type === 'apartment' ? 8 : 3);
+      for (let i = 0; i < windowCount; i++) {
+        const windowGeometry = new THREE.PlaneGeometry(0.3, 0.3);
+        const windowMaterial = new THREE.MeshBasicMaterial({
+          color: 0x4fc3f7,
+          transparent: true,
+          opacity: 0.3 + Math.random() * 0.4
+        });
+        const window = new THREE.Mesh(windowGeometry, windowMaterial);
+
+        const side = Math.floor(Math.random() * 4);
+        const offsetX = (Math.random() - 0.5) * width * 0.7;
+        const offsetY = (Math.random() - 0.3) * height;
+        const offsetZ = (Math.random() - 0.5) * depth * 0.7;
+
+        if (side === 0) {
+          window.position.set(x + width/2, height/2 + offsetY, z + offsetZ);
+          window.rotation.y = Math.PI / 2;
+        } else if (side === 1) {
+          window.position.set(x - width/2, height/2 + offsetY, z + offsetZ);
+          window.rotation.y = -Math.PI / 2;
+        } else if (side === 2) {
+          window.position.set(x + offsetX, height/2 + offsetY, z + depth/2);
+        } else {
+          window.position.set(x + offsetX, height/2 + offsetY, z - depth/2);
+          window.rotation.y = Math.PI;
+        }
+
+        scene.add(window);
+      }
+
       return building;
     }
 
@@ -524,44 +557,100 @@
     light4.position.set(-streetWidth/2, 1.5, -streetWidth/2);
     scene.add(light4);
 
+    // Ground plane (asphalt)
+    const groundGeometry = new THREE.PlaneGeometry(blockSize * 1.5, blockSize * 1.5, 40, 40);
+    const groundMaterial = new THREE.MeshBasicMaterial({
+      color: 0x1a1a1a,
+      transparent: true,
+      opacity: 0.8
+    });
+
+    // Add noise to ground
+    const positions = groundGeometry.attributes.position;
+    for (let i = 0; i < positions.count; i++) {
+      const y = (Math.random() - 0.5) * 0.3;
+      positions.setY(i, y);
+    }
+    positions.needsUpdate = true;
+    groundGeometry.computeVertexNormals();
+
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.1;
+    scene.add(ground);
+
     // Road markings
-    const gridHelper = new THREE.GridHelper(blockSize * 1.2, 80, 0x4fc3f7, 0x1a1a1a);
-    gridHelper.material.opacity = 0.1;
+    const gridHelper = new THREE.GridHelper(blockSize * 1.2, 80, 0x4fc3f7, 0x2a2a2a);
+    gridHelper.material.opacity = 0.15;
     gridHelper.material.transparent = true;
     scene.add(gridHelper);
 
-    // Camera flight path
+    // Camera flight path with smooth turns
     let flightProgress = 0;
-    const flightSpeed = 0.0006;
+    const flightSpeed = 0.4;
+    const turnRadius = 8;
+    const straightLength = blockSize - turnRadius * 2;
 
     function getFlightPosition(progress) {
-      const p = progress % 4;
-      const side = Math.floor(p);
-      const t = p - side;
+      const totalLength = (straightLength + Math.PI * turnRadius / 2) * 4;
+      const normalizedProgress = (progress % totalLength) / totalLength;
+      const segment = normalizedProgress * 4;
+      const side = Math.floor(segment);
+      const t = segment - side;
 
-      let x, z, lookX, lookZ;
+      const segmentLength = straightLength + Math.PI * turnRadius / 2;
+      const straightPortion = straightLength / segmentLength;
 
-      if (side === 0) {
-        x = -blockSize/2 + t * blockSize;
-        z = 0;
-        lookX = x + 20;
-        lookZ = z;
-      } else if (side === 1) {
-        x = blockSize/2;
-        z = -blockSize/2 + t * blockSize;
-        lookX = x;
-        lookZ = z + 20;
-      } else if (side === 2) {
-        x = blockSize/2 - t * blockSize;
-        z = 0;
-        lookX = x - 20;
-        lookZ = z;
+      let x, z, angle;
+
+      if (t < straightPortion) {
+        // Straight section
+        const straightT = t / straightPortion;
+
+        if (side === 0) { // West to East
+          x = -blockSize/2 + turnRadius + straightT * straightLength;
+          z = 0;
+          angle = 0;
+        } else if (side === 1) { // North to South
+          x = blockSize/2;
+          z = -blockSize/2 + turnRadius + straightT * straightLength;
+          angle = Math.PI / 2;
+        } else if (side === 2) { // East to West
+          x = blockSize/2 - turnRadius - straightT * straightLength;
+          z = 0;
+          angle = Math.PI;
+        } else { // South to North
+          x = -blockSize/2;
+          z = blockSize/2 - turnRadius - straightT * straightLength;
+          angle = -Math.PI / 2;
+        }
       } else {
-        x = -blockSize/2;
-        z = blockSize/2 - t * blockSize;
-        lookX = x;
-        lookZ = z - 20;
+        // Turn section
+        const turnT = (t - straightPortion) / (1 - straightPortion);
+        const turnAngle = turnT * Math.PI / 2;
+
+        if (side === 0) { // Turn from East to South
+          x = blockSize/2 - turnRadius + Math.sin(turnAngle) * turnRadius;
+          z = turnRadius - Math.cos(turnAngle) * turnRadius;
+          angle = turnAngle;
+        } else if (side === 1) { // Turn from South to West
+          x = blockSize/2 - turnRadius * (1 - Math.cos(turnAngle));
+          z = blockSize/2 - turnRadius + Math.sin(turnAngle) * turnRadius;
+          angle = Math.PI / 2 + turnAngle;
+        } else if (side === 2) { // Turn from West to North
+          x = -blockSize/2 + turnRadius - Math.sin(turnAngle) * turnRadius;
+          z = -turnRadius + Math.cos(turnAngle) * turnRadius;
+          angle = Math.PI + turnAngle;
+        } else { // Turn from North to East
+          x = -blockSize/2 + turnRadius * (1 - Math.cos(turnAngle));
+          z = -blockSize/2 + turnRadius - Math.sin(turnAngle) * turnRadius;
+          angle = -Math.PI / 2 + turnAngle;
+        }
       }
+
+      const lookDistance = 20;
+      const lookX = x + Math.cos(angle) * lookDistance;
+      const lookZ = z + Math.sin(angle) * lookDistance;
 
       return { x, z, lookX, lookZ };
     }
