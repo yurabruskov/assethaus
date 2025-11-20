@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Blockchain Network</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 32px 70px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(138, 43, 226, 0.25);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: 700;
+      font-family: 'IBM Plex Mono', monospace;
+      color: #8a2be2;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      display: flex;
+      gap: 38px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover {
+      color: #8a2be2;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 70px;
+    }
+
+    .hero-content {
+      max-width: 680px;
+    }
+
+    h1 {
+      font-size: 78px;
+      font-weight: 700;
+      margin-bottom: 30px;
+      line-height: 1;
+      color: #ffffff;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 50px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+    }
+
+    .btn {
+      padding: 17px 42px;
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 4px;
+      transition: all 0.3s;
+      font-family: 'IBM Plex Mono', monospace;
+      text-transform: uppercase;
+    }
+
+    .btn-primary {
+      background: #8a2be2;
+      color: #ffffff;
+      border: 2px solid #8a2be2;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #8a2be2;
+      box-shadow: 0 0 25px rgba(138, 43, 226, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #8a2be2;
+      color: #8a2be2;
+    }
+
+    .networks {
+      padding: 95px 70px;
+      background: rgba(0, 0, 0, 0.65);
+    }
+
+    .section-title {
+      font-size: 50px;
+      font-weight: 700;
+      margin-bottom: 55px;
+    }
+
+    .networks-flex {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      max-width: 1000px;
+    }
+
+    .network-item {
+      padding: 20px 32px;
+      background: rgba(138, 43, 226, 0.08);
+      border: 1px solid rgba(138, 43, 226, 0.25);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 13px;
+      border-radius: 25px;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .network-item:hover {
+      background: rgba(138, 43, 226, 0.15);
+      border-color: #8a2be2;
+    }
+
+    .capabilities {
+      padding: 95px 70px;
+    }
+
+    .capabilities-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 1100px;
+      margin-top: 55px;
+    }
+
+    .capability {
+      padding: 45px 0;
+      border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      gap: 35px;
+    }
+
+    .capability:last-child {
+      border-bottom: none;
+    }
+
+    .capability-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 32px;
+      color: #8a2be2;
+      font-weight: 600;
+    }
+
+    .capability-text h3 {
+      font-size: 30px;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .capability-text p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .cta {
+      padding: 115px 70px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 60px;
+      margin-bottom: 24px;
+      font-weight: 700;
+    }
+
+    .cta p {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 48px;
+    }
+
+    footer {
+      padding: 58px 70px;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      border-top: 1px solid rgba(138, 43, 226, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 50px; }
+      .capability { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#capabilities">Features</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Distributed<br>Asset Network</h1>
+        <p class="hero-desc">
+          Every property becomes a node in the blockchain. Our decentralized infrastructure connects real estate assets across the globe, creating an interconnected ecosystem of tokenized value.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Join Network</a>
+          <a href="#" class="btn btn-outline">Explore</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Connected Blockchains</h2>
+      <div class="networks-flex">
+        <div class="network-item">Ethereum</div>
+        <div class="network-item">Polygon</div>
+        <div class="network-item">Arbitrum</div>
+        <div class="network-item">Optimism</div>
+        <div class="network-item">Base</div>
+        <div class="network-item">Avalanche</div>
+        <div class="network-item">BNB Chain</div>
+        <div class="network-item">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Network Features</h2>
+      <div class="capabilities-stack">
+        <div class="capability">
+          <div class="capability-num">01</div>
+          <div class="capability-text">
+            <h3>Decentralized Architecture</h3>
+            <p>Properties are distributed across multiple blockchain networks, ensuring redundancy, security, and global accessibility without single points of failure.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">02</div>
+          <div class="capability-text">
+            <h3>Cross-Chain Bridges</h3>
+            <p>Seamless asset transfers between networks with automated bridging protocols, enabling liquidity and trading across the entire ecosystem.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">03</div>
+          <div class="capability-text">
+            <h3>Network Consensus</h3>
+            <p>Multi-chain validation ensures property ownership and transaction integrity through distributed consensus mechanisms and cryptographic proof.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">04</div>
+          <div class="capability-text">
+            <h3>Growing Topology</h3>
+            <p>Network expands continuously as new properties and blockchains join, creating an ever-growing web of interconnected real estate assets.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Connect Your Assets</h2>
+      <p>Become part of the global property network</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Decentralized Property Infrastructure</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    const cubes = [];
+    const connections = [];
+    const maxCubes = 60;
+    let cubeIndex = 0;
+
+    // Create cube nodes
+    function createCube() {
+      const size = 1.5 + Math.random() * 1;
+      const geometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(size, size, size)
+      );
+
+      const material = new THREE.LineBasicMaterial({
+        color: 0x8a2be2,
+        transparent: true,
+        opacity: 0
+      });
+
+      const cube = new THREE.LineSegments(geometry, material);
+
+      // Random position in 3D space
+      const radius = 15 + Math.random() * 20;
+      const theta = Math.random() * Math.PI * 2;
+      const phi = Math.random() * Math.PI;
+
+      cube.position.x = radius * Math.sin(phi) * Math.cos(theta);
+      cube.position.y = radius * Math.sin(phi) * Math.sin(theta);
+      cube.position.z = radius * Math.cos(phi);
+
+      cube.userData.targetOpacity = 0.4 + Math.random() * 0.3;
+      cube.userData.rotationSpeed = {
+        x: (Math.random() - 0.5) * 0.01,
+        y: (Math.random() - 0.5) * 0.01,
+        z: (Math.random() - 0.5) * 0.01
+      };
+
+      scene.add(cube);
+      cubes.push(cube);
+
+      // Create connections to nearby cubes
+      if (cubes.length > 1) {
+        const numConnections = Math.min(2 + Math.floor(Math.random() * 2), cubes.length - 1);
+        for (let i = 0; i < numConnections; i++) {
+          const targetCube = cubes[Math.floor(Math.random() * (cubes.length - 1))];
+          if (targetCube !== cube) {
+            createConnection(cube, targetCube);
+          }
+        }
+      }
+    }
+
+    // Create connection line between cubes
+    function createConnection(cube1, cube2) {
+      const points = [
+        cube1.position.clone(),
+        cube2.position.clone()
+      ];
+
+      const geometry = new THREE.BufferGeometry().setFromPoints(points);
+      const material = new THREE.LineBasicMaterial({
+        color: 0x8a2be2,
+        transparent: true,
+        opacity: 0
+      });
+
+      const line = new THREE.Line(geometry, material);
+      line.userData.targetOpacity = 0.15;
+      line.userData.cube1 = cube1;
+      line.userData.cube2 = cube2;
+
+      scene.add(line);
+      connections.push(line);
+    }
+
+    // Camera setup
+    camera.position.set(50, 30, 50);
+    camera.lookAt(0, 0, 0);
+
+    let time = 0;
+    const cubeSpawnInterval = 15;
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      time += 1;
+
+      // Spawn new cubes periodically
+      if (time % cubeSpawnInterval === 0 && cubeIndex < maxCubes) {
+        createCube();
+        cubeIndex++;
+      }
+
+      // Fade in cubes
+      cubes.forEach(cube => {
+        if (cube.material.opacity < cube.userData.targetOpacity) {
+          cube.material.opacity += 0.01;
+        }
+
+        // Rotate cubes
+        cube.rotation.x += cube.userData.rotationSpeed.x;
+        cube.rotation.y += cube.userData.rotationSpeed.y;
+        cube.rotation.z += cube.userData.rotationSpeed.z;
+      });
+
+      // Fade in and update connections
+      connections.forEach(connection => {
+        if (connection.material.opacity < connection.userData.targetOpacity) {
+          connection.material.opacity += 0.005;
+        }
+
+        // Update connection positions (cubes might rotate)
+        const positions = connection.geometry.attributes.position.array;
+        positions[0] = connection.userData.cube1.position.x;
+        positions[1] = connection.userData.cube1.position.y;
+        positions[2] = connection.userData.cube1.position.z;
+        positions[3] = connection.userData.cube2.position.x;
+        positions[4] = connection.userData.cube2.position.y;
+        positions[5] = connection.userData.cube2.position.z;
+        connection.geometry.attributes.position.needsUpdate = true;
+      });
+
+      // Rotate camera around the network
+      const radius = 60;
+      camera.position.x = Math.cos(time * 0.002) * radius;
+      camera.position.z = Math.sin(time * 0.002) * radius;
+      camera.position.y = 30 + Math.sin(time * 0.001) * 10;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
