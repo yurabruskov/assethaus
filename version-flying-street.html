@@ -572,11 +572,16 @@
     light4.position.set(-streetWidth/2, 1.5, -streetWidth/2);
     scene.add(light4);
 
-    // Ground grid pattern (like checkerboard)
-    const gridHelper = new THREE.GridHelper(blockSize * 1.3, 120, 0x4fc3f7, 0x1a1a1a);
-    gridHelper.material.opacity = 0.3;
+    // Ground grid pattern (TRON-style like Land Plots)
+    const gridHelper = new THREE.GridHelper(
+      blockSize * 1.3,
+      180,  // Grid divisions
+      0x00d4ff,  // Cyan center lines
+      0x003366   // Dark blue grid lines
+    );
+    gridHelper.material.opacity = 0.5;
     gridHelper.material.transparent = true;
-    gridHelper.position.y = 0;
+    gridHelper.position.y = -0.1;
     scene.add(gridHelper);
 
     // Camera flight path - slower with random turns
@@ -589,7 +594,7 @@
     let turnProgress = 0;
     const moveSpeed = 0.08; // Slower movement
     const turnSpeed = 0.01; // Slower turning
-    const straightDistance = 50;
+    const straightDistance = 200; // Walk full street before turning
 
     function getFlightPosition() {
       let x = cameraX;

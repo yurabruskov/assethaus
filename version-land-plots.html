@@ -446,17 +446,29 @@
           color = (r << 16) | (g << 8) | b;
         }
 
-        const geometry = new THREE.EdgesGeometry(
-          new THREE.BoxGeometry(width, height, depth)
-        );
+        const boxGeometry = new THREE.BoxGeometry(width, height, depth);
 
-        const material = new THREE.LineBasicMaterial({
+        // Create solid walls
+        const wallMaterial = new THREE.MeshBasicMaterial({
           color: color,
           transparent: true,
           opacity: 0
         });
+        const walls = new THREE.Mesh(boxGeometry, wallMaterial);
 
-        const plot = new THREE.LineSegments(geometry, material);
+        // Create edges (outline)
+        const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+        const edgesMaterial = new THREE.LineBasicMaterial({
+          color: color,
+          transparent: true,
+          opacity: 0
+        });
+        const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+        // Group walls and edges together
+        const plot = new THREE.Group();
+        plot.add(walls);
+        plot.add(edges);
 
         plot.position.x = (x - gridSize / 2) * (plotSize + spacing);
         plot.position.y = height / 2;
@@ -466,6 +478,8 @@
         plot.userData.baseHeight = height;
         plot.userData.animationDelay = (x + z) * 1.5;
         plot.userData.isPark = park;
+        plot.userData.wallMaterial = wallMaterial;
+        plot.userData.edgesMaterial = edgesMaterial;
 
         scene.add(plot);
         plots.push(plot);
@@ -500,8 +514,15 @@
       // Fade in plots with delay
       plots.forEach((plot, index) => {
         if (time > plot.userData.animationDelay) {
-          if (plot.material.opacity < plot.userData.targetOpacity) {
-            plot.material.opacity += 0.008;
+          const wallMat = plot.userData.wallMaterial;
+          const edgesMat = plot.userData.edgesMaterial;
+
+          // Fade in both walls and edges
+          if (wallMat.opacity < plot.userData.targetOpacity * 0.3) {
+            wallMat.opacity += 0.008;
+          }
+          if (edgesMat.opacity < plot.userData.targetOpacity) {
+            edgesMat.opacity += 0.008;
           }
 
           // Gentle height pulse (less for parks)
