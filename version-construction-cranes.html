@@ -522,52 +522,34 @@
           crane.hookY += 0.12;
           crane.hook.position.y = crane.hookY;
 
-          if (crane.block) {
-            crane.block.position.y = crane.hookY;
-          }
-
           if (crane.hookY >= liftHeight) {
-            crane.state = 'moving';
-          }
-        } else if (crane.state === 'moving') {
-          // Move horizontally to target position
-          if (crane.block) {
-            crane.block.position.x += (targetX - crane.block.position.x) * 0.05;
-            crane.block.position.z += (targetZ - crane.block.position.z) * 0.05;
-
-            const distX = Math.abs(crane.block.position.x - targetX);
-            const distZ = Math.abs(crane.block.position.z - targetZ);
-
-            if (distX < 0.15 && distZ < 0.15) {
-              crane.state = 'placing';
-            }
+            crane.state = 'placing';
           }
         } else if (crane.state === 'placing') {
           // Lower block to target floor
-          if (crane.block) {
-            crane.block.position.y += (targetY - crane.block.position.y) * 0.07;
-            crane.hookY = crane.block.position.y;
-            crane.hook.position.y = crane.hookY;
+          crane.hookY += (targetY - crane.hookY) * 0.07;
+          crane.hook.position.y = crane.hookY;
 
-            if (Math.abs(crane.block.position.y - targetY) < 0.15) {
-              // Block placed! Add to building
+          if (Math.abs(crane.hookY - targetY) < 0.15) {
+            // Block placed! Add to building
+            if (crane.block) {
               building.blocks.push(crane.block);
               crane.block = null;
-
-              // Move to next segment
-              building.currentSegmentX++;
-              if (building.currentSegmentX >= building.segments.x) {
-                building.currentSegmentX = 0;
-                building.currentSegmentZ++;
-
-                if (building.currentSegmentZ >= building.segments.z) {
-                  building.currentSegmentZ = 0;
-                  building.currentFloor++;
-                }
-              }
-
-              crane.state = 'rotating_to_pickup';
             }
+
+            // Move to next segment
+            building.currentSegmentX++;
+            if (building.currentSegmentX >= building.segments.x) {
+              building.currentSegmentX = 0;
+              building.currentSegmentZ++;
+
+              if (building.currentSegmentZ >= building.segments.z) {
+                building.currentSegmentZ = 0;
+                building.currentFloor++;
+              }
+            }
+
+            crane.state = 'rotating_to_pickup';
           }
         } else if (crane.state === 'rotating_to_pickup') {
           // Rotate back to pickup position
@@ -596,6 +578,13 @@
         // Update hook position to follow crane arm rotation
         crane.hook.position.x = crane.x + Math.sin(crane.rotation) * (-crane.armLength);
         crane.hook.position.z = crane.z + Math.cos(crane.rotation) * (-crane.armLength);
+
+        // Update block position to follow hook
+        if (crane.block) {
+          crane.block.position.x = crane.hook.position.x;
+          crane.block.position.y = crane.hook.position.y;
+          crane.block.position.z = crane.hook.position.z;
+        }
 
         // Update cable position (vertical from arm end to hook)
         const cablePos = crane.cable.geometry.attributes.position.array;
