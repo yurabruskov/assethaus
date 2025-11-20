@@ -341,156 +341,209 @@
     renderer.setClearColor(0x000000, 1);
     container.appendChild(renderer.domElement);
 
-    const constructionSites = [];
-    const cranes = [];
+    // Building configuration: 5x6 segments, 8 floors
+    const building = {
+      segments: { x: 5, z: 6 },
+      segmentSize: 3,
+      floorHeight: 3,
+      totalFloors: 8,
+      currentFloor: 0,
+      currentSegmentX: 0,
+      currentSegmentZ: 0,
+      blocks: []
+    };
 
-    // Create 5 construction sites
-    for (let i = 0; i < 5; i++) {
-      const siteX = (i - 2) * 20;
+    // Crane configuration
+    const crane = {
+      x: 20,
+      z: 0,
+      hookY: 30,
+      hook: null,
+      block: null,
+      state: 'lowering' // lowering, pickup, lifting, moving, placing, returning
+    };
 
-      // Building being constructed
-      const building = {
-        x: siteX,
-        targetHeight: 20 + Math.random() * 25,
-        currentFloor: 0,
-        floors: [],
-        floorHeight: 3
-      };
+    // Create crane structure
+    const craneGeometry = new THREE.EdgesGeometry(
+      new THREE.BoxGeometry(1.2, 35, 1.2)
+    );
+    const craneMaterial = new THREE.LineBasicMaterial({
+      color: 0xffb800,
+      transparent: true,
+      opacity: 0.6
+    });
+    const craneMesh = new THREE.LineSegments(craneGeometry, craneMaterial);
+    craneMesh.position.set(crane.x, 17.5, crane.z);
+    scene.add(craneMesh);
 
-      // Crane for this site
-      const crane = {
-        x: siteX + 8,
-        building: building,
-        hook: null,
-        hookY: 40,
-        hookTarget: 0,
-        block: null,
-        state: 'lowering' // lowering, lifting, placing
-      };
+    // Crane arm
+    const armGeometry = new THREE.EdgesGeometry(
+      new THREE.BoxGeometry(25, 1, 1)
+    );
+    const armMesh = new THREE.LineSegments(armGeometry, craneMaterial);
+    armMesh.position.set(crane.x - 7, 34, crane.z);
+    scene.add(armMesh);
 
-      // Crane structure
-      const craneGeometry = new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(1, 45, 1)
-      );
-      const craneMaterial = new THREE.LineBasicMaterial({
-        color: 0xffb800,
-        transparent: true,
-        opacity: 0.5
-      });
-      const craneMesh = new THREE.LineSegments(craneGeometry, craneMaterial);
-      craneMesh.position.set(crane.x, 22.5, 0);
-      scene.add(craneMesh);
+    // Crane hook
+    const hookGeometry = new THREE.EdgesGeometry(
+      new THREE.BoxGeometry(0.4, 0.4, 0.4)
+    );
+    const hookMaterial = new THREE.LineBasicMaterial({
+      color: 0xffb800,
+      transparent: true,
+      opacity: 0.8
+    });
+    const hookMesh = new THREE.LineSegments(hookGeometry, hookMaterial);
+    hookMesh.position.set(crane.x - 14, crane.hookY, crane.z);
+    scene.add(hookMesh);
+    crane.hook = hookMesh;
 
-      // Crane arm
-      const armGeometry = new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(20, 0.8, 0.8)
-      );
-      const armMesh = new THREE.LineSegments(armGeometry, craneMaterial);
-      armMesh.position.set(crane.x - 5, 44, 0);
-      scene.add(armMesh);
-
-      // Crane hook (small cube)
-      const hookGeometry = new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(0.5, 0.5, 0.5)
-      );
-      const hookMaterial = new THREE.LineBasicMaterial({
-        color: 0xffb800,
-        transparent: true,
-        opacity: 0.7
-      });
-      const hookMesh = new THREE.LineSegments(hookGeometry, hookMaterial);
-      hookMesh.position.set(crane.x - 10, crane.hookY, 0);
-      scene.add(hookMesh);
-      crane.hook = hookMesh;
-
-      constructionSites.push(building);
-      cranes.push(crane);
-    }
-
-    // Add ground grid
-    const gridHelper = new THREE.GridHelper(120, 60, 0xffb800, 0x1a1a1a);
-    gridHelper.material.opacity = 0.2;
+    // Ground grid
+    const gridHelper = new THREE.GridHelper(80, 40, 0xffb800, 0x1a1a1a);
+    gridHelper.material.opacity = 0.15;
     gridHelper.material.transparent = true;
     scene.add(gridHelper);
 
-    // Camera setup
-    camera.position.set(50, 30, 60);
-    camera.lookAt(0, 15, 0);
+    // Building foundation outline
+    const foundationGeometry = new THREE.EdgesGeometry(
+      new THREE.BoxGeometry(
+        building.segments.x * building.segmentSize,
+        0.2,
+        building.segments.z * building.segmentSize
+      )
+    );
+    const foundationMaterial = new THREE.LineBasicMaterial({
+      color: 0xffb800,
+      transparent: true,
+      opacity: 0.3
+    });
+    const foundation = new THREE.LineSegments(foundationGeometry, foundationMaterial);
+    foundation.position.set(0, 0.1, 0);
+    scene.add(foundation);
+
+    // Camera setup - gentle sway
+    let cameraAngle = 0;
+    camera.position.set(35, 25, 35);
+    camera.lookAt(0, 10, 0);
 
     let time = 0;
 
     function animate() {
       requestAnimationFrame(animate);
-
       time += 1;
 
-      // Update cranes
-      cranes.forEach((crane, index) => {
-        const building = crane.building;
-        const maxFloors = Math.floor(building.targetHeight / building.floorHeight);
+      // Calculate target positions for current block
+      const targetFloor = building.currentFloor;
+      const targetX = (building.currentSegmentX - building.segments.x / 2 + 0.5) * building.segmentSize;
+      const targetZ = (building.currentSegmentZ - building.segments.z / 2 + 0.5) * building.segmentSize;
+      const targetY = targetFloor * building.floorHeight + building.floorHeight / 2;
 
-        if (building.currentFloor < maxFloors) {
-          // Crane animation states
-          if (crane.state === 'lowering') {
-            crane.hookY -= 0.15;
-            crane.hook.position.y = crane.hookY;
+      // Check if construction is complete
+      const isComplete = building.currentFloor >= building.totalFloors;
 
-            if (crane.hookY <= 1) {
-              crane.state = 'lifting';
+      if (!isComplete) {
+        // Crane animation states
+        if (crane.state === 'lowering') {
+          crane.hookY -= 0.08;
+          crane.hook.position.y = crane.hookY;
 
-              // Create block to lift
-              const blockGeometry = new THREE.EdgesGeometry(
-                new THREE.BoxGeometry(4, building.floorHeight - 0.2, 4)
-              );
-              const blockMaterial = new THREE.LineBasicMaterial({
-                color: 0xffb800,
-                transparent: true,
-                opacity: 0.6
-              });
-              const blockMesh = new THREE.LineSegments(blockGeometry, blockMaterial);
-              blockMesh.position.set(crane.x - 10, crane.hookY, 0);
-              scene.add(blockMesh);
-              crane.block = blockMesh;
-            }
-          } else if (crane.state === 'lifting') {
-            crane.hookY += 0.12;
-            crane.hook.position.y = crane.hookY;
+          if (crane.hookY <= 0.5) {
+            crane.state = 'pickup';
+          }
+        } else if (crane.state === 'pickup') {
+          // Create block at ground level
+          if (!crane.block) {
+            const blockGeometry = new THREE.EdgesGeometry(
+              new THREE.BoxGeometry(
+                building.segmentSize - 0.2,
+                building.floorHeight - 0.2,
+                building.segmentSize - 0.2
+              )
+            );
+            const blockMaterial = new THREE.LineBasicMaterial({
+              color: 0xffb800,
+              transparent: true,
+              opacity: 0.6
+            });
+            const blockMesh = new THREE.LineSegments(blockGeometry, blockMaterial);
+            blockMesh.position.set(crane.x - 14, crane.hookY, crane.z);
+            scene.add(blockMesh);
+            crane.block = blockMesh;
+          }
+          crane.state = 'lifting';
+        } else if (crane.state === 'lifting') {
+          crane.hookY += 0.1;
+          crane.hook.position.y = crane.hookY;
 
-            if (crane.block) {
-              crane.block.position.y = crane.hookY;
-            }
+          if (crane.block) {
+            crane.block.position.y = crane.hookY;
+          }
 
-            if (crane.hookY >= 45) {
+          if (crane.hookY >= 32) {
+            crane.state = 'moving';
+          }
+        } else if (crane.state === 'moving') {
+          // Move horizontally to target position
+          if (crane.block) {
+            crane.block.position.x += (targetX - crane.block.position.x) * 0.04;
+            crane.block.position.z += (targetZ - crane.block.position.z) * 0.04;
+
+            const distX = Math.abs(crane.block.position.x - targetX);
+            const distZ = Math.abs(crane.block.position.z - targetZ);
+
+            if (distX < 0.1 && distZ < 0.1) {
               crane.state = 'placing';
-              crane.hookTarget = building.currentFloor * building.floorHeight + building.floorHeight / 2;
-            }
-          } else if (crane.state === 'placing') {
-            // Move block to building position
-            if (crane.block) {
-              crane.block.position.x += (building.x - crane.block.position.x) * 0.05;
-              crane.block.position.y += (crane.hookTarget - crane.block.position.y) * 0.05;
-
-              // Check if block is in place
-              if (Math.abs(crane.block.position.x - building.x) < 0.1 &&
-                  Math.abs(crane.block.position.y - crane.hookTarget) < 0.1) {
-                // Place block permanently
-                building.floors.push(crane.block);
-                building.currentFloor++;
-                crane.block = null;
-                crane.state = 'lowering';
-                crane.hookY = 44;
-                crane.hook.position.y = crane.hookY;
-              }
             }
           }
-        }
-      });
+        } else if (crane.state === 'placing') {
+          // Lower block to target floor
+          if (crane.block) {
+            crane.block.position.y += (targetY - crane.block.position.y) * 0.06;
+            crane.hookY = crane.block.position.y;
+            crane.hook.position.y = crane.hookY;
 
-      // Rotate camera
-      const radius = 70;
-      camera.position.x = Math.cos(time * 0.002) * radius;
-      camera.position.z = Math.sin(time * 0.002) * radius;
-      camera.position.y = 28 + Math.sin(time * 0.001) * 5;
+            if (Math.abs(crane.block.position.y - targetY) < 0.1) {
+              // Block placed! Add to building
+              building.blocks.push(crane.block);
+              crane.block = null;
+
+              // Move to next segment
+              building.currentSegmentX++;
+              if (building.currentSegmentX >= building.segments.x) {
+                building.currentSegmentX = 0;
+                building.currentSegmentZ++;
+
+                if (building.currentSegmentZ >= building.segments.z) {
+                  building.currentSegmentZ = 0;
+                  building.currentFloor++;
+                }
+              }
+
+              crane.state = 'returning';
+            }
+          }
+        } else if (crane.state === 'returning') {
+          // Return hook to crane position
+          crane.hookY += 0.1;
+          crane.hook.position.y = crane.hookY;
+
+          if (crane.hookY >= 30) {
+            crane.hookY = 30;
+            crane.state = 'lowering';
+          }
+        }
+      }
+
+      // Gentle camera sway (not full rotation)
+      cameraAngle += 0.001;
+      const swayAmount = Math.sin(cameraAngle) * 15; // Sway ±15 degrees
+      const radius = 50;
+      const baseAngle = Math.PI / 4; // 45 degrees
+      const angle = baseAngle + swayAmount * (Math.PI / 180);
+
+      camera.position.x = Math.cos(angle) * radius;
+      camera.position.z = Math.sin(angle) * radius;
+      camera.position.y = 22 + Math.sin(time * 0.002) * 3;
       camera.lookAt(0, 12, 0);
 
       renderer.render(scene, camera);
