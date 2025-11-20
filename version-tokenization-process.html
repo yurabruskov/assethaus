@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Tokenization Process</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 30px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .logo {
+      font-size: 28px;
+      font-weight: 700;
+      color: #6366f1;
+      letter-spacing: -0.5px;
+    }
+
+    nav {
+      display: flex;
+      gap: 35px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    nav a:hover {
+      color: #6366f1;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0 60px;
+      text-align: center;
+    }
+
+    .hero-content {
+      max-width: 800px;
+    }
+
+    h1 {
+      font-size: 78px;
+      font-weight: 700;
+      margin-bottom: 28px;
+      line-height: 0.95;
+      color: #ffffff;
+      letter-spacing: -2.5px;
+    }
+
+    .hero-desc {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.68);
+      margin-bottom: 46px;
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 17px 42px;
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      background: #6366f1;
+      color: #ffffff;
+      border: 2px solid #6366f1;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #6366f1;
+      box-shadow: 0 0 24px rgba(99, 102, 241, 0.3);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.25);
+    }
+
+    .btn-outline:hover {
+      border-color: #6366f1;
+      color: #6366f1;
+    }
+
+    .process {
+      padding: 100px 60px;
+      background: rgba(0, 0, 0, 0.6);
+    }
+
+    .section-title {
+      font-size: 52px;
+      font-weight: 700;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    .process-steps {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 32px;
+    }
+
+    .step-card {
+      padding: 38px;
+      background: rgba(99, 102, 241, 0.05);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    .step-card:hover {
+      background: rgba(99, 102, 241, 0.1);
+      border-color: #6366f1;
+      transform: translateY(-2px);
+    }
+
+    .step-number {
+      font-size: 48px;
+      font-weight: 700;
+      color: #6366f1;
+      margin-bottom: 16px;
+      opacity: 0.5;
+    }
+
+    .step-card h3 {
+      font-size: 24px;
+      margin-bottom: 14px;
+      font-weight: 600;
+      color: #6366f1;
+    }
+
+    .step-card p {
+      color: rgba(255, 255, 255, 0.68);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .cta {
+      padding: 110px 60px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 60px;
+      margin-bottom: 26px;
+      font-weight: 700;
+    }
+
+    .cta p {
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.68);
+      margin-bottom: 48px;
+    }
+
+    footer {
+      padding: 56px 60px;
+      text-align: center;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      border-top: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 48px; }
+      .process-steps { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET HAUS</div>
+      <nav>
+        <a href="#process">Process</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Tokenization<br>Process</h1>
+        <p class="hero-desc">
+          End-to-end asset tokenization service. From consultation to investor management, we handle every step of transforming real estate into blockchain-based securities.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Start Tokenization</a>
+          <a href="#" class="btn btn-outline">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="process" id="process">
+      <h2 class="section-title">Six-Step Process</h2>
+      <div class="process-steps">
+        <div class="step-card">
+          <div class="step-number">01</div>
+          <h3>Consultation & Asset Valuation</h3>
+          <p>Analyze property from legal and financial perspectives. Determine tokenization opportunities, minimum investment, ownership structure, and jurisdiction selection.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">02</div>
+          <h3>Legal Documentation</h3>
+          <p>Develop comprehensive documentation: emission terms, registration documents, investor agreements. Ensure regulatory compliance and complete legal due diligence. Establish KYC/AML partnerships.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">03</div>
+          <h3>Token Creation & Issuance</h3>
+          <p>Technical implementation on chosen blockchain (Ethereum, Polygon, BSC). Issue security tokens representing fractional ownership. Integrate smart contracts for rights distribution, dividends, and governance.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">04</div>
+          <h3>Investor Platform Launch</h3>
+          <p>Create investor portal with complete transparency: investment opportunities, documents, investment status. Automate KYC, onboarding, and digital document signing. Ensure user-friendly investor experience.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">05</div>
+          <h3>Fundraising & Investor Attraction</h3>
+          <p>Organize marketing campaigns, webinars, roadshows. Engage with partner networks, institutional and retail investors. Post-placement support: portfolio management, reporting, secondary market.</p>
+        </div>
+
+        <div class="step-card">
+          <div class="step-number">06</div>
+          <h3>Asset Management & Aftercare</h3>
+          <p>Automate dividend and income distribution. Ensure ownership transparency and data updates. Support token resale and investment exit processes through secondary market infrastructure.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Ready to Tokenize?</h2>
+      <p>Transform your real estate assets into digital securities</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Tokenization Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    camera.position.set(0, 15, 40);
+    camera.lookAt(0, 0, 0);
+
+    // Process steps visualization - 6 stages as animated frames
+    const steps = [
+      { title: "Consultation", icon: "📋", position: { x: -20, y: 5, z: 0 } },
+      { title: "Documentation", icon: "📄", position: { x: -12, y: 5, z: 0 } },
+      { title: "Token Creation", icon: "💎", position: { x: -4, y: 5, z: 0 } },
+      { title: "Platform Launch", icon: "🚀", position: { x: 4, y: 5, z: 0 } },
+      { title: "Fundraising", icon: "💰", position: { x: 12, y: 5, z: 0 } },
+      { title: "Asset Management", icon: "📊", position: { x: 20, y: 5, z: 0 } }
+    ];
+
+    const stepObjects = [];
+    let currentStep = 0;
+    let stepProgress = 0;
+
+    steps.forEach((step, index) => {
+      // Create box for each step
+      const geometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(5, 5, 5)
+      );
+      const material = new THREE.LineBasicMaterial({
+        color: 0x6366f1,
+        transparent: true,
+        opacity: 0
+      });
+      const box = new THREE.LineSegments(geometry, material);
+      box.position.set(step.position.x, step.position.y, step.position.z);
+      box.userData.targetOpacity = 0.8;
+      box.userData.index = index;
+      box.userData.activated = false;
+      scene.add(box);
+      stepObjects.push(box);
+
+      // Create connecting line to next step
+      if (index < steps.length - 1) {
+        const lineGeometry = new THREE.BufferGeometry();
+        const linePoints = [
+          new THREE.Vector3(step.position.x + 2.5, step.position.y, step.position.z),
+          new THREE.Vector3(steps[index + 1].position.x - 2.5, steps[index + 1].position.y, steps[index + 1].position.z)
+        ];
+        lineGeometry.setFromPoints(linePoints);
+        const lineMaterial = new THREE.LineBasicMaterial({
+          color: 0x6366f1,
+          transparent: true,
+          opacity: 0
+        });
+        const line = new THREE.Line(lineGeometry, lineMaterial);
+        line.userData.activated = false;
+        scene.add(line);
+        box.userData.connection = line;
+      }
+    });
+
+    // Create central asset (building being tokenized)
+    const assetGeometry = new THREE.EdgesGeometry(
+      new THREE.BoxGeometry(6, 12, 6)
+    );
+    const assetMaterial = new THREE.LineBasicMaterial({
+      color: 0xffb800,
+      transparent: true,
+      opacity: 0.7
+    });
+    const asset = new THREE.LineSegments(assetGeometry, assetMaterial);
+    asset.position.set(0, -8, -5);
+    scene.add(asset);
+
+    // Create token particles that flow around
+    const particles = [];
+    for (let i = 0; i < 30; i++) {
+      const particleGeometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(0.3, 0.3, 0.3)
+      );
+      const particleMaterial = new THREE.LineBasicMaterial({
+        color: 0x6366f1,
+        transparent: true,
+        opacity: 0.6
+      });
+      const particle = new THREE.LineSegments(particleGeometry, particleMaterial);
+      particle.position.set(
+        (Math.random() - 0.5) * 50,
+        (Math.random() - 0.5) * 20,
+        (Math.random() - 0.5) * 20
+      );
+      particle.userData.velocity = {
+        x: (Math.random() - 0.5) * 0.02,
+        y: (Math.random() - 0.5) * 0.02,
+        z: (Math.random() - 0.5) * 0.02
+      };
+      scene.add(particle);
+      particles.push(particle);
+    }
+
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 1;
+
+      // Sequentially activate steps
+      stepProgress += 0.3;
+      if (stepProgress >= 200 && currentStep < steps.length) {
+        stepProgress = 0;
+        currentStep++;
+      }
+
+      // Animate steps
+      stepObjects.forEach((box, index) => {
+        if (index < currentStep) {
+          box.userData.activated = true;
+        }
+
+        if (box.userData.activated) {
+          // Fade in
+          if (box.material.opacity < box.userData.targetOpacity) {
+            box.material.opacity += 0.015;
+          }
+
+          // Rotate
+          box.rotation.x += 0.005;
+          box.rotation.y += 0.01;
+
+          // Pulse
+          const pulse = Math.sin(time * 0.02 + index * 0.5) * 0.3;
+          box.position.y = steps[index].position.y + pulse;
+
+          // Activate connection line
+          if (box.userData.connection) {
+            box.userData.connection.userData.activated = true;
+            if (box.userData.connection.material.opacity < 0.5) {
+              box.userData.connection.material.opacity += 0.01;
+            }
+          }
+        }
+      });
+
+      // Rotate asset
+      asset.rotation.y += 0.005;
+
+      // Animate particles
+      particles.forEach(particle => {
+        particle.position.x += particle.userData.velocity.x;
+        particle.position.y += particle.userData.velocity.y;
+        particle.position.z += particle.userData.velocity.z;
+
+        // Bounce back
+        if (Math.abs(particle.position.x) > 25) particle.userData.velocity.x *= -1;
+        if (Math.abs(particle.position.y) > 10) particle.userData.velocity.y *= -1;
+        if (Math.abs(particle.position.z) > 10) particle.userData.velocity.z *= -1;
+
+        particle.rotation.x += 0.02;
+        particle.rotation.y += 0.02;
+      });
+
+      // Camera gentle movement
+      camera.position.x = Math.sin(time * 0.0005) * 5;
+      camera.position.y = 15 + Math.sin(time * 0.0008) * 3;
+      camera.lookAt(0, 0, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>

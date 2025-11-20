@@ -584,17 +584,16 @@
     gridHelper.position.y = -0.1;
     scene.add(gridHelper);
 
-    // Camera flight path - slower with random turns
+    // Camera flight path - walk along streets
     let currentState = 'moving'; // 'moving' or 'turning'
     let currentAngle = 0;
     let targetAngle = 0;
-    let cameraX = -40;
-    let cameraZ = 0;
+    let cameraX = 0;
+    let cameraZ = -60;
     let moveProgress = 0;
     let turnProgress = 0;
     const moveSpeed = 0.08; // Slower movement
-    const turnSpeed = 0.01; // Slower turning
-    const straightDistance = 200; // Walk full street before turning
+    const straightDistance = 500; // Walk longer before turning (multiple blocks)
 
     function getFlightPosition() {
       let x = cameraX;
@@ -609,9 +608,9 @@
         cameraZ = z;
         moveProgress++;
       } else {
-        // Turning
+        // Turning (slower)
         const angleDiff = targetAngle - currentAngle;
-        currentAngle += angleDiff * 0.05;
+        currentAngle += angleDiff * 0.015; // Much slower turn
         angle = currentAngle;
         turnProgress++;
       }
@@ -637,7 +636,7 @@
           targetAngle = currentAngle + (Math.PI / 2) * turnDirection;
         }
       } else {
-        if (turnProgress >= 100) {
+        if (turnProgress >= 300) { // Longer turn duration
           currentState = 'moving';
           turnProgress = 0;
           moveProgress = 0;

@@ -351,57 +351,12 @@
       blocks: []
     };
 
-    // Crane configuration (simplified)
-    const crane = {
-      hookY: 40,
-      hook: null,
-      block: null,
-      cable: null,
-      state: 'lowering' // lowering, pickup, lifting, placing
+    // Simplified construction state (no crane)
+    const construction = {
+      currentBlock: null,
+      state: 'creating', // creating, placing
+      buildDelay: 0
     };
-
-    // Crane arm (simple, fixed position)
-    const armGeometry = new THREE.EdgesGeometry(
-      new THREE.BoxGeometry(25, 1.8, 1.8)
-    );
-    const armMaterial2 = new THREE.LineBasicMaterial({
-      color: 0xffb800,
-      transparent: true,
-      opacity: 0.9
-    });
-    const armMesh = new THREE.LineSegments(armGeometry, armMaterial2);
-    armMesh.position.set(5, 49, 15);
-    scene.add(armMesh);
-
-    // Crane hook (larger)
-    const hookGeometry = new THREE.EdgesGeometry(
-      new THREE.BoxGeometry(0.6, 0.6, 0.6)
-    );
-    const hookMaterial = new THREE.LineBasicMaterial({
-      color: 0xffb800,
-      transparent: true,
-      opacity: 0.9
-    });
-    const hookMesh = new THREE.LineSegments(hookGeometry, hookMaterial);
-    hookMesh.position.set(-7, crane.hookY, 15);
-    scene.add(hookMesh);
-    crane.hook = hookMesh;
-
-    // Crane cable (rope)
-    const cableGeometry = new THREE.BufferGeometry();
-    const cablePositions = new Float32Array([
-      -7, 49, 15,  // Top (end of crane arm)
-      -7, crane.hookY, 15   // Bottom (hook)
-    ]);
-    cableGeometry.setAttribute('position', new THREE.BufferAttribute(cablePositions, 3));
-    const cableMaterial = new THREE.LineBasicMaterial({
-      color: 0xffb800,
-      transparent: true,
-      opacity: 0.6
-    });
-    const cable = new THREE.Line(cableGeometry, cableMaterial);
-    scene.add(cable);
-    crane.cable = cable;
 
     // Ground grid
     const gridHelper = new THREE.GridHelper(80, 40, 0xffb800, 0x1a1a1a);
@@ -450,13 +405,14 @@
       const isComplete = building.currentFloor >= building.totalFloors;
 
       if (!isComplete) {
-        // Simplified crane animation
-        if (crane.state === 'lowering') {
-          crane.hookY -= 0.1;
-          crane.hook.position.y = crane.hookY;
+        // Simplified smooth construction
+        construction.buildDelay++;
 
-          // Create block near construction site when hook is low
-          if (crane.hookY <= 1.5 && !crane.block) {
+        if (construction.buildDelay >= 60) { // Wait 60 frames between blocks
+          construction.buildDelay = 0;
+
+          if (!construction.currentBlock) {
+            // Create new block
             const blockGeometry = new THREE.EdgesGeometry(
               new THREE.BoxGeometry(
                 building.segmentSize - 0.3,
@@ -467,87 +423,58 @@
             const blockMaterial = new THREE.LineBasicMaterial({
               color: 0xffb800,
               transparent: true,
-              opacity: 0.7
+              opacity: 0
             });
             const blockMesh = new THREE.LineSegments(blockGeometry, blockMaterial);
-            // Block appears near construction site (on ground)
-            blockMesh.position.set(targetX + 8, building.floorHeight / 2, targetZ + 8);
+            // Block starts above target position
+            blockMesh.position.set(targetX, targetY + 20, targetZ);
+            blockMesh.userData.targetY = targetY;
+            blockMesh.userData.targetOpacity = 0.8;
             scene.add(blockMesh);
-            crane.block = blockMesh;
-          }
-
-          if (crane.hookY <= 0.6) {
-            crane.state = 'lifting';
-          }
-        } else if (crane.state === 'lifting') {
-          crane.hookY += 0.12;
-          crane.hook.position.y = crane.hookY;
-
-          // Move block toward hook and up
-          if (crane.block) {
-            crane.block.position.x += (crane.hook.position.x - crane.block.position.x) * 0.08;
-            crane.block.position.z += (crane.hook.position.z - crane.block.position.z) * 0.08;
-            crane.block.position.y = crane.hookY;
-          }
-
-          if (crane.hookY >= liftHeight) {
-            crane.state = 'placing';
-          }
-        } else if (crane.state === 'placing') {
-          // Move block to target position
-          if (crane.block) {
-            crane.block.position.x += (targetX - crane.block.position.x) * 0.06;
-            crane.block.position.z += (targetZ - crane.block.position.z) * 0.06;
-            crane.block.position.y += (targetY - crane.block.position.y) * 0.06;
-
-            crane.hookY = crane.block.position.y;
-            crane.hook.position.y = crane.hookY;
-
-            const dist = Math.abs(crane.block.position.y - targetY);
-            if (dist < 0.2) {
-              // Block placed!
-              building.blocks.push(crane.block);
-              crane.block = null;
-
-              // Move to next segment
-              building.currentSegmentX++;
-              if (building.currentSegmentX >= building.segments.x) {
-                building.currentSegmentX = 0;
-                building.currentSegmentZ++;
-                if (building.currentSegmentZ >= building.segments.z) {
-                  building.currentSegmentZ = 0;
-                  building.currentFloor++;
-                }
-              }
-
-              crane.state = 'returning';
-            }
-          }
-        } else if (crane.state === 'returning') {
-          crane.hookY += 0.15;
-          crane.hook.position.y = crane.hookY;
-
-          if (crane.hookY >= 40) {
-            crane.hookY = 40;
-            crane.state = 'lowering';
+            construction.currentBlock = blockMesh;
+            construction.state = 'placing';
           }
         }
 
-        // Update cable position
-        const cablePos = crane.cable.geometry.attributes.position.array;
-        cablePos[0] = crane.hook.position.x;
-        cablePos[1] = 49;
-        cablePos[2] = crane.hook.position.z;
-        cablePos[3] = crane.hook.position.x;
-        cablePos[4] = crane.hook.position.y;
-        cablePos[5] = crane.hook.position.z;
-        crane.cable.geometry.attributes.position.needsUpdate = true;
+        // Animate current block
+        if (construction.currentBlock) {
+          const block = construction.currentBlock;
+
+          // Fade in
+          if (block.material.opacity < block.userData.targetOpacity) {
+            block.material.opacity += 0.02;
+          }
+
+          // Drop down smoothly
+          if (block.position.y > block.userData.targetY) {
+            block.position.y += (block.userData.targetY - block.position.y) * 0.05;
+          }
+
+          // Check if placed
+          if (Math.abs(block.position.y - block.userData.targetY) < 0.1 &&
+              block.material.opacity >= block.userData.targetOpacity - 0.05) {
+            // Block placed!
+            building.blocks.push(block);
+            construction.currentBlock = null;
+
+            // Move to next segment
+            building.currentSegmentX++;
+            if (building.currentSegmentX >= building.segments.x) {
+              building.currentSegmentX = 0;
+              building.currentSegmentZ++;
+              if (building.currentSegmentZ >= building.segments.z) {
+                building.currentSegmentZ = 0;
+                building.currentFloor++;
+              }
+            }
+          }
+        }
       }
 
       // Camera follows the action with smooth interpolation
-      let targetLookX = crane.block ? crane.block.position.x : 0;
-      let targetLookY = crane.block ? crane.block.position.y : targetY;
-      let targetLookZ = crane.block ? crane.block.position.z : 0;
+      let targetLookX = construction.currentBlock ? construction.currentBlock.position.x : 0;
+      let targetLookY = construction.currentBlock ? construction.currentBlock.position.y : targetY;
+      let targetLookZ = construction.currentBlock ? construction.currentBlock.position.z : 0;
 
       // Smooth camera lookAt to avoid jerky motion
       smoothLookX += (targetLookX - smoothLookX) * 0.05;

@@ -448,11 +448,10 @@
 
         const boxGeometry = new THREE.BoxGeometry(width, height, depth);
 
-        // Create solid walls
+        // Create solid walls (non-transparent)
         const wallMaterial = new THREE.MeshBasicMaterial({
           color: color,
-          transparent: true,
-          opacity: 0
+          transparent: false
         });
         const walls = new THREE.Mesh(boxGeometry, wallMaterial);
 
@@ -514,13 +513,9 @@
       // Fade in plots with delay
       plots.forEach((plot, index) => {
         if (time > plot.userData.animationDelay) {
-          const wallMat = plot.userData.wallMaterial;
           const edgesMat = plot.userData.edgesMaterial;
 
-          // Fade in both walls and edges
-          if (wallMat.opacity < plot.userData.targetOpacity * 0.3) {
-            wallMat.opacity += 0.008;
-          }
+          // Fade in edges only (walls are solid)
           if (edgesMat.opacity < plot.userData.targetOpacity) {
             edgesMat.opacity += 0.008;
           }
