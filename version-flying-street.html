@@ -584,78 +584,52 @@
     gridHelper.position.y = -0.1;
     scene.add(gridHelper);
 
-    // Camera flight path - move only along main streets
-    let currentState = 'moving';
+    // Camera flight path - continuous movement along streets
     let currentStreet = 'vertical'; // 'vertical' or 'horizontal'
     let cameraX = 0;
     let cameraZ = -70;
-    let moveProgress = 0;
-    let turnProgress = 0;
+    let targetAngle = Math.PI / 2; // Start facing north
+    let currentAngle = Math.PI / 2;
     const moveSpeed = 0.08;
-    const straightDistance = 400;
-    const cityLimit = 85; // Stay within city bounds
+    const cityLimit = 75; // Stay within city bounds
 
     function getFlightPosition() {
-      let x = cameraX;
-      let z = cameraZ;
-
-      if (currentState === 'moving') {
-        // Move along current street
-        if (currentStreet === 'vertical') {
-          z += moveSpeed;
-          cameraZ = z;
-          // Keep on vertical street (x near 0)
-          cameraX = 0;
-        } else {
-          x += moveSpeed;
-          cameraX = x;
-          // Keep on horizontal street (z near 0)
-          cameraZ = 0;
-        }
-        moveProgress++;
-
-        // Check if leaving city bounds
-        if (Math.abs(cameraX) > cityLimit || Math.abs(cameraZ) > cityLimit) {
-          currentState = 'turning';
-          moveProgress = 0;
-          turnProgress = 0;
+      // Move along current street
+      if (currentStreet === 'vertical') {
+        cameraZ += moveSpeed;
+        // Check if reached edge
+        if (cameraZ > cityLimit) {
+          // Switch to horizontal street
+          currentStreet = 'horizontal';
+          targetAngle = 0; // Face east
+          cameraZ = 0; // Start from center
+          cameraX = -cityLimit;
         }
       } else {
-        // Turning
-        turnProgress++;
+        cameraX += moveSpeed;
+        // Check if reached edge
+        if (cameraX > cityLimit) {
+          // Switch to vertical street
+          currentStreet = 'vertical';
+          targetAngle = Math.PI / 2; // Face north
+          cameraX = 0; // Start from center
+          cameraZ = -cityLimit;
+        }
       }
 
-      const angle = currentStreet === 'vertical' ? Math.PI / 2 : 0;
-      const lookDistance = 20;
-      const lookX = x + Math.cos(angle) * lookDistance;
-      const lookZ = z + Math.sin(angle) * lookDistance;
+      // Smooth angle transition
+      const angleDiff = targetAngle - currentAngle;
+      currentAngle += angleDiff * 0.05;
 
-      return { x, z, lookX, lookZ };
+      const lookDistance = 20;
+      const lookX = cameraX + Math.cos(currentAngle) * lookDistance;
+      const lookZ = cameraZ + Math.sin(currentAngle) * lookDistance;
+
+      return { x: cameraX, z: cameraZ, lookX, lookZ };
     }
 
     function animate() {
       requestAnimationFrame(animate);
-
-      // Update flight state - switch streets at intersection
-      if (currentState === 'moving') {
-        if (moveProgress >= straightDistance) {
-          currentState = 'turning';
-          moveProgress = 0;
-          turnProgress = 0;
-        }
-      } else {
-        if (turnProgress >= 200) {
-          // Switch to perpendicular street
-          currentStreet = currentStreet === 'vertical' ? 'horizontal' : 'vertical';
-          currentState = 'moving';
-          turnProgress = 0;
-          moveProgress = 0;
-
-          // Reset position to center intersection
-          cameraX = 0;
-          cameraZ = 0;
-        }
-      }
 
       const pos = getFlightPosition();
 
