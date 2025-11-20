@@ -584,37 +584,84 @@
     gridHelper.position.y = -0.1;
     scene.add(gridHelper);
 
-    // Camera flight path - continuous movement along streets
+    // Camera flight path - walk through city streets
     let currentStreet = 'vertical'; // 'vertical' or 'horizontal'
+    let currentStreetCoord = 0; // Which street we're on (0, 30, -30, etc)
     let cameraX = 0;
-    let cameraZ = -70;
+    let cameraZ = -60;
     let targetAngle = Math.PI / 2; // Start facing north
     let currentAngle = Math.PI / 2;
+    let distanceWalked = 0;
+    let nextTurnDistance = 300 + Math.random() * 300; // Turn after 300-600 units
     const moveSpeed = 0.08;
-    const cityLimit = 75; // Stay within city bounds
+    const cityLimit = 70;
+    const streetSpacing = 30; // Streets every 30 units
 
     function getFlightPosition() {
       // Move along current street
       if (currentStreet === 'vertical') {
         cameraZ += moveSpeed;
-        // Check if reached edge
-        if (cameraZ > cityLimit) {
-          // Switch to horizontal street
-          currentStreet = 'horizontal';
-          targetAngle = 0; // Face east
-          cameraZ = 0; // Start from center
-          cameraX = -cityLimit;
-        }
+        cameraX = currentStreetCoord; // Stay on current vertical street
       } else {
         cameraX += moveSpeed;
-        // Check if reached edge
-        if (cameraX > cityLimit) {
+        cameraZ = currentStreetCoord; // Stay on current horizontal street
+      }
+      distanceWalked += moveSpeed;
+
+      // Check if time to turn (random intersection)
+      if (distanceWalked >= nextTurnDistance) {
+        // Turn at intersection
+        if (currentStreet === 'vertical') {
+          // Switch to horizontal street
+          currentStreet = 'horizontal';
+          // Choose a nearby horizontal street
+          const turnDirection = Math.random() > 0.5 ? 1 : -1;
+          currentStreetCoord = Math.round(cameraZ / streetSpacing) * streetSpacing;
+          // Make sure within city
+          if (Math.abs(currentStreetCoord) > cityLimit) {
+            currentStreetCoord = turnDirection * streetSpacing;
+          }
+          targetAngle = 0; // Face east
+          cameraZ = currentStreetCoord;
+          cameraX = Math.round(cameraX / streetSpacing) * streetSpacing;
+        } else {
           // Switch to vertical street
           currentStreet = 'vertical';
+          // Choose a nearby vertical street
+          const turnDirection = Math.random() > 0.5 ? 1 : -1;
+          currentStreetCoord = Math.round(cameraX / streetSpacing) * streetSpacing;
+          // Make sure within city
+          if (Math.abs(currentStreetCoord) > cityLimit) {
+            currentStreetCoord = turnDirection * streetSpacing;
+          }
           targetAngle = Math.PI / 2; // Face north
-          cameraX = 0; // Start from center
-          cameraZ = -cityLimit;
+          cameraX = currentStreetCoord;
+          cameraZ = Math.round(cameraZ / streetSpacing) * streetSpacing;
         }
+
+        // Reset for next turn
+        distanceWalked = 0;
+        nextTurnDistance = 300 + Math.random() * 300;
+      }
+
+      // Check if leaving city - turn before edge
+      if (Math.abs(cameraX) > cityLimit || Math.abs(cameraZ) > cityLimit) {
+        // Force turn
+        if (currentStreet === 'vertical') {
+          currentStreet = 'horizontal';
+          targetAngle = cameraZ > 0 ? Math.PI : 0; // Turn around
+          currentStreetCoord = 0;
+          cameraZ = 0;
+          cameraX = 0;
+        } else {
+          currentStreet = 'vertical';
+          targetAngle = cameraX > 0 ? -Math.PI/2 : Math.PI/2; // Turn around
+          currentStreetCoord = 0;
+          cameraX = 0;
+          cameraZ = 0;
+        }
+        distanceWalked = 0;
+        nextTurnDistance = 300 + Math.random() * 300;
       }
 
       // Smooth angle transition
