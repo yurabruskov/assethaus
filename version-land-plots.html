@@ -384,35 +384,64 @@
     renderer.setClearColor(0x000000, 1);
     container.appendChild(renderer.domElement);
 
-    // Create grid of land plots
-    const gridSize = 20;
-    const plotSize = 4;
-    const spacing = 0.5;
+    // City map configuration
+    const gridSize = 24;
+    const plotSize = 3.5;
+    const spacing = 0.3;
     const plots = [];
 
+    // Define city structure
+    function isStreet(x, z) {
+      // Main avenue (wide street at center)
+      if (Math.abs(x - 12) <= 1 || Math.abs(z - 12) <= 1) return 'avenue';
+
+      // Regular streets every 5 blocks
+      if (x % 5 === 0 || z % 5 === 0) return 'street';
+
+      return false;
+    }
+
+    function isPark(x, z) {
+      // Parks in specific zones
+      return (x >= 3 && x <= 5 && z >= 15 && z <= 17) ||
+             (x >= 17 && x <= 19 && z >= 3 && z <= 5);
+    }
+
+    // Create city plots
     for (let x = 0; x < gridSize; x++) {
       for (let z = 0; z < gridSize; z++) {
-        // Calculate height based on position (creates interesting patterns)
-        const centerX = gridSize / 2;
-        const centerZ = gridSize / 2;
-        const distanceFromCenter = Math.sqrt(
-          Math.pow(x - centerX, 2) + Math.pow(z - centerZ, 2)
-        );
+        const street = isStreet(x, z);
 
-        const baseHeight = 2 + Math.random() * 15;
-        const waveHeight = Math.sin(x * 0.3) * Math.cos(z * 0.3) * 5;
-        const height = baseHeight + waveHeight;
+        // Skip streets
+        if (street) continue;
+
+        const park = isPark(x, z);
+        let height, color;
+
+        if (park) {
+          // Parks are low and green-ish
+          height = 0.5 + Math.random() * 1;
+          color = 0x6bff8a; // Green tint
+        } else {
+          // Buildings vary in height (represents value)
+          const distFromCenter = Math.sqrt(
+            Math.pow(x - gridSize/2, 2) + Math.pow(z - gridSize/2, 2)
+          );
+          const centralFactor = 1 - (distFromCenter / (gridSize/2));
+
+          height = 3 + Math.random() * 18 + centralFactor * 8;
+
+          // Color based on height (value)
+          const heightRatio = height / 25;
+          const r = Math.floor(255 * heightRatio);
+          const g = Math.floor(107);
+          const b = Math.floor(107 + (1 - heightRatio) * 80);
+          color = (r << 16) | (g << 8) | b;
+        }
 
         const geometry = new THREE.EdgesGeometry(
           new THREE.BoxGeometry(plotSize, height, plotSize)
         );
-
-        // Color based on height
-        const heightRatio = height / 20;
-        const r = Math.floor(255 * heightRatio);
-        const g = Math.floor(107);
-        const b = Math.floor(107 + (1 - heightRatio) * 100);
-        const color = (r << 16) | (g << 8) | b;
 
         const material = new THREE.LineBasicMaterial({
           color: color,
@@ -426,9 +455,10 @@
         plot.position.y = height / 2;
         plot.position.z = (z - gridSize / 2) * (plotSize + spacing);
 
-        plot.userData.targetOpacity = 0.4 + Math.random() * 0.3;
+        plot.userData.targetOpacity = park ? 0.25 + Math.random() * 0.15 : 0.4 + Math.random() * 0.3;
         plot.userData.baseHeight = height;
-        plot.userData.animationDelay = (x + z) * 2;
+        plot.userData.animationDelay = (x + z) * 1.5;
+        plot.userData.isPark = park;
 
         scene.add(plot);
         plots.push(plot);
@@ -436,8 +466,8 @@
     }
 
     // Add ground grid
-    const gridHelper = new THREE.GridHelper(gridSize * (plotSize + spacing), gridSize, 0xff6b6b, 0x1a1a1a);
-    gridHelper.material.opacity = 0.15;
+    const gridHelper = new THREE.GridHelper(gridSize * (plotSize + spacing), gridSize * 2, 0xff6b6b, 0x0d0d0d);
+    gridHelper.material.opacity = 0.12;
     gridHelper.material.transparent = true;
     scene.add(gridHelper);
 
@@ -456,21 +486,40 @@
       plots.forEach((plot, index) => {
         if (time > plot.userData.animationDelay) {
           if (plot.material.opacity < plot.userData.targetOpacity) {
-            plot.material.opacity += 0.01;
+            plot.material.opacity += 0.008;
           }
 
-          // Gentle height pulse
-          const pulse = Math.sin(time * 0.02 + index * 0.05) * 0.3;
-          plot.position.y = (plot.userData.baseHeight + pulse) / 2;
+          // Gentle height pulse (less for parks)
+          if (plot.userData.isPark) {
+            const pulse = Math.sin(time * 0.015 + index * 0.08) * 0.1;
+            plot.position.y = (plot.userData.baseHeight + pulse) / 2;
+          } else {
+            const pulse = Math.sin(time * 0.018 + index * 0.06) * 0.25;
+            plot.position.y = (plot.userData.baseHeight + pulse) / 2;
+          }
         }
       });
 
-      // Rotate camera around the portfolio map
-      const radius = 65;
-      camera.position.x = Math.cos(time * 0.003) * radius;
-      camera.position.z = Math.sin(time * 0.003) * radius;
-      camera.position.y = 30 + Math.sin(time * 0.002) * 8;
-      camera.lookAt(0, 5, 0);
+      // Camera flies in figure-8 pattern with varying height
+      const slowTime = time * 0.0015;
+
+      // Figure-8 / lemniscate curve
+      const scale = 55;
+      const a = scale;
+      const t = slowTime;
+
+      camera.position.x = (a * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
+      camera.position.z = (a * Math.sin(t) * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
+
+      // Varying height following a different wave
+      camera.position.y = 25 + Math.sin(slowTime * 1.7) * 12 + Math.cos(slowTime * 0.9) * 6;
+
+      // Look at center with slight offset
+      camera.lookAt(
+        Math.sin(slowTime * 0.5) * 5,
+        6,
+        Math.cos(slowTime * 0.5) * 5
+      );
 
       renderer.render(scene, camera);
     }
