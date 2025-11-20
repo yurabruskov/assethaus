@@ -438,8 +438,12 @@
           width = plotSize * sizeVariation;
           depth = plotSize * (0.7 + Math.random() * 0.6);
 
-          // Black edges for buildings
-          color = 0x000000;
+          // Color based on height (value)
+          const heightRatio = height / 25;
+          const r = Math.floor(255 * heightRatio);
+          const g = Math.floor(107);
+          const b = Math.floor(107 + (1 - heightRatio) * 80);
+          color = (r << 16) | (g << 8) | b;
         }
 
         const geometry = new THREE.EdgesGeometry(

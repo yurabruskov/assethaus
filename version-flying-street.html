@@ -341,8 +341,9 @@
     renderer.setClearColor(0x000000, 1);
     container.appendChild(renderer.domElement);
 
-    const blockSize = 90;
-    const streetWidth = 8;
+    const blockSize = 180; // Doubled city size
+    const streetWidth = 12; // Wide main avenue
+    const streetWidthSmall = 6; // Smaller streets
     const sidewalkWidth = 2;
 
     // Create diverse city buildings
@@ -378,23 +379,63 @@
       return building;
     }
 
+    // City zones
+    function isStreet(x, z) {
+      // Main avenue (center cross)
+      if (Math.abs(x) < streetWidth/2 + sidewalkWidth) return true;
+      if (Math.abs(z) < streetWidth/2 + sidewalkWidth) return true;
+
+      // Smaller streets every 30 units
+      if (Math.abs(x % 30) < streetWidthSmall/2 + sidewalkWidth) return true;
+      if (Math.abs(z % 30) < streetWidthSmall/2 + sidewalkWidth) return true;
+
+      return false;
+    }
+
+    function isPark(x, z) {
+      // Parks in specific zones
+      return (x >= 25 && x <= 45 && z >= 25 && z <= 45) ||
+             (x >= -45 && x <= -25 && z >= -45 && z <= -25);
+    }
+
+    function isSquare(x, z) {
+      // Empty square/plaza
+      return (x >= -20 && x <= 20 && z >= 50 && z <= 70);
+    }
+
     // Create buildings around streets
     const buildingTypes = ['skyscraper', 'apartment', 'shop'];
     for (let x = -blockSize/2; x < blockSize/2; x += 7) {
       for (let z = -blockSize/2; z < blockSize/2; z += 7) {
-        // Skip street areas
-        if (Math.abs(x) < streetWidth/2 + sidewalkWidth ||
-            Math.abs(z) < streetWidth/2 + sidewalkWidth) {
-          continue;
-        }
+        if (isStreet(x, z) || isPark(x, z) || isSquare(x, z)) continue;
+
         const type = buildingTypes[Math.floor(Math.random() * buildingTypes.length)];
         createBuilding(x, z, type);
       }
     }
 
-    // Create cars
+    // Add trees in parks
+    for (let i = 0; i < 40; i++) {
+      const parkChoice = Math.random() > 0.5;
+      const x = parkChoice ? (25 + Math.random() * 20) : (-45 + Math.random() * 20);
+      const z = parkChoice ? (25 + Math.random() * 20) : (-45 + Math.random() * 20);
+
+      const treeGeometry = new THREE.EdgesGeometry(
+        new THREE.ConeGeometry(1.2, 4, 6)
+      );
+      const treeMaterial = new THREE.LineBasicMaterial({
+        color: 0x6bff8a,
+        transparent: true,
+        opacity: 0.5
+      });
+      const tree = new THREE.LineSegments(treeGeometry, treeMaterial);
+      tree.position.set(x, 2, z);
+      scene.add(tree);
+    }
+
+    // Create cars on main avenue (both directions)
     const cars = [];
-    for (let i = 0; i < 12; i++) {
+    for (let i = 0; i < 20; i++) {
       const carGeometry = new THREE.EdgesGeometry(
         new THREE.BoxGeometry(1.5, 0.8, 3)
       );
@@ -407,14 +448,20 @@
 
       const isVertical = i % 2 === 0;
       if (isVertical) {
-        car.position.set(Math.random() * 4 - 2, 0.4, -blockSize/2 + Math.random() * blockSize);
+        // Vertical avenue - two lanes (both directions)
+        const lane = (i % 4 < 2) ? -3 : 3; // Left or right lane
+        const direction = (i % 4 < 2) ? 1 : -1; // Up or down
+        car.position.set(lane, 0.6, -blockSize/2 + Math.random() * blockSize);
         car.userData.direction = 'vertical';
-        car.userData.speed = 0.08 + Math.random() * 0.05;
+        car.userData.speed = (0.08 + Math.random() * 0.05) * direction;
       } else {
-        car.position.set(-blockSize/2 + Math.random() * blockSize, 0.4, Math.random() * 4 - 2);
+        // Horizontal avenue - two lanes (both directions)
+        const lane = (i % 4 < 2) ? -3 : 3;
+        const direction = (i % 4 < 2) ? 1 : -1;
+        car.position.set(-blockSize/2 + Math.random() * blockSize, 0.6, lane);
         car.rotation.y = Math.PI / 2;
         car.userData.direction = 'horizontal';
-        car.userData.speed = 0.08 + Math.random() * 0.05;
+        car.userData.speed = (0.08 + Math.random() * 0.05) * direction;
       }
 
       scene.add(car);
@@ -525,66 +572,43 @@
     light4.position.set(-streetWidth/2, 1.5, -streetWidth/2);
     scene.add(light4);
 
-    // Ground plane (asphalt)
-    const groundGeometry = new THREE.PlaneGeometry(blockSize * 1.5, blockSize * 1.5, 40, 40);
-    const groundMaterial = new THREE.MeshBasicMaterial({
-      color: 0x1a1a1a,
-      transparent: true,
-      opacity: 0.8
-    });
-
-    // Add noise to ground
-    const positions = groundGeometry.attributes.position;
-    for (let i = 0; i < positions.count; i++) {
-      const y = (Math.random() - 0.5) * 0.3;
-      positions.setY(i, y);
-    }
-    positions.needsUpdate = true;
-    groundGeometry.computeVertexNormals();
-
-    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
-    ground.rotation.x = -Math.PI / 2;
-    ground.position.y = -0.1;
-    scene.add(ground);
-
-    // Road markings
-    const gridHelper = new THREE.GridHelper(blockSize * 1.2, 80, 0x4fc3f7, 0x2a2a2a);
-    gridHelper.material.opacity = 0.15;
+    // Ground grid pattern (like checkerboard)
+    const gridHelper = new THREE.GridHelper(blockSize * 1.3, 120, 0x4fc3f7, 0x1a1a1a);
+    gridHelper.material.opacity = 0.3;
     gridHelper.material.transparent = true;
+    gridHelper.position.y = 0;
     scene.add(gridHelper);
 
-    // Camera flight path - move and turn at intersections
+    // Camera flight path - slower with random turns
     let currentState = 'moving'; // 'moving' or 'turning'
-    let currentSide = 0; // 0=East, 1=South, 2=West, 3=North
+    let currentAngle = 0;
+    let targetAngle = 0;
+    let cameraX = -40;
+    let cameraZ = 0;
     let moveProgress = 0;
     let turnProgress = 0;
-    const moveSpeed = 0.2;
-    const turnSpeed = 0.02;
-    const straightDistance = 35;
-
-    const startPositions = [
-      { x: -15, z: 0, angle: 0 },      // Moving East
-      { x: 0, z: -15, angle: Math.PI / 2 },   // Moving South
-      { x: 15, z: 0, angle: Math.PI },  // Moving West
-      { x: 0, z: 15, angle: -Math.PI / 2 }    // Moving North
-    ];
+    const moveSpeed = 0.08; // Slower movement
+    const turnSpeed = 0.01; // Slower turning
+    const straightDistance = 50;
 
     function getFlightPosition() {
-      const currentPos = startPositions[currentSide];
-      let x, z, angle;
+      let x = cameraX;
+      let z = cameraZ;
+      let angle = currentAngle;
 
       if (currentState === 'moving') {
-        const distance = moveProgress;
-        angle = currentPos.angle;
-        x = currentPos.x + Math.cos(angle) * distance;
-        z = currentPos.z + Math.sin(angle) * distance;
+        // Move forward
+        x += Math.cos(currentAngle) * moveSpeed;
+        z += Math.sin(currentAngle) * moveSpeed;
+        cameraX = x;
+        cameraZ = z;
+        moveProgress++;
       } else {
-        // Turning at intersection
-        const startAngle = startPositions[currentSide].angle;
-        const turnAmount = turnProgress * Math.PI / 2;
-        angle = startAngle + turnAmount;
-        x = 0;
-        z = 0;
+        // Turning
+        const angleDiff = targetAngle - currentAngle;
+        currentAngle += angleDiff * 0.05;
+        angle = currentAngle;
+        turnProgress++;
       }
 
       const lookDistance = 20;
@@ -597,20 +621,21 @@
     function animate() {
       requestAnimationFrame(animate);
 
-      // Update flight state
+      // Update flight state with random turns
       if (currentState === 'moving') {
-        moveProgress += moveSpeed;
         if (moveProgress >= straightDistance) {
           currentState = 'turning';
           moveProgress = 0;
           turnProgress = 0;
+          // Random turn: left (-90) or right (+90)
+          const turnDirection = Math.random() > 0.5 ? 1 : -1;
+          targetAngle = currentAngle + (Math.PI / 2) * turnDirection;
         }
       } else {
-        turnProgress += turnSpeed;
-        if (turnProgress >= 1) {
+        if (turnProgress >= 100) {
           currentState = 'moving';
           turnProgress = 0;
-          currentSide = (currentSide + 1) % 4;
+          moveProgress = 0;
         }
       }
 
