@@ -360,19 +360,6 @@
       state: 'lowering' // lowering, pickup, lifting, placing
     };
 
-    // Create crane structure (larger)
-    const craneGeometry = new THREE.EdgesGeometry(
-      new THREE.BoxGeometry(1.8, 50, 1.8)
-    );
-    const craneMaterial = new THREE.LineBasicMaterial({
-      color: 0xffb800,
-      transparent: true,
-      opacity: 0.7
-    });
-    const craneMesh = new THREE.LineSegments(craneGeometry, craneMaterial);
-    craneMesh.position.set(18, 25, 15);
-    scene.add(craneMesh);
-
     // Crane arm (simple, fixed position)
     const armGeometry = new THREE.EdgesGeometry(
       new THREE.BoxGeometry(25, 1.8, 1.8)
@@ -444,6 +431,7 @@
     camera.lookAt(0, 15, 0);
 
     let time = 0;
+    let smoothLookX = 0, smoothLookY = 0, smoothLookZ = 0;
 
     function animate() {
       requestAnimationFrame(animate);
@@ -556,13 +544,20 @@
         crane.cable.geometry.attributes.position.needsUpdate = true;
       }
 
-      // Camera follows the action
-      let lookAtTarget = crane.block ? crane.block.position : new THREE.Vector3(0, targetY, 0);
+      // Camera follows the action with smooth interpolation
+      let targetLookX = crane.block ? crane.block.position.x : 0;
+      let targetLookY = crane.block ? crane.block.position.y : targetY;
+      let targetLookZ = crane.block ? crane.block.position.z : 0;
+
+      // Smooth camera lookAt to avoid jerky motion
+      smoothLookX += (targetLookX - smoothLookX) * 0.05;
+      smoothLookY += (targetLookY - smoothLookY) * 0.05;
+      smoothLookZ += (targetLookZ - smoothLookZ) * 0.05;
 
       camera.position.x = 42 + Math.sin(time * 0.0008) * 8;
       camera.position.z = 42 + Math.cos(time * 0.0008) * 8;
       camera.position.y = 28 + Math.sin(time * 0.001) * 4;
-      camera.lookAt(lookAtTarget);
+      camera.lookAt(smoothLookX, smoothLookY, smoothLookZ);
 
       renderer.render(scene, camera);
     }
