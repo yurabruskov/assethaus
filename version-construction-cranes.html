@@ -379,9 +379,14 @@
 
     // Crane arm (longer and rotatable)
     const armGeometry = new THREE.EdgesGeometry(
-      new THREE.BoxGeometry(35, 1.2, 1.2)
+      new THREE.BoxGeometry(35, 1.8, 1.8)
     );
-    const armMesh = new THREE.LineSegments(armGeometry, craneMaterial);
+    const armMaterial2 = new THREE.LineBasicMaterial({
+      color: 0xffb800,
+      transparent: true,
+      opacity: 0.9
+    });
+    const armMesh = new THREE.LineSegments(armGeometry, armMaterial2);
     armMesh.position.set(0, 0, 0); // Will be positioned relative to crane top
     const craneTop = new THREE.Group();
     craneTop.position.set(crane.x, 49, crane.z);
@@ -400,21 +405,23 @@
       opacity: 0.9
     });
     const hookMesh = new THREE.LineSegments(hookGeometry, hookMaterial);
-    hookMesh.position.set(crane.x - 20, crane.hookY, crane.z);
+    const armLength = 27.5; // Distance from crane center to end of arm
+    hookMesh.position.set(crane.x - armLength, crane.hookY, crane.z);
     scene.add(hookMesh);
     crane.hook = hookMesh;
+    crane.armLength = armLength;
 
     // Crane cable (rope)
     const cableGeometry = new THREE.BufferGeometry();
     const cablePositions = new Float32Array([
-      crane.x - 20, 49, crane.z,  // Top (crane arm)
-      crane.x - 20, crane.hookY, crane.z   // Bottom (hook)
+      crane.x - armLength, 49, crane.z,  // Top (end of crane arm)
+      crane.x - armLength, crane.hookY, crane.z   // Bottom (hook)
     ]);
     cableGeometry.setAttribute('position', new THREE.BufferAttribute(cablePositions, 3));
     const cableMaterial = new THREE.LineBasicMaterial({
       color: 0xffb800,
       transparent: true,
-      opacity: 0.5
+      opacity: 0.6
     });
     const cable = new THREE.Line(cableGeometry, cableMaterial);
     scene.add(cable);
@@ -448,7 +455,7 @@
     camera.lookAt(0, 15, 0);
 
     let time = 0;
-    const pickupX = crane.x - 20;
+    const pickupX = crane.x - crane.armLength;
     const pickupZ = crane.z;
 
     function animate() {
@@ -586,15 +593,18 @@
           }
         }
 
-        // Update cable position
+        // Update hook position to follow crane arm rotation
+        crane.hook.position.x = crane.x + Math.sin(crane.rotation) * (-crane.armLength);
+        crane.hook.position.z = crane.z + Math.cos(crane.rotation) * (-crane.armLength);
+
+        // Update cable position (vertical from arm end to hook)
         const cablePos = crane.cable.geometry.attributes.position.array;
-        const hookWorldPos = crane.hook.position;
-        cablePos[0] = crane.x + Math.sin(crane.rotation) * (-20);
+        cablePos[0] = crane.hook.position.x;
         cablePos[1] = 49;
-        cablePos[2] = crane.z + Math.cos(crane.rotation) * (-20);
-        cablePos[3] = hookWorldPos.x;
-        cablePos[4] = hookWorldPos.y;
-        cablePos[5] = hookWorldPos.z;
+        cablePos[2] = crane.hook.position.z;
+        cablePos[3] = crane.hook.position.x;
+        cablePos[4] = crane.hook.position.y;
+        cablePos[5] = crane.hook.position.z;
         crane.cable.geometry.attributes.position.needsUpdate = true;
       }
 
