@@ -416,20 +416,27 @@
         if (street) continue;
 
         const park = isPark(x, z);
-        let height, color;
+        let height, width, depth, color;
 
         if (park) {
-          // Parks are low and green-ish
+          // Parks are low and green-ish with varied sizes
           height = 0.5 + Math.random() * 1;
+          width = plotSize * (0.9 + Math.random() * 0.2);
+          depth = plotSize * (0.9 + Math.random() * 0.2);
           color = 0x6bff8a; // Green tint
         } else {
-          // Buildings vary in height (represents value)
+          // Buildings vary in height and footprint (represents value and type)
           const distFromCenter = Math.sqrt(
             Math.pow(x - gridSize/2, 2) + Math.pow(z - gridSize/2, 2)
           );
           const centralFactor = 1 - (distFromCenter / (gridSize/2));
 
           height = 3 + Math.random() * 18 + centralFactor * 8;
+
+          // Vary building footprint - some are wider, some narrower
+          const sizeVariation = 0.7 + Math.random() * 0.6;
+          width = plotSize * sizeVariation;
+          depth = plotSize * (0.7 + Math.random() * 0.6);
 
           // Color based on height (value)
           const heightRatio = height / 25;
@@ -440,7 +447,7 @@
         }
 
         const geometry = new THREE.EdgesGeometry(
-          new THREE.BoxGeometry(plotSize, height, plotSize)
+          new THREE.BoxGeometry(width, height, depth)
         );
 
         const material = new THREE.LineBasicMaterial({
@@ -465,9 +472,31 @@
       }
     }
 
+    // Ground plane (city terrain)
+    const groundGeometry = new THREE.PlaneGeometry(gridSize * (plotSize + spacing) * 1.2, gridSize * (plotSize + spacing) * 1.2, 50, 50);
+    const groundMaterial = new THREE.MeshBasicMaterial({
+      color: 0x2a2a2a,
+      transparent: true,
+      opacity: 0.9
+    });
+
+    // Add subtle noise to ground
+    const groundPositions = groundGeometry.attributes.position;
+    for (let i = 0; i < groundPositions.count; i++) {
+      const noise = (Math.random() - 0.5) * 0.4;
+      groundPositions.setZ(i, noise);
+    }
+    groundPositions.needsUpdate = true;
+    groundGeometry.computeVertexNormals();
+
+    const ground = new THREE.Mesh(groundGeometry, groundMaterial);
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -0.15;
+    scene.add(ground);
+
     // Add ground grid
-    const gridHelper = new THREE.GridHelper(gridSize * (plotSize + spacing), gridSize * 2, 0xff6b6b, 0x0d0d0d);
-    gridHelper.material.opacity = 0.12;
+    const gridHelper = new THREE.GridHelper(gridSize * (plotSize + spacing), gridSize * 2, 0xff6b6b, 0x3a3a3a);
+    gridHelper.material.opacity = 0.18;
     gridHelper.material.transparent = true;
     scene.add(gridHelper);
 
@@ -476,6 +505,8 @@
     camera.lookAt(0, 0, 0);
 
     let time = 0;
+    let cameraX = 50, cameraY = 35, cameraZ = 50;
+    let lookX = 0, lookY = 6, lookZ = 0;
 
     function animate() {
       requestAnimationFrame(animate);
@@ -500,26 +531,35 @@
         }
       });
 
-      // Camera flies in figure-8 pattern with varying height
-      const slowTime = time * 0.0015;
+      // Smooth camera movement with interpolation
+      const slowTime = time * 0.001;
 
       // Figure-8 / lemniscate curve
       const scale = 55;
       const a = scale;
       const t = slowTime;
 
-      camera.position.x = (a * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
-      camera.position.z = (a * Math.sin(t) * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
+      const targetX = (a * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
+      const targetZ = (a * Math.sin(t) * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
+      const targetY = 25 + Math.sin(slowTime * 1.2) * 10 + Math.cos(slowTime * 0.7) * 5;
 
-      // Varying height following a different wave
-      camera.position.y = 25 + Math.sin(slowTime * 1.7) * 12 + Math.cos(slowTime * 0.9) * 6;
+      // Smooth interpolation (ease camera movement)
+      cameraX += (targetX - cameraX) * 0.05;
+      cameraZ += (targetZ - cameraZ) * 0.05;
+      cameraY += (targetY - cameraY) * 0.05;
 
-      // Look at center with slight offset
-      camera.lookAt(
-        Math.sin(slowTime * 0.5) * 5,
-        6,
-        Math.cos(slowTime * 0.5) * 5
-      );
+      camera.position.x = cameraX;
+      camera.position.y = cameraY;
+      camera.position.z = cameraZ;
+
+      // Smooth look-at target
+      const targetLookX = Math.sin(slowTime * 0.3) * 4;
+      const targetLookZ = Math.cos(slowTime * 0.3) * 4;
+
+      lookX += (targetLookX - lookX) * 0.05;
+      lookZ += (targetLookZ - lookZ) * 0.05;
+
+      camera.lookAt(lookX, lookY, lookZ);
 
       renderer.render(scene, camera);
     }

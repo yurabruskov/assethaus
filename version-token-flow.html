@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Token Flow</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Roboto+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Orbitron', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    header {
+      padding: 28px 60px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.25);
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      font-family: 'Roboto Mono', monospace;
+      color: #00ffff;
+      letter-spacing: 2px;
+    }
+
+    nav {
+      display: flex;
+      gap: 35px;
+    }
+
+    nav a {
+      color: rgba(255, 255, 255, 0.75);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      transition: color 0.3s;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+    }
+
+    nav a:hover {
+      color: #00ffff;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0 60px;
+    }
+
+    .hero-content {
+      max-width: 750px;
+    }
+
+    h1 {
+      font-size: 90px;
+      font-weight: 800;
+      margin-bottom: 35px;
+      line-height: 0.92;
+      color: #ffffff;
+      letter-spacing: -2px;
+    }
+
+    .hero-desc {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 50px;
+      line-height: 1.7;
+      font-weight: 400;
+    }
+
+    .btn-group {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+    }
+
+    .btn {
+      padding: 17px 40px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 3px;
+      transition: all 0.3s;
+      font-family: 'Roboto Mono', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .btn-primary {
+      background: #00ffff;
+      color: #000000;
+      border: 2px solid #00ffff;
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: #00ffff;
+      box-shadow: 0 0 30px rgba(0, 255, 255, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #ffffff;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: #00ffff;
+      color: #00ffff;
+    }
+
+    .networks {
+      padding: 100px 60px;
+      background: rgba(0, 0, 0, 0.75);
+    }
+
+    .section-title {
+      font-size: 50px;
+      font-weight: 800;
+      margin-bottom: 60px;
+      text-align: center;
+    }
+
+    .networks-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      max-width: 950px;
+      margin: 0 auto;
+    }
+
+    .network-chip {
+      padding: 14px 28px;
+      background: rgba(0, 255, 255, 0.08);
+      border: 1px solid rgba(0, 255, 255, 0.3);
+      font-family: 'Roboto Mono', monospace;
+      font-size: 12px;
+      border-radius: 20px;
+      transition: all 0.3s;
+      font-weight: 600;
+    }
+
+    .network-chip:hover {
+      background: rgba(0, 255, 255, 0.15);
+      border-color: #00ffff;
+    }
+
+    .capabilities {
+      padding: 100px 60px;
+    }
+
+    .capabilities-rows {
+      display: flex;
+      flex-direction: column;
+      gap: 45px;
+      max-width: 1000px;
+      margin: 0 auto;
+      margin-top: 60px;
+    }
+
+    .capability {
+      display: flex;
+      gap: 40px;
+      padding: 45px;
+      background: rgba(0, 255, 255, 0.03);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      border-radius: 4px;
+      transition: all 0.3s;
+    }
+
+    .capability:hover {
+      background: rgba(0, 255, 255, 0.08);
+      border-color: #00ffff;
+    }
+
+    .capability-num {
+      font-family: 'Roboto Mono', monospace;
+      font-size: 40px;
+      color: #00ffff;
+      font-weight: 700;
+      min-width: 80px;
+    }
+
+    .capability-text h3 {
+      font-size: 26px;
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .capability-text p {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .cta {
+      padding: 120px 60px;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 64px;
+      margin-bottom: 28px;
+      font-weight: 800;
+    }
+
+    .cta p {
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 50px;
+    }
+
+    footer {
+      padding: 60px;
+      text-align: center;
+      font-family: 'Roboto Mono', monospace;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.4);
+      border-top: 1px solid rgba(0, 255, 255, 0.25);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 54px; }
+      .capability { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET.HAUS</div>
+      <nav>
+        <a href="#capabilities">Features</a>
+        <a href="#networks">Networks</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <div class="hero-content">
+        <h1>Digital Asset<br>Liquidity</h1>
+        <p class="hero-desc">
+          Watch value flow between properties in real-time. Tokens move seamlessly across the network, creating instant liquidity and enabling fractional ownership at scale.
+        </p>
+        <div class="btn-group">
+          <a href="#" class="btn btn-primary">Trade Now</a>
+          <a href="#" class="btn btn-outline">View Markets</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="networks" id="networks">
+      <h2 class="section-title">Trading Networks</h2>
+      <div class="networks-flow">
+        <div class="network-chip">Ethereum</div>
+        <div class="network-chip">Polygon</div>
+        <div class="network-chip">Arbitrum</div>
+        <div class="network-chip">Optimism</div>
+        <div class="network-chip">Base</div>
+        <div class="network-chip">Avalanche</div>
+        <div class="network-chip">BNB Chain</div>
+        <div class="network-chip">Solana</div>
+      </div>
+    </section>
+
+    <section class="capabilities" id="capabilities">
+      <h2 class="section-title">Liquidity Features</h2>
+      <div class="capabilities-rows">
+        <div class="capability">
+          <div class="capability-num">01</div>
+          <div class="capability-text">
+            <h3>Instant Token Transfers</h3>
+            <p>Property tokens flow between wallets instantly, enabling real-time trading and settlement without intermediaries or settlement delays.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">02</div>
+          <div class="capability-text">
+            <h3>Cross-Property Liquidity</h3>
+            <p>Value flows between different properties creating a unified liquidity pool, allowing investors to rebalance portfolios instantly.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">03</div>
+          <div class="capability-text">
+            <h3>Automated Market Making</h3>
+            <p>Smart contracts provide continuous liquidity through automated market makers, ensuring tokens can always be bought or sold.</p>
+          </div>
+        </div>
+        <div class="capability">
+          <div class="capability-num">04</div>
+          <div class="capability-text">
+            <h3>Real-Time Valuations</h3>
+            <p>Market-driven pricing updates continuously as tokens flow, reflecting real supply and demand dynamics across the network.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta" id="contact">
+      <h2>Join the Flow</h2>
+      <p>Start trading tokenized real estate with instant liquidity</p>
+      <a href="#" class="btn btn-primary">Get Started</a>
+    </section>
+
+    <footer>
+      <p>© 2025 Asset Haus — Digital Asset Liquidity Platform</p>
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(70, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000, 1);
+    container.appendChild(renderer.domElement);
+
+    // Create buildings (nodes)
+    const buildings = [];
+    const buildingCount = 8;
+
+    for (let i = 0; i < buildingCount; i++) {
+      const angle = (i / buildingCount) * Math.PI * 2;
+      const radius = 25;
+      const height = 10 + Math.random() * 15;
+
+      const geometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(3, height, 3)
+      );
+      const material = new THREE.LineBasicMaterial({
+        color: 0x00ffff,
+        transparent: true,
+        opacity: 0.6
+      });
+      const building = new THREE.LineSegments(geometry, material);
+
+      building.position.x = Math.cos(angle) * radius;
+      building.position.y = height / 2;
+      building.position.z = Math.sin(angle) * radius;
+
+      building.userData.angle = angle;
+      building.userData.height = height;
+
+      scene.add(building);
+      buildings.push(building);
+    }
+
+    // Tokens flowing between buildings
+    const tokens = [];
+    const maxTokens = 40;
+
+    function createToken() {
+      const fromBuilding = buildings[Math.floor(Math.random() * buildings.length)];
+      const toBuilding = buildings[Math.floor(Math.random() * buildings.length)];
+
+      if (fromBuilding === toBuilding) return;
+
+      const tokenGeometry = new THREE.EdgesGeometry(
+        new THREE.SphereGeometry(0.3, 6, 6)
+      );
+      const tokenMaterial = new THREE.LineBasicMaterial({
+        color: 0x00ffff,
+        transparent: true,
+        opacity: 0.8
+      });
+      const token = new THREE.LineSegments(tokenGeometry, tokenMaterial);
+
+      token.position.copy(fromBuilding.position);
+      token.userData.from = fromBuilding.position.clone();
+      token.userData.to = toBuilding.position.clone();
+      token.userData.progress = 0;
+      token.userData.speed = 0.008 + Math.random() * 0.008;
+
+      scene.add(token);
+      tokens.push(token);
+    }
+
+    // Initialize tokens
+    for (let i = 0; i < 20; i++) {
+      createToken();
+    }
+
+    // Add connection lines (faint)
+    const connections = [];
+    for (let i = 0; i < buildings.length; i++) {
+      for (let j = i + 1; j < buildings.length; j++) {
+        const points = [
+          buildings[i].position.clone(),
+          buildings[j].position.clone()
+        ];
+        const geometry = new THREE.BufferGeometry().setFromPoints(points);
+        const material = new THREE.LineBasicMaterial({
+          color: 0x00ffff,
+          transparent: true,
+          opacity: 0.05
+        });
+        const line = new THREE.Line(geometry, material);
+        scene.add(line);
+        connections.push(line);
+      }
+    }
+
+    // Camera setup
+    camera.position.set(40, 30, 40);
+    camera.lookAt(0, 10, 0);
+
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 1;
+
+      // Rotate buildings slowly
+      buildings.forEach((building, index) => {
+        building.rotation.y += 0.005;
+      });
+
+      // Animate tokens
+      tokens.forEach((token, index) => {
+        token.userData.progress += token.userData.speed;
+
+        if (token.userData.progress >= 1) {
+          // Token reached destination, create new journey
+          scene.remove(token);
+          tokens.splice(index, 1);
+
+          if (tokens.length < maxTokens) {
+            createToken();
+          }
+        } else {
+          // Interpolate position with arc
+          const p = token.userData.progress;
+          const from = token.userData.from;
+          const to = token.userData.to;
+
+          // Linear interpolation
+          token.position.x = from.x + (to.x - from.x) * p;
+          token.position.z = from.z + (to.z - from.z) * p;
+
+          // Arc height
+          const arcHeight = Math.sin(p * Math.PI) * 8;
+          token.position.y = from.y + (to.y - from.y) * p + arcHeight;
+
+          // Rotate token
+          token.rotation.x += 0.08;
+          token.rotation.y += 0.08;
+
+          // Pulse opacity
+          token.material.opacity = 0.6 + Math.sin(p * Math.PI) * 0.3;
+        }
+      });
+
+      // Rotate camera
+      const radius = 52;
+      camera.position.x = Math.cos(time * 0.002) * radius;
+      camera.position.z = Math.sin(time * 0.002) * radius;
+      camera.position.y = 28 + Math.sin(time * 0.001) * 6;
+      camera.lookAt(0, 12, 0);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
