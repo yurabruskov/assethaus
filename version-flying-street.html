@@ -375,38 +375,6 @@
       building.position.set(x, height / 2, z);
       scene.add(building);
 
-      // Add windows
-      const windowCount = type === 'skyscraper' ? 15 : (type === 'apartment' ? 8 : 3);
-      for (let i = 0; i < windowCount; i++) {
-        const windowGeometry = new THREE.PlaneGeometry(0.3, 0.3);
-        const windowMaterial = new THREE.MeshBasicMaterial({
-          color: 0x4fc3f7,
-          transparent: true,
-          opacity: 0.3 + Math.random() * 0.4
-        });
-        const window = new THREE.Mesh(windowGeometry, windowMaterial);
-
-        const side = Math.floor(Math.random() * 4);
-        const offsetX = (Math.random() - 0.5) * width * 0.7;
-        const offsetY = (Math.random() - 0.3) * height;
-        const offsetZ = (Math.random() - 0.5) * depth * 0.7;
-
-        if (side === 0) {
-          window.position.set(x + width/2, height/2 + offsetY, z + offsetZ);
-          window.rotation.y = Math.PI / 2;
-        } else if (side === 1) {
-          window.position.set(x - width/2, height/2 + offsetY, z + offsetZ);
-          window.rotation.y = -Math.PI / 2;
-        } else if (side === 2) {
-          window.position.set(x + offsetX, height/2 + offsetY, z + depth/2);
-        } else {
-          window.position.set(x + offsetX, height/2 + offsetY, z - depth/2);
-          window.rotation.y = Math.PI;
-        }
-
-        scene.add(window);
-      }
-
       return building;
     }
 
@@ -587,8 +555,8 @@
 
     // Camera flight path with smooth turns
     let flightProgress = 0;
-    const flightSpeed = 0.4;
-    const turnRadius = 8;
+    const flightSpeed = 0.15;
+    const turnRadius = 22;
     const straightLength = blockSize - turnRadius * 2;
 
     function getFlightPosition(progress) {
@@ -662,7 +630,7 @@
       const pos = getFlightPosition(flightProgress);
 
       camera.position.x = pos.x;
-      camera.position.y = 5 + Math.sin(flightProgress * 3) * 0.5;
+      camera.position.y = 5 + Math.sin(flightProgress * 0.02) * 0.2;
       camera.position.z = pos.z;
       camera.lookAt(pos.lookX, 3, pos.lookZ);
 
