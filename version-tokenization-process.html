@@ -317,98 +317,253 @@
     renderer.setClearColor(0x000000, 1);
     container.appendChild(renderer.domElement);
 
-    camera.position.set(0, 15, 40);
+    camera.position.set(0, 5, 25);
     camera.lookAt(0, 0, 0);
 
-    // Process steps visualization - 6 stages as animated frames
-    const steps = [
-      { title: "Consultation", icon: "📋", position: { x: -20, y: 5, z: 0 } },
-      { title: "Documentation", icon: "📄", position: { x: -12, y: 5, z: 0 } },
-      { title: "Token Creation", icon: "💎", position: { x: -4, y: 5, z: 0 } },
-      { title: "Platform Launch", icon: "🚀", position: { x: 4, y: 5, z: 0 } },
-      { title: "Fundraising", icon: "💰", position: { x: 12, y: 5, z: 0 } },
-      { title: "Asset Management", icon: "📊", position: { x: 20, y: 5, z: 0 } }
+    // Stage titles and descriptions
+    const stages = [
+      {
+        title: "1. Консультация и оценка актива",
+        desc: "Анализ объекта и определение возможностей токенизации",
+        duration: 400
+      },
+      {
+        title: "2. Юридическая документация",
+        desc: "Подготовка эмиссионных условий и договоров",
+        duration: 400
+      },
+      {
+        title: "3. Создание токенов",
+        desc: "Выпуск security токенов на блокчейне",
+        duration: 400
+      },
+      {
+        title: "4. Запуск платформы",
+        desc: "Создание портала для инвесторов",
+        duration: 400
+      },
+      {
+        title: "5. Привлечение инвесторов",
+        desc: "Фандрайзинг и маркетинговые кампании",
+        duration: 400
+      },
+      {
+        title: "6. Управление активом",
+        desc: "Автоматизация выплат и прозрачность владения",
+        duration: 400
+      }
     ];
 
-    const stepObjects = [];
-    let currentStep = 0;
-    let stepProgress = 0;
+    let currentStage = 0;
+    let stageProgress = 0;
+    let sceneObjects = [];
 
-    steps.forEach((step, index) => {
-      // Create box for each step
-      const geometry = new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(5, 5, 5)
+    // Create title overlay
+    const titleDiv = document.createElement('div');
+    titleDiv.style.position = 'fixed';
+    titleDiv.style.top = '20%';
+    titleDiv.style.left = '50%';
+    titleDiv.style.transform = 'translateX(-50%)';
+    titleDiv.style.textAlign = 'center';
+    titleDiv.style.zIndex = '10';
+    titleDiv.style.color = '#ffffff';
+    titleDiv.style.fontFamily = 'Space Grotesk, sans-serif';
+    titleDiv.style.pointerEvents = 'none';
+    titleDiv.innerHTML = `
+      <div style="font-size: 42px; font-weight: 700; margin-bottom: 12px; color: #6366f1;">${stages[0].title}</div>
+      <div style="font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7); max-width: 600px;">${stages[0].desc}</div>
+    `;
+    document.body.appendChild(titleDiv);
+
+    function clearScene() {
+      sceneObjects.forEach(obj => scene.remove(obj));
+      sceneObjects = [];
+    }
+
+    function createStage1() {
+      // Building being analyzed
+      const buildingGeometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(8, 15, 8)
       );
-      const material = new THREE.LineBasicMaterial({
-        color: 0x6366f1,
+      const buildingMaterial = new THREE.LineBasicMaterial({
+        color: 0xffb800,
         transparent: true,
         opacity: 0
       });
-      const box = new THREE.LineSegments(geometry, material);
-      box.position.set(step.position.x, step.position.y, step.position.z);
-      box.userData.targetOpacity = 0.8;
-      box.userData.index = index;
-      box.userData.activated = false;
-      scene.add(box);
-      stepObjects.push(box);
+      const building = new THREE.LineSegments(buildingGeometry, buildingMaterial);
+      building.position.y = 7.5;
+      scene.add(building);
+      sceneObjects.push(building);
 
-      // Create connecting line to next step
-      if (index < steps.length - 1) {
-        const lineGeometry = new THREE.BufferGeometry();
-        const linePoints = [
-          new THREE.Vector3(step.position.x + 2.5, step.position.y, step.position.z),
-          new THREE.Vector3(steps[index + 1].position.x - 2.5, steps[index + 1].position.y, steps[index + 1].position.z)
-        ];
-        lineGeometry.setFromPoints(linePoints);
-        const lineMaterial = new THREE.LineBasicMaterial({
+      // Orbiting analysis documents
+      for (let i = 0; i < 5; i++) {
+        const docGeometry = new THREE.EdgesGeometry(
+          new THREE.PlaneGeometry(2, 3)
+        );
+        const docMaterial = new THREE.LineBasicMaterial({
           color: 0x6366f1,
           transparent: true,
           opacity: 0
         });
-        const line = new THREE.Line(lineGeometry, lineMaterial);
-        line.userData.activated = false;
-        scene.add(line);
-        box.userData.connection = line;
+        const doc = new THREE.LineSegments(docGeometry, docMaterial);
+        doc.userData.angle = (i / 5) * Math.PI * 2;
+        doc.userData.radius = 12;
+        doc.userData.type = 'document';
+        scene.add(doc);
+        sceneObjects.push(doc);
       }
-    });
 
-    // Create central asset (building being tokenized)
-    const assetGeometry = new THREE.EdgesGeometry(
-      new THREE.BoxGeometry(6, 12, 6)
-    );
-    const assetMaterial = new THREE.LineBasicMaterial({
-      color: 0xffb800,
-      transparent: true,
-      opacity: 0.7
-    });
-    const asset = new THREE.LineSegments(assetGeometry, assetMaterial);
-    asset.position.set(0, -8, -5);
-    scene.add(asset);
+      return { building };
+    }
 
-    // Create token particles that flow around
-    const particles = [];
-    for (let i = 0; i < 30; i++) {
-      const particleGeometry = new THREE.EdgesGeometry(
-        new THREE.BoxGeometry(0.3, 0.3, 0.3)
+    function createStage2() {
+      // Legal documents stack
+      for (let i = 0; i < 8; i++) {
+        const docGeometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(5, 0.2, 7)
+        );
+        const docMaterial = new THREE.LineBasicMaterial({
+          color: 0x6366f1,
+          transparent: true,
+          opacity: 0
+        });
+        const doc = new THREE.LineSegments(docGeometry, docMaterial);
+        doc.position.y = i * 0.8 - 3;
+        doc.userData.targetY = doc.position.y;
+        doc.userData.type = 'legalDoc';
+        scene.add(doc);
+        sceneObjects.push(doc);
+      }
+    }
+
+    function createStage3() {
+      // Building transforms into tokens
+      const buildingGeometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(8, 15, 8)
       );
-      const particleMaterial = new THREE.LineBasicMaterial({
-        color: 0x6366f1,
+      const buildingMaterial = new THREE.LineBasicMaterial({
+        color: 0xffb800,
         transparent: true,
-        opacity: 0.6
+        opacity: 0.8
       });
-      const particle = new THREE.LineSegments(particleGeometry, particleMaterial);
-      particle.position.set(
-        (Math.random() - 0.5) * 50,
-        (Math.random() - 0.5) * 20,
-        (Math.random() - 0.5) * 20
+      const building = new THREE.LineSegments(buildingGeometry, buildingMaterial);
+      building.position.y = 0;
+      building.userData.type = 'transformBuilding';
+      scene.add(building);
+      sceneObjects.push(building);
+
+      // Tokens flying out
+      for (let i = 0; i < 30; i++) {
+        const tokenGeometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(0.5, 0.5, 0.5)
+        );
+        const tokenMaterial = new THREE.LineBasicMaterial({
+          color: 0x6366f1,
+          transparent: true,
+          opacity: 0
+        });
+        const token = new THREE.LineSegments(tokenGeometry, tokenMaterial);
+        token.position.set(0, 0, 0);
+        token.userData.angle = (i / 30) * Math.PI * 2;
+        token.userData.speed = 0.05 + Math.random() * 0.03;
+        token.userData.type = 'token';
+        scene.add(token);
+        sceneObjects.push(token);
+      }
+    }
+
+    function createStage4() {
+      // Platform grid
+      for (let i = 0; i < 12; i++) {
+        for (let j = 0; j < 8; j++) {
+          const cellGeometry = new THREE.EdgesGeometry(
+            new THREE.PlaneGeometry(2, 2)
+          );
+          const cellMaterial = new THREE.LineBasicMaterial({
+            color: 0x6366f1,
+            transparent: true,
+            opacity: 0
+          });
+          const cell = new THREE.LineSegments(cellGeometry, cellMaterial);
+          cell.position.set((i - 6) * 2.5, (j - 4) * 2.5, 0);
+          cell.rotation.x = 0;
+          cell.userData.delay = (i + j) * 5;
+          cell.userData.type = 'platformCell';
+          scene.add(cell);
+          sceneObjects.push(cell);
+        }
+      }
+    }
+
+    function createStage5() {
+      // Central token pool
+      const poolGeometry = new THREE.EdgesGeometry(
+        new THREE.CylinderGeometry(5, 5, 2, 32)
       );
-      particle.userData.velocity = {
-        x: (Math.random() - 0.5) * 0.02,
-        y: (Math.random() - 0.5) * 0.02,
-        z: (Math.random() - 0.5) * 0.02
-      };
-      scene.add(particle);
-      particles.push(particle);
+      const poolMaterial = new THREE.LineBasicMaterial({
+        color: 0xffb800,
+        transparent: true,
+        opacity: 0.7
+      });
+      const pool = new THREE.LineSegments(poolGeometry, poolMaterial);
+      pool.position.y = 0;
+      scene.add(pool);
+      sceneObjects.push(pool);
+
+      // Investors (coins) flowing in
+      for (let i = 0; i < 20; i++) {
+        const coinGeometry = new THREE.EdgesGeometry(
+          new THREE.CylinderGeometry(0.5, 0.5, 0.2, 16)
+        );
+        const coinMaterial = new THREE.LineBasicMaterial({
+          color: 0x6366f1,
+          transparent: true,
+          opacity: 0
+        });
+        const coin = new THREE.LineSegments(coinGeometry, coinMaterial);
+        const angle = (i / 20) * Math.PI * 2;
+        coin.position.set(Math.cos(angle) * 15, 8 + Math.random() * 5, Math.sin(angle) * 15);
+        coin.userData.targetY = 1;
+        coin.userData.type = 'coin';
+        scene.add(coin);
+        sceneObjects.push(coin);
+      }
+    }
+
+    function createStage6() {
+      // Central building
+      const buildingGeometry = new THREE.EdgesGeometry(
+        new THREE.BoxGeometry(6, 12, 6)
+      );
+      const buildingMaterial = new THREE.LineBasicMaterial({
+        color: 0xffb800,
+        transparent: true,
+        opacity: 0.8
+      });
+      const building = new THREE.LineSegments(buildingGeometry, buildingMaterial);
+      building.position.y = 0;
+      scene.add(building);
+      sceneObjects.push(building);
+
+      // Dividend streams going out
+      for (let i = 0; i < 8; i++) {
+        const streamGeometry = new THREE.EdgesGeometry(
+          new THREE.BoxGeometry(0.3, 0.3, 0.3)
+        );
+        const streamMaterial = new THREE.LineBasicMaterial({
+          color: 0x6366f1,
+          transparent: true,
+          opacity: 0.7
+        });
+        const stream = new THREE.LineSegments(streamGeometry, streamMaterial);
+        const angle = (i / 8) * Math.PI * 2;
+        stream.position.set(0, 0, 0);
+        stream.userData.angle = angle;
+        stream.userData.radius = 0;
+        stream.userData.type = 'stream';
+        scene.add(stream);
+        sceneObjects.push(stream);
+      }
     }
 
     let time = 0;
@@ -416,69 +571,87 @@
     function animate() {
       requestAnimationFrame(animate);
       time += 1;
+      stageProgress += 1;
 
-      // Sequentially activate steps
-      stepProgress += 0.3;
-      if (stepProgress >= 200 && currentStep < steps.length) {
-        stepProgress = 0;
-        currentStep++;
+      // Switch stages
+      if (stageProgress >= stages[currentStage].duration) {
+        currentStage = (currentStage + 1) % stages.length;
+        stageProgress = 0;
+        clearScene();
+
+        // Update title
+        titleDiv.innerHTML = `
+          <div style="font-size: 42px; font-weight: 700; margin-bottom: 12px; color: #6366f1;">${stages[currentStage].title}</div>
+          <div style="font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.7); max-width: 600px;">${stages[currentStage].desc}</div>
+        `;
+
+        // Create new stage
+        if (currentStage === 0) createStage1();
+        else if (currentStage === 1) createStage2();
+        else if (currentStage === 2) createStage3();
+        else if (currentStage === 3) createStage4();
+        else if (currentStage === 4) createStage5();
+        else if (currentStage === 5) createStage6();
       }
 
-      // Animate steps
-      stepObjects.forEach((box, index) => {
-        if (index < currentStep) {
-          box.userData.activated = true;
-        }
-
-        if (box.userData.activated) {
-          // Fade in
-          if (box.material.opacity < box.userData.targetOpacity) {
-            box.material.opacity += 0.015;
+      // Animate current stage
+      sceneObjects.forEach(obj => {
+        if (obj.userData.type === 'document') {
+          // Stage 1: Orbiting documents
+          obj.userData.angle += 0.01;
+          obj.position.x = Math.cos(obj.userData.angle) * obj.userData.radius;
+          obj.position.y = 7 + Math.sin(obj.userData.angle * 2) * 2;
+          obj.position.z = Math.sin(obj.userData.angle) * obj.userData.radius;
+          obj.lookAt(0, 7, 0);
+          if (obj.material.opacity < 0.7) obj.material.opacity += 0.01;
+        } else if (obj.userData.type === 'legalDoc') {
+          // Stage 2: Stacking documents
+          if (obj.material.opacity < 0.8) obj.material.opacity += 0.015;
+          obj.rotation.y += 0.005;
+        } else if (obj.userData.type === 'transformBuilding') {
+          // Stage 3: Building splits
+          obj.scale.x = 1 + Math.sin(stageProgress * 0.05) * 0.3;
+          obj.scale.z = 1 + Math.sin(stageProgress * 0.05) * 0.3;
+          obj.rotation.y += 0.01;
+        } else if (obj.userData.type === 'token') {
+          // Stage 3: Tokens fly out
+          if (obj.material.opacity < 0.7) obj.material.opacity += 0.02;
+          obj.userData.angle += obj.userData.speed;
+          const radius = (stageProgress / 100) * 15;
+          obj.position.x = Math.cos(obj.userData.angle) * radius;
+          obj.position.y = Math.sin(obj.userData.angle * 3) * 3;
+          obj.position.z = Math.sin(obj.userData.angle) * radius;
+          obj.rotation.x += 0.05;
+          obj.rotation.y += 0.05;
+        } else if (obj.userData.type === 'platformCell') {
+          // Stage 4: Platform grid appears
+          if (stageProgress > obj.userData.delay) {
+            if (obj.material.opacity < 0.6) obj.material.opacity += 0.02;
           }
-
-          // Rotate
-          box.rotation.x += 0.005;
-          box.rotation.y += 0.01;
-
-          // Pulse
-          const pulse = Math.sin(time * 0.02 + index * 0.5) * 0.3;
-          box.position.y = steps[index].position.y + pulse;
-
-          // Activate connection line
-          if (box.userData.connection) {
-            box.userData.connection.userData.activated = true;
-            if (box.userData.connection.material.opacity < 0.5) {
-              box.userData.connection.material.opacity += 0.01;
-            }
-          }
+        } else if (obj.userData.type === 'coin') {
+          // Stage 5: Coins flow in
+          if (obj.material.opacity < 0.8) obj.material.opacity += 0.015;
+          obj.position.y += (obj.userData.targetY - obj.position.y) * 0.02;
+          obj.rotation.y += 0.05;
+        } else if (obj.userData.type === 'stream') {
+          // Stage 6: Dividends stream out
+          obj.userData.radius += 0.08;
+          if (obj.userData.radius > 15) obj.userData.radius = 0;
+          obj.position.x = Math.cos(obj.userData.angle) * obj.userData.radius;
+          obj.position.z = Math.sin(obj.userData.angle) * obj.userData.radius;
+          obj.position.y = obj.userData.radius * 0.1;
         }
       });
 
-      // Rotate asset
-      asset.rotation.y += 0.005;
-
-      // Animate particles
-      particles.forEach(particle => {
-        particle.position.x += particle.userData.velocity.x;
-        particle.position.y += particle.userData.velocity.y;
-        particle.position.z += particle.userData.velocity.z;
-
-        // Bounce back
-        if (Math.abs(particle.position.x) > 25) particle.userData.velocity.x *= -1;
-        if (Math.abs(particle.position.y) > 10) particle.userData.velocity.y *= -1;
-        if (Math.abs(particle.position.z) > 10) particle.userData.velocity.z *= -1;
-
-        particle.rotation.x += 0.02;
-        particle.rotation.y += 0.02;
-      });
-
-      // Camera gentle movement
-      camera.position.x = Math.sin(time * 0.0005) * 5;
-      camera.position.y = 15 + Math.sin(time * 0.0008) * 3;
-      camera.lookAt(0, 0, 0);
+      // Gentle camera movement
+      camera.position.x = Math.sin(time * 0.001) * 3;
+      camera.position.y = 5 + Math.sin(time * 0.0008) * 2;
 
       renderer.render(scene, camera);
     }
+
+    // Initialize first stage
+    createStage1();
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
