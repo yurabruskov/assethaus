@@ -584,62 +584,76 @@
     gridHelper.position.y = -0.1;
     scene.add(gridHelper);
 
-    // Camera flight path - walk along streets
-    let currentState = 'moving'; // 'moving' or 'turning'
-    let currentAngle = 0;
-    let targetAngle = 0;
+    // Camera flight path - move only along main streets
+    let currentState = 'moving';
+    let currentStreet = 'vertical'; // 'vertical' or 'horizontal'
     let cameraX = 0;
-    let cameraZ = -60;
+    let cameraZ = -70;
     let moveProgress = 0;
     let turnProgress = 0;
-    const moveSpeed = 0.08; // Slower movement
-    const straightDistance = 500; // Walk longer before turning (multiple blocks)
+    const moveSpeed = 0.08;
+    const straightDistance = 400;
+    const cityLimit = 85; // Stay within city bounds
 
     function getFlightPosition() {
       let x = cameraX;
       let z = cameraZ;
-      let angle = currentAngle;
 
       if (currentState === 'moving') {
-        // Move forward
-        x += Math.cos(currentAngle) * moveSpeed;
-        z += Math.sin(currentAngle) * moveSpeed;
-        cameraX = x;
-        cameraZ = z;
+        // Move along current street
+        if (currentStreet === 'vertical') {
+          z += moveSpeed;
+          cameraZ = z;
+          // Keep on vertical street (x near 0)
+          cameraX = 0;
+        } else {
+          x += moveSpeed;
+          cameraX = x;
+          // Keep on horizontal street (z near 0)
+          cameraZ = 0;
+        }
         moveProgress++;
+
+        // Check if leaving city bounds
+        if (Math.abs(cameraX) > cityLimit || Math.abs(cameraZ) > cityLimit) {
+          currentState = 'turning';
+          moveProgress = 0;
+          turnProgress = 0;
+        }
       } else {
-        // Turning (slower)
-        const angleDiff = targetAngle - currentAngle;
-        currentAngle += angleDiff * 0.015; // Much slower turn
-        angle = currentAngle;
+        // Turning
         turnProgress++;
       }
 
+      const angle = currentStreet === 'vertical' ? Math.PI / 2 : 0;
       const lookDistance = 20;
       const lookX = x + Math.cos(angle) * lookDistance;
       const lookZ = z + Math.sin(angle) * lookDistance;
 
-      return { x, z, angle, lookX, lookZ };
+      return { x, z, lookX, lookZ };
     }
 
     function animate() {
       requestAnimationFrame(animate);
 
-      // Update flight state with random turns
+      // Update flight state - switch streets at intersection
       if (currentState === 'moving') {
         if (moveProgress >= straightDistance) {
           currentState = 'turning';
           moveProgress = 0;
           turnProgress = 0;
-          // Random turn: left (-90) or right (+90)
-          const turnDirection = Math.random() > 0.5 ? 1 : -1;
-          targetAngle = currentAngle + (Math.PI / 2) * turnDirection;
         }
       } else {
-        if (turnProgress >= 300) { // Longer turn duration
+        if (turnProgress >= 200) {
+          // Switch to perpendicular street
+          currentStreet = currentStreet === 'vertical' ? 'horizontal' : 'vertical';
           currentState = 'moving';
           turnProgress = 0;
           moveProgress = 0;
+
+          // Reset position to center intersection
+          cameraX = 0;
+          cameraZ = 0;
         }
       }
 
@@ -654,10 +668,14 @@
       cars.forEach(car => {
         if (car.userData.direction === 'vertical') {
           car.position.z += car.userData.speed;
+          // Wrap around at city boundaries
           if (car.position.z > blockSize/2) car.position.z = -blockSize/2;
+          if (car.position.z < -blockSize/2) car.position.z = blockSize/2;
         } else {
           car.position.x += car.userData.speed;
+          // Wrap around at city boundaries
           if (car.position.x > blockSize/2) car.position.x = -blockSize/2;
+          if (car.position.x < -blockSize/2) car.position.x = blockSize/2;
         }
       });
 
@@ -665,10 +683,14 @@
       pedestrians.forEach(ped => {
         if (ped.userData.direction === 'vertical') {
           ped.position.z += ped.userData.speed;
+          // Wrap around at city boundaries
           if (ped.position.z > blockSize/2) ped.position.z = -blockSize/2;
+          if (ped.position.z < -blockSize/2) ped.position.z = blockSize/2;
         } else {
           ped.position.x += ped.userData.speed;
+          // Wrap around at city boundaries
           if (ped.position.x > blockSize/2) ped.position.x = -blockSize/2;
+          if (ped.position.x < -blockSize/2) ped.position.x = blockSize/2;
         }
       });
 
