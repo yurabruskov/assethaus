@@ -1,145 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Asset Haus — Фирменный стиль</title>
-
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
-
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Work Sans', sans-serif;
       background: #000000;
       color: #ffffff;
       line-height: 1.6;
-      overflow-x: hidden;
-    }
-
-    #canvas-container {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 0;
-    }
-
-    .content {
-      position: relative;
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .content > * {
-      pointer-events: auto;
     }
 
     header {
       padding: 28px 65px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 107, 107, 0.3);
+      background: rgba(0, 0, 0, 0.95);
+      border-bottom: 2px solid rgba(107, 255, 138, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 100;
     }
 
     .logo {
       font-size: 32px;
       font-weight: 800;
       font-family: 'Fira Code', monospace;
-      color: #ff6b6b;
+      background: linear-gradient(135deg, #6bff8a 0%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     .hero {
-      min-height: 100vh;
+      min-height: 80vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       text-align: center;
-      padding: 0 65px;
+      padding: 100px 65px;
+      background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,212,255,0.05) 100%);
     }
 
     h1 {
-      font-size: 88px;
+      font-size: 96px;
       font-weight: 800;
+      line-height: 0.95;
+      background: linear-gradient(135deg, #6bff8a 0%, #00d4ff 50%, #ff6b6b 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -4px;
       margin-bottom: 20px;
-      line-height: 0.98;
-      color: #ffffff;
-      letter-spacing: -3px;
-      text-shadow: 0 0 40px rgba(255, 107, 107, 0.5);
     }
 
     .subtitle {
-      font-size: 24px;
-      color: rgba(255, 255, 255, 0.7);
-      margin-bottom: 60px;
-      font-weight: 300;
-      font-family: 'Fira Code', monospace;
+      font-size: 18px;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 4px;
+      text-transform: uppercase;
     }
 
     .section {
       padding: 100px 65px;
-      max-width: 1400px;
+      max-width: 1600px;
       margin: 0 auto;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     }
 
     .section-title {
       font-size: 48px;
       font-weight: 800;
-      margin-bottom: 50px;
-      color: #ff6b6b;
+      margin-bottom: 20px;
+      background: linear-gradient(135deg, #6bff8a 0%, #00d4ff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
       font-family: 'Fira Code', monospace;
     }
 
-    .grid {
+    .section-desc {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.5);
+      margin-bottom: 60px;
+      max-width: 900px;
+      line-height: 1.8;
+    }
+
+    .color-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
       gap: 30px;
-      margin-bottom: 80px;
-    }
-
-    .card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 107, 107, 0.2);
-      padding: 30px;
-      border-radius: 8px;
-      transition: all 0.3s;
-    }
-
-    .card:hover {
-      background: rgba(255, 107, 107, 0.08);
-      border-color: #ff6b6b;
-      transform: translateY(-5px);
-    }
-
-    .card h3 {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 12px;
-      color: #ffffff;
-      font-family: 'Fira Code', monospace;
-    }
-
-    .card p {
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-      line-height: 1.6;
-    }
-
-    .color-palette {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 30px;
     }
 
     .color-item {
@@ -147,344 +98,765 @@
     }
 
     .color-box {
-      width: 120px;
-      height: 120px;
-      border-radius: 8px;
-      margin-bottom: 12px;
+      width: 100%;
+      height: 200px;
+      border-radius: 12px;
+      margin-bottom: 16px;
       border: 2px solid rgba(255, 255, 255, 0.1);
-      transition: transform 0.3s;
+      transition: all 0.3s;
+      position: relative;
     }
 
     .color-box:hover {
-      transform: scale(1.1);
+      transform: scale(1.05) translateY(-8px);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5);
     }
 
     .color-name {
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: 700;
       font-family: 'Fira Code', monospace;
-      color: rgba(255, 255, 255, 0.8);
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 6px;
     }
 
     .color-hex {
+      font-size: 12px;
+      font-family: 'Fira Code', monospace;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    .color-rgb {
       font-size: 11px;
       font-family: 'Fira Code', monospace;
-      color: rgba(255, 255, 255, 0.5);
+      color: rgba(255, 255, 255, 0.3);
+      margin-top: 4px;
+    }
+
+    .element-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(0, 212, 255, 0.15);
+      padding: 60px;
+      border-radius: 20px;
+      margin-bottom: 80px;
+      transition: all 0.3s;
+    }
+
+    .element-card:hover {
+      background: rgba(0, 212, 255, 0.05);
+      border-color: rgba(0, 212, 255, 0.4);
+    }
+
+    .element-number {
+      font-size: 14px;
+      color: rgba(0, 212, 255, 0.6);
+      font-family: 'Fira Code', monospace;
+      margin-bottom: 10px;
+    }
+
+    .element-title {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #6bff8a;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .element-desc {
+      font-size: 16px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.9;
+      margin-bottom: 40px;
+    }
+
+    .element-visual {
+      width: 100%;
+      height: 300px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 12px;
+      border: 2px solid rgba(0, 212, 255, 0.2);
+      margin-bottom: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .element-specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 25px;
+      background: rgba(0, 0, 0, 0.4);
+      padding: 35px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .spec-label {
+      color: rgba(255, 255, 255, 0.4);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 8px;
+    }
+
+    .spec-value {
+      color: #00d4ff;
+      font-family: 'Fira Code', monospace;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .btn-showcase {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin: 40px 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 18px 40px;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 8px;
+      transition: all 0.3s;
+      font-family: 'Fira Code', monospace;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #6bff8a 0%, #00d4ff 100%);
+      color: #000;
+      border: none;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 15px 40px rgba(107, 255, 138, 0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: #6bff8a;
+      border: 2px solid #6bff8a;
+    }
+
+    .btn-secondary:hover {
+      background: rgba(107, 255, 138, 0.15);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: #00d4ff;
+      border: 2px solid #00d4ff;
+    }
+
+    .btn-outline:hover {
+      background: rgba(0, 212, 255, 0.15);
+    }
+
+    .info-block {
+      background: rgba(0, 212, 255, 0.05);
+      border-left: 5px solid #00d4ff;
+      padding: 35px;
+      margin: 30px 0;
+      border-radius: 8px;
+    }
+
+    .info-block-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #00d4ff;
+      margin-bottom: 12px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .info-block-text {
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.8;
+    }
+
+    .warning-block {
+      background: rgba(255, 107, 107, 0.05);
+      border-left: 5px solid #ff6b6b;
+      padding: 35px;
+      margin: 30px 0;
+      border-radius: 8px;
+    }
+
+    .warning-block-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #ff6b6b;
+      margin-bottom: 12px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .success-block {
+      background: rgba(107, 255, 138, 0.05);
+      border-left: 5px solid #6bff8a;
+      padding: 35px;
+      margin: 30px 0;
+      border-radius: 8px;
+    }
+
+    .success-block-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #6bff8a;
+      margin-bottom: 12px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .pattern-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 40px;
+      margin-top: 50px;
+    }
+
+    .pattern-box {
+      height: 300px;
+      border-radius: 16px;
+      border: 2px solid rgba(0, 212, 255, 0.2);
+      position: relative;
+      overflow: hidden;
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    .pattern-name {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 20px;
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      color: #6bff8a;
+      text-align: center;
+      border-top: 1px solid rgba(0, 212, 255, 0.3);
+    }
+
+    .type-specimen {
+      margin-bottom: 50px;
+      padding: 50px;
+      background: rgba(255, 255, 255, 0.02);
+      border-left: 5px solid #6bff8a;
+      border-radius: 12px;
+    }
+
+    .type-label {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.4);
+      margin-bottom: 15px;
+      font-family: 'Fira Code', monospace;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+      margin: 50px 0;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 212, 255, 0.2);
+      padding: 40px;
+      border-radius: 12px;
+      transition: all 0.3s;
+    }
+
+    .card:hover {
+      background: rgba(0, 212, 255, 0.08);
+      border-color: rgba(0, 212, 255, 0.5);
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 15px;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .card p {
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 1.8;
     }
 
     footer {
-      padding: 60px 65px;
+      padding: 80px 65px;
       text-align: center;
       font-family: 'Fira Code', monospace;
       font-size: 12px;
-      color: rgba(255, 255, 255, 0.45);
-      border-top: 1px solid rgba(255, 107, 107, 0.2);
-      background: rgba(0, 0, 0, 0.85);
+      color: rgba(255, 255, 255, 0.3);
+      border-top: 1px solid rgba(107, 255, 138, 0.1);
+      background: rgba(0, 0, 0, 0.95);
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 54px; }
+      .section-title { font-size: 36px; }
+      .grid-2col { grid-template-columns: 1fr; }
+      .color-grid { grid-template-columns: 1fr 1fr; }
     }
   </style>
 </head>
 <body>
-  <div id="canvas-container"></div>
+  <header>
+    <div class="logo">ASSET_HAUS</div>
+  </header>
 
-  <div class="content">
-    <header>
-      <div class="logo">ASSET_HAUS</div>
-    </header>
+  <section class="hero">
+    <h1>Фирменный<br>Стиль</h1>
+    <p class="subtitle">Brand Identity & Design System</p>
+  </section>
 
-    <section class="hero">
-      <h1>Фирменный<br>Стиль</h1>
-      <p class="subtitle">Brand Identity & Design System</p>
-    </section>
+  <!-- 01. ЦВЕТОВАЯ ПАЛИТРА -->
+  <section class="section">
+    <h2 class="section-title">01. Цветовая палитра</h2>
+    <p class="section-desc">
+      Цвета извлечены из 3D визуализации Land Plots. Градиентная схема от темных к ярким оттенкам символизирует рост стоимости активов.
+      Формула расчета: R = 255 * (height/25), G = 107 (const), B = 107 + (1 - height/25) * 80.
+    </p>
 
-    <section class="section">
-      <h2 class="section-title">Цветовая палитра</h2>
-      <div class="color-palette">
-        <div class="color-item">
-          <div class="color-box" style="background: #ff6b6b;"></div>
-          <div class="color-name">Primary Red</div>
-          <div class="color-hex">#FF6B6B</div>
-        </div>
-        <div class="color-item">
-          <div class="color-box" style="background: #00d4ff;"></div>
-          <div class="color-name">Cyan Accent</div>
-          <div class="color-hex">#00D4FF</div>
-        </div>
-        <div class="color-item">
-          <div class="color-box" style="background: #6bff8a;"></div>
-          <div class="color-name">Success Green</div>
-          <div class="color-hex">#6BFF8A</div>
-        </div>
-        <div class="color-item">
-          <div class="color-box" style="background: #003366;"></div>
-          <div class="color-name">Deep Blue</div>
-          <div class="color-hex">#003366</div>
-        </div>
-        <div class="color-item">
-          <div class="color-box" style="background: #000000; border-color: #ff6b6b;"></div>
-          <div class="color-name">Black</div>
-          <div class="color-hex">#000000</div>
-        </div>
-        <div class="color-item">
-          <div class="color-box" style="background: #ffffff;"></div>
-          <div class="color-name">White</div>
-          <div class="color-hex">#FFFFFF</div>
+    <div class="color-grid">
+      <div class="color-item">
+        <div class="color-box" style="background: rgb(50, 107, 140);"></div>
+        <div class="color-name">Low Value Asset</div>
+        <div class="color-hex">#326B8C</div>
+        <div class="color-rgb">RGB(50, 107, 140)</div>
+      </div>
+
+      <div class="color-item">
+        <div class="color-box" style="background: rgb(100, 107, 130);"></div>
+        <div class="color-name">Mid-Low Value</div>
+        <div class="color-hex">#646B82</div>
+        <div class="color-rgb">RGB(100, 107, 130)</div>
+      </div>
+
+      <div class="color-item">
+        <div class="color-box" style="background: rgb(150, 107, 120);"></div>
+        <div class="color-name">Mid Value</div>
+        <div class="color-hex">#966B78</div>
+        <div class="color-rgb">RGB(150, 107, 120)</div>
+      </div>
+
+      <div class="color-item">
+        <div class="color-box" style="background: rgb(200, 107, 112);"></div>
+        <div class="color-name">Mid-High Value</div>
+        <div class="color-hex">#C86B70</div>
+        <div class="color-rgb">RGB(200, 107, 112)</div>
+      </div>
+
+      <div class="color-item">
+        <div class="color-box" style="background: rgb(255, 107, 107);"></div>
+        <div class="color-name">High Value Asset</div>
+        <div class="color-hex">#FF6B6B</div>
+        <div class="color-rgb">RGB(255, 107, 107)</div>
+      </div>
+
+      <div class="color-item">
+        <div class="color-box" style="background: #6bff8a;"></div>
+        <div class="color-name">Growth / Park</div>
+        <div class="color-hex">#6BFF8A</div>
+        <div class="color-rgb">RGB(107, 255, 138)</div>
+      </div>
+
+      <div class="color-item">
+        <div class="color-box" style="background: #00d4ff;"></div>
+        <div class="color-name">Tech / Grid</div>
+        <div class="color-hex">#00D4FF</div>
+        <div class="color-rgb">RGB(0, 212, 255)</div>
+      </div>
+
+      <div class="color-item">
+        <div class="color-box" style="background: #003366;"></div>
+        <div class="color-name">Deep Grid Lines</div>
+        <div class="color-hex">#003366</div>
+        <div class="color-rgb">RGB(0, 51, 102)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02. BUILDING BLOCK -->
+  <section class="section">
+    <div class="element-card">
+      <div class="element-number">ELEMENT 02</div>
+      <h3 class="element-title">Building Block</h3>
+      <p class="element-desc">
+        Базовый фирменный элемент — объемное здание с solid стенами и wireframe гранями. Символизирует недвижимость как физический актив.
+        Используется цветовая палитра от темных к ярким оттенкам в зависимости от ценности актива. Solid стены дают объем, а EdgesGeometry создает характерную TRON-эстетику.
+      </p>
+
+      <div class="element-visual" style="background: radial-gradient(circle, rgba(150,107,120,0.2) 0%, rgba(0,0,0,0.4) 100%);">
+        <div style="width: 120px; height: 180px; border: 3px solid rgb(150, 107, 120); position: relative;">
+          <div style="position: absolute; width: 100%; height: 100%; border: 1px solid rgba(150, 107, 120, 0.3); transform: translate(10px, -10px);"></div>
         </div>
       </div>
 
-      <h2 class="section-title">Фирменные элементы</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>3D Logo Element</h3>
-          <p>Объемный логотип в виде куба с пульсирующими гранями. Используется в заставках и промо-материалах.</p>
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Geometry</div>
+          <div class="spec-value">BoxGeometry + EdgesGeometry</div>
         </div>
-        <div class="card">
-          <h3>Building Block</h3>
-          <p>Базовый элемент — здание с solid стенами и линейными краями. Символизирует недвижимость.</p>
+        <div>
+          <div class="spec-label">Material</div>
+          <div class="spec-value">MeshBasicMaterial + LineBasicMaterial</div>
         </div>
-        <div class="card">
-          <h3>Data Grid</h3>
-          <p>TRON-style сетка с cyan линиями. Представляет технологичность и структурированность данных.</p>
+        <div>
+          <div class="spec-label">Color Range</div>
+          <div class="spec-value">#326B8C → #FF6B6B</div>
         </div>
-        <div class="card">
-          <h3>Value Pyramid</h3>
-          <p>Пирамида из блоков с gradient от красного к зеленому. Визуализирует рост стоимости активов.</p>
+        <div>
+          <div class="spec-label">Animation</div>
+          <div class="spec-value">Gentle height pulse + Fade-in</div>
         </div>
-        <div class="card">
-          <h3>Token Ring</h3>
-          <p>Вращающееся кольцо из маленьких кубиков. Символизирует токенизацию и фрагментацию активов.</p>
+        <div>
+          <div class="spec-label">Use Case</div>
+          <div class="spec-value">Asset visualization, property maps</div>
         </div>
-        <div class="card">
-          <h3>Network Nodes</h3>
-          <p>Связанные между собой узлы-кубики. Представляет блокчейн и децентрализованную сеть.</p>
-        </div>
-      </div>
-
-      <h2 class="section-title">Типографика</h2>
-      <div class="grid">
-        <div class="card">
-          <h3>Work Sans</h3>
-          <p style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 300;">Light 300 — Body text and descriptions</p>
-          <p style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;">SemiBold 600 — Navigation and labels</p>
-          <p style="font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 800;">ExtraBold 800 — Headlines and titles</p>
-        </div>
-        <div class="card">
-          <h3>Fira Code</h3>
-          <p style="font-family: 'Fira Code', monospace; font-size: 16px; font-weight: 400;">Regular 400 — Code and data values</p>
-          <p style="font-family: 'Fira Code', monospace; font-size: 18px; font-weight: 600;">SemiBold 600 — Logo and CTAs</p>
+        <div>
+          <div class="spec-label">Opacity</div>
+          <div class="spec-value">Solid walls (1.0) + Edges (0.0-0.8)</div>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <footer>
-      © 2025 Asset Haus. Фирменный стиль и дизайн-система.
-    </footer>
-  </div>
+  <!-- 03. TRON GRID -->
+  <section class="section">
+    <div class="element-card">
+      <div class="element-number">ELEMENT 03</div>
+      <h3 class="element-title">TRON-Style Grid</h3>
+      <p class="element-desc">
+        Характерная сетка в стиле TRON с cyan центральными линиями и темно-синими grid линиями. Создает ощущение технологичности,
+        цифровизации и структурированности данных. Используется как ground plane во всех 3D визуализациях. Полупрозрачность (opacity 0.3-0.5)
+        позволяет фокусироваться на основных элементах.
+      </p>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <script>
-    const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      <div class="element-visual" style="background: repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(0,212,255,0.2) 29px, rgba(0,212,255,0.2) 30px), repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(0,51,102,0.3) 29px, rgba(0,51,102,0.3) 30px);">
+      </div>
 
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setClearColor(0x000000);
-    document.getElementById('canvas-container').appendChild(renderer.domElement);
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Geometry</div>
+          <div class="spec-value">GridHelper</div>
+        </div>
+        <div>
+          <div class="spec-label">Center Lines</div>
+          <div class="spec-value">#00D4FF (Cyan)</div>
+        </div>
+        <div>
+          <div class="spec-label">Grid Lines</div>
+          <div class="spec-value">#003366 (Deep Blue)</div>
+        </div>
+        <div>
+          <div class="spec-label">Opacity</div>
+          <div class="spec-value">0.3 - 0.5</div>
+        </div>
+        <div>
+          <div class="spec-label">Position</div>
+          <div class="spec-value">Y = -0.1 (Below objects)</div>
+        </div>
+        <div>
+          <div class="spec-label">Use Case</div>
+          <div class="spec-value">Ground plane, data visualization backdrop</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    const elements = [];
+  <!-- 04. ТИПОГРАФИКА -->
+  <section class="section">
+    <h2 class="section-title">04. Типографика</h2>
+    <p class="section-desc">
+      Два шрифта формируют визуальный язык: Work Sans для основного текста и Fira Code для технических элементов.
+    </p>
 
-    // 1. LOGO CUBE (центральный элемент)
-    const logoSize = 4;
-    const logoGeometry = new THREE.BoxGeometry(logoSize, logoSize, logoSize);
-    const logoEdgesGeometry = new THREE.EdgesGeometry(logoGeometry);
-    const logoEdgesMaterial = new THREE.LineBasicMaterial({ color: 0xff6b6b, linewidth: 2 });
-    const logoCube = new THREE.LineSegments(logoEdgesGeometry, logoEdgesMaterial);
-    logoCube.position.set(0, 8, -20);
-    scene.add(logoCube);
-    elements.push({ mesh: logoCube, type: 'logo' });
+    <div class="type-specimen">
+      <div class="type-label">Work Sans ExtraBold 800</div>
+      <div class="type-display" style="font-family: 'Work Sans', sans-serif; font-size: 64px; font-weight: 800; line-height: 1.1;">
+        Tokenize Real Estate
+      </div>
+    </div>
 
-    // 2. BUILDING BLOCKS (слева) - символизируют недвижимость
-    for (let i = 0; i < 5; i++) {
-      const height = 3 + Math.random() * 6;
-      const buildingGeometry = new THREE.BoxGeometry(2, height, 2);
+    <div class="type-specimen">
+      <div class="type-label">Work Sans SemiBold 600</div>
+      <div class="type-display" style="font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 600;">
+        Navigation • Labels • Subheadings • Call-to-Action
+      </div>
+    </div>
 
-      const color = i < 2 ? 0xff6b6b : (i < 4 ? 0x00d4ff : 0x6bff8a);
-      const wallMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.6 });
-      const walls = new THREE.Mesh(buildingGeometry, wallMaterial);
+    <div class="type-specimen">
+      <div class="type-label">Work Sans Light 300</div>
+      <div class="type-display" style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 300; line-height: 1.8;">
+        Asset Haus revolutionizes real estate investment through blockchain technology and tokenization.
+        We make premium properties accessible to everyone by fractionalizing ownership into digital tokens.
+        Invest in commercial real estate starting from $100, earn passive income, and trade 24/7 on our platform.
+      </div>
+    </div>
 
-      const edgesGeometry = new THREE.EdgesGeometry(buildingGeometry);
-      const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
-      const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+    <div class="type-specimen">
+      <div class="type-label">Fira Code SemiBold 600</div>
+      <div class="type-display" style="font-family: 'Fira Code', monospace; font-size: 32px; font-weight: 600;">
+        ASSET_HAUS
+      </div>
+    </div>
 
-      const building = new THREE.Group();
-      building.add(walls);
-      building.add(edges);
+    <div class="type-specimen">
+      <div class="type-label">Fira Code Regular 400</div>
+      <div class="type-display" style="font-family: 'Fira Code', monospace; font-size: 16px; font-weight: 400;">
+        $1,250,000.00 • #FF6B6B • RGB(255, 107, 107) • 0x326B8C
+      </div>
+    </div>
+  </section>
 
-      building.position.set(-15 + i * 3, height / 2, -15);
-      scene.add(building);
-      elements.push({ mesh: building, type: 'building', baseY: height / 2, index: i });
-    }
+  <!-- 05. КНОПКИ -->
+  <section class="section">
+    <h2 class="section-title">05. Кнопки</h2>
+    <p class="section-desc">
+      Три стиля кнопок для разных сценариев использования. Gradient кнопка для основных действий, outline для вторичных, и ghost для навигации.
+    </p>
 
-    // 3. VALUE PYRAMID (справа) - пирамида роста стоимости
-    for (let level = 0; level < 6; level++) {
-      const count = 6 - level;
-      for (let i = 0; i < count; i++) {
-        const boxGeometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+    <div class="btn-showcase">
+      <a href="#" class="btn btn-primary">Начать инвестировать</a>
+      <a href="#" class="btn btn-secondary">Узнать больше</a>
+      <a href="#" class="btn btn-outline">Смотреть презентацию</a>
+    </div>
 
-        const ratio = level / 5;
-        const r = Math.floor(255 * (1 - ratio));
-        const g = Math.floor(107 + ratio * 148);
-        const color = (r << 16) | (g << 8) | 138;
+    <div class="element-specs">
+      <div>
+        <div class="spec-label">Primary Button</div>
+        <div class="spec-value">Gradient: #6BFF8A → #00D4FF</div>
+      </div>
+      <div>
+        <div class="spec-label">Secondary Button</div>
+        <div class="spec-value">Border: 2px solid #6BFF8A</div>
+      </div>
+      <div>
+        <div class="spec-label">Outline Button</div>
+        <div class="spec-value">Border: 2px solid #00D4FF</div>
+      </div>
+      <div>
+        <div class="spec-label">Font</div>
+        <div class="spec-value">Fira Code SemiBold 600</div>
+      </div>
+      <div>
+        <div class="spec-label">Padding</div>
+        <div class="spec-value">18px 40px</div>
+      </div>
+      <div>
+        <div class="spec-label">Border Radius</div>
+        <div class="spec-value">8px</div>
+      </div>
+    </div>
+  </section>
 
-        const wallMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.5 });
-        const walls = new THREE.Mesh(boxGeometry, wallMaterial);
+  <!-- 06. ИНФО-БЛОКИ -->
+  <section class="section">
+    <h2 class="section-title">06. Инфо-блоки</h2>
+    <p class="section-desc">
+      Три типа информационных блоков для различных сообщений: info (информация), warning (предупреждение), success (успех).
+    </p>
 
-        const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
-        const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
-        const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+    <div class="info-block">
+      <div class="info-block-title">Технологичность</div>
+      <div class="info-block-text">
+        Все активы на платформе Asset Haus токенизированы на блокчейне Ethereum. Смарт-контракты обеспечивают автоматическое распределение
+        дивидендов и прозрачность всех транзакций.
+      </div>
+    </div>
 
-        const box = new THREE.Group();
-        box.add(walls);
-        box.add(edges);
+    <div class="warning-block">
+      <div class="warning-block-title">Важное предупреждение</div>
+      <div class="info-block-text">
+        Инвестиции в токенизированную недвижимость связаны с рисками. Стоимость токенов может как расти, так и падать.
+        Инвестируйте только те средства, потерю которых вы можете себе позволить.
+      </div>
+    </div>
 
-        const offsetX = (i - count / 2) * 1.7;
-        box.position.set(12 + offsetX, 1 + level * 1.7, -15);
+    <div class="success-block">
+      <div class="success-block-title">Успешное размещение</div>
+      <div class="info-block-text">
+        Офисное здание в центре Москвы успешно токенизировано. Привлечено $2.5M от 487 инвесторов.
+        Первая выплата дивидендов запланирована на следующий квартал.
+      </div>
+    </div>
 
-        scene.add(box);
-        elements.push({ mesh: box, type: 'pyramid', level: level, index: i });
-      }
-    }
+    <div class="element-specs">
+      <div>
+        <div class="spec-label">Info Block</div>
+        <div class="spec-value">Border-left: 5px solid #00D4FF</div>
+      </div>
+      <div>
+        <div class="spec-label">Warning Block</div>
+        <div class="spec-value">Border-left: 5px solid #FF6B6B</div>
+      </div>
+      <div>
+        <div class="spec-label">Success Block</div>
+        <div class="spec-value">Border-left: 5px solid #6BFF8A</div>
+      </div>
+      <div>
+        <div class="spec-label">Background</div>
+        <div class="spec-value">RGBA with 0.05 opacity</div>
+      </div>
+      <div>
+        <div class="spec-label">Padding</div>
+        <div class="spec-value">35px</div>
+      </div>
+      <div>
+        <div class="spec-label">Border Radius</div>
+        <div class="spec-value">8px</div>
+      </div>
+    </div>
+  </section>
 
-    // 4. TOKEN RING (верх справа) - кольцо токенов
-    const ringRadius = 6;
-    const tokenCount = 12;
-    const tokenRing = [];
+  <!-- 07. ПАТТЕРНЫ -->
+  <section class="section">
+    <h2 class="section-title">07. Графические паттерны</h2>
+    <p class="section-desc">
+      Повторяющиеся геометрические паттерны на основе фирменных элементов для использования в фонах, декоративных элементах и иллюстрациях.
+    </p>
 
-    for (let i = 0; i < tokenCount; i++) {
-      const angle = (i / tokenCount) * Math.PI * 2;
-      const tokenGeometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+    <div class="pattern-grid">
+      <div class="pattern-box" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,212,255,0.1) 35px, rgba(0,212,255,0.1) 36px);">
+        <div class="pattern-name">Diagonal Grid Pattern</div>
+      </div>
 
-      const color = i % 3 === 0 ? 0xff6b6b : (i % 3 === 1 ? 0x00d4ff : 0x6bff8a);
-      const edgesGeometry = new THREE.EdgesGeometry(tokenGeometry);
-      const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
-      const token = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+      <div class="pattern-box" style="background: radial-gradient(circle at 25% 25%, rgba(107,255,138,0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(0,212,255,0.1) 0%, transparent 50%);">
+        <div class="pattern-name">Radial Gradient Pattern</div>
+      </div>
 
-      const x = Math.cos(angle) * ringRadius;
-      const z = Math.sin(angle) * ringRadius - 25;
-      token.position.set(x, 12, z);
+      <div class="pattern-box" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(0,212,255,0.05) 29px, rgba(0,212,255,0.05) 30px), repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(107,255,138,0.05) 29px, rgba(107,255,138,0.05) 30px);">
+        <div class="pattern-name">Orthogonal Grid Pattern</div>
+      </div>
+    </div>
+  </section>
 
-      scene.add(token);
-      tokenRing.push(token);
-      elements.push({ mesh: token, type: 'token', angle: angle });
-    }
+  <!-- 08. КАРТОЧКИ -->
+  <section class="section">
+    <h2 class="section-title">08. Карточки контента</h2>
+    <p class="section-desc">
+      Стандартные карточки для отображения информации о свойствах, услугах и возможностях платформы.
+    </p>
 
-    // 5. NETWORK NODES (низ слева) - сеть блокчейн
-    const nodes = [];
-    for (let i = 0; i < 6; i++) {
-      const nodeGeometry = new THREE.BoxGeometry(1, 1, 1);
-      const edgesGeometry = new THREE.EdgesGeometry(nodeGeometry);
-      const color = i === 0 || i === 5 ? 0xff6b6b : 0x00d4ff;
-      const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
-      const node = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+    <div class="grid-2col">
+      <div class="card">
+        <h3>Токенизация</h3>
+        <p>Преобразуем физические активы в цифровые токены на блокчейне. Каждый токен представляет долю собственности и дает право на доход от аренды.</p>
+      </div>
 
-      const angle = (i / 6) * Math.PI * 2;
-      const radius = 4;
-      node.position.set(-12 + Math.cos(angle) * radius, 2, -25 + Math.sin(angle) * radius);
+      <div class="card">
+        <h3>Ликвидность</h3>
+        <p>Торгуйте токенами недвижимости 24/7 на нашей платформе. Продавайте и покупайте доли в премиальных объектах без посредников и бумажной волокиты.</p>
+      </div>
 
-      scene.add(node);
-      nodes.push(node);
-      elements.push({ mesh: node, type: 'node', index: i });
-    }
+      <div class="card">
+        <h3>Пассивный доход</h3>
+        <p>Получайте ежеквартальные выплаты от аренды объектов. Смарт-контракты автоматически распределяют доход пропорционально количеству токенов.</p>
+      </div>
 
-    // Connections between nodes (lines)
-    for (let i = 0; i < nodes.length; i++) {
-      const nextIndex = (i + 1) % nodes.length;
-      const points = [];
-      points.push(new THREE.Vector3(nodes[i].position.x, nodes[i].position.y, nodes[i].position.z));
-      points.push(new THREE.Vector3(nodes[nextIndex].position.x, nodes[nextIndex].position.y, nodes[nextIndex].position.z));
+      <div class="card">
+        <h3>Прозрачность</h3>
+        <p>Вся информация о недвижимости, финансовых показателях и транзакциях доступна в блокчейне. Полная прозрачность и безопасность инвестиций.</p>
+      </div>
+    </div>
+  </section>
 
-      const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
-      const lineMaterial = new THREE.LineBasicMaterial({ color: 0x003366, transparent: true, opacity: 0.4 });
-      const line = new THREE.Line(lineGeometry, lineMaterial);
-      scene.add(line);
-    }
+  <!-- 09. ПРИМЕРЫ ИСПОЛЬЗОВАНИЯ -->
+  <section class="section">
+    <h2 class="section-title">09. Примеры страниц</h2>
+    <p class="section-desc">
+      Типовые макеты страниц с применением фирменного стиля.
+    </p>
 
-    // 6. DATA GRID (ground)
-    const gridHelper = new THREE.GridHelper(
-      60,
-      40,
-      0x00d4ff,
-      0x003366
-    );
-    gridHelper.material.opacity = 0.3;
-    gridHelper.material.transparent = true;
-    gridHelper.position.y = -1;
-    scene.add(gridHelper);
+    <div class="element-card">
+      <div class="element-number">PAGE TEMPLATE 01</div>
+      <h3 class="element-title">Landing Page</h3>
+      <p class="element-desc">
+        Главная страница с hero-секцией, статистикой, описанием возможностей и call-to-action.
+        Использует gradient заголовки, карточки с hover эффектами, и кнопки с shadow при наведении.
+      </p>
 
-    // Camera setup
-    camera.position.set(0, 12, 10);
-    camera.lookAt(0, 5, -15);
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Header</div>
+          <div class="spec-value">Sticky, backdrop-filter blur</div>
+        </div>
+        <div>
+          <div class="spec-label">Hero Section</div>
+          <div class="spec-value">Full height, centered content</div>
+        </div>
+        <div>
+          <div class="spec-label">Stats Section</div>
+          <div class="spec-value">3-column grid with numbers</div>
+        </div>
+        <div>
+          <div class="spec-label">Features</div>
+          <div class="spec-value">Card grid with hover effects</div>
+        </div>
+        <div>
+          <div class="spec-label">Background</div>
+          <div class="spec-value">#000000 with gradient overlays</div>
+        </div>
+        <div>
+          <div class="spec-label">CTA</div>
+          <div class="spec-value">Primary gradient button</div>
+        </div>
+      </div>
+    </div>
 
-    let time = 0;
+    <div class="element-card">
+      <div class="element-number">PAGE TEMPLATE 02</div>
+      <h3 class="element-title">Property Detail Page</h3>
+      <p class="element-desc">
+        Детальная страница объекта недвижимости с 3D визуализацией (Building Block element), характеристиками объекта,
+        финансовыми показателями и кнопкой инвестирования. Инфо-блоки для важной информации.
+      </p>
 
-    function animate() {
-      requestAnimationFrame(animate);
-      time += 0.01;
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">3D Visualization</div>
+          <div class="spec-value">Building Block with property color</div>
+        </div>
+        <div>
+          <div class="spec-label">Property Info</div>
+          <div class="spec-value">Info blocks + specs grid</div>
+        </div>
+        <div>
+          <div class="spec-label">Financial Data</div>
+          <div class="spec-value">Fira Code monospace numbers</div>
+        </div>
+        <div>
+          <div class="spec-label">Investment Button</div>
+          <div class="spec-value">Primary gradient, prominent</div>
+        </div>
+        <div>
+          <div class="spec-label">Risk Warning</div>
+          <div class="spec-value">Warning block at bottom</div>
+        </div>
+        <div>
+          <div class="spec-label">Related Properties</div>
+          <div class="spec-value">Card grid at end</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      // Animate logo cube - rotation and pulse
-      logoCube.rotation.x = time * 0.5;
-      logoCube.rotation.y = time * 0.7;
-      const pulse = 1 + Math.sin(time * 2) * 0.1;
-      logoCube.scale.set(pulse, pulse, pulse);
-
-      // Animate buildings - gentle height pulse
-      elements.forEach(el => {
-        if (el.type === 'building') {
-          const wavePulse = Math.sin(time * 1.5 + el.index * 0.5) * 0.3;
-          el.mesh.position.y = el.baseY + wavePulse;
-        }
-
-        // Animate pyramid - wave effect
-        if (el.type === 'pyramid') {
-          const wave = Math.sin(time * 2 + el.level * 0.3 + el.index * 0.2) * 0.1;
-          el.mesh.rotation.y = time * 0.5 + el.level * 0.5;
-          el.mesh.position.y += wave;
-        }
-
-        // Animate token ring - rotation
-        if (el.type === 'token') {
-          const newAngle = el.angle + time;
-          const x = Math.cos(newAngle) * ringRadius;
-          const z = Math.sin(newAngle) * ringRadius - 25;
-          el.mesh.position.x = x;
-          el.mesh.position.z = z;
-          el.mesh.rotation.x = time * 2;
-          el.mesh.rotation.y = time * 3;
-        }
-
-        // Animate network nodes - floating
-        if (el.type === 'node') {
-          const float = Math.sin(time * 1.5 + el.index * 0.8) * 0.5;
-          el.mesh.position.y = 2 + float;
-          el.mesh.rotation.x = time * 0.5;
-          el.mesh.rotation.z = time * 0.3;
-        }
-      });
-
-      // Gentle camera movement
-      camera.position.x = Math.sin(time * 0.1) * 3;
-      camera.position.y = 12 + Math.cos(time * 0.15) * 2;
-      camera.lookAt(0, 5, -15);
-
-      renderer.render(scene, camera);
-    }
-
-    window.addEventListener('resize', () => {
-      camera.aspect = window.innerWidth / window.innerHeight;
-      camera.updateProjectionMatrix();
-      renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    animate();
-  </script>
+  <footer>
+    © 2025 Asset Haus. Фирменный стиль и дизайн-система<br>
+    Цвета и элементы извлечены из 3D визуализации Land Plots
+  </footer>
 </body>
 </html>
