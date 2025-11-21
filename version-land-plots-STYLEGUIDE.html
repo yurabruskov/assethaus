@@ -404,11 +404,71 @@
       background: rgba(0, 0, 0, 0.95);
     }
 
+    /* 3D Canvas Styles */
+    .canvas-3d {
+      width: 100%;
+      height: 400px;
+      border-radius: 16px;
+      border: 2px solid rgba(0, 212, 255, 0.3);
+      background: rgba(0, 0, 0, 0.6);
+      margin-bottom: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .canvas-3d canvas {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+
+    .canvas-label {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: #6bff8a;
+      border: 1px solid rgba(107, 255, 138, 0.3);
+    }
+
+    /* Animated Patterns */
+    .pattern-animated {
+      position: relative;
+    }
+
+    @keyframes patternPulse {
+      0%, 100% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+    }
+
+    @keyframes patternSlide {
+      0% { background-position: 0 0; }
+      100% { background-position: 50px 50px; }
+    }
+
+    @keyframes patternRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .pattern-layer {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
     @media (max-width: 768px) {
       h1 { font-size: 54px; }
       .section-title { font-size: 36px; }
       .grid-2col { grid-template-columns: 1fr; }
       .color-grid { grid-template-columns: 1fr 1fr; }
+      .canvas-3d { height: 300px; }
     }
   </style>
 </head>
@@ -722,6 +782,213 @@
     </div>
   </section>
 
+  <!-- 06a. 3D ФИРМЕННЫЕ ЭЛЕМЕНТЫ -->
+  <section class="section">
+    <h2 class="section-title">06a. 3D Фирменные элементы</h2>
+    <p class="section-desc">
+      Уникальные трехмерные объекты в стиле Land Plots 3D визуализации. Эти элементы создают узнаваемую визуальную идентичность
+      и используются в интерактивных демонстрациях, презентациях и промо-материалах.
+    </p>
+
+    <!-- Building Block Element -->
+    <div class="element-card">
+      <div class="element-number">3D ELEMENT 01</div>
+      <h3 class="element-title">Building Block — Высотное здание</h3>
+      <p class="element-desc">
+        Ключевой фирменный элемент: объемное здание переменной высоты с solid стенами цвета value-gradient (#326B8C → #FF6B6B)
+        и wireframe гранями. Используется для визуализации недвижимых активов, портфелей и карт стоимости.
+      </p>
+
+      <div class="canvas-3d" id="canvas-building">
+        <div class="canvas-label">Building Block Interactive</div>
+      </div>
+
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Geometry</div>
+          <div class="spec-value">BoxGeometry (variable height)</div>
+        </div>
+        <div>
+          <div class="spec-label">Materials</div>
+          <div class="spec-value">Solid walls + EdgesGeometry</div>
+        </div>
+        <div>
+          <div class="spec-label">Color Formula</div>
+          <div class="spec-value">R=255*(h/25), G=107, B=107+(1-h/25)*80</div>
+        </div>
+        <div>
+          <div class="spec-label">Animation</div>
+          <div class="spec-value">Gentle pulse, rotation on hover</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Park Block Element -->
+    <div class="element-card">
+      <div class="element-number">3D ELEMENT 02</div>
+      <h3 class="element-title">Park Block — Зеленая зона</h3>
+      <p class="element-desc">
+        Низкое плоское здание зеленого цвета (#6BFF8A) представляет парки, зеленые зоны и экологические элементы в визуализациях.
+        Отличается малой высотой (0.5-1.5 units) и яркостью, создавая контраст с value buildings.
+      </p>
+
+      <div class="canvas-3d" id="canvas-park">
+        <div class="canvas-label">Park Block Interactive</div>
+      </div>
+
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Geometry</div>
+          <div class="spec-value">BoxGeometry (low height 0.5-1.5)</div>
+        </div>
+        <div>
+          <div class="spec-label">Color</div>
+          <div class="spec-value">#6BFF8A (Growth Green)</div>
+        </div>
+        <div>
+          <div class="spec-label">Opacity</div>
+          <div class="spec-value">0.25-0.4 (more transparent)</div>
+        </div>
+        <div>
+          <div class="spec-label">Use Case</div>
+          <div class="spec-value">Ecological zones, parks, green spaces</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid Element -->
+    <div class="element-card">
+      <div class="element-number">3D ELEMENT 03</div>
+      <h3 class="element-title">TRON Grid — Технологичная сетка</h3>
+      <p class="element-desc">
+        Анимированная сетка в стиле TRON с cyan (#00D4FF) центральными линиями и темно-синими (#003366) grid линиями.
+        Создает digital/cyber эстетику. Используется как ground plane во всех 3D сценах.
+      </p>
+
+      <div class="canvas-3d" id="canvas-grid">
+        <div class="canvas-label">TRON Grid Interactive</div>
+      </div>
+
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Geometry</div>
+          <div class="spec-value">GridHelper (Three.js)</div>
+        </div>
+        <div>
+          <div class="spec-label">Center Lines</div>
+          <div class="spec-value">#00D4FF (Cyan, opacity 0.5)</div>
+        </div>
+        <div>
+          <div class="spec-label">Grid Lines</div>
+          <div class="spec-value">#003366 (Deep Blue, opacity 0.5)</div>
+        </div>
+        <div>
+          <div class="spec-label">Animation</div>
+          <div class="spec-value">Slow rotation or wave effect</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Value Pyramid Element -->
+    <div class="element-card">
+      <div class="element-number">3D ELEMENT 04</div>
+      <h3 class="element-title">Value Pyramid — Пирамида роста</h3>
+      <p class="element-desc">
+        Пирамидальная структура из кубов с градиентом от низких значений (темные, внизу) к высоким (яркие красные, вверху).
+        Визуализирует рост стоимости, иерархию активов и инвестиционные уровни.
+      </p>
+
+      <div class="canvas-3d" id="canvas-pyramid">
+        <div class="canvas-label">Value Pyramid Interactive</div>
+      </div>
+
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Structure</div>
+          <div class="spec-value">6 levels, decreasing width</div>
+        </div>
+        <div>
+          <div class="spec-label">Color Gradient</div>
+          <div class="spec-value">#326B8C (bottom) → #FF6B6B (top)</div>
+        </div>
+        <div>
+          <div class="spec-label">Animation</div>
+          <div class="spec-value">Wave effect, level-based pulse</div>
+        </div>
+        <div>
+          <div class="spec-label">Symbolism</div>
+          <div class="spec-value">Growth, value hierarchy, investment tiers</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Token Particle Element -->
+    <div class="element-card">
+      <div class="element-number">3D ELEMENT 05</div>
+      <h3 class="element-title">Token Particle — Токен-куб</h3>
+      <p class="element-desc">
+        Маленький вращающийся куб с wireframe эстетикой в цветах бренда (#6BFF8A, #00D4FF, #FF6B6B).
+        Используется для визуализации токенов, фрагментов активов, частиц данных. Часто в группах или orbital rings.
+      </p>
+
+      <div class="canvas-3d" id="canvas-token">
+        <div class="canvas-label">Token Particle Interactive</div>
+      </div>
+
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Geometry</div>
+          <div class="spec-value">Small BoxGeometry (0.5-1.0 units)</div>
+        </div>
+        <div>
+          <div class="spec-label">Material</div>
+          <div class="spec-value">EdgesGeometry only (wireframe)</div>
+        </div>
+        <div>
+          <div class="spec-label">Colors</div>
+          <div class="spec-value">Cycling: Green → Cyan → Red</div>
+        </div>
+        <div>
+          <div class="spec-label">Animation</div>
+          <div class="spec-value">Fast rotation, orbital movement</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Data Connection Element -->
+    <div class="element-card">
+      <div class="element-number">3D ELEMENT 06</div>
+      <h3 class="element-title">Data Connection — Линии связи</h3>
+      <p class="element-desc">
+        Тонкие линии (#003366, #00D4FF) соединяющие узлы или объекты. Представляют блокчейн связи, data flow,
+        network connections. Часто полупрозрачные с pulse анимацией вдоль линии.
+      </p>
+
+      <div class="canvas-3d" id="canvas-connection">
+        <div class="canvas-label">Data Connection Interactive</div>
+      </div>
+
+      <div class="element-specs">
+        <div>
+          <div class="spec-label">Geometry</div>
+          <div class="spec-value">Line (BufferGeometry)</div>
+        </div>
+        <div>
+          <div class="spec-label">Material</div>
+          <div class="spec-value">LineBasicMaterial</div>
+        </div>
+        <div>
+          <div class="spec-label">Color</div>
+          <div class="spec-value">#003366 base, #00D4FF highlights</div>
+        </div>
+        <div>
+          <div class="spec-label">Animation</div>
+          <div class="spec-value">Data pulse traveling along line</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- 07. ПАТТЕРНЫ -->
   <section class="section">
     <h2 class="section-title">07. Графические паттерны</h2>
@@ -730,16 +997,126 @@
     </p>
 
     <div class="pattern-grid">
-      <div class="pattern-box" style="background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(0,212,255,0.1) 35px, rgba(0,212,255,0.1) 36px);">
-        <div class="pattern-name">Diagonal Grid Pattern</div>
+      <!-- Pattern 1: Animated TRON Grid -->
+      <div class="pattern-box pattern-animated">
+        <div class="pattern-layer" style="
+          background-image:
+            repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(0,212,255,0.4) 29px, rgba(0,212,255,0.4) 30px),
+            repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(0,51,102,0.6) 29px, rgba(0,51,102,0.6) 30px);
+          animation: patternSlide 20s linear infinite;
+        "></div>
+        <div class="pattern-name">TRON Grid (Animated)</div>
       </div>
 
-      <div class="pattern-box" style="background: radial-gradient(circle at 25% 25%, rgba(107,255,138,0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(0,212,255,0.1) 0%, transparent 50%);">
-        <div class="pattern-name">Radial Gradient Pattern</div>
+      <!-- Pattern 2: Value Gradient Boxes -->
+      <div class="pattern-box" style="
+        background-image:
+          linear-gradient(135deg, rgba(50,107,140,0.3) 0%, rgba(50,107,140,0.3) 25%, transparent 25%, transparent 50%, rgba(100,107,130,0.3) 50%, rgba(100,107,130,0.3) 75%, transparent 75%, transparent),
+          linear-gradient(45deg, rgba(150,107,120,0.2) 0%, rgba(150,107,120,0.2) 25%, transparent 25%, transparent 50%, rgba(200,107,112,0.2) 50%, rgba(200,107,112,0.2) 75%, transparent 75%, transparent);
+        background-size: 60px 60px;
+        background-position: 0 0, 30px 30px;
+      ">
+        <div class="pattern-name">Value Gradient Boxes</div>
       </div>
 
-      <div class="pattern-box" style="background-image: repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(0,212,255,0.05) 29px, rgba(0,212,255,0.05) 30px), repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(107,255,138,0.05) 29px, rgba(107,255,138,0.05) 30px);">
-        <div class="pattern-name">Orthogonal Grid Pattern</div>
+      <!-- Pattern 3: Diagonal Wireframe -->
+      <div class="pattern-box pattern-animated" style="position: relative; overflow: hidden;">
+        <div class="pattern-layer" style="
+          background-image:
+            repeating-linear-gradient(45deg, transparent, transparent 34px, rgba(0,212,255,0.5) 34px, rgba(0,212,255,0.5) 36px),
+            repeating-linear-gradient(-45deg, transparent, transparent 34px, rgba(107,255,138,0.3) 34px, rgba(107,255,138,0.3) 36px);
+          animation: patternPulse 3s ease-in-out infinite;
+        "></div>
+        <div class="pattern-name">Diagonal Wireframe</div>
+      </div>
+
+      <!-- Pattern 4: Hexagon Grid -->
+      <div class="pattern-box" style="
+        background-color: rgba(0,0,0,0.3);
+        background-image:
+          radial-gradient(circle at 0% 50%, rgba(0,212,255,0.15) 0%, transparent 50%),
+          radial-gradient(circle at 50% 100%, rgba(107,255,138,0.15) 0%, transparent 50%),
+          radial-gradient(circle at 100% 50%, rgba(255,107,107,0.15) 0%, transparent 50%),
+          radial-gradient(circle at 50% 0%, rgba(0,212,255,0.15) 0%, transparent 50%);
+        background-size: 80px 80px;
+        background-position: 0 0, 40px 40px, 0 0, 40px 40px;
+      ">
+        <div class="pattern-name">Radial Network Pattern</div>
+      </div>
+
+      <!-- Pattern 5: Building Silhouettes -->
+      <div class="pattern-box" style="
+        background:
+          linear-gradient(to top, rgba(50,107,140,0.4) 0%, transparent 30%) 0% 100%,
+          linear-gradient(to top, rgba(100,107,130,0.5) 0%, transparent 50%) 20% 100%,
+          linear-gradient(to top, rgba(150,107,120,0.4) 0%, transparent 40%) 40% 100%,
+          linear-gradient(to top, rgba(200,107,112,0.5) 0%, transparent 60%) 60% 100%,
+          linear-gradient(to top, rgba(255,107,107,0.6) 0%, transparent 70%) 80% 100%,
+          rgba(0,0,0,0.4);
+        background-size: 20% 100%;
+        background-repeat: no-repeat;
+      ">
+        <div class="pattern-name">Building Skyline Pattern</div>
+      </div>
+
+      <!-- Pattern 6: Circuit Board -->
+      <div class="pattern-box pattern-animated" style="position: relative;">
+        <div class="pattern-layer" style="
+          background-image:
+            repeating-linear-gradient(0deg, transparent 0px, transparent 19px, rgba(0,212,255,0.2) 19px, rgba(0,212,255,0.2) 20px, transparent 20px, transparent 40px),
+            repeating-linear-gradient(90deg, transparent 0px, transparent 19px, rgba(0,212,255,0.2) 19px, rgba(0,212,255,0.2) 20px, transparent 20px, transparent 40px),
+            repeating-linear-gradient(45deg, transparent 0px, transparent 29px, rgba(107,255,138,0.15) 29px, rgba(107,255,138,0.15) 30px, transparent 30px, transparent 60px);
+        "></div>
+        <div style="
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          background: rgba(255,107,107,0.6);
+          border: 2px solid rgba(0,212,255,0.8);
+          border-radius: 50%;
+          top: 20%;
+          left: 30%;
+          box-shadow: 0 0 20px rgba(0,212,255,0.6);
+        "></div>
+        <div style="
+          position: absolute;
+          width: 8px;
+          height: 8px;
+          background: rgba(107,255,138,0.6);
+          border: 2px solid rgba(0,212,255,0.8);
+          border-radius: 50%;
+          top: 60%;
+          left: 70%;
+          box-shadow: 0 0 20px rgba(107,255,138,0.6);
+        "></div>
+        <div class="pattern-name">Circuit Board / Data Flow</div>
+      </div>
+
+      <!-- Pattern 7: Gradient Mesh -->
+      <div class="pattern-box" style="
+        background:
+          radial-gradient(ellipse at top left, rgba(107,255,138,0.2) 0%, transparent 50%),
+          radial-gradient(ellipse at top right, rgba(0,212,255,0.2) 0%, transparent 50%),
+          radial-gradient(ellipse at bottom left, rgba(0,212,255,0.2) 0%, transparent 50%),
+          radial-gradient(ellipse at bottom right, rgba(255,107,107,0.2) 0%, transparent 50%),
+          rgba(0,0,0,0.5);
+      ">
+        <div class="pattern-name">Gradient Mesh Overlay</div>
+      </div>
+
+      <!-- Pattern 8: Token Array -->
+      <div class="pattern-box pattern-animated" style="
+        background-image:
+          repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(0,212,255,0.05) 50px, rgba(0,212,255,0.05) 51px),
+          repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(0,212,255,0.05) 50px, rgba(0,212,255,0.05) 51px);
+        position: relative;
+      ">
+        <div style="position: absolute; width: 12px; height: 12px; border: 2px solid rgba(107,255,138,0.6); top: 25px; left: 25px; transform: rotate(45deg);"></div>
+        <div style="position: absolute; width: 12px; height: 12px; border: 2px solid rgba(0,212,255,0.6); top: 25px; left: 75px; transform: rotate(45deg);"></div>
+        <div style="position: absolute; width: 12px; height: 12px; border: 2px solid rgba(255,107,107,0.6); top: 75px; left: 25px; transform: rotate(45deg);"></div>
+        <div style="position: absolute; width: 12px; height: 12px; border: 2px solid rgba(107,255,138,0.6); top: 75px; left: 75px; transform: rotate(45deg);"></div>
+        <div style="position: absolute; width: 12px; height: 12px; border: 2px solid rgba(0,212,255,0.6); top: 125px; left: 50px; transform: rotate(45deg); animation: patternPulse 2s ease-in-out infinite;"></div>
+        <div class="pattern-name">Token Array Pattern</div>
       </div>
     </div>
   </section>
@@ -858,5 +1235,392 @@
     © 2025 Asset Haus. Фирменный стиль и дизайн-система<br>
     Цвета и элементы извлечены из 3D визуализации Land Plots
   </footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    // Initialize all 3D canvas elements
+    const canvases = {
+      building: null,
+      park: null,
+      grid: null,
+      pyramid: null,
+      token: null,
+      connection: null
+    };
+
+    // 1. BUILDING BLOCK
+    function initBuilding() {
+      const container = document.getElementById('canvas-building');
+      if (!container) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      // Create 3 buildings with different heights (value gradient)
+      const buildings = [];
+      const heights = [8, 14, 20];
+      const positions = [-5, 0, 5];
+
+      heights.forEach((height, i) => {
+        const heightRatio = height / 25;
+        const r = Math.floor(255 * heightRatio);
+        const g = 107;
+        const b = Math.floor(107 + (1 - heightRatio) * 80);
+        const color = (r << 16) | (g << 8) | b;
+
+        const boxGeometry = new THREE.BoxGeometry(2.5, height, 2.5);
+        const wallMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: false });
+        const walls = new THREE.Mesh(boxGeometry, wallMaterial);
+
+        const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+        const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+        const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+        const building = new THREE.Group();
+        building.add(walls);
+        building.add(edges);
+        building.position.set(positions[i], height / 2, 0);
+        building.userData = { baseY: height / 2, index: i };
+
+        scene.add(building);
+        buildings.push(building);
+      });
+
+      camera.position.set(0, 10, 18);
+      camera.lookAt(0, 8, 0);
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        buildings.forEach(building => {
+          const pulse = Math.sin(time * 1.5 + building.userData.index * 0.5) * 0.3;
+          building.position.y = building.userData.baseY + pulse;
+          building.rotation.y += 0.002;
+        });
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      canvases.building = { scene, camera, renderer, container };
+    }
+
+    // 2. PARK BLOCK
+    function initPark() {
+      const container = document.getElementById('canvas-park');
+      if (!container) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      // Create park blocks (green, low)
+      const parks = [];
+      for (let i = 0; i < 5; i++) {
+        const height = 0.5 + Math.random() * 1;
+        const boxGeometry = new THREE.BoxGeometry(2 + Math.random(), height, 2 + Math.random());
+        const color = 0x6bff8a;
+
+        const wallMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.4 });
+        const walls = new THREE.Mesh(boxGeometry, wallMaterial);
+
+        const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+        const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+        const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+        const park = new THREE.Group();
+        park.add(walls);
+        park.add(edges);
+        park.position.set((i - 2) * 3, height / 2, 0);
+        park.userData = { baseY: height / 2, index: i };
+
+        scene.add(park);
+        parks.push(park);
+      }
+
+      camera.position.set(0, 5, 15);
+      camera.lookAt(0, 0, 0);
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        parks.forEach(park => {
+          const pulse = Math.sin(time * 1.2 + park.userData.index * 0.8) * 0.15;
+          park.position.y = park.userData.baseY + pulse;
+        });
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      canvases.park = { scene, camera, renderer, container };
+    }
+
+    // 3. TRON GRID
+    function initGrid() {
+      const container = document.getElementById('canvas-grid');
+      if (!container) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      const gridHelper = new THREE.GridHelper(30, 40, 0x00d4ff, 0x003366);
+      gridHelper.material.opacity = 0.6;
+      gridHelper.material.transparent = true;
+      scene.add(gridHelper);
+
+      camera.position.set(15, 20, 15);
+      camera.lookAt(0, 0, 0);
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.005;
+
+        gridHelper.rotation.y = time * 0.5;
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      canvases.grid = { scene, camera, renderer, container };
+    }
+
+    // 4. VALUE PYRAMID
+    function initPyramid() {
+      const container = document.getElementById('canvas-pyramid');
+      if (!container) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      const boxes = [];
+      for (let level = 0; level < 6; level++) {
+        const count = 6 - level;
+        const ratio = level / 5;
+        const r = Math.floor(50 + 205 * ratio);
+        const g = 107;
+        const b = Math.floor(140 - 33 * ratio);
+        const color = (r << 16) | (g << 8) | b;
+
+        for (let i = 0; i < count; i++) {
+          const boxGeometry = new THREE.BoxGeometry(1.2, 1.2, 1.2);
+          const wallMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.7 });
+          const walls = new THREE.Mesh(boxGeometry, wallMaterial);
+
+          const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+          const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+          const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+          const box = new THREE.Group();
+          box.add(walls);
+          box.add(edges);
+
+          const offsetX = (i - count / 2) * 1.4;
+          box.position.set(offsetX, 0.6 + level * 1.4, 0);
+          box.userData = { level: level, index: i };
+
+          scene.add(box);
+          boxes.push(box);
+        }
+      }
+
+      camera.position.set(0, 6, 15);
+      camera.lookAt(0, 4, 0);
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        boxes.forEach(box => {
+          const wave = Math.sin(time * 2 + box.userData.level * 0.5 + box.userData.index * 0.3) * 0.08;
+          box.position.y = 0.6 + box.userData.level * 1.4 + wave;
+          box.rotation.y = time * 0.5 + box.userData.level * 0.3;
+        });
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      canvases.pyramid = { scene, camera, renderer, container };
+    }
+
+    // 5. TOKEN PARTICLE
+    function initToken() {
+      const container = document.getElementById('canvas-token');
+      if (!container) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      const tokens = [];
+      const colors = [0x6bff8a, 0x00d4ff, 0xff6b6b];
+      const ringRadius = 6;
+      const tokenCount = 12;
+
+      for (let i = 0; i < tokenCount; i++) {
+        const angle = (i / tokenCount) * Math.PI * 2;
+        const tokenGeometry = new THREE.BoxGeometry(0.7, 0.7, 0.7);
+        const color = colors[i % 3];
+
+        const edgesGeometry = new THREE.EdgesGeometry(tokenGeometry);
+        const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+        const token = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+        token.userData = { angle: angle, index: i };
+        scene.add(token);
+        tokens.push(token);
+      }
+
+      camera.position.set(0, 3, 15);
+      camera.lookAt(0, 0, 0);
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        tokens.forEach(token => {
+          const newAngle = token.userData.angle + time;
+          const x = Math.cos(newAngle) * ringRadius;
+          const z = Math.sin(newAngle) * ringRadius;
+          const y = Math.sin(time * 2 + token.userData.index * 0.5) * 2;
+
+          token.position.set(x, y, z);
+          token.rotation.x = time * 3 + token.userData.index;
+          token.rotation.y = time * 2;
+        });
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      canvases.token = { scene, camera, renderer, container };
+    }
+
+    // 6. DATA CONNECTION
+    function initConnection() {
+      const container = document.getElementById('canvas-connection');
+      if (!container) return;
+
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, container.clientWidth / container.clientHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+      renderer.setSize(container.clientWidth, container.clientHeight);
+      renderer.setClearColor(0x000000, 0);
+      container.appendChild(renderer.domElement);
+
+      // Create nodes
+      const nodes = [];
+      const nodeCount = 6;
+      const radius = 5;
+
+      for (let i = 0; i < nodeCount; i++) {
+        const angle = (i / nodeCount) * Math.PI * 2;
+        const nodeGeometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+        const color = i % 2 === 0 ? 0x00d4ff : 0x6bff8a;
+
+        const edgesGeometry = new THREE.EdgesGeometry(nodeGeometry);
+        const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+        const node = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+        node.position.set(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+        node.userData = { index: i };
+
+        scene.add(node);
+        nodes.push(node);
+      }
+
+      // Create connections
+      const lines = [];
+      for (let i = 0; i < nodes.length; i++) {
+        const nextIndex = (i + 1) % nodes.length;
+        const points = [];
+        points.push(nodes[i].position.clone());
+        points.push(nodes[nextIndex].position.clone());
+
+        const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+        const lineMaterial = new THREE.LineBasicMaterial({ color: 0x003366, transparent: true, opacity: 0.6 });
+        const line = new THREE.Line(lineGeometry, lineMaterial);
+        scene.add(line);
+        lines.push(line);
+      }
+
+      camera.position.set(0, 8, 12);
+      camera.lookAt(0, 0, 0);
+
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        nodes.forEach(node => {
+          const float = Math.sin(time * 1.5 + node.userData.index * 0.8) * 0.5;
+          node.position.y = float;
+          node.rotation.x = time * 0.5;
+          node.rotation.z = time * 0.3;
+        });
+
+        // Update line positions
+        for (let i = 0; i < lines.length; i++) {
+          const nextIndex = (i + 1) % nodes.length;
+          const points = [];
+          points.push(nodes[i].position.clone());
+          points.push(nodes[nextIndex].position.clone());
+          lines[i].geometry.setFromPoints(points);
+        }
+
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      canvases.connection = { scene, camera, renderer, container };
+    }
+
+    // Initialize all on load
+    window.addEventListener('load', () => {
+      initBuilding();
+      initPark();
+      initGrid();
+      initPyramid();
+      initToken();
+      initConnection();
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      Object.values(canvases).forEach(canvas => {
+        if (canvas && canvas.container) {
+          canvas.camera.aspect = canvas.container.clientWidth / canvas.container.clientHeight;
+          canvas.camera.updateProjectionMatrix();
+          canvas.renderer.setSize(canvas.container.clientWidth, canvas.container.clientHeight);
+        }
+      });
+    });
+  </script>
 </body>
 </html>
