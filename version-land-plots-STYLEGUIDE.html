@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Asset Haus — Фирменный стиль</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: #000000;
+      color: #ffffff;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    #canvas-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .content > * {
+      pointer-events: auto;
+    }
+
+    header {
+      padding: 28px 65px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 107, 107, 0.3);
+    }
+
+    .logo {
+      font-size: 32px;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+      color: #ff6b6b;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 0 65px;
+    }
+
+    h1 {
+      font-size: 88px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      line-height: 0.98;
+      color: #ffffff;
+      letter-spacing: -3px;
+      text-shadow: 0 0 40px rgba(255, 107, 107, 0.5);
+    }
+
+    .subtitle {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.7);
+      margin-bottom: 60px;
+      font-weight: 300;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .section {
+      padding: 100px 65px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 50px;
+      color: #ff6b6b;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin-bottom: 80px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 107, 107, 0.2);
+      padding: 30px;
+      border-radius: 8px;
+      transition: all 0.3s;
+    }
+
+    .card:hover {
+      background: rgba(255, 107, 107, 0.08);
+      border-color: #ff6b6b;
+      transform: translateY(-5px);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: #ffffff;
+      font-family: 'Fira Code', monospace;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      line-height: 1.6;
+    }
+
+    .color-palette {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      margin-top: 30px;
+    }
+
+    .color-item {
+      text-align: center;
+    }
+
+    .color-box {
+      width: 120px;
+      height: 120px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .color-box:hover {
+      transform: scale(1.1);
+    }
+
+    .color-name {
+      font-size: 12px;
+      font-weight: 600;
+      font-family: 'Fira Code', monospace;
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .color-hex {
+      font-size: 11px;
+      font-family: 'Fira Code', monospace;
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    footer {
+      padding: 60px 65px;
+      text-align: center;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.45);
+      border-top: 1px solid rgba(255, 107, 107, 0.2);
+      background: rgba(0, 0, 0, 0.85);
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas-container"></div>
+
+  <div class="content">
+    <header>
+      <div class="logo">ASSET_HAUS</div>
+    </header>
+
+    <section class="hero">
+      <h1>Фирменный<br>Стиль</h1>
+      <p class="subtitle">Brand Identity & Design System</p>
+    </section>
+
+    <section class="section">
+      <h2 class="section-title">Цветовая палитра</h2>
+      <div class="color-palette">
+        <div class="color-item">
+          <div class="color-box" style="background: #ff6b6b;"></div>
+          <div class="color-name">Primary Red</div>
+          <div class="color-hex">#FF6B6B</div>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background: #00d4ff;"></div>
+          <div class="color-name">Cyan Accent</div>
+          <div class="color-hex">#00D4FF</div>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background: #6bff8a;"></div>
+          <div class="color-name">Success Green</div>
+          <div class="color-hex">#6BFF8A</div>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background: #003366;"></div>
+          <div class="color-name">Deep Blue</div>
+          <div class="color-hex">#003366</div>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background: #000000; border-color: #ff6b6b;"></div>
+          <div class="color-name">Black</div>
+          <div class="color-hex">#000000</div>
+        </div>
+        <div class="color-item">
+          <div class="color-box" style="background: #ffffff;"></div>
+          <div class="color-name">White</div>
+          <div class="color-hex">#FFFFFF</div>
+        </div>
+      </div>
+
+      <h2 class="section-title">Фирменные элементы</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>3D Logo Element</h3>
+          <p>Объемный логотип в виде куба с пульсирующими гранями. Используется в заставках и промо-материалах.</p>
+        </div>
+        <div class="card">
+          <h3>Building Block</h3>
+          <p>Базовый элемент — здание с solid стенами и линейными краями. Символизирует недвижимость.</p>
+        </div>
+        <div class="card">
+          <h3>Data Grid</h3>
+          <p>TRON-style сетка с cyan линиями. Представляет технологичность и структурированность данных.</p>
+        </div>
+        <div class="card">
+          <h3>Value Pyramid</h3>
+          <p>Пирамида из блоков с gradient от красного к зеленому. Визуализирует рост стоимости активов.</p>
+        </div>
+        <div class="card">
+          <h3>Token Ring</h3>
+          <p>Вращающееся кольцо из маленьких кубиков. Символизирует токенизацию и фрагментацию активов.</p>
+        </div>
+        <div class="card">
+          <h3>Network Nodes</h3>
+          <p>Связанные между собой узлы-кубики. Представляет блокчейн и децентрализованную сеть.</p>
+        </div>
+      </div>
+
+      <h2 class="section-title">Типографика</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>Work Sans</h3>
+          <p style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 300;">Light 300 — Body text and descriptions</p>
+          <p style="font-family: 'Work Sans', sans-serif; font-size: 16px; font-weight: 600;">SemiBold 600 — Navigation and labels</p>
+          <p style="font-family: 'Work Sans', sans-serif; font-size: 20px; font-weight: 800;">ExtraBold 800 — Headlines and titles</p>
+        </div>
+        <div class="card">
+          <h3>Fira Code</h3>
+          <p style="font-family: 'Fira Code', monospace; font-size: 16px; font-weight: 400;">Regular 400 — Code and data values</p>
+          <p style="font-family: 'Fira Code', monospace; font-size: 18px; font-weight: 600;">SemiBold 600 — Logo and CTAs</p>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © 2025 Asset Haus. Фирменный стиль и дизайн-система.
+    </footer>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <script>
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setClearColor(0x000000);
+    document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+    const elements = [];
+
+    // 1. LOGO CUBE (центральный элемент)
+    const logoSize = 4;
+    const logoGeometry = new THREE.BoxGeometry(logoSize, logoSize, logoSize);
+    const logoEdgesGeometry = new THREE.EdgesGeometry(logoGeometry);
+    const logoEdgesMaterial = new THREE.LineBasicMaterial({ color: 0xff6b6b, linewidth: 2 });
+    const logoCube = new THREE.LineSegments(logoEdgesGeometry, logoEdgesMaterial);
+    logoCube.position.set(0, 8, -20);
+    scene.add(logoCube);
+    elements.push({ mesh: logoCube, type: 'logo' });
+
+    // 2. BUILDING BLOCKS (слева) - символизируют недвижимость
+    for (let i = 0; i < 5; i++) {
+      const height = 3 + Math.random() * 6;
+      const buildingGeometry = new THREE.BoxGeometry(2, height, 2);
+
+      const color = i < 2 ? 0xff6b6b : (i < 4 ? 0x00d4ff : 0x6bff8a);
+      const wallMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.6 });
+      const walls = new THREE.Mesh(buildingGeometry, wallMaterial);
+
+      const edgesGeometry = new THREE.EdgesGeometry(buildingGeometry);
+      const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+      const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+      const building = new THREE.Group();
+      building.add(walls);
+      building.add(edges);
+
+      building.position.set(-15 + i * 3, height / 2, -15);
+      scene.add(building);
+      elements.push({ mesh: building, type: 'building', baseY: height / 2, index: i });
+    }
+
+    // 3. VALUE PYRAMID (справа) - пирамида роста стоимости
+    for (let level = 0; level < 6; level++) {
+      const count = 6 - level;
+      for (let i = 0; i < count; i++) {
+        const boxGeometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
+
+        const ratio = level / 5;
+        const r = Math.floor(255 * (1 - ratio));
+        const g = Math.floor(107 + ratio * 148);
+        const color = (r << 16) | (g << 8) | 138;
+
+        const wallMaterial = new THREE.MeshBasicMaterial({ color: color, transparent: true, opacity: 0.5 });
+        const walls = new THREE.Mesh(boxGeometry, wallMaterial);
+
+        const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+        const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+        const edges = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+        const box = new THREE.Group();
+        box.add(walls);
+        box.add(edges);
+
+        const offsetX = (i - count / 2) * 1.7;
+        box.position.set(12 + offsetX, 1 + level * 1.7, -15);
+
+        scene.add(box);
+        elements.push({ mesh: box, type: 'pyramid', level: level, index: i });
+      }
+    }
+
+    // 4. TOKEN RING (верх справа) - кольцо токенов
+    const ringRadius = 6;
+    const tokenCount = 12;
+    const tokenRing = [];
+
+    for (let i = 0; i < tokenCount; i++) {
+      const angle = (i / tokenCount) * Math.PI * 2;
+      const tokenGeometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+
+      const color = i % 3 === 0 ? 0xff6b6b : (i % 3 === 1 ? 0x00d4ff : 0x6bff8a);
+      const edgesGeometry = new THREE.EdgesGeometry(tokenGeometry);
+      const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+      const token = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+      const x = Math.cos(angle) * ringRadius;
+      const z = Math.sin(angle) * ringRadius - 25;
+      token.position.set(x, 12, z);
+
+      scene.add(token);
+      tokenRing.push(token);
+      elements.push({ mesh: token, type: 'token', angle: angle });
+    }
+
+    // 5. NETWORK NODES (низ слева) - сеть блокчейн
+    const nodes = [];
+    for (let i = 0; i < 6; i++) {
+      const nodeGeometry = new THREE.BoxGeometry(1, 1, 1);
+      const edgesGeometry = new THREE.EdgesGeometry(nodeGeometry);
+      const color = i === 0 || i === 5 ? 0xff6b6b : 0x00d4ff;
+      const edgesMaterial = new THREE.LineBasicMaterial({ color: color });
+      const node = new THREE.LineSegments(edgesGeometry, edgesMaterial);
+
+      const angle = (i / 6) * Math.PI * 2;
+      const radius = 4;
+      node.position.set(-12 + Math.cos(angle) * radius, 2, -25 + Math.sin(angle) * radius);
+
+      scene.add(node);
+      nodes.push(node);
+      elements.push({ mesh: node, type: 'node', index: i });
+    }
+
+    // Connections between nodes (lines)
+    for (let i = 0; i < nodes.length; i++) {
+      const nextIndex = (i + 1) % nodes.length;
+      const points = [];
+      points.push(new THREE.Vector3(nodes[i].position.x, nodes[i].position.y, nodes[i].position.z));
+      points.push(new THREE.Vector3(nodes[nextIndex].position.x, nodes[nextIndex].position.y, nodes[nextIndex].position.z));
+
+      const lineGeometry = new THREE.BufferGeometry().setFromPoints(points);
+      const lineMaterial = new THREE.LineBasicMaterial({ color: 0x003366, transparent: true, opacity: 0.4 });
+      const line = new THREE.Line(lineGeometry, lineMaterial);
+      scene.add(line);
+    }
+
+    // 6. DATA GRID (ground)
+    const gridHelper = new THREE.GridHelper(
+      60,
+      40,
+      0x00d4ff,
+      0x003366
+    );
+    gridHelper.material.opacity = 0.3;
+    gridHelper.material.transparent = true;
+    gridHelper.position.y = -1;
+    scene.add(gridHelper);
+
+    // Camera setup
+    camera.position.set(0, 12, 10);
+    camera.lookAt(0, 5, -15);
+
+    let time = 0;
+
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 0.01;
+
+      // Animate logo cube - rotation and pulse
+      logoCube.rotation.x = time * 0.5;
+      logoCube.rotation.y = time * 0.7;
+      const pulse = 1 + Math.sin(time * 2) * 0.1;
+      logoCube.scale.set(pulse, pulse, pulse);
+
+      // Animate buildings - gentle height pulse
+      elements.forEach(el => {
+        if (el.type === 'building') {
+          const wavePulse = Math.sin(time * 1.5 + el.index * 0.5) * 0.3;
+          el.mesh.position.y = el.baseY + wavePulse;
+        }
+
+        // Animate pyramid - wave effect
+        if (el.type === 'pyramid') {
+          const wave = Math.sin(time * 2 + el.level * 0.3 + el.index * 0.2) * 0.1;
+          el.mesh.rotation.y = time * 0.5 + el.level * 0.5;
+          el.mesh.position.y += wave;
+        }
+
+        // Animate token ring - rotation
+        if (el.type === 'token') {
+          const newAngle = el.angle + time;
+          const x = Math.cos(newAngle) * ringRadius;
+          const z = Math.sin(newAngle) * ringRadius - 25;
+          el.mesh.position.x = x;
+          el.mesh.position.z = z;
+          el.mesh.rotation.x = time * 2;
+          el.mesh.rotation.y = time * 3;
+        }
+
+        // Animate network nodes - floating
+        if (el.type === 'node') {
+          const float = Math.sin(time * 1.5 + el.index * 0.8) * 0.5;
+          el.mesh.position.y = 2 + float;
+          el.mesh.rotation.x = time * 0.5;
+          el.mesh.rotation.z = time * 0.3;
+        }
+      });
+
+      // Gentle camera movement
+      camera.position.x = Math.sin(time * 0.1) * 3;
+      camera.position.y = 12 + Math.cos(time * 0.15) * 2;
+      camera.lookAt(0, 5, -15);
+
+      renderer.render(scene, camera);
+    }
+
+    window.addEventListener('resize', () => {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+    });
+
+    animate();
+  </script>
+</body>
+</html>
