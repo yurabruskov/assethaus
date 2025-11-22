@@ -1022,14 +1022,72 @@ function createFlatShape(vertices, color) {
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    // Global renderer to avoid WebGL context limit
-    let globalRenderer = null;
     const PAGE_SEED = Date.now();
     const COLORS = [0xff6b6b, 0xffb4a2, 0xe78fb3, 0xb794f6, 0x95b8d1, 0x4a5899, 0x8b7ab8, 0x00fff0];
+
+    // Track active scenes to manage WebGL contexts
+    const activeScenes = new Map();
+    const maxActiveScenes = 8; // Limit active WebGL contexts
 
     function seededRandom(seed) {
       const x = Math.sin(seed) * 10000;
       return x - Math.floor(x);
+    }
+
+    // Cleanup function to dispose of Three.js resources
+    function disposeScene(containerId) {
+      const sceneData = activeScenes.get(containerId);
+      if (!sceneData) return;
+
+      // Stop animation
+      if (sceneData.animationId) {
+        cancelAnimationFrame(sceneData.animationId);
+      }
+
+      // Dispose renderer
+      if (sceneData.renderer) {
+        sceneData.renderer.dispose();
+        sceneData.renderer.forceContextLoss();
+      }
+
+      // Remove canvas
+      if (sceneData.canvas && sceneData.canvas.parentNode) {
+        sceneData.canvas.parentNode.removeChild(sceneData.canvas);
+      }
+
+      activeScenes.delete(containerId);
+    }
+
+    // Lazy scene initializer with Intersection Observer
+    function initLazyScene(container, createFunc, config) {
+      if (!container) return;
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Create scene when visible
+            if (!activeScenes.has(container.id)) {
+              // If too many scenes, dispose oldest non-visible
+              if (activeScenes.size >= maxActiveScenes) {
+                for (let [id, data] of activeScenes) {
+                  const elem = document.getElementById(id);
+                  const rect = elem.getBoundingClientRect();
+                  const isVisible = rect.top < window.innerHeight && rect.bottom > 0;
+                  if (!isVisible) {
+                    disposeScene(id);
+                    break;
+                  }
+                }
+              }
+              createFunc(container, config);
+            }
+          }
+        });
+      }, {
+        rootMargin: '200px' // Start loading slightly before visible
+      });
+
+      observer.observe(container);
     }
 
     // City scene with patterns (streets, parks) and smooth camera
@@ -1156,9 +1214,10 @@ function createFlatShape(vertices, color) {
       let cameraY = config.camY || 12;
       let cameraZ = config.camZ || 15;
       let lookX = 0, lookY = 0, lookZ = 0;
+      let animationId = null;
 
       function animate() {
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
         time += 1;
 
         if (config.pulse) {
@@ -1203,9 +1262,18 @@ function createFlatShape(vertices, color) {
       }
 
       animate();
+
+      // Register scene for cleanup management
+      if (container.id) {
+        activeScenes.set(container.id, {
+          renderer: renderer,
+          canvas: canvas,
+          animationId: animationId
+        });
+      }
     }
 
-    // Create 3D abstract forms with flat sharp geometries
+    // Create 3D abstract forms - simple 3D volumetric shapes (like buildings)
     function createAbstractForm(container, seed, type = 'polygon') {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 100);
@@ -1235,30 +1303,16 @@ function createFlatShape(vertices, color) {
       const meshes = [];
 
       if (type === 'polygon') {
-        // Single flat angular polygon
-        const vertices = 3 + Math.floor(seededRandom(seed + 1) * 5);
-        const shape = new THREE.Shape();
+        // Single 3D angular building - simple box with variations
+        const width = 1.2 + seededRandom(seed + 1) * 0.8;
+        const height = 1.5 + seededRandom(seed + 2) * 1.5;
+        const depth = 1.0 + seededRandom(seed + 3) * 0.8;
 
-        for (let i = 0; i < vertices; i++) {
-          const angle = (Math.PI * 2 / vertices) * i;
-          const radius = 1.5 + seededRandom(seed + i + 2) * 0.8;
-          const x = Math.cos(angle) * radius;
-          const y = Math.sin(angle) * radius;
-
-          if (i === 0) {
-            shape.moveTo(x, y);
-          } else {
-            shape.lineTo(x, y); // Sharp angles, no curves!
-          }
-        }
-        shape.closePath();
-
-        const geometry = new THREE.ShapeGeometry(shape);
+        const geometry = new THREE.BoxGeometry(width, height, depth);
         const material = new THREE.MeshStandardMaterial({
           color: color,
-          metalness: 0.5,
-          roughness: 0.3,
-          side: THREE.DoubleSide,
+          metalness: 0.4,
+          roughness: 0.6,
           emissive: color,
           emissiveIntensity: 0.2
         });
@@ -1268,87 +1322,61 @@ function createFlatShape(vertices, color) {
         meshes.push(mesh);
 
       } else if (type === 'cluster') {
-        // Multiple intersecting planes
+        // Multiple 3D boxes at different positions - like building cluster
         const count = 3 + Math.floor(seededRandom(seed) * 3);
 
         for (let i = 0; i < count; i++) {
-          const vertices = 3 + Math.floor(seededRandom(seed + i * 10) * 4);
-          const shape = new THREE.Shape();
+          const width = 0.5 + seededRandom(seed + i * 10) * 0.6;
+          const height = 0.6 + seededRandom(seed + i * 11) * 1.2;
+          const depth = 0.5 + seededRandom(seed + i * 12) * 0.6;
 
-          for (let j = 0; j < vertices; j++) {
-            const angle = (Math.PI * 2 / vertices) * j;
-            const radius = 0.8 + seededRandom(seed + i * 10 + j) * 0.5;
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
-
-            if (j === 0) {
-              shape.moveTo(x, y);
-            } else {
-              shape.lineTo(x, y);
-            }
-          }
-          shape.closePath();
-
-          const geometry = new THREE.ShapeGeometry(shape);
+          const geometry = new THREE.BoxGeometry(width, height, depth);
           const meshColor = colorOptions[Math.floor(seededRandom(seed + i * 5) * colorOptions.length)];
           const material = new THREE.MeshStandardMaterial({
             color: meshColor,
-            metalness: 0.6,
-            roughness: 0.2,
-            side: THREE.DoubleSide,
+            metalness: 0.5,
+            roughness: 0.5,
             emissive: meshColor,
-            emissiveIntensity: 0.3
+            emissiveIntensity: 0.25
           });
 
           const mesh = new THREE.Mesh(geometry, material);
           mesh.position.set(
             (seededRandom(seed + i * 7) - 0.5) * 2,
-            (seededRandom(seed + i * 8) - 0.5) * 2,
-            (seededRandom(seed + i * 9) - 0.5) * 0.5
+            (seededRandom(seed + i * 8) - 0.5) * 1.5,
+            (seededRandom(seed + i * 9) - 0.5) * 1
           );
-          mesh.rotation.z = seededRandom(seed + i * 11) * Math.PI * 2;
+          mesh.rotation.y = seededRandom(seed + i * 11) * Math.PI * 0.5; // 0, 45, or 90 degrees
 
           scene.add(mesh);
           meshes.push(mesh);
         }
 
       } else if (type === 'network') {
-        // Angular connected nodes
+        // Angular connected 3D cubes as nodes
         const nodeCount = 4 + Math.floor(seededRandom(seed) * 4);
         const nodes = [];
 
         for (let i = 0; i < nodeCount; i++) {
-          const vertices = 3;
-          const shape = new THREE.Shape();
           const size = 0.3 + seededRandom(seed + i * 3) * 0.2;
-
-          for (let j = 0; j < vertices; j++) {
-            const angle = (Math.PI * 2 / vertices) * j;
-            const x = Math.cos(angle) * size;
-            const y = Math.sin(angle) * size;
-
-            if (j === 0) {
-              shape.moveTo(x, y);
-            } else {
-              shape.lineTo(x, y);
-            }
-          }
-          shape.closePath();
-
-          const geometry = new THREE.ShapeGeometry(shape);
+          const geometry = new THREE.BoxGeometry(size, size, size);
           const material = new THREE.MeshStandardMaterial({
             color: color,
-            metalness: 0.7,
-            roughness: 0.2,
-            side: THREE.DoubleSide,
+            metalness: 0.6,
+            roughness: 0.3,
             emissive: color,
-            emissiveIntensity: 0.4
+            emissiveIntensity: 0.3
           });
 
           const mesh = new THREE.Mesh(geometry, material);
           const angle = (Math.PI * 2 / nodeCount) * i;
           const radius = 1.5;
           mesh.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0);
+          mesh.rotation.set(
+            seededRandom(seed + i * 4) * Math.PI * 0.5,
+            seededRandom(seed + i * 5) * Math.PI * 0.5,
+            seededRandom(seed + i * 6) * Math.PI * 0.5
+          );
 
           scene.add(mesh);
           meshes.push(mesh);
@@ -1367,68 +1395,57 @@ function createFlatShape(vertices, color) {
         }
 
       } else if (type === 'skyline') {
-        // Vertical faceted forms
+        // Vertical 3D buildings with ascending heights
         const count = 5 + Math.floor(seededRandom(seed) * 5);
 
         for (let i = 0; i < count; i++) {
-          const vertices = 3;
-          const shape = new THREE.Shape();
-          const width = 0.3;
-          const height = 0.5 + seededRandom(seed + i) * 2;
+          const width = 0.3 + seededRandom(seed + i * 2) * 0.2;
+          const height = 0.5 + (i / count) * 2 + seededRandom(seed + i) * 0.5;
+          const depth = 0.3 + seededRandom(seed + i * 3) * 0.2;
 
-          // Triangle pointing up
-          shape.moveTo(0, height);
-          shape.lineTo(-width, 0);
-          shape.lineTo(width, 0);
-          shape.closePath();
-
-          const geometry = new THREE.ShapeGeometry(shape);
+          const geometry = new THREE.BoxGeometry(width, height, depth);
           const meshColor = colorOptions[Math.floor(i / count * colorOptions.length)];
           const material = new THREE.MeshStandardMaterial({
             color: meshColor,
-            metalness: 0.5,
-            roughness: 0.4,
-            side: THREE.DoubleSide,
+            metalness: 0.4,
+            roughness: 0.5,
             emissive: meshColor,
             emissiveIntensity: 0.2
           });
 
           const mesh = new THREE.Mesh(geometry, material);
           mesh.position.x = (i - count / 2) * 0.5;
+          mesh.position.y = 0;
 
           scene.add(mesh);
           meshes.push(mesh);
         }
 
       } else if (type === 'facets') {
-        // Crystalline triangular array
+        // Grid of 3D cubes with varied sizes
         const rows = 3;
         const cols = 3;
 
         for (let i = 0; i < rows; i++) {
           for (let j = 0; j < cols; j++) {
-            const shape = new THREE.Shape();
-            const size = 0.4 + seededRandom(seed + i * cols + j) * 0.2;
-
-            shape.moveTo(0, size);
-            shape.lineTo(-size * 0.866, -size * 0.5);
-            shape.lineTo(size * 0.866, -size * 0.5);
-            shape.closePath();
-
-            const geometry = new THREE.ShapeGeometry(shape);
+            const size = 0.3 + seededRandom(seed + i * cols + j) * 0.3;
+            const geometry = new THREE.BoxGeometry(size, size, size);
             const meshColor = colorOptions[Math.floor(seededRandom(seed + i * 7 + j * 3) * colorOptions.length)];
             const material = new THREE.MeshStandardMaterial({
               color: meshColor,
-              metalness: 0.6,
-              roughness: 0.3,
-              side: THREE.DoubleSide,
+              metalness: 0.5,
+              roughness: 0.4,
               emissive: meshColor,
-              emissiveIntensity: 0.25
+              emissiveIntensity: 0.2
             });
 
             const mesh = new THREE.Mesh(geometry, material);
-            mesh.position.set((j - 1) * 1, (i - 1) * 1, 0);
-            mesh.rotation.z = seededRandom(seed + i + j * 2) * Math.PI * 2;
+            mesh.position.set((j - 1) * 0.8, (i - 1) * 0.8, 0);
+            mesh.rotation.set(
+              seededRandom(seed + i + j * 2) * Math.PI * 0.25,
+              seededRandom(seed + i * 2 + j) * Math.PI * 0.25,
+              seededRandom(seed + i + j * 3) * Math.PI * 0.25
+            );
 
             scene.add(mesh);
             meshes.push(mesh);
@@ -1441,8 +1458,10 @@ function createFlatShape(vertices, color) {
 
       // Animation
       let time = 0;
+      let animationId = null;
+
       function animate() {
-        requestAnimationFrame(animate);
+        animationId = requestAnimationFrame(animate);
         time += 0.01;
 
         meshes.forEach((mesh, i) => {
@@ -1454,9 +1473,18 @@ function createFlatShape(vertices, color) {
       }
 
       animate();
+
+      // Register scene for cleanup management
+      if (container.id) {
+        activeScenes.set(container.id, {
+          renderer: renderer,
+          canvas: canvas,
+          animationId: animationId
+        });
+      }
     }
 
-    // Hero
+    // Hero - always visible, load immediately
     createCityScene(document.getElementById('hero-canvas'), {
       gridSize: 16,
       plotSize: 1.5,
@@ -1468,15 +1496,20 @@ function createFlatShape(vertices, color) {
       cameraRadius: 20
     });
 
-    // Abstract Forms - 3D with flat geometries
-    createAbstractForm(document.getElementById('form-foundation'), PAGE_SEED + 1, 'polygon');
-    createAbstractForm(document.getElementById('form-cluster'), PAGE_SEED + 2, 'cluster');
-    createAbstractForm(document.getElementById('form-network'), PAGE_SEED + 3, 'network');
-    createAbstractForm(document.getElementById('form-skyline'), PAGE_SEED + 4, 'skyline');
-    createAbstractForm(document.getElementById('form-triangles'), PAGE_SEED + 5, 'facets');
+    // Abstract Forms - lazy load with 3D volumetric shapes
+    initLazyScene(document.getElementById('form-foundation'),
+      (c) => createAbstractForm(c, PAGE_SEED + 1, 'polygon'));
+    initLazyScene(document.getElementById('form-cluster'),
+      (c) => createAbstractForm(c, PAGE_SEED + 2, 'cluster'));
+    initLazyScene(document.getElementById('form-network'),
+      (c) => createAbstractForm(c, PAGE_SEED + 3, 'network'));
+    initLazyScene(document.getElementById('form-skyline'),
+      (c) => createAbstractForm(c, PAGE_SEED + 4, 'skyline'));
+    initLazyScene(document.getElementById('form-triangles'),
+      (c) => createAbstractForm(c, PAGE_SEED + 5, 'facets'));
 
-    // Scenes - reuse city
-    createCityScene(document.getElementById('scene-empty'), {
+    // Composed Scenes - lazy load
+    initLazyScene(document.getElementById('scene-empty'), createCityScene, {
       gridSize: 10,
       density: 0.02,
       heightFunc: () => 0.5,
@@ -1488,7 +1521,7 @@ function createFlatShape(vertices, color) {
       usePatterns: false
     });
 
-    createCityScene(document.getElementById('scene-first'), {
+    initLazyScene(document.getElementById('scene-first'), createCityScene, {
       gridSize: 8,
       density: 0.08,
       heightFunc: () => 4,
@@ -1500,7 +1533,7 @@ function createFlatShape(vertices, color) {
       usePatterns: false
     });
 
-    createCityScene(document.getElementById('scene-growing'), {
+    initLazyScene(document.getElementById('scene-growing'), createCityScene, {
       gridSize: 10,
       density: 0.4,
       pulse: true,
@@ -1510,7 +1543,7 @@ function createFlatShape(vertices, color) {
       usePatterns: true
     });
 
-    createCityScene(document.getElementById('scene-city'), {
+    initLazyScene(document.getElementById('scene-city'), createCityScene, {
       gridSize: 18,
       density: 0.85,
       pulse: true,
@@ -1522,7 +1555,7 @@ function createFlatShape(vertices, color) {
       camZ: 25
     });
 
-    createCityScene(document.getElementById('scene-analytics'), {
+    initLazyScene(document.getElementById('scene-analytics'), createCityScene, {
       gridSize: 12,
       density: 0.7,
       colorFunc: (h) => h > 3 ? 0x00ff00 : h > 1.5 ? 0xffff00 : 0xff0000,
@@ -1533,7 +1566,7 @@ function createFlatShape(vertices, color) {
       usePatterns: true
     });
 
-    createCityScene(document.getElementById('scene-dark'), {
+    initLazyScene(document.getElementById('scene-dark'), createCityScene, {
       gridSize: 14,
       density: 0.75,
       colorFunc: () => 0x00fff0,
@@ -1549,7 +1582,7 @@ function createFlatShape(vertices, color) {
       camZ: 18
     });
 
-    createCityScene(document.getElementById('scene-celebration'), {
+    initLazyScene(document.getElementById('scene-celebration'), createCityScene, {
       gridSize: 10,
       density: 0.6,
       colorFunc: () => COLORS[Math.floor(Math.random() * COLORS.length)],
@@ -1561,8 +1594,8 @@ function createFlatShape(vertices, color) {
       usePatterns: false
     });
 
-    // Landing demo
-    createCityScene(document.getElementById('landing-demo-canvas'), {
+    // Landing demo - lazy load
+    initLazyScene(document.getElementById('landing-demo-canvas'), createCityScene, {
       gridSize: 14,
       density: 0.7,
       pulse: true,
@@ -1571,15 +1604,23 @@ function createFlatShape(vertices, color) {
       cameraRadius: 16
     });
 
-    // Property cards & benefits - 3D abstract forms
-    createAbstractForm(document.getElementById('property-1'), PAGE_SEED + 10, 'polygon');
-    createAbstractForm(document.getElementById('property-2'), PAGE_SEED + 11, 'cluster');
-    createAbstractForm(document.getElementById('property-3'), PAGE_SEED + 12, 'skyline');
+    // Property cards - lazy load 3D forms
+    initLazyScene(document.getElementById('property-1'),
+      (c) => createAbstractForm(c, PAGE_SEED + 10, 'polygon'));
+    initLazyScene(document.getElementById('property-2'),
+      (c) => createAbstractForm(c, PAGE_SEED + 11, 'cluster'));
+    initLazyScene(document.getElementById('property-3'),
+      (c) => createAbstractForm(c, PAGE_SEED + 12, 'skyline'));
 
-    createAbstractForm(document.getElementById('benefit-1'), PAGE_SEED + 20, 'polygon');
-    createAbstractForm(document.getElementById('benefit-2'), PAGE_SEED + 21, 'facets');
-    createAbstractForm(document.getElementById('benefit-3'), PAGE_SEED + 22, 'network');
-    createAbstractForm(document.getElementById('benefit-4'), PAGE_SEED + 23, 'cluster');
+    // Benefits - lazy load 3D forms
+    initLazyScene(document.getElementById('benefit-1'),
+      (c) => createAbstractForm(c, PAGE_SEED + 20, 'polygon'));
+    initLazyScene(document.getElementById('benefit-2'),
+      (c) => createAbstractForm(c, PAGE_SEED + 21, 'facets'));
+    initLazyScene(document.getElementById('benefit-3'),
+      (c) => createAbstractForm(c, PAGE_SEED + 22, 'network'));
+    initLazyScene(document.getElementById('benefit-4'),
+      (c) => createAbstractForm(c, PAGE_SEED + 23, 'cluster'));
 
     // Smooth scroll
     document.querySelectorAll('.nav-link').forEach(link => {
