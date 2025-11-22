@@ -24,8 +24,6 @@
       --color-lavender: #8b7ab8;
       --color-cyan: #00fff0;
       --bg-dark: #000000;
-      --bg-dark-secondary: #0a0e27;
-      --bg-dark-tertiary: #1e1b3c;
       --text-primary: #ffffff;
       --text-secondary: rgba(255, 255, 255, 0.7);
       --text-muted: rgba(255, 255, 255, 0.45);
@@ -57,18 +55,9 @@
       z-index: 100;
     }
 
-    .sidebar::-webkit-scrollbar {
-      width: 6px;
-    }
-
-    .sidebar::-webkit-scrollbar-track {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .sidebar::-webkit-scrollbar-thumb {
-      background: var(--color-primary);
-      border-radius: 3px;
-    }
+    .sidebar::-webkit-scrollbar { width: 6px; }
+    .sidebar::-webkit-scrollbar-track { background: rgba(255, 255, 255, 0.05); }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }
 
     .logo {
       font-size: 24px;
@@ -136,6 +125,7 @@
       width: 100%;
       height: 70vh;
       overflow: hidden;
+      background: #000;
     }
 
     .canvas-section.small {
@@ -210,23 +200,9 @@
     }
 
     /* Grid Layouts */
-    .grid-2 {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 40px;
-    }
-
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 40px;
-    }
-
-    .grid-4 {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 30px;
-    }
+    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; }
+    .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+    .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
 
     /* Cards */
     .card {
@@ -255,203 +231,10 @@
       line-height: 1.6;
     }
 
-    /* Color Swatches */
-    .color-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 24px;
-    }
-
-    .color-swatch {
-      height: 120px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.3s;
-    }
-
-    .color-swatch:hover {
-      transform: scale(1.05);
-    }
-
-    .color-name {
-      font-size: 16px;
-      font-weight: 600;
-      margin-bottom: 4px;
-    }
-
-    .color-hex {
-      font-family: 'Fira Code', monospace;
-      font-size: 13px;
-      color: var(--text-muted);
-    }
-
-    /* Buttons */
-    .btn {
-      display: inline-block;
-      padding: 16px 36px;
-      font-size: 14px;
-      font-weight: 700;
-      font-family: 'Fira Code', monospace;
-      text-transform: uppercase;
-      text-decoration: none;
-      border-radius: 6px;
-      transition: all 0.3s;
-      cursor: pointer;
-      border: none;
-      letter-spacing: 0.5px;
-    }
-
-    .btn-primary {
-      background: var(--color-primary);
-      color: var(--bg-dark);
-    }
-
-    .btn-primary:hover {
-      background: transparent;
-      color: var(--color-primary);
-      box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
-      border: 2px solid var(--color-primary);
-    }
-
-    .btn-secondary {
-      background: transparent;
-      color: var(--text-primary);
-      border: 2px solid rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-secondary:hover {
-      border-color: var(--color-primary);
-      color: var(--color-primary);
-    }
-
-    /* Button Demo Section */
-    .button-demo {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      margin-top: 30px;
-    }
-
-    /* Typography */
-    .type-specimen {
-      margin-bottom: 40px;
-      padding-bottom: 40px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .type-label {
-      font-family: 'Fira Code', monospace;
-      font-size: 11px;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 12px;
-    }
-
-    .type-h1 {
-      font-size: 88px;
-      font-weight: 800;
-      line-height: 0.98;
-      letter-spacing: -3px;
-    }
-
-    .type-h2 {
-      font-size: 64px;
-      font-weight: 700;
-      letter-spacing: -2px;
-    }
-
-    .type-h3 {
-      font-size: 48px;
-      font-weight: 600;
-      letter-spacing: -1px;
-    }
-
-    .type-body {
-      font-size: 18px;
-      line-height: 1.7;
-    }
-
-    /* Code Blocks */
-    .code-block {
-      background: rgba(0, 0, 0, 0.6);
-      border: 1px solid var(--border-color);
-      border-radius: 8px;
-      padding: 24px;
-      margin: 30px 0;
-      font-family: 'Fira Code', monospace;
-      font-size: 13px;
-      line-height: 1.8;
-      color: var(--color-cyan);
-      overflow-x: auto;
-    }
-
-    /* Interactive Controls */
-    .control-panel {
-      background: rgba(0, 0, 0, 0.85);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border-color);
-      border-radius: 12px;
-      padding: 30px;
-      margin: 40px 0;
-    }
-
-    .control-title {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      margin-bottom: 24px;
-    }
-
-    .control-row {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-
-    .control-label {
-      font-size: 14px;
-      font-weight: 600;
-      color: var(--text-secondary);
-      min-width: 160px;
-    }
-
-    .slider {
-      flex: 1;
-      max-width: 300px;
-      height: 4px;
-      border-radius: 2px;
-      background: rgba(255, 255, 255, 0.1);
-      outline: none;
-      -webkit-appearance: none;
-    }
-
-    .slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 16px;
-      height: 16px;
-      border-radius: 50%;
-      background: var(--color-primary);
-      cursor: pointer;
-      box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
-    }
-
-    .slider-value {
-      font-family: 'Fira Code', monospace;
-      font-size: 12px;
-      color: var(--color-primary);
-      min-width: 70px;
-    }
-
     /* Artifact Grid */
     .artifact-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
       gap: 30px;
       margin-top: 40px;
     }
@@ -462,16 +245,18 @@
       overflow: hidden;
       cursor: pointer;
       transition: all 0.3s;
+      border: 1px solid rgba(255, 255, 255, 0.1);
     }
 
     .artifact-card:hover {
       transform: translateY(-8px);
       box-shadow: 0 20px 60px rgba(255, 107, 107, 0.3);
+      border-color: var(--color-primary);
     }
 
     .artifact-preview {
-      height: 250px;
-      background: linear-gradient(135deg, var(--bg-dark-secondary), var(--bg-dark-tertiary));
+      height: 300px;
+      background: #000;
       position: relative;
     }
 
@@ -489,6 +274,7 @@
       font-size: 14px;
       color: var(--text-secondary);
       margin-bottom: 16px;
+      line-height: 1.6;
     }
 
     .artifact-meta {
@@ -527,37 +313,86 @@
       letter-spacing: 1px;
     }
 
-    /* Gradient Builder */
-    .gradient-builder {
-      background: rgba(0, 0, 0, 0.4);
-      border-radius: 12px;
-      padding: 40px;
-      margin: 40px 0;
-    }
-
-    .gradient-preview-large {
-      height: 300px;
-      border-radius: 12px;
-      margin-bottom: 30px;
-    }
-
-    .color-stops {
-      margin-bottom: 30px;
-    }
-
-    .color-stop {
-      display: flex;
-      gap: 20px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .color-picker {
-      width: 60px;
-      height: 40px;
-      border: none;
+    /* Buttons */
+    .btn {
+      display: inline-block;
+      padding: 16px 36px;
+      font-size: 14px;
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      text-transform: uppercase;
+      text-decoration: none;
       border-radius: 6px;
+      transition: all 0.3s;
       cursor: pointer;
+      border: none;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--bg-dark);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 107, 107, 0.4);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    /* Code Blocks */
+    .code-block {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 30px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--color-cyan);
+      overflow-x: auto;
+    }
+
+    /* Color Swatches */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+    }
+
+    .color-swatch {
+      height: 120px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .color-swatch:hover {
+      transform: scale(1.05);
+    }
+
+    .color-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .color-hex {
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      color: var(--text-muted);
     }
 
     /* Footer */
@@ -572,21 +407,17 @@
 
     /* Responsive */
     @media (max-width: 1024px) {
-      .sidebar {
-        transform: translateX(-100%);
-      }
-      .main-content {
-        margin-left: 0;
-      }
-      .grid-2, .grid-3, .grid-4, .stats-grid {
-        grid-template-columns: 1fr;
-      }
+      .sidebar { transform: translateX(-100%); }
+      .main-content { margin-left: 0; }
+      .grid-2, .grid-3, .grid-4, .stats-grid { grid-template-columns: 1fr; }
+      .artifact-grid { grid-template-columns: 1fr; }
+      .canvas-overlay h1 { font-size: 42px; }
     }
   </style>
 </head>
 <body>
   <div class="layout">
-    <!-- Sidebar Navigation -->
+    <!-- Sidebar -->
     <aside class="sidebar">
       <div class="logo">ASSET_HAUS</div>
       <div class="version">Design System v2.0</div>
@@ -595,8 +426,7 @@
         <div class="nav-section">
           <div class="nav-section-title">─── OVERVIEW ───</div>
           <a href="#introduction" class="nav-link">Introduction</a>
-          <a href="#how-to-use" class="nav-link">How to Use</a>
-          <a href="#download" class="nav-link">Download All</a>
+          <a href="#philosophy" class="nav-link">Philosophy</a>
         </div>
 
         <div class="nav-section">
@@ -604,7 +434,6 @@
           <a href="#colors" class="nav-link">Colors & Gradients</a>
           <a href="#typography" class="nav-link">Typography</a>
           <a href="#materials" class="nav-link">3D Materials</a>
-          <a href="#animation" class="nav-link">Animation Principles</a>
         </div>
 
         <div class="nav-section">
@@ -616,20 +445,12 @@
         <div class="nav-section">
           <div class="nav-section-title">─── COMPONENTS ───</div>
           <a href="#buttons" class="nav-link">Buttons</a>
-          <a href="#cards" class="nav-link">Cards</a>
-          <a href="#forms" class="nav-link">Forms</a>
-        </div>
-
-        <div class="nav-section">
-          <div class="nav-section-title">─── GENERATORS ───</div>
-          <a href="#gradient-builder" class="nav-link">Gradient Builder</a>
-          <a href="#scene-composer" class="nav-link">Scene Composer</a>
+          <a href="#examples" class="nav-link">Code Examples</a>
         </div>
 
         <div class="nav-section">
           <div class="nav-section-title">─── RESOURCES ───</div>
           <a href="#downloads" class="nav-link">Downloads</a>
-          <a href="#code-snippets" class="nav-link">Code Snippets</a>
         </div>
       </nav>
     </aside>
@@ -637,7 +458,7 @@
     <!-- Main Content -->
     <main class="main-content">
 
-      <!-- HERO SECTION -->
+      <!-- HERO -->
       <section class="canvas-section" id="hero">
         <div class="canvas-container" id="hero-canvas"></div>
         <div class="canvas-overlay">
@@ -651,97 +472,93 @@
         <div class="section-header">
           <h2 class="section-title">Introduction</h2>
           <p class="section-description">
-            Welcome to the ASSET_HAUS Design System — a comprehensive guide to building
-            modern interfaces for real estate tokenization. Our design language combines
-            abstract 3D geometry, bold gradients, and smooth animations to create trust
-            and transparency in the digital real estate space.
+            Welcome to the ASSET_HAUS Design System — a comprehensive visual language
+            for real estate tokenization. Our design combines abstract 3D cityscapes,
+            bold gradients, and smooth animations to represent portfolio growth and value.
           </p>
         </div>
 
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-value">5</div>
-            <div class="stat-label">Core Forms</div>
+            <div class="stat-label">Abstract Forms</div>
           </div>
           <div class="stat-card">
             <div class="stat-value">7</div>
             <div class="stat-label">Composed Scenes</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">50+</div>
-            <div class="stat-label">Components</div>
+            <div class="stat-value">8</div>
+            <div class="stat-label">Brand Colors</div>
           </div>
           <div class="stat-card">
-            <div class="stat-value">2</div>
-            <div class="stat-label">Generators</div>
+            <div class="stat-value">∞</div>
+            <div class="stat-label">Possibilities</div>
           </div>
         </div>
 
         <div class="grid-3">
           <div class="card">
-            <div class="card-title">🎨 Abstraction</div>
+            <div class="card-title">🏗️ Abstraction</div>
             <div class="card-description">
-              We use abstract geometric forms instead of literal representations.
-              Complex compositions of intersecting planes, cubes, and other shapes
-              create visual metaphors for trust and value.
+              Abstract cityscapes represent portfolios. Building height = asset value.
+              Color = performance. Together they create a visual map of wealth.
             </div>
           </div>
           <div class="card">
             <div class="card-title">✨ Motion</div>
             <div class="card-description">
-              Slow, purposeful animations bring our designs to life. Orbital camera
-              movements and subtle transitions create a premium, considered feel.
+              Slow orbital camera movements and gentle pulsing bring scenes to life.
+              Every animation is purposeful, never rushed.
             </div>
           </div>
           <div class="card">
             <div class="card-title">💎 Materiality</div>
             <div class="card-description">
-              Glass-like transparency, metallic surfaces, and glowing emissive materials
-              represent our commitment to openness and technological innovation.
+              Solid blocks for established assets. Transparent for new opportunities.
+              Glowing edges for high performers. Material tells the story.
             </div>
           </div>
         </div>
       </section>
 
-      <!-- HOW TO USE -->
-      <section class="content-section dark-bg" id="how-to-use">
+      <!-- PHILOSOPHY -->
+      <section class="content-section dark-bg" id="philosophy">
         <div class="section-header">
-          <h2 class="section-title">How to Use This Guide</h2>
+          <h2 class="section-title">Design Philosophy</h2>
           <p class="section-description">
-            This design system is built for designers, developers, and marketers.
-            Each section includes interactive examples, code snippets, and downloadable assets.
+            We don't show literal buildings. We show abstract cities where each structure
+            represents a tokenized asset. Height shows value, color shows performance,
+            position shows diversification.
           </p>
         </div>
 
         <div class="grid-2">
           <div class="card">
-            <div class="card-title">For Designers</div>
+            <div class="card-title">Why Cities?</div>
             <div class="card-description">
-              • Explore brand colors and gradients<br>
-              • Download 3D models and renders<br>
-              • Use the Scene Composer to create custom visuals<br>
-              • Access Figma templates and component libraries
+              Real estate portfolios are like cities — diverse, growing, interconnected.
+              A single property is a building. A portfolio is an entire urban landscape.
+              This metaphor is intuitive and powerful.
             </div>
           </div>
           <div class="card">
-            <div class="card-title">For Developers</div>
+            <div class="card-title">Why Abstract?</div>
             <div class="card-description">
-              • Copy Three.js code snippets<br>
-              • Implement animations and interactions<br>
-              • Use pre-built React components<br>
-              • Export scenes as GLB/FBX formats
+              Abstraction is universal. It works for any property type, any location,
+              any market. It's timeless, scalable, and distinctly modern.
             </div>
           </div>
         </div>
       </section>
 
-      <!-- COLORS & GRADIENTS -->
+      <!-- COLORS -->
       <section class="content-section" id="colors">
         <div class="section-header">
           <h2 class="section-title">Colors & Gradients</h2>
           <p class="section-description">
-            Our color palette reflects the bold, innovative spirit of real estate tokenization.
-            Each color carries meaning and purpose in our design system.
+            Our palette transitions from warm coral (growth) through purple (premium)
+            to cool cyan (technology). Each color has semantic meaning.
           </p>
         </div>
 
@@ -789,127 +606,17 @@
           </div>
         </div>
 
-        <h3 class="section-subtitle" style="margin-top: 60px;">Brand Gradients</h3>
+        <h3 class="section-subtitle" style="margin-top: 60px;">Gradients</h3>
         <div class="grid-2">
           <div>
-            <div class="color-swatch" style="background: linear-gradient(135deg, #ff6b6b 0%, #b794f6 50%, #95b8d1 100%); height: 200px;"></div>
-            <div class="color-name">Primary Light Gradient</div>
-            <div class="code-block" style="margin-top: 16px;">background: linear-gradient(135deg, #ff6b6b 0%, #b794f6 50%, #95b8d1 100%);</div>
+            <div class="color-swatch" style="background: linear-gradient(135deg, #ff6b6b 0%, #b794f6 50%, #95b8d1 100%); height: 180px;"></div>
+            <div class="color-name">Light Mode Primary</div>
+            <div class="code-block">linear-gradient(135deg, #ff6b6b 0%, #b794f6 50%, #95b8d1 100%)</div>
           </div>
           <div>
-            <div class="color-swatch" style="background: linear-gradient(135deg, #0a0e27 0%, #4a5899 50%, #1e1b3c 100%); height: 200px;"></div>
-            <div class="color-name">Primary Dark Gradient</div>
-            <div class="code-block" style="margin-top: 16px;">background: linear-gradient(135deg, #0a0e27 0%, #4a5899 50%, #1e1b3c 100%);</div>
-          </div>
-        </div>
-      </section>
-
-      <!-- TYPOGRAPHY -->
-      <section class="content-section dark-bg" id="typography">
-        <div class="section-header">
-          <h2 class="section-title">Typography</h2>
-          <p class="section-description">
-            We use Work Sans for headings and body text, with Fira Code for all code and technical elements.
-          </p>
-        </div>
-
-        <div class="type-specimen">
-          <div class="type-label">Heading 1 / Work Sans / 88px Bold</div>
-          <div class="type-h1">Map Your Portfolio</div>
-        </div>
-
-        <div class="type-specimen">
-          <div class="type-label">Heading 2 / Work Sans / 64px Bold</div>
-          <div class="type-h2">Start Building Today</div>
-        </div>
-
-        <div class="type-specimen">
-          <div class="type-label">Heading 3 / Work Sans / 48px Semibold</div>
-          <div class="type-h3">Platform Capabilities</div>
-        </div>
-
-        <div class="type-specimen">
-          <div class="type-label">Body Text / Work Sans / 18px Regular</div>
-          <div class="type-body">
-            Visualize your entire real estate portfolio as an interactive map.
-            Each property becomes a data point, showing value distribution and
-            market performance across your holdings.
-          </div>
-        </div>
-      </section>
-
-      <!-- 3D MATERIALS -->
-      <section class="content-section" id="materials">
-        <div class="section-header">
-          <h2 class="section-title">3D Materials</h2>
-          <p class="section-description">
-            Five core material types define our visual language, from solid matter to glowing energy.
-          </p>
-        </div>
-
-        <div class="canvas-section small">
-          <div class="canvas-container" id="materials-canvas"></div>
-        </div>
-
-        <div class="control-panel">
-          <div class="control-title">Material Controls</div>
-          <div class="control-row">
-            <span class="control-label">Material Type</span>
-            <select id="materialType" style="flex: 1; max-width: 300px; padding: 10px; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: white; border-radius: 6px;">
-              <option value="0">Matte Solid</option>
-              <option value="1">Glossy</option>
-              <option value="2">Glass</option>
-              <option value="3">Glowing</option>
-              <option value="4">Gradient Mapped</option>
-            </select>
-          </div>
-          <div class="control-row">
-            <span class="control-label">Roughness</span>
-            <input type="range" class="slider" id="roughness" min="0" max="1" step="0.1" value="0.5">
-            <span class="slider-value" id="roughnessValue">0.5</span>
-          </div>
-          <div class="control-row">
-            <span class="control-label">Metalness</span>
-            <input type="range" class="slider" id="metalness" min="0" max="1" step="0.1" value="0">
-            <span class="slider-value" id="metalnessValue">0.0</span>
-          </div>
-        </div>
-
-        <div class="grid-3">
-          <div class="card">
-            <div class="card-title">Matte Solid</div>
-            <div class="card-description">
-              Non-reflective surfaces for solid, trustworthy elements.
-              <br><br>roughness: 1.0<br>metalness: 0.0
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">Glossy</div>
-            <div class="card-description">
-              Reflective metallic surfaces for premium features.
-              <br><br>roughness: 0.2<br>metalness: 0.8
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">Glass</div>
-            <div class="card-description">
-              Transparent materials symbolizing openness.
-              <br><br>transmission: 1.0<br>thickness: 0.5
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">Glowing</div>
-            <div class="card-description">
-              Emissive materials for highlights and CTAs.
-              <br><br>emissive: color<br>emissiveIntensity: 2
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-title">Gradient Mapped</div>
-            <div class="card-description">
-              Custom gradient textures for unique effects.
-              <br><br>map: gradientTexture
-            </div>
+            <div class="color-swatch" style="background: linear-gradient(135deg, #0a0e27 0%, #4a5899 50%, #1e1b3c 100%); height: 180px;"></div>
+            <div class="color-name">Dark Mode Primary</div>
+            <div class="code-block">linear-gradient(135deg, #0a0e27 0%, #4a5899 50%, #1e1b3c 100%)</div>
           </div>
         </div>
       </section>
@@ -919,8 +626,8 @@
         <div class="section-header">
           <h2 class="section-title">Abstract Forms</h2>
           <p class="section-description">
-            Five core abstract compositions made from intersecting planes, geometric elements,
-            and varied materials. Each form represents a concept in our platform.
+            Five core 3D compositions representing key concepts in real estate investment.
+            Each uses the city metaphor in unique ways.
           </p>
         </div>
 
@@ -928,60 +635,60 @@
           <div class="artifact-card">
             <div class="artifact-preview" id="form-trust"></div>
             <div class="artifact-info">
-              <div class="artifact-name">The Trust</div>
+              <div class="artifact-name">The Foundation</div>
               <div class="artifact-description">
-                Complex composition of intersecting transparent planes representing
-                blockchain transparency and immutability.
+                A single solid block represents the foundation of your portfolio —
+                your first investment, stable and strong.
               </div>
-              <div class="artifact-meta">Type: Glass + Wireframe</div>
+              <div class="artifact-meta">Use: Empty states, onboarding</div>
             </div>
           </div>
 
           <div class="artifact-card">
             <div class="artifact-preview" id="form-value"></div>
             <div class="artifact-info">
-              <div class="artifact-name">The Value</div>
+              <div class="artifact-name">The Cluster</div>
               <div class="artifact-description">
-                Layered geometric forms with gradient materials symbolizing
-                accumulated wealth and portfolio growth.
+                Multiple buildings of varying heights show diversification —
+                different asset types, different values, balanced portfolio.
               </div>
-              <div class="artifact-meta">Type: Gradient + Metallic</div>
+              <div class="artifact-meta">Use: Portfolio overview</div>
             </div>
           </div>
 
           <div class="artifact-card">
             <div class="artifact-preview" id="form-growth"></div>
             <div class="artifact-info">
-              <div class="artifact-name">The Growth</div>
+              <div class="artifact-name">The Skyline</div>
               <div class="artifact-description">
-                Ascending abstract structure with dynamic elements representing
-                portfolio expansion and market growth.
+                Buildings arranged by height create an ascending skyline —
+                visual representation of portfolio growth over time.
               </div>
-              <div class="artifact-meta">Type: Solid + Emissive</div>
+              <div class="artifact-meta">Use: Growth charts, success states</div>
             </div>
           </div>
 
           <div class="artifact-card">
             <div class="artifact-preview" id="form-liquidity"></div>
             <div class="artifact-info">
-              <div class="artifact-name">The Liquidity</div>
+              <div class="artifact-name">The Grid</div>
               <div class="artifact-description">
-                Flowing composition with curved and straight elements representing
-                asset liquidity and market flow.
+                Organized grid of uniform buildings represents market structure —
+                orderly, accessible, liquid markets.
               </div>
-              <div class="artifact-meta">Type: Glass + Glow</div>
+              <div class="artifact-meta">Use: Marketplace, available assets</div>
             </div>
           </div>
 
           <div class="artifact-card">
             <div class="artifact-preview" id="form-cycle"></div>
             <div class="artifact-info">
-              <div class="artifact-name">The Cycle</div>
+              <div class="artifact-name">The District</div>
               <div class="artifact-description">
-                Circular arrangement of geometric forms representing market cycles
-                and continuous value creation.
+                Circular arrangement of buildings around a central plaza —
+                represents market cycles and ecosystem connectivity.
               </div>
-              <div class="artifact-meta">Type: Mixed Materials</div>
+              <div class="artifact-meta">Use: Analytics, market overview</div>
             </div>
           </div>
         </div>
@@ -992,7 +699,7 @@
         <div class="section-header">
           <h2 class="section-title">Composed Scenes</h2>
           <p class="section-description">
-            Seven complete 3D scenes for different states and contexts in your application.
+            Seven complete scenes for different application states, from empty to thriving.
           </p>
         </div>
 
@@ -1002,19 +709,19 @@
             <div class="artifact-info">
               <div class="artifact-name">Empty State</div>
               <div class="artifact-description">
-                Minimal scene with a single glowing element on a platform,
-                inviting users to begin their journey.
+                Empty platform with a single glowing foundation block.
+                "Your city awaits" — inviting, not discouraging.
               </div>
             </div>
           </div>
 
           <div class="artifact-card">
-            <div class="artifact-preview" id="scene-first-asset"></div>
+            <div class="artifact-preview" id="scene-first"></div>
             <div class="artifact-info">
               <div class="artifact-name">First Asset</div>
               <div class="artifact-description">
-                A single prominent geometric form representing the user's
-                first property investment.
+                One prominent building stands alone. The start of something bigger.
+                Pride in that first investment.
               </div>
             </div>
           </div>
@@ -1024,8 +731,8 @@
             <div class="artifact-info">
               <div class="artifact-name">Growing Portfolio</div>
               <div class="artifact-description">
-                Multiple forms in various sizes showing portfolio diversification
-                and expansion.
+                5-10 buildings of varying sizes. Portfolio is taking shape.
+                Diversity is visible.
               </div>
             </div>
           </div>
@@ -1035,8 +742,8 @@
             <div class="artifact-info">
               <div class="artifact-name">Full City</div>
               <div class="artifact-description">
-                Complex cityscape of abstract buildings representing a
-                mature, diversified portfolio.
+                Dense urban landscape — mature, diversified portfolio.
+                Complexity managed beautifully.
               </div>
             </div>
           </div>
@@ -1046,8 +753,8 @@
             <div class="artifact-info">
               <div class="artifact-name">Analytics View</div>
               <div class="artifact-description">
-                Data visualization through geometric forms with color-coded
-                performance indicators.
+                Color-coded buildings: green for growth, red for decline,
+                blue for stable. Data as architecture.
               </div>
             </div>
           </div>
@@ -1055,10 +762,10 @@
           <div class="artifact-card">
             <div class="artifact-preview" id="scene-dark"></div>
             <div class="artifact-info">
-              <div class="artifact-name">Dark Mode</div>
+              <div class="artifact-name">Dark Mode City</div>
               <div class="artifact-description">
-                Neon-accented composition optimized for dark theme with
-                glowing cyan elements.
+                Same city, neon accents. Glowing cyan edges.
+                Cyberpunk meets real estate.
               </div>
             </div>
           </div>
@@ -1068,8 +775,8 @@
             <div class="artifact-info">
               <div class="artifact-name">Celebration</div>
               <div class="artifact-description">
-                Dynamic, energetic composition for successful transactions
-                and milestones.
+                Dynamic pulsing, bright colors, upward movement.
+                For milestones and achievements.
               </div>
             </div>
           </div>
@@ -1080,505 +787,428 @@
       <section class="content-section dark-bg" id="buttons">
         <div class="section-header">
           <h2 class="section-title">Buttons</h2>
-          <p class="section-description">
-            Interactive button components with hover effects and state variations.
-          </p>
         </div>
 
-        <h3 class="section-subtitle">Primary Buttons</h3>
-        <div class="button-demo">
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
           <button class="btn btn-primary">Invest Now</button>
-          <button class="btn btn-primary">Get Started</button>
-          <button class="btn btn-primary">View Portfolio</button>
-        </div>
-
-        <h3 class="section-subtitle" style="margin-top: 40px;">Secondary Buttons</h3>
-        <div class="button-demo">
           <button class="btn btn-secondary">Learn More</button>
-          <button class="btn btn-secondary">Cancel</button>
-          <button class="btn btn-secondary">Back</button>
         </div>
 
-        <div class="code-block" style="margin-top: 40px;">/* Button Styles */
-.btn-primary {
-  background: linear-gradient(135deg, #ff6b6b, #b794f6);
-  color: white;
+        <div class="code-block" style="margin-top: 30px;">.btn-primary {
+  background: #ff6b6b;
+  color: #000;
   padding: 16px 36px;
-  border-radius: 6px;
   font-weight: 700;
+  border-radius: 6px;
   transition: all 0.3s;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(255, 107, 107, 0.3);
+  box-shadow: 0 8px 24px rgba(255, 107, 107, 0.4);
 }</div>
       </section>
 
-      <!-- GRADIENT BUILDER -->
-      <section class="content-section" id="gradient-builder">
+      <!-- CODE EXAMPLES -->
+      <section class="content-section" id="examples">
         <div class="section-header">
-          <h2 class="section-title">Gradient Builder</h2>
+          <h2 class="section-title">Code Examples</h2>
           <p class="section-description">
-            Create custom gradients for your projects. Adjust colors, positions, and angles in real-time.
+            Ready-to-use Three.js code for creating portfolio cityscapes.
           </p>
         </div>
 
-        <div class="gradient-builder">
-          <div class="gradient-preview-large" id="gradientPreview"></div>
+        <h3 class="section-subtitle">Create a Single Building</h3>
+        <div class="code-block">// Create a building (asset)
+const height = assetValue / 1000000; // $1M = 1 unit height
+const color = performance > 0 ? 0x00ff00 : 0xff0000;
 
-          <div class="control-panel" style="margin: 0;">
-            <div class="control-title">Gradient Controls</div>
-
-            <div class="color-stops">
-              <div class="color-stop">
-                <span class="control-label">Color 1</span>
-                <input type="color" class="color-picker" id="color1" value="#ff6b6b">
-                <input type="range" class="slider" id="pos1" min="0" max="100" value="0">
-                <span class="slider-value" id="pos1Value">0%</span>
-              </div>
-
-              <div class="color-stop">
-                <span class="control-label">Color 2</span>
-                <input type="color" class="color-picker" id="color2" value="#b794f6">
-                <input type="range" class="slider" id="pos2" min="0" max="100" value="50">
-                <span class="slider-value" id="pos2Value">50%</span>
-              </div>
-
-              <div class="color-stop">
-                <span class="control-label">Color 3</span>
-                <input type="color" class="color-picker" id="color3" value="#95b8d1">
-                <input type="range" class="slider" id="pos3" min="0" max="100" value="100">
-                <span class="slider-value" id="pos3Value">100%</span>
-              </div>
-            </div>
-
-            <div class="control-row">
-              <span class="control-label">Angle</span>
-              <input type="range" class="slider" id="gradientAngle" min="0" max="360" value="135">
-              <span class="slider-value" id="angleValue">135°</span>
-            </div>
-          </div>
-
-          <div class="code-block" id="gradientCode">background: linear-gradient(135deg, #ff6b6b 0%, #b794f6 50%, #95b8d1 100%);</div>
-
-          <div style="margin-top: 20px;">
-            <button class="btn btn-primary" onclick="copyGradientCode()">Copy CSS</button>
-            <button class="btn btn-secondary" onclick="resetGradient()">Reset</button>
-          </div>
-        </div>
-      </section>
-
-      <!-- CODE SNIPPETS -->
-      <section class="content-section dark-bg" id="code-snippets">
-        <div class="section-header">
-          <h2 class="section-title">Code Snippets</h2>
-          <p class="section-description">
-            Ready-to-use code examples for implementing our design system in your projects.
-          </p>
-        </div>
-
-        <h3 class="section-subtitle">Three.js Scene Setup</h3>
-        <div class="code-block">// Basic Three.js Scene Setup
-const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setClearColor(0x0a0e27, 1);
-document.body.appendChild(renderer.domElement);
-
-// Lighting
-const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-scene.add(ambientLight);
-
-const pointLight = new THREE.PointLight(0xff6b6b, 1.5, 100);
-pointLight.position.set(10, 10, 10);
-scene.add(pointLight);
-
-// Camera position
-camera.position.set(0, 3, 8);
-camera.lookAt(0, 0, 0);</div>
-
-        <h3 class="section-subtitle" style="margin-top: 40px;">Abstract Form Creation</h3>
-        <div class="code-block">// Create Abstract Composition
-const group = new THREE.Group();
-
-// Intersecting Planes
-for (let i = 0; i < 5; i++) {
-  const planeGeo = new THREE.PlaneGeometry(3, 4);
-  const planeMat = new THREE.MeshStandardMaterial({
-    color: 0xff6b6b,
-    side: THREE.DoubleSide,
-    transparent: true,
-    opacity: 0.6,
-    metalness: 0.6,
-    roughness: 0.3
-  });
-
-  const plane = new THREE.Mesh(planeGeo, planeMat);
-  plane.rotation.y = (Math.PI * 2 / 5) * i;
-  plane.rotation.x = Math.sin(i * 0.5) * 0.4;
-
-  group.add(plane);
-}
-
-// Add geometric accent
-const cubeGeo = new THREE.BoxGeometry(0.6, 0.6, 0.6);
-const cubeMat = new THREE.MeshStandardMaterial({
-  color: 0x00fff0,
-  emissive: 0x00fff0,
-  emissiveIntensity: 0.8
+const geometry = new THREE.BoxGeometry(1, height, 1);
+const material = new THREE.MeshStandardMaterial({
+  color: color,
+  metalness: 0.3,
+  roughness: 0.7
 });
-const cube = new THREE.Mesh(cubeGeo, cubeMat);
-group.add(cube);
 
-scene.add(group);</div>
+const building = new THREE.Mesh(geometry, material);
+building.position.y = height / 2;
+scene.add(building);</div>
 
-        <h3 class="section-subtitle" style="margin-top: 40px;">Animation Loop</h3>
-        <div class="code-block">// Animation Loop
-function animate() {
-  requestAnimationFrame(animate);
+        <h3 class="section-subtitle" style="margin-top: 40px;">Create a City (Portfolio)</h3>
+        <div class="code-block">// Create portfolio city
+const gridSize = 12;
+const spacing = 1.5;
 
-  // Rotate group
-  group.rotation.y += 0.003;
-  group.rotation.x += 0.001;
+for (let x = 0; x < gridSize; x++) {
+  for (let z = 0; z < gridSize; z++) {
+    const asset = portfolio[x * gridSize + z];
+    if (!asset) continue;
 
-  // Pulse effect
-  const scale = 1 + Math.sin(Date.now() * 0.002) * 0.1;
-  cube.scale.set(scale, scale, scale);
+    const height = asset.value / 1000000;
+    const building = createBuilding(height, asset.performance);
 
-  renderer.render(scene, camera);
-}
+    building.position.x = (x - gridSize/2) * spacing;
+    building.position.z = (z - gridSize/2) * spacing;
 
-animate();</div>
+    scene.add(building);
+  }
+}</div>
       </section>
 
       <!-- DOWNLOADS -->
-      <section class="content-section" id="downloads">
+      <section class="content-section dark-bg" id="downloads">
         <div class="section-header">
           <h2 class="section-title">Downloads</h2>
-          <p class="section-description">
-            Download complete asset packages, 3D models, and templates.
-          </p>
         </div>
 
         <div class="card" style="background: rgba(255, 107, 107, 0.1); border-color: var(--color-primary);">
-          <div class="card-title">Complete Design System Package</div>
-          <div class="card-description" style="margin-bottom: 24px;">
-            Version: 2.0.1 | Last Updated: Nov 2024 | File Size: 487 MB<br><br>
-
-            Includes:<br>
-            ✓ 12 3D Models (.glb, .fbx)<br>
-            ✓ 50+ Static Renders (4K PNG)<br>
-            ✓ 50 Icons (SVG + PNG)<br>
-            ✓ 4 Video Loops (MP4)<br>
-            ✓ Code Snippets & Templates<br>
-            ✓ Brand Guidelines PDF
+          <div class="card-title">Complete Design System</div>
+          <div class="card-description" style="margin-bottom: 20px;">
+            All 3D scenes, code examples, and assets in one package.<br>
+            Format: GLB, FBX, MP4, PNG
           </div>
-          <button class="btn btn-primary">Download Full Package (487 MB)</button>
-        </div>
-
-        <div class="grid-3" style="margin-top: 40px;">
-          <div class="card">
-            <div class="card-title">3D Assets Only</div>
-            <div class="card-description">
-              GLB and FBX files for all abstract forms and composed scenes.
-            </div>
-            <button class="btn btn-secondary" style="margin-top: 20px;">Download (125 MB)</button>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Icons & Graphics</div>
-            <div class="card-description">
-              SVG and PNG icons, plus static renders of all 3D scenes.
-            </div>
-            <button class="btn btn-secondary" style="margin-top: 20px;">Download (89 MB)</button>
-          </div>
-
-          <div class="card">
-            <div class="card-title">Video Loops</div>
-            <div class="card-description">
-              MP4 animation loops for hero sections and backgrounds.
-            </div>
-            <button class="btn btn-secondary" style="margin-top: 20px;">Download (273 MB)</button>
-          </div>
+          <button class="btn btn-primary">Download (487 MB)</button>
         </div>
       </section>
 
       <!-- Footer -->
       <footer>
         <p>© 2025 ASSET_HAUS — Complete Design System</p>
-        <p style="margin-top: 8px; opacity: 0.5;">Built with Three.js, Modern Web Standards, and Abstract Architecture</p>
+        <p style="margin-top: 8px; opacity: 0.5;">Built with Three.js & Abstract City Metaphor</p>
       </footer>
     </main>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    // Initialize all Three.js scenes
+    // Utility function to create city scene
+    function createCityScene(container, config) {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-    // HERO SCENE - Complex Abstract Composition
-    const heroContainer = document.getElementById('hero-canvas');
-    const heroScene = new THREE.Scene();
-    const heroCamera = new THREE.PerspectiveCamera(60, heroContainer.offsetWidth / heroContainer.offsetHeight, 0.1, 1000);
-    const heroRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+      renderer.setClearColor(0x000000, 1);
+      container.appendChild(renderer.domElement);
 
-    heroRenderer.setSize(heroContainer.offsetWidth, heroContainer.offsetHeight);
-    heroRenderer.setClearColor(0x0a0e27, 1);
-    heroContainer.appendChild(heroRenderer.domElement);
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+      scene.add(ambientLight);
 
-    // Lighting for hero
-    const heroAmbient = new THREE.AmbientLight(0xffffff, 0.4);
-    heroScene.add(heroAmbient);
+      const pointLight = new THREE.PointLight(config.lightColor || 0xff6b6b, 1.2, 100);
+      pointLight.position.set(10, 10, 10);
+      scene.add(pointLight);
 
-    const heroPointLight1 = new THREE.PointLight(0xff6b6b, 1.5, 100);
-    heroPointLight1.position.set(10, 10, 10);
-    heroScene.add(heroPointLight1);
+      // Create buildings
+      const buildings = [];
+      const gridSize = config.gridSize || 12;
+      const plotSize = config.plotSize || 1.2;
+      const spacing = config.spacing || 0.2;
 
-    const heroPointLight2 = new THREE.PointLight(0x00fff0, 1.2, 100);
-    heroPointLight2.position.set(-10, -10, -5);
-    heroScene.add(heroPointLight2);
+      for (let x = 0; x < gridSize; x++) {
+        for (let z = 0; z < gridSize; z++) {
+          // Skip based on density
+          if (config.density && Math.random() > config.density) continue;
 
-    // Create hero abstract form
-    const heroGroup = new THREE.Group();
+          // Calculate height
+          let height;
+          if (config.heightFunc) {
+            height = config.heightFunc(x, z, gridSize);
+          } else {
+            const distFromCenter = Math.sqrt(Math.pow(x - gridSize/2, 2) + Math.pow(z - gridSize/2, 2));
+            const centralFactor = 1 - (distFromCenter / (gridSize/2));
+            height = 0.5 + Math.random() * 3 + centralFactor * 2;
+          }
 
-    // Intersecting planes
-    const planeColors = [0xff6b6b, 0xb794f6, 0x00fff0, 0xe78fb3, 0x95b8d1];
-    for (let i = 0; i < 5; i++) {
-      const planeGeo = new THREE.PlaneGeometry(4, 5);
-      const planeMat = new THREE.MeshStandardMaterial({
-        color: planeColors[i],
-        side: THREE.DoubleSide,
-        transparent: true,
-        opacity: 0.5,
-        metalness: 0.6,
-        roughness: 0.3,
-        emissive: planeColors[i],
-        emissiveIntensity: 0.2
-      });
+          // Color
+          let color;
+          if (config.colorFunc) {
+            color = config.colorFunc(height, x, z);
+          } else {
+            const heightRatio = height / 5;
+            const r = Math.floor(255 * heightRatio);
+            const g = Math.floor(107);
+            const b = Math.floor(107 + (1 - heightRatio) * 80);
+            color = (r << 16) | (g << 8) | b;
+          }
 
-      const plane = new THREE.Mesh(planeGeo, planeMat);
-      plane.rotation.y = (Math.PI * 2 / 5) * i;
-      plane.rotation.x = Math.sin(i * 0.5) * 0.4;
-      plane.position.x = Math.cos(i * 1.2) * 0.5;
+          const boxGeometry = new THREE.BoxGeometry(plotSize, height, plotSize);
+          const material = new THREE.MeshStandardMaterial({
+            color: color,
+            metalness: config.metalness || 0.3,
+            roughness: config.roughness || 0.7,
+            emissive: config.emissive ? color : 0x000000,
+            emissiveIntensity: config.emissive ? 0.3 : 0
+          });
 
-      heroGroup.add(plane);
-    }
+          const building = new THREE.Mesh(boxGeometry, material);
+          building.position.x = (x - gridSize / 2) * (plotSize + spacing);
+          building.position.y = height / 2;
+          building.position.z = (z - gridSize / 2) * (plotSize + spacing);
 
-    // Add geometric accents
-    const cubeGeo = new THREE.BoxGeometry(0.8, 0.8, 0.8);
-    const cubeMat = new THREE.MeshStandardMaterial({
-      color: 0x00fff0,
-      emissive: 0x00fff0,
-      emissiveIntensity: 1,
-      metalness: 0.8,
-      roughness: 0.2
-    });
-    const heroCube = new THREE.Mesh(cubeGeo, cubeMat);
-    heroGroup.add(heroCube);
+          building.userData.baseHeight = height;
+          building.userData.animationDelay = (x + z) * (config.animDelay || 0.5);
 
-    // Add torus
-    const torusGeo = new THREE.TorusGeometry(2, 0.2, 16, 100);
-    const torusMat = new THREE.MeshStandardMaterial({
-      color: 0xffb4a2,
-      metalness: 0.8,
-      roughness: 0.2,
-      transparent: true,
-      opacity: 0.7
-    });
-    const heroTorus = new THREE.Mesh(torusGeo, torusMat);
-    heroTorus.rotation.x = Math.PI / 4;
-    heroGroup.add(heroTorus);
-
-    heroScene.add(heroGroup);
-    heroCamera.position.set(0, 3, 10);
-    heroCamera.lookAt(0, 0, 0);
-
-    // MATERIALS SCENE - 5 shapes with different materials
-    const materialsContainer = document.getElementById('materials-canvas');
-    if (materialsContainer) {
-      const matScene = new THREE.Scene();
-      const matCamera = new THREE.PerspectiveCamera(60, materialsContainer.offsetWidth / materialsContainer.offsetHeight, 0.1, 1000);
-      const matRenderer = new THREE.WebGLRenderer({ antialias: true });
-
-      matRenderer.setSize(materialsContainer.offsetWidth, materialsContainer.offsetHeight);
-      matRenderer.setClearColor(0x1e1b3c, 1);
-      materialsContainer.appendChild(matRenderer.domElement);
-
-      const matAmbient = new THREE.AmbientLight(0xffffff, 0.5);
-      matScene.add(matAmbient);
-
-      const matLight = new THREE.PointLight(0xffffff, 1, 100);
-      matLight.position.set(5, 5, 5);
-      matScene.add(matLight);
-
-      // Create 5 cubes with different materials
-      const materials = [
-        new THREE.MeshStandardMaterial({ color: 0xff6b6b, roughness: 1, metalness: 0 }),
-        new THREE.MeshStandardMaterial({ color: 0xb794f6, roughness: 0.2, metalness: 0.8 }),
-        new THREE.MeshPhysicalMaterial({ color: 0x95b8d1, transmission: 0.9, thickness: 0.5, roughness: 0 }),
-        new THREE.MeshStandardMaterial({ color: 0x00fff0, emissive: 0x00fff0, emissiveIntensity: 1 }),
-        new THREE.MeshStandardMaterial({ color: 0xe78fb3, roughness: 0.5, metalness: 0.3 })
-      ];
-
-      const matCubes = [];
-      const cubeSize = 1.5;
-      const spacing = 2.5;
-
-      for (let i = 0; i < 5; i++) {
-        const geo = new THREE.BoxGeometry(cubeSize, cubeSize, cubeSize);
-        const cube = new THREE.Mesh(geo, materials[i]);
-        cube.position.x = (i - 2) * spacing;
-        matScene.add(cube);
-        matCubes.push(cube);
+          scene.add(building);
+          buildings.push(building);
+        }
       }
 
-      matCamera.position.set(0, 2, 8);
-      matCamera.lookAt(0, 0, 0);
+      // Grid
+      if (!config.noGrid) {
+        const gridHelper = new THREE.GridHelper(
+          gridSize * (plotSize + spacing) * 1.2,
+          gridSize * 2,
+          config.gridColor1 || 0x00d4ff,
+          config.gridColor2 || 0x003366
+        );
+        gridHelper.material.opacity = 0.3;
+        gridHelper.material.transparent = true;
+        gridHelper.position.y = -0.05;
+        scene.add(gridHelper);
+      }
+
+      // Camera
+      camera.position.set(
+        config.camX || 15,
+        config.camY || 12,
+        config.camZ || 15
+      );
+      camera.lookAt(0, 0, 0);
 
       // Animation
-      function animateMaterials() {
-        requestAnimationFrame(animateMaterials);
-        matCubes.forEach((cube, i) => {
-          cube.rotation.y += 0.005;
-          cube.rotation.x += 0.003;
-          cube.position.y = Math.sin(Date.now() * 0.001 + i) * 0.3;
-        });
-        matRenderer.render(matScene, matCamera);
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 1;
+
+        // Pulse buildings
+        if (config.pulse) {
+          buildings.forEach((building, i) => {
+            if (time > building.userData.animationDelay) {
+              const pulse = Math.sin(time * 0.02 + i * 0.05) * 0.1;
+              building.position.y = (building.userData.baseHeight + pulse) / 2;
+            }
+          });
+        }
+
+        // Rotate camera
+        if (config.rotateCamera) {
+          const angle = time * 0.001;
+          const radius = 15;
+          camera.position.x = Math.cos(angle) * radius;
+          camera.position.z = Math.sin(angle) * radius;
+          camera.lookAt(0, 0, 0);
+        }
+
+        renderer.render(scene, camera);
       }
-      animateMaterials();
 
-      // Material controls
-      document.getElementById('materialType')?.addEventListener('change', (e) => {
-        const index = parseInt(e.target.value);
-        matCubes.forEach((cube, i) => {
-          cube.visible = (i === index);
-        });
-      });
+      animate();
 
-      document.getElementById('roughness')?.addEventListener('input', (e) => {
-        const value = parseFloat(e.target.value);
-        document.getElementById('roughnessValue').textContent = value.toFixed(1);
-        matCubes.forEach(cube => {
-          if (cube.material.roughness !== undefined) {
-            cube.material.roughness = value;
-          }
-        });
-      });
-
-      document.getElementById('metalness')?.addEventListener('input', (e) => {
-        const value = parseFloat(e.target.value);
-        document.getElementById('metalnessValue').textContent = value.toFixed(1);
-        matCubes.forEach(cube => {
-          if (cube.material.metalness !== undefined) {
-            cube.material.metalness = value;
-          }
-        });
-      });
+      return { scene, camera, renderer, buildings };
     }
 
-    // Hero animation
-    let heroTime = 0;
-    function animateHero() {
-      requestAnimationFrame(animateHero);
-      heroTime += 0.01;
-
-      heroGroup.rotation.y += 0.002;
-      heroGroup.rotation.x += 0.001;
-
-      heroCube.scale.set(
-        1 + Math.sin(heroTime * 2) * 0.1,
-        1 + Math.sin(heroTime * 2) * 0.1,
-        1 + Math.sin(heroTime * 2) * 0.1
-      );
-
-      heroTorus.rotation.y += 0.005;
-      heroTorus.rotation.z += 0.003;
-
-      heroPointLight1.position.x = Math.sin(heroTime * 0.5) * 10;
-      heroPointLight1.position.z = Math.cos(heroTime * 0.5) * 10;
-
-      heroRenderer.render(heroScene, heroCamera);
-    }
-    animateHero();
-
-    // Gradient Builder
-    function updateGradient() {
-      const color1 = document.getElementById('color1')?.value || '#ff6b6b';
-      const color2 = document.getElementById('color2')?.value || '#b794f6';
-      const color3 = document.getElementById('color3')?.value || '#95b8d1';
-      const pos1 = document.getElementById('pos1')?.value || '0';
-      const pos2 = document.getElementById('pos2')?.value || '50';
-      const pos3 = document.getElementById('pos3')?.value || '100';
-      const angle = document.getElementById('gradientAngle')?.value || '135';
-
-      const gradient = `linear-gradient(${angle}deg, ${color1} ${pos1}%, ${color2} ${pos2}%, ${color3} ${pos3}%)`;
-
-      const preview = document.getElementById('gradientPreview');
-      const code = document.getElementById('gradientCode');
-
-      if (preview) preview.style.background = gradient;
-      if (code) code.textContent = `background: ${gradient};`;
-    }
-
-    // Gradient controls
-    ['color1', 'color2', 'color3', 'pos1', 'pos2', 'pos3', 'gradientAngle'].forEach(id => {
-      const el = document.getElementById(id);
-      if (el) {
-        el.addEventListener('input', (e) => {
-          if (id.startsWith('pos')) {
-            document.getElementById(id + 'Value').textContent = e.target.value + '%';
-          } else if (id === 'gradientAngle') {
-            document.getElementById('angleValue').textContent = e.target.value + '°';
-          }
-          updateGradient();
-        });
-      }
+    // HERO - Full City
+    createCityScene(document.getElementById('hero-canvas'), {
+      gridSize: 16,
+      plotSize: 1.5,
+      spacing: 0.3,
+      density: 0.8,
+      pulse: true,
+      rotateCamera: true,
+      lightColor: 0xff6b6b,
+      camX: 20,
+      camY: 15,
+      camZ: 20
     });
 
-    updateGradient();
+    // FORM: Foundation
+    createCityScene(document.getElementById('form-trust'), {
+      gridSize: 3,
+      plotSize: 2,
+      density: 0.1,
+      heightFunc: () => 3,
+      colorFunc: () => 0xff6b6b,
+      emissive: true,
+      camX: 5,
+      camY: 4,
+      camZ: 5,
+      noGrid: true
+    });
 
-    function copyGradientCode() {
-      const code = document.getElementById('gradientCode')?.textContent;
-      if (code) {
-        navigator.clipboard.writeText(code);
-        alert('Gradient CSS copied to clipboard!');
-      }
-    }
+    // FORM: Cluster
+    createCityScene(document.getElementById('form-value'), {
+      gridSize: 5,
+      plotSize: 1.2,
+      density: 0.6,
+      heightFunc: (x, z) => 1 + Math.random() * 3,
+      colorFunc: (h) => h > 2 ? 0x00fff0 : 0xb794f6,
+      camX: 8,
+      camY: 6,
+      camZ: 8
+    });
 
-    function resetGradient() {
-      document.getElementById('color1').value = '#ff6b6b';
-      document.getElementById('color2').value = '#b794f6';
-      document.getElementById('color3').value = '#95b8d1';
-      document.getElementById('pos1').value = '0';
-      document.getElementById('pos2').value = '50';
-      document.getElementById('pos3').value = '100';
-      document.getElementById('gradientAngle').value = '135';
-      updateGradient();
-    }
+    // FORM: Skyline
+    createCityScene(document.getElementById('form-growth'), {
+      gridSize: 8,
+      plotSize: 1,
+      density: 0.3,
+      heightFunc: (x, z) => x * 0.5 + 0.5,
+      colorFunc: (h) => {
+        const ratio = h / 4;
+        return ratio > 0.7 ? 0x00ff00 : ratio > 0.4 ? 0xffff00 : 0xff6b6b;
+      },
+      camX: 10,
+      camY: 5,
+      camZ: 10
+    });
 
-    // Smooth scroll for navigation
+    // FORM: Grid
+    createCityScene(document.getElementById('form-liquidity'), {
+      gridSize: 8,
+      plotSize: 1,
+      density: 1,
+      heightFunc: () => 1.5 + Math.random() * 0.5,
+      colorFunc: () => 0x95b8d1,
+      spacing: 0.4,
+      camX: 12,
+      camY: 8,
+      camZ: 12
+    });
+
+    // FORM: District
+    createCityScene(document.getElementById('form-cycle'), {
+      gridSize: 10,
+      plotSize: 1,
+      density: 0.5,
+      heightFunc: (x, z, gridSize) => {
+        const centerX = gridSize / 2;
+        const centerZ = gridSize / 2;
+        const dist = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(z - centerZ, 2));
+        return dist < 3 ? 0.5 : 2 + Math.random();
+      },
+      colorFunc: (h) => h < 1 ? 0x6bff8a : 0xb794f6,
+      camX: 12,
+      camY: 10,
+      camZ: 12
+    });
+
+    // SCENE: Empty
+    createCityScene(document.getElementById('scene-empty'), {
+      gridSize: 10,
+      plotSize: 0.8,
+      density: 0.02,
+      heightFunc: () => 0.5,
+      colorFunc: () => 0x00fff0,
+      emissive: true,
+      camX: 6,
+      camY: 3,
+      camZ: 6
+    });
+
+    // SCENE: First Asset
+    createCityScene(document.getElementById('scene-first'), {
+      gridSize: 8,
+      plotSize: 2,
+      density: 0.08,
+      heightFunc: () => 4,
+      colorFunc: () => 0xff6b6b,
+      emissive: true,
+      camX: 8,
+      camY: 6,
+      camZ: 8
+    });
+
+    // SCENE: Growing
+    createCityScene(document.getElementById('scene-growing'), {
+      gridSize: 10,
+      plotSize: 1.2,
+      density: 0.4,
+      heightFunc: () => 1 + Math.random() * 3,
+      pulse: true,
+      camX: 12,
+      camY: 8,
+      camZ: 12
+    });
+
+    // SCENE: City
+    createCityScene(document.getElementById('scene-city'), {
+      gridSize: 18,
+      plotSize: 1.2,
+      spacing: 0.2,
+      density: 0.85,
+      pulse: true,
+      rotateCamera: true,
+      camX: 25,
+      camY: 18,
+      camZ: 25
+    });
+
+    // SCENE: Analytics
+    createCityScene(document.getElementById('scene-analytics'), {
+      gridSize: 12,
+      plotSize: 1.2,
+      density: 0.7,
+      colorFunc: (h) => {
+        if (h > 3) return 0x00ff00;
+        if (h > 1.5) return 0xffff00;
+        return 0xff0000;
+      },
+      pulse: true,
+      camX: 15,
+      camY: 12,
+      camZ: 15
+    });
+
+    // SCENE: Dark Mode
+    createCityScene(document.getElementById('scene-dark'), {
+      gridSize: 14,
+      plotSize: 1.2,
+      density: 0.75,
+      colorFunc: () => 0x00fff0,
+      emissive: true,
+      metalness: 0.8,
+      roughness: 0.2,
+      lightColor: 0x00fff0,
+      gridColor1: 0x00fff0,
+      gridColor2: 0x004466,
+      pulse: true,
+      rotateCamera: true,
+      camX: 18,
+      camY: 14,
+      camZ: 18
+    });
+
+    // SCENE: Celebration
+    createCityScene(document.getElementById('scene-celebration'), {
+      gridSize: 10,
+      plotSize: 1.5,
+      density: 0.6,
+      heightFunc: () => 2 + Math.random() * 3,
+      colorFunc: () => {
+        const colors = [0xff6b6b, 0xffb4a2, 0xb794f6, 0x00fff0];
+        return colors[Math.floor(Math.random() * colors.length)];
+      },
+      emissive: true,
+      pulse: true,
+      animDelay: 0.2,
+      camX: 12,
+      camY: 10,
+      camZ: 12
+    });
+
+    // Smooth scroll navigation
     document.querySelectorAll('.nav-link').forEach(link => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const target = document.querySelector(link.getAttribute('href'));
         if (target) {
           target.scrollIntoView({ behavior: 'smooth' });
-
           document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
           link.classList.add('active');
         }
       });
-    });
-
-    // Responsive handling
-    window.addEventListener('resize', () => {
-      if (heroRenderer && heroContainer) {
-        heroCamera.aspect = heroContainer.offsetWidth / heroContainer.offsetHeight;
-        heroCamera.updateProjectionMatrix();
-        heroRenderer.setSize(heroContainer.offsetWidth, heroContainer.offsetHeight);
-      }
     });
   </script>
 </body>
