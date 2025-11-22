@@ -1,32 +1,167 @@
-# ASSET_HAUS Design System — Финальное ТЗ v2.0
+# ASSET_HAUS Design System — Foundation OS v3.0
 
-## 🎯 КОНЦЕПЦИЯ
+## 🏛️ ФИЛОСОФИЯ: "BUILDING WEALTH"
 
-Интерактивная дизайн-система для платформы токенизации недвижимости ASSET_HAUS.
+> **Gravity UI** использует физику. **ASSET_HAUS** использует архитектуру.
 
-### Ключевые принципы:
+Это не просто дизайн-система — это **инфраструктурное решение** для визуализации цифровой недвижимости.
 
-1. **Абстрактная геометрия** - НЕ кубики, а уникальные искаженные формы
-2. **Город как метафора** - portfolio = city, asset = building
-3. **Динамическая рандомность** - каждая форма уникальна, но узнаваема по стилю
-4. **Фирменные градиенты** - розовый→фиолетовый→синий (Light), синий→циан (Dark)
-5. **Плавные анимации** - orbital camera, gentle pulsing
-6. **Реальные компоненты** - landing, карточки объектов, преимущества
+### Метафора: Материальность Цифровых Активов
+
+**Бетон** — Надёжность (Базовые активы, стабильные токены)
+**Стекло** — Прозрачность (Compliance, on-chain данные)
+**Сталь** — Структура (Smart contracts, архитектура)
+**Свет** — Ликвидность (Активные рынки, торговля)
+
+### Визуальный язык: "Инженерная Точность"
+
+Как **Gravity UI** выглядит как приборная панель космического корабля,
+**ASSET_HAUS** выглядит как **архитектурное бюро будущего** + **трейдинговый терминал**.
 
 ---
 
-## 🎨 ЦВЕТОВАЯ ПАЛИТРА
+## 🎯 CORE PRINCIPLES
 
-### Brand Colors:
+1. **3D Volumetric Forms** - Простые архитектурные формы с прямыми углами (как здания)
+2. **City as Metaphor** - Portfolio = City, Asset = Building, Height = Value
+3. **Deterministic Randomness** - Уникальность через seed, консистентность через стиль
+4. **Dark Mode First** - Профессиональный трейдинг-терминал эстетика
+5. **Material-Driven Colors** - Бетон (#95b8d1), Стекло (cyan), Сталь (purple)
+6. **Data-Dense UI** - Таблицы, графики, метрики (как у Gravity Charts)
+
+---
+
+## 🏗️ SYSTEM ARCHITECTURE (Modular Approach)
+
+Вдохновлено архитектурой **@gravity-ui**:
+
+```
+@assethaus/foundation     → Core UI (Buttons, Inputs, Cards)
+@assethaus/charts         → Financial Charts (Price, APY, Distribution)
+@assethaus/3d             → Three.js Components (Cities, Forms, Scenes)
+@assethaus/icons          → Linear Icon Set (Properties, Crypto, Finance)
+@assethaus/entities       → RWA-Specific (AssetCard, PropertyViewer, TokenBadge)
+@assethaus/themes         → Dark/Light + Custom Themes
+```
+
+### Почему модульность?
+
+- ✅ **Для девелоперов**: `npm install @assethaus/charts` — и готово
+- ✅ **Для дизайнеров**: Независимые Figma-библиотеки
+- ✅ **Для бизнеса**: White-label решения (клиент берёт только нужные модули)
+
+---
+
+## 🎨 FOUNDATIONS: Design Tokens
+
+### Semantic Color System (не просто цвета, а смыслы)
+
+```javascript
+// ❌ Старый подход
+--color-primary: #ff6b6b;
+--color-purple: #b794f6;
+
+// ✅ Новый подход (Gravity-style)
+--action-primary: #ff6b6b;           // CTA, main actions
+--action-secondary: #b794f6;         // Secondary actions
+
+--status-success: #6bff8a;           // Asset growth, positive ROI
+--status-warning: #ffb4a2;           // Low liquidity, risks
+--status-danger: #ff6b6b;            // Losses, critical alerts
+--status-info: #00fff0;              // Neutral info, tooltips
+
+--data-positive: #6bff8a;            // +15% APY, gains
+--data-negative: #ff6b6b;            // -5%, losses
+--data-neutral: #95b8d1;             // Stable, 0% change
+
+--material-concrete: #95b8d1;        // Base assets (real estate)
+--material-glass: rgba(0,255,240,0.1); // Transparent overlays
+--material-steel: #8b7ab8;           // Structural elements
+--material-neon: #00fff0;            // Highlights, active states
+```
+
+### Typography System (Data-First)
+
+**Принцип**: Читаемость финансовых данных превыше всего.
+
+```javascript
+// Display (Hero headlines)
+--font-display: 'Work Sans', sans-serif;
+--size-display-xl: 88px;   // Hero sections
+--size-display-l: 64px;    // Page headers
+--size-display-m: 48px;    // Section titles
+
+// Body (Content)
+--font-body: 'Inter', -apple-system, sans-serif;
+--size-body-l: 18px;       // Long-form content
+--size-body-m: 16px;       // Default UI text
+--size-body-s: 14px;       // Secondary text
+--size-body-xs: 12px;      // Captions, labels
+
+// Data (Numbers, Tables, Code)
+--font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+--size-data-l: 32px;       // Large metrics ($4.2M)
+--size-data-m: 24px;       // Card stats (15% APY)
+--size-data-s: 16px;       // Table cells
+--size-data-xs: 12px;      // Tiny metrics
+
+// Использование
+.metric-value {
+  font-family: var(--font-mono);
+  font-size: var(--size-data-l);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  // Моноширинный шрифт = идеальное выравнивание в таблицах
+}
+```
+
+### Component Sizing (s/m/l/xl)
+
+Как у **Gravity UI** — все компоненты имеют 4 размера:
+
+```javascript
+// Buttons
+--btn-height-s: 32px;
+--btn-height-m: 40px;   // Default
+--btn-height-l: 48px;
+--btn-height-xl: 56px;  // Touch-friendly для мобильных
+
+// Inputs
+--input-height-s: 32px;
+--input-height-m: 40px;
+--input-height-l: 48px;
+--input-height-xl: 56px;
+
+// Cards
+--card-padding-s: 16px;
+--card-padding-m: 24px;  // Default
+--card-padding-l: 32px;
+--card-padding-xl: 48px;
+
+// Spacing Scale (8px base)
+--space-xs: 4px;
+--space-s: 8px;
+--space-m: 16px;
+--space-l: 24px;
+--space-xl: 32px;
+--space-2xl: 48px;
+--space-3xl: 64px;
+```
+
+---
+
+## 🎨 ЦВЕТОВАЯ ПАЛИТРА (Legacy Support)
+
+### Brand Colors (для обратной совместимости):
 ```css
---color-primary: #ff6b6b;      /* Primary Coral */
---color-secondary: #ffb4a2;    /* Secondary Peach */
---color-accent-pink: #e78fb3;  /* Accent Pink */
---color-purple: #b794f6;       /* Deep Purple */
---color-sky-blue: #95b8d1;     /* Sky Blue */
---color-deep-blue: #4a5899;    /* Deep Blue */
---color-lavender: #8b7ab8;     /* Lavender */
---color-cyan: #00fff0;         /* Neon Cyan */
+--color-primary: #ff6b6b;      /* → --action-primary */
+--color-secondary: #ffb4a2;    /* → --action-secondary */
+--color-accent-pink: #e78fb3;
+--color-purple: #b794f6;       /* → --material-steel */
+--color-sky-blue: #95b8d1;     /* → --material-concrete */
+--color-deep-blue: #4a5899;
+--color-lavender: #8b7ab8;
+--color-cyan: #00fff0;         /* → --material-neon */
 ```
 
 ### Gradients:
@@ -83,45 +218,194 @@ linear-gradient(90deg, #ffb4a2 0%, #ff6b6b 100%)
 
 ---
 
-## 📐 СТРУКТУРА ДИЗАЙН-СИСТЕМЫ
+## 📐 МОДУЛЬНАЯ АРХИТЕКТУРА БИБЛИОТЕК
+
+### @assethaus/foundation — Core UI Components
+
+**Назначение**: Базовые интерфейсные элементы для любого RWA приложения.
+
+```
+npm install @assethaus/foundation
+```
+
+**Компоненты**:
+- Button (size: s/m/l/xl, variant: primary/secondary/ghost)
+- Input (text, number, search)
+- Select & Dropdown
+- Checkbox, Radio, Switch
+- Card (с поддержкой 3D visual header)
+- Table (data-dense, monospace numbers)
+- Modal & Drawer
+- Toast & Notifications
+- Tabs & Navigation
+- Badge & Tag
+
+**Стиль**: Минималистичный, "инженерная точность", тёмная тема по умолчанию.
+
+---
+
+### @assethaus/charts — Financial Visualizations
+
+**Назначение**: Графики для визуализации финансовых данных (как @gravity-ui/charts).
+
+```
+npm install @assethaus/charts
+```
+
+**Компоненты**:
+- **Line Chart** — Рост цены токена во времени
+- **Bar Chart** — Выплаты дивидендов по месяцам
+- **Donut Chart** — Структура портфеля (asset allocation)
+- **Area Chart** — Накопленная доходность (APY over time)
+- **Candlestick** — Торговая активность (для вторичного рынка)
+- **Heatmap** — Корреляция активов
+
+**Фичи**:
+- Real-time updates
+- Responsive (mobile → desktop)
+- Accessibility (ARIA labels)
+- Export to PNG/CSV
+
+---
+
+### @assethaus/3d — Three.js Components
+
+**Назначение**: 3D визуализации для hero-секций, карточек, дашбордов.
+
+```
+npm install @assethaus/3d
+```
+
+**Компоненты**:
+- **CityScene** — 3D город (portfolio visualization)
+- **AbstractForm** — Генеративные 3D формы (5 типов)
+- **PropertyViewer** — Интерактивный 3D превью объекта
+- **AnimatedBackground** — Абстрактный 3D фон для hero-секций
+
+**Оптимизации**:
+- Lazy loading (Intersection Observer)
+- Max 8 WebGL contexts
+- Auto-dispose для offscreen сцен
+- LOD (Level of Detail) для мобильных
+
+---
+
+### @assethaus/icons — Linear Icon Set
+
+**Назначение**: Набор иконок в едином линейном стиле (thin stroke).
+
+```
+npm install @assethaus/icons
+```
+
+**Категории**:
+- **Property** — house, apartment, commercial, land
+- **Finance** — wallet, chart-up, percent, dollar
+- **Crypto** — ethereum, polygon, bitcoin, token
+- **Actions** — buy, sell, transfer, stake
+- **Status** — success, warning, pending, error
+
+**Форматы**: SVG, React components, Vue components.
+
+---
+
+### @assethaus/entities — RWA-Specific Components
+
+**Назначение**: Компоненты для работы с недвижимостью и токенами.
+
+```
+npm install @assethaus/entities
+```
+
+**Компоненты**:
+- **AssetCard** — Карточка объекта (фото + метрики + 3D превью)
+- **PropertyDetails** — Детальная страница объекта
+- **TokenBadge** — Бейдж статуса токена (Funded, Trading, Sold Out)
+- **APYDisplay** — Красивое отображение доходности
+- **OwnershipBar** — Прогресс-бар владения (You own 15%)
+- **TransactionHistory** — История операций с токенами
+
+---
+
+### @assethaus/themes — Theme System
+
+**Назначение**: Система тем с поддержкой dark/light mode + custom branding.
+
+```
+npm install @assethaus/themes
+```
+
+**Темы**:
+- **Dark Professional** (default) — Трейдинг-терминал стиль
+- **Light Clean** — Для презентаций и маркетинга
+- **Cyberpunk** — Neon cyan/purple (для событий)
+- **Custom** — White-label (клиент задаёт свою палитру)
+
+**Переключение**:
+```javascript
+import { ThemeProvider } from '@assethaus/themes';
+
+<ThemeProvider theme="dark-professional">
+  <App />
+</ThemeProvider>
+```
+
+---
+
+## 📐 СТРУКТУРА ПРЕЗЕНТАЦИОННОЙ СТРАНИЦЫ
 
 ### Левое меню (280px Fixed Sidebar):
 
 ```
 ASSET_HAUS
-Design System v2.0
+Foundation OS v3.0
 
 ─── OVERVIEW ───
 - Introduction
-- Philosophy
-- How to Use
+- Philosophy: "Building Wealth"
+- Architecture
+- Installation
 
 ─── FOUNDATIONS ───
-- Colors & Gradients
+- Design Tokens
+- Color System
 - Typography
+- Spacing & Sizing
 - 3D Materials
-- Animation Principles
 
-─── ARTIFACTS ───
-- Abstract Forms (5)
-- Composed Scenes (7)
+─── LIBRARIES ───
+- @assethaus/foundation
+- @assethaus/charts
+- @assethaus/3d
+- @assethaus/icons
+- @assethaus/entities
+- @assethaus/themes
 
 ─── COMPONENTS ───
-- Landing Sections
-- Property Cards
-- Feature Blocks
-- Benefits Grid
-- Pricing Tables
-- CTA Sections
+Interactive Demos:
+- Buttons (all sizes/variants)
+- Inputs & Forms
+- Cards & Tables
+- Charts (live preview)
+- 3D Scenes (toggle camera)
 
-─── CODE ───
-- Three.js Examples
-- Form Generators
-- City Builder
+─── REAL EXAMPLES ───
+- Landing Hero
+- Asset Cards Grid
+- Portfolio Dashboard
+- Property Details Page
+
+─── FOR DEVELOPERS ───
+- NPM Installation
+- React Examples
+- API Reference
+- Performance Guide
 
 ─── RESOURCES ───
-- Downloads
-- Figma Files
+- Figma Library
+- 3D Models (GLB)
+- Video Loops
+- Brand Guidelines PDF
 ```
 
 ---
@@ -544,27 +828,265 @@ ASSET_HAUS_Design_System_v2.zip (487 MB)
 
 ---
 
+## 🎨 ГЕНЕРАТИВНАЯ ГРАФИКА ДЛЯ ОБЛОЖЕК
+
+**Принцип**: Как **Gravity UI** использует процедурную генерацию для обложек, мы создаём уникальные визуалы для каждого объекта недвижимости.
+
+### Алгоритм генерации Asset Cover:
+
+```javascript
+function generateAssetCover(asset) {
+  // 1. Базовое изображение объекта
+  const baseImage = asset.photo;
+
+  // 2. Фирменный градиент-оверлей (на основе перформанса)
+  const performance = asset.apy;
+  const gradient = performance > 10
+    ? 'linear-gradient(135deg, rgba(107,255,138,0.3), rgba(0,255,240,0.3))' // Green (успех)
+    : 'linear-gradient(135deg, rgba(255,107,107,0.3), rgba(231,143,179,0.3))'; // Red (риск)
+
+  // 3. 3D элемент (уникальная форма на основе seed = property ID)
+  const form3D = generateAbstractForm({
+    seed: asset.id,
+    type: 'polygon',
+    color: getColorByAPY(asset.apy)
+  });
+
+  // 4. Типографика (крупная, на переднем плане)
+  const typography = `
+    <h2 class="asset-title">${asset.name}</h2>
+    <div class="asset-apy">${asset.apy}% APY</div>
+  `;
+
+  // Итоговый композит:
+  // [Photo] → [Gradient Overlay] → [3D Form (positioned top-right)] → [Typography]
+
+  return compositeAssetCover(baseImage, gradient, form3D, typography);
+}
+```
+
+### Примеры использования:
+
+**1. Social Media Posts**
+- Автоматическая генерация обложек для Instagram/Twitter
+- Каждый объект = уникальный визуал
+- Консистентный бренд (градиенты + формы)
+
+**2. Email Campaigns**
+- Превью объектов в рассылках
+- Динамическая генерация на сервере
+
+**3. Маркетплейс Thumbnails**
+- Каталог объектов с уникальными обложками
+- Hover = 3D форма вращается
+
+### Технические детали:
+
+```javascript
+// Canvas API для серверной генерации
+import { Canvas } from 'canvas';
+
+function renderAssetCoverServer(asset, width = 1200, height = 630) {
+  const canvas = new Canvas(width, height);
+  const ctx = canvas.getContext('2d');
+
+  // 1. Draw base image
+  ctx.drawImage(loadImage(asset.photo), 0, 0, width, height);
+
+  // 2. Apply gradient overlay
+  const gradient = ctx.createLinearGradient(0, 0, width, height);
+  gradient.addColorStop(0, `rgba(${getPerformanceColor(asset.apy)}, 0.5)`);
+  gradient.addColorStop(1, 'rgba(74,88,153,0.7)');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, width, height);
+
+  // 3. Render 3D form as static image (pre-rendered GLB → PNG)
+  const form3D = loadFormImage(asset.id);
+  ctx.drawImage(form3D, width - 400, 50, 350, 350);
+
+  // 4. Draw typography
+  ctx.font = 'bold 64px Work Sans';
+  ctx.fillStyle = '#ffffff';
+  ctx.fillText(asset.name, 50, height - 150);
+
+  ctx.font = '48px JetBrains Mono';
+  ctx.fillStyle = '#00fff0';
+  ctx.fillText(`${asset.apy}% APY`, 50, height - 80);
+
+  return canvas.toBuffer('image/png');
+}
+```
+
+---
+
+## 🚀 SHOWCASE PAGE: Презентация системы
+
+**Вдохновение**: https://gravity-ui.com
+
+### Структура главной страницы (как продукт):
+
+#### 1. Hero Section
+```html
+<section class="hero">
+  <div class="hero-3d-bg">
+    <!-- Rotating 3D city (interactive!) -->
+  </div>
+  <div class="hero-content">
+    <h1>Foundation OS</h1>
+    <p>Инфраструктурное решение для визуализации цифровой недвижимости</p>
+    <div class="hero-cta">
+      <button class="btn-primary">Get Started</button>
+      <button class="btn-ghost">View on GitHub</button>
+    </div>
+  </div>
+</section>
+```
+
+**3D фон**: Full City scene с orbital camera. При скролле — parallax эффект.
+
+#### 2. Philosophy Section
+```html
+<section class="philosophy">
+  <h2>Gravity UI использует физику. ASSET_HAUS использует архитектуру.</h2>
+  <div class="materials-grid">
+    <div class="material-card">
+      <div class="material-visual"><!-- 3D бетон --></div>
+      <h3>Бетон</h3>
+      <p>Надёжность</p>
+    </div>
+    <!-- Steel, Glass, Light -->
+  </div>
+</section>
+```
+
+#### 3. Interactive Component Demo
+```html
+<section class="demo">
+  <h2>Живые компоненты</h2>
+  <div class="demo-controls">
+    <label>Размер:</label>
+    <button data-size="s">S</button>
+    <button data-size="m" class="active">M</button>
+    <button data-size="l">L</button>
+    <button data-size="xl">XL</button>
+  </div>
+  <div class="demo-preview">
+    <!-- Реальная кнопка, которую можно изменить в реальном времени -->
+    <button class="btn-primary" data-current-size="m">
+      Primary Action
+    </button>
+  </div>
+  <div class="demo-code">
+    <pre><code class="language-jsx">
+&lt;Button size="m" variant="primary"&gt;
+  Primary Action
+&lt;/Button&gt;
+    </code></pre>
+  </div>
+</section>
+```
+
+**Фишка**: Переключаешь размер → кнопка меняется мгновенно + обновляется код.
+
+#### 4. Theme Switcher
+```html
+<div class="theme-toggle">
+  <button class="theme-btn" data-theme="dark">🌙 Dark</button>
+  <button class="theme-btn active" data-theme="light">☀️ Light</button>
+</div>
+
+<script>
+// Вся страница меняет тему мгновенно
+document.querySelectorAll('.theme-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const theme = btn.dataset.theme;
+    document.documentElement.setAttribute('data-theme', theme);
+  });
+});
+</script>
+```
+
+**Как у Gravity**: Весь сайт мгновенно переключается между темной и светлой темой.
+
+#### 5. Developers First
+```html
+<section class="dev-section">
+  <h2>Для разработчиков</h2>
+  <div class="install-command">
+    <code>npm install @assethaus/foundation</code>
+    <button class="copy-btn">Copy</button>
+  </div>
+  <div class="quick-start">
+    <pre><code class="language-jsx">
+import { Button, Card } from '@assethaus/foundation';
+import { CityScene } from '@assethaus/3d';
+
+function App() {
+  return (
+    &lt;Card&gt;
+      &lt;CityScene assets={portfolio} /&gt;
+      &lt;Button variant="primary"&gt;View Portfolio&lt;/Button&gt;
+    &lt;/Card&gt;
+  );
+}
+    </code></pre>
+  </div>
+</section>
+```
+
+#### 6. Resources / Downloads
+```html
+<section class="resources">
+  <h2>Ресурсы</h2>
+  <div class="resource-cards">
+    <a href="/figma" class="resource-card">
+      <h3>Figma Library</h3>
+      <p>Все компоненты для дизайнеров</p>
+      <span class="download-icon">↓</span>
+    </a>
+    <a href="/3d-models.zip" class="resource-card">
+      <h3>3D Models (GLB)</h3>
+      <p>487 MB</p>
+    </a>
+    <a href="/brand-guidelines.pdf" class="resource-card">
+      <h3>Brand Guidelines</h3>
+      <p>PDF, 24 страницы</p>
+    </a>
+  </div>
+</section>
+```
+
+---
+
 ## 📊 МЕТРИКИ УСПЕХА
 
-- **Узнаваемость**: 90%+ узнают бренд по цветам
-- **Уникальность**: Каждая генерация форм отличается
-- **Производительность**: 60 FPS на средних устройствах
-- **Адаптивность**: Работает от mobile до 4K
-- **Консистентность**: Единый стиль при вариативности форм
+- **Узнаваемость**: 90%+ узнают бренд по архитектурным формам и материалам
+- **Модульность**: Клиенты используют только нужные пакеты (@assethaus/charts, @assethaus/3d)
+- **Производительность**: 60 FPS на средних устройствах, max 8 WebGL contexts
+- **Адаптивность**: Работает от mobile (320px) до 4K (3840px)
+- **Developer Experience**: `npm install` → ready to use за 5 минут
 
 ---
 
-## 🎨 ФИЛОСОФИЯ ДИЗАЙНА
+## 🎨 ФИНАЛЬНАЯ ФИЛОСОФИЯ
 
-> "Портфель - это город. Каждый актив - здание. Высота = ценность. Цвет = перформанс. Форма = уникальность. Вместе они создают визуальную карту богатства."
+> **"Портфель — это город. Каждый актив — здание. Высота = ценность. Цвет = перформанс. Материал = тип актива."**
+
+### Отличия от конкурентов:
+
+**Atlassian**: Мягкий, "человечный" дизайн (иллюстрации людей)
+**Gravity UI**: Космос, физика, гравитация (абстрактные силы)
+**ASSET_HAUS**: Архитектура, материалы, строительство (цифровое богатство)
 
 Мы не показываем буквальные здания.
-Мы показываем абстрактные города, где геометрия рассказывает историю.
-Каждая форма уникальна, но все узнаваемы.
-Это ASSET_HAUS.
+Мы показываем **абстрактные города**, где геометрия рассказывает историю инвестиций.
+Каждая форма уникальна (через seed), но все узнаваемы (через стиль).
+
+**Это не просто дизайн-система. Это инфраструктурное решение.**
 
 ---
 
-**Версия**: 2.0
+**Версия**: 3.0 "Foundation OS"
 **Дата**: Ноябрь 2024
 **Статус**: Production Ready
+**Вдохновлено**: Gravity UI, но для RWA
