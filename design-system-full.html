@@ -398,12 +398,6 @@
       line-height: 1.6;
     }
 
-    /* SVG Abstract Shapes */
-    .abstract-svg {
-      width: 100%;
-      height: 100%;
-    }
-
     /* Buttons */
     .btn {
       display: inline-block;
@@ -552,7 +546,7 @@
         <div class="canvas-container" id="hero-canvas"></div>
         <div class="canvas-overlay">
           <h1>ASSET_HAUS<br>Design System</h1>
-          <p>Flat Geometry · Sharp Angles · Bold Identity</p>
+          <p>3D Technology · Sharp Geometry · Animated Forms</p>
         </div>
       </section>
 
@@ -561,8 +555,9 @@
         <div class="section-header">
           <h2 class="section-title">Introduction</h2>
           <p class="section-description">
-            Welcome to ASSET_HAUS Design System v2.0 — flat, geometric, angular.
-            Every form is sharp and faceted, creating a bold architectural language.
+            Welcome to ASSET_HAUS Design System v2.0 — powered by Three.js 3D technology.
+            Flat geometric planes in 3D space. Sharp angles. Animated cameras. Dynamic lighting.
+            Every form is unique, yet instantly recognizable.
           </p>
         </div>
 
@@ -587,24 +582,24 @@
 
         <div class="grid-3">
           <div class="card">
-            <div class="card-title">🔺 Flat & Angular</div>
+            <div class="card-title">🎬 3D Technology</div>
             <div class="card-description">
-              Sharp angles, flat planes, geometric precision. No organic curves,
-              only crisp edges and faceted surfaces.
+              Three.js WebGL rendering. Flat ShapeGeometry planes in 3D space.
+              Animated rotation, dynamic camera, real-time lighting. Our signature.
             </div>
           </div>
           <div class="card">
-            <div class="card-title">✨ Brand Recognition</div>
+            <div class="card-title">⚡ Sharp & Angular</div>
             <div class="card-description">
-              Consistent colors and geometric style create instant brand recognition
-              despite varying compositions.
+              No Bezier curves, only lineTo() sharp angles. No ExtrudeGeometry,
+              only flat planes. Geometric precision, faceted architecture.
             </div>
           </div>
           <div class="card">
             <div class="card-title">💎 Portfolio as City</div>
             <div class="card-description">
-              Real estate portfolios visualized as abstract cities. Height = value,
-              color = performance.
+              Real estate portfolios visualized as abstract 3D cities. Height = value,
+              color = performance, animation = engagement.
             </div>
           </div>
         </div>
@@ -615,8 +610,9 @@
         <div class="section-header">
           <h2 class="section-title">Design Philosophy</h2>
           <p class="section-description">
-            Flat geometric shapes. Sharp angles. No volume, all planes.
-            Intersecting surfaces create depth through layers, not extrusion.
+            3D technology showcasing flat geometric planes. ShapeGeometry in 3D space—sharp angles,
+            no extrusion, no curves. Animated camera creates depth. Lighting reveals facets.
+            This is our tech signature.
           </p>
         </div>
 
@@ -624,19 +620,19 @@
           <div class="card">
             <div class="card-title">Rejected ❌</div>
             <div class="card-description">
-              <strong>3D volumes</strong><br>
-              Extruded shapes<br>
-              Organic curves<br>
-              Soft bevels
+              <strong>ExtrudeGeometry volumes</strong><br>
+              Bezier curves<br>
+              Organic shapes<br>
+              Soft bevels & rounded edges
             </div>
           </div>
           <div class="card">
             <div class="card-title">Approved ✅</div>
             <div class="card-description">
-              <strong>Flat planes</strong><br>
-              Angular polygons<br>
-              Sharp facets<br>
-              Geometric precision
+              <strong>ShapeGeometry planes in 3D</strong><br>
+              lineTo() sharp angles<br>
+              MeshStandardMaterial + lighting<br>
+              Animated rotation & camera
             </div>
           </div>
         </div>
@@ -970,39 +966,56 @@
           </p>
         </div>
 
-        <h3 class="section-subtitle">Flat Angular Shape</h3>
-        <div class="code-block">// Create flat angular polygon
+        <h3 class="section-subtitle">Flat Angular Shape with Three.js</h3>
+        <div class="code-block">// Create flat angular polygon with sharp edges
 function createFlatShape(vertices, color) {
   const shape = new THREE.Shape();
 
   for (let i = 0; i < vertices; i++) {
     const angle = (Math.PI * 2 / vertices) * i;
-    const radius = 2 + Math.random() * 0.5;
+    const radius = 1.5 + Math.random() * 0.8;
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
 
     if (i === 0) {
       shape.moveTo(x, y);
     } else {
-      shape.lineTo(x, y); // Sharp lines, no curves
+      shape.lineTo(x, y); // Sharp lines, NO curves!
     }
   }
   shape.closePath();
 
+  // Use ShapeGeometry for flat 2D shape in 3D space
   const geometry = new THREE.ShapeGeometry(shape);
-  const material = new THREE.MeshBasicMaterial({
+
+  // MeshStandardMaterial with emissive glow
+  const material = new THREE.MeshStandardMaterial({
     color: color,
-    side: THREE.DoubleSide
+    metalness: 0.5,
+    roughness: 0.3,
+    side: THREE.DoubleSide,
+    emissive: color,
+    emissiveIntensity: 0.2
   });
 
-  return new THREE.Mesh(geometry, material);
+  const mesh = new THREE.Mesh(geometry, material);
+
+  // Animate rotation
+  function animate() {
+    requestAnimationFrame(animate);
+    mesh.rotation.y += 0.01;
+    mesh.rotation.x += 0.005;
+  }
+  animate();
+
+  return mesh;
 }</div>
       </section>
 
       <!-- Footer -->
       <footer>
         <p>© 2025 ASSET_HAUS — Design System v2.0</p>
-        <p style="margin-top: 8px; opacity: 0.5;">Flat Geometry · Sharp Angles · Bold Identity</p>
+        <p style="margin-top: 8px; opacity: 0.5;">Powered by Three.js · 3D Technology · WebGL Rendering</p>
       </footer>
     </main>
   </div>
@@ -1130,59 +1143,267 @@ function createFlatShape(vertices, color) {
       animate();
     }
 
-    // Create SVG flat geometric shapes (to avoid WebGL contexts)
-    function createSVGShape(container, seed, type = 'polygon') {
-      const colors = ['#ff6b6b', '#ffb4a2', '#b794f6', '#00fff0', '#95b8d1'];
-      const color = colors[Math.floor(seededRandom(seed) * colors.length)];
+    // Create 3D abstract forms with flat sharp geometries
+    function createAbstractForm(container, seed, type = 'polygon') {
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 100);
 
-      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-      svg.setAttribute('viewBox', '0 0 200 200');
-      svg.classList.add('abstract-svg');
+      if (!globalRenderer) {
+        globalRenderer = new THREE.WebGLRenderer({ antialias: true });
+      }
+
+      // Reuse canvas or create new one
+      let canvas = container.querySelector('canvas');
+      if (!canvas) {
+        canvas = globalRenderer.domElement.cloneNode();
+        const tempRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
+        tempRenderer.setSize(container.offsetWidth, container.offsetHeight);
+        tempRenderer.setClearColor(0x000000, 1);
+        container.appendChild(canvas);
+
+        // Store renderer for this container
+        container._renderer = tempRenderer;
+      }
+
+      const renderer = container._renderer;
+
+      // Lighting
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
+      scene.add(ambientLight);
+
+      const pointLight1 = new THREE.PointLight(0xff6b6b, 1.5, 50);
+      pointLight1.position.set(5, 5, 5);
+      scene.add(pointLight1);
+
+      const pointLight2 = new THREE.PointLight(0x00fff0, 1, 50);
+      pointLight2.position.set(-5, -5, 3);
+      scene.add(pointLight2);
+
+      const colorOptions = [0xff6b6b, 0xffb4a2, 0xb794f6, 0x00fff0, 0x95b8d1];
+      const color = colorOptions[Math.floor(seededRandom(seed) * colorOptions.length)];
+
+      const meshes = [];
 
       if (type === 'polygon') {
+        // Single flat angular polygon
         const vertices = 3 + Math.floor(seededRandom(seed + 1) * 5);
-        let points = '';
+        const shape = new THREE.Shape();
 
         for (let i = 0; i < vertices; i++) {
-          const angle = (Math.PI * 2 / vertices) * i - Math.PI / 2;
-          const radius = 60 + seededRandom(seed + i + 2) * 30;
-          const x = 100 + Math.cos(angle) * radius;
-          const y = 100 + Math.sin(angle) * radius;
-          points += `${x},${y} `;
+          const angle = (Math.PI * 2 / vertices) * i;
+          const radius = 1.5 + seededRandom(seed + i + 2) * 0.8;
+          const x = Math.cos(angle) * radius;
+          const y = Math.sin(angle) * radius;
+
+          if (i === 0) {
+            shape.moveTo(x, y);
+          } else {
+            shape.lineTo(x, y); // Sharp angles, no curves!
+          }
+        }
+        shape.closePath();
+
+        const geometry = new THREE.ShapeGeometry(shape);
+        const material = new THREE.MeshStandardMaterial({
+          color: color,
+          metalness: 0.5,
+          roughness: 0.3,
+          side: THREE.DoubleSide,
+          emissive: color,
+          emissiveIntensity: 0.2
+        });
+
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+        meshes.push(mesh);
+
+      } else if (type === 'cluster') {
+        // Multiple intersecting planes
+        const count = 3 + Math.floor(seededRandom(seed) * 3);
+
+        for (let i = 0; i < count; i++) {
+          const vertices = 3 + Math.floor(seededRandom(seed + i * 10) * 4);
+          const shape = new THREE.Shape();
+
+          for (let j = 0; j < vertices; j++) {
+            const angle = (Math.PI * 2 / vertices) * j;
+            const radius = 0.8 + seededRandom(seed + i * 10 + j) * 0.5;
+            const x = Math.cos(angle) * radius;
+            const y = Math.sin(angle) * radius;
+
+            if (j === 0) {
+              shape.moveTo(x, y);
+            } else {
+              shape.lineTo(x, y);
+            }
+          }
+          shape.closePath();
+
+          const geometry = new THREE.ShapeGeometry(shape);
+          const meshColor = colorOptions[Math.floor(seededRandom(seed + i * 5) * colorOptions.length)];
+          const material = new THREE.MeshStandardMaterial({
+            color: meshColor,
+            metalness: 0.6,
+            roughness: 0.2,
+            side: THREE.DoubleSide,
+            emissive: meshColor,
+            emissiveIntensity: 0.3
+          });
+
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.position.set(
+            (seededRandom(seed + i * 7) - 0.5) * 2,
+            (seededRandom(seed + i * 8) - 0.5) * 2,
+            (seededRandom(seed + i * 9) - 0.5) * 0.5
+          );
+          mesh.rotation.z = seededRandom(seed + i * 11) * Math.PI * 2;
+
+          scene.add(mesh);
+          meshes.push(mesh);
         }
 
-        const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-        polygon.setAttribute('points', points);
-        polygon.setAttribute('fill', color);
-        polygon.setAttribute('fill-opacity', '0.8');
-        polygon.setAttribute('stroke', color);
-        polygon.setAttribute('stroke-width', '2');
+      } else if (type === 'network') {
+        // Angular connected nodes
+        const nodeCount = 4 + Math.floor(seededRandom(seed) * 4);
+        const nodes = [];
 
-        svg.appendChild(polygon);
-      } else if (type === 'triangles') {
-        for (let i = 0; i < 3; i++) {
-          const cx = 50 + seededRandom(seed + i) * 100;
-          const cy = 50 + seededRandom(seed + i + 3) * 100;
-          const size = 20 + seededRandom(seed + i + 6) * 30;
+        for (let i = 0; i < nodeCount; i++) {
+          const vertices = 3;
+          const shape = new THREE.Shape();
+          const size = 0.3 + seededRandom(seed + i * 3) * 0.2;
 
-          const points = `
-            ${cx},${cy - size}
-            ${cx - size},${cy + size}
-            ${cx + size},${cy + size}
-          `;
+          for (let j = 0; j < vertices; j++) {
+            const angle = (Math.PI * 2 / vertices) * j;
+            const x = Math.cos(angle) * size;
+            const y = Math.sin(angle) * size;
 
-          const triangle = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
-          triangle.setAttribute('points', points);
-          triangle.setAttribute('fill', colors[i % colors.length]);
-          triangle.setAttribute('fill-opacity', '0.7');
-          triangle.setAttribute('stroke', colors[i % colors.length]);
-          triangle.setAttribute('stroke-width', '2');
+            if (j === 0) {
+              shape.moveTo(x, y);
+            } else {
+              shape.lineTo(x, y);
+            }
+          }
+          shape.closePath();
 
-          svg.appendChild(triangle);
+          const geometry = new THREE.ShapeGeometry(shape);
+          const material = new THREE.MeshStandardMaterial({
+            color: color,
+            metalness: 0.7,
+            roughness: 0.2,
+            side: THREE.DoubleSide,
+            emissive: color,
+            emissiveIntensity: 0.4
+          });
+
+          const mesh = new THREE.Mesh(geometry, material);
+          const angle = (Math.PI * 2 / nodeCount) * i;
+          const radius = 1.5;
+          mesh.position.set(Math.cos(angle) * radius, Math.sin(angle) * radius, 0);
+
+          scene.add(mesh);
+          meshes.push(mesh);
+          nodes.push(mesh.position);
+        }
+
+        // Connect with lines
+        const lineMaterial = new THREE.LineBasicMaterial({ color: color, opacity: 0.4, transparent: true });
+        for (let i = 0; i < nodes.length; i++) {
+          for (let j = i + 1; j < nodes.length; j++) {
+            const points = [nodes[i], nodes[j]];
+            const geometry = new THREE.BufferGeometry().setFromPoints(points);
+            const line = new THREE.Line(geometry, lineMaterial);
+            scene.add(line);
+          }
+        }
+
+      } else if (type === 'skyline') {
+        // Vertical faceted forms
+        const count = 5 + Math.floor(seededRandom(seed) * 5);
+
+        for (let i = 0; i < count; i++) {
+          const vertices = 3;
+          const shape = new THREE.Shape();
+          const width = 0.3;
+          const height = 0.5 + seededRandom(seed + i) * 2;
+
+          // Triangle pointing up
+          shape.moveTo(0, height);
+          shape.lineTo(-width, 0);
+          shape.lineTo(width, 0);
+          shape.closePath();
+
+          const geometry = new THREE.ShapeGeometry(shape);
+          const meshColor = colorOptions[Math.floor(i / count * colorOptions.length)];
+          const material = new THREE.MeshStandardMaterial({
+            color: meshColor,
+            metalness: 0.5,
+            roughness: 0.4,
+            side: THREE.DoubleSide,
+            emissive: meshColor,
+            emissiveIntensity: 0.2
+          });
+
+          const mesh = new THREE.Mesh(geometry, material);
+          mesh.position.x = (i - count / 2) * 0.5;
+
+          scene.add(mesh);
+          meshes.push(mesh);
+        }
+
+      } else if (type === 'facets') {
+        // Crystalline triangular array
+        const rows = 3;
+        const cols = 3;
+
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
+            const shape = new THREE.Shape();
+            const size = 0.4 + seededRandom(seed + i * cols + j) * 0.2;
+
+            shape.moveTo(0, size);
+            shape.lineTo(-size * 0.866, -size * 0.5);
+            shape.lineTo(size * 0.866, -size * 0.5);
+            shape.closePath();
+
+            const geometry = new THREE.ShapeGeometry(shape);
+            const meshColor = colorOptions[Math.floor(seededRandom(seed + i * 7 + j * 3) * colorOptions.length)];
+            const material = new THREE.MeshStandardMaterial({
+              color: meshColor,
+              metalness: 0.6,
+              roughness: 0.3,
+              side: THREE.DoubleSide,
+              emissive: meshColor,
+              emissiveIntensity: 0.25
+            });
+
+            const mesh = new THREE.Mesh(geometry, material);
+            mesh.position.set((j - 1) * 1, (i - 1) * 1, 0);
+            mesh.rotation.z = seededRandom(seed + i + j * 2) * Math.PI * 2;
+
+            scene.add(mesh);
+            meshes.push(mesh);
+          }
         }
       }
 
-      container.appendChild(svg);
+      camera.position.set(0, 0, 6);
+      camera.lookAt(0, 0, 0);
+
+      // Animation
+      let time = 0;
+      function animate() {
+        requestAnimationFrame(animate);
+        time += 0.01;
+
+        meshes.forEach((mesh, i) => {
+          mesh.rotation.y = time * 0.3 + i * 0.1;
+          mesh.rotation.x = time * 0.2 + i * 0.05;
+        });
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
     }
 
     // Hero
@@ -1195,12 +1416,12 @@ function createFlatShape(vertices, color) {
       rotateCamera: true
     });
 
-    // Abstract Forms - SVG to save WebGL contexts
-    createSVGShape(document.getElementById('form-foundation'), PAGE_SEED + 1, 'polygon');
-    createSVGShape(document.getElementById('form-cluster'), PAGE_SEED + 2, 'triangles');
-    createSVGShape(document.getElementById('form-network'), PAGE_SEED + 3, 'polygon');
-    createSVGShape(document.getElementById('form-skyline'), PAGE_SEED + 4, 'triangles');
-    createSVGShape(document.getElementById('form-triangles'), PAGE_SEED + 5, 'triangles');
+    // Abstract Forms - 3D with flat geometries
+    createAbstractForm(document.getElementById('form-foundation'), PAGE_SEED + 1, 'polygon');
+    createAbstractForm(document.getElementById('form-cluster'), PAGE_SEED + 2, 'cluster');
+    createAbstractForm(document.getElementById('form-network'), PAGE_SEED + 3, 'network');
+    createAbstractForm(document.getElementById('form-skyline'), PAGE_SEED + 4, 'skyline');
+    createAbstractForm(document.getElementById('form-triangles'), PAGE_SEED + 5, 'facets');
 
     // Scenes - reuse city
     createCityScene(document.getElementById('scene-empty'), {
@@ -1287,15 +1508,15 @@ function createFlatShape(vertices, color) {
       rotateCamera: true
     });
 
-    // Property cards & benefits - SVG
-    createSVGShape(document.getElementById('property-1'), PAGE_SEED + 10, 'polygon');
-    createSVGShape(document.getElementById('property-2'), PAGE_SEED + 11, 'triangles');
-    createSVGShape(document.getElementById('property-3'), PAGE_SEED + 12, 'polygon');
+    // Property cards & benefits - 3D abstract forms
+    createAbstractForm(document.getElementById('property-1'), PAGE_SEED + 10, 'polygon');
+    createAbstractForm(document.getElementById('property-2'), PAGE_SEED + 11, 'cluster');
+    createAbstractForm(document.getElementById('property-3'), PAGE_SEED + 12, 'skyline');
 
-    createSVGShape(document.getElementById('benefit-1'), PAGE_SEED + 20, 'polygon');
-    createSVGShape(document.getElementById('benefit-2'), PAGE_SEED + 21, 'triangles');
-    createSVGShape(document.getElementById('benefit-3'), PAGE_SEED + 22, 'polygon');
-    createSVGShape(document.getElementById('benefit-4'), PAGE_SEED + 23, 'triangles');
+    createAbstractForm(document.getElementById('benefit-1'), PAGE_SEED + 20, 'polygon');
+    createAbstractForm(document.getElementById('benefit-2'), PAGE_SEED + 21, 'facets');
+    createAbstractForm(document.getElementById('benefit-3'), PAGE_SEED + 22, 'network');
+    createAbstractForm(document.getElementById('benefit-4'), PAGE_SEED + 23, 'cluster');
 
     // Smooth scroll
     document.querySelectorAll('.nav-link').forEach(link => {
