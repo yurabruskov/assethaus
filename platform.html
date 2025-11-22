@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ASSET_HAUS Platform — Real Estate Tokenization</title>
+  <title>Tokenization Platform Overview | Asset Haus Infrastructure</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
 
@@ -44,40 +44,66 @@
       top: 0;
       left: 0;
       right: 0;
-      padding: 28px 65px;
+      padding: 24px 65px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: rgba(0, 0, 0, 0.85);
+      background: rgba(0, 0, 0, 0.9);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
       z-index: 1000;
     }
 
     .logo {
-      font-size: 28px;
+      font-size: 26px;
       font-weight: 800;
       font-family: 'Fira Code', monospace;
       color: var(--color-primary);
     }
 
+    .logo-subtext {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: -4px;
+    }
+
     nav {
       display: flex;
       gap: 35px;
+      align-items: center;
     }
 
     nav a {
       color: var(--text-secondary);
       text-decoration: none;
-      font-size: 13px;
+      font-size: 14px;
       font-weight: 600;
       transition: color 0.3s;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
     }
 
     nav a:hover,
     nav a.active {
+      color: var(--color-primary);
+    }
+
+    .btn-header {
+      padding: 12px 28px;
+      background: transparent;
+      color: var(--text-primary);
+      border: 1.5px solid var(--border-color);
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: 'Fira Code', monospace;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .btn-header:hover {
+      border-color: var(--color-primary);
       color: var(--color-primary);
     }
 
@@ -89,6 +115,7 @@
       align-items: center;
       justify-content: center;
       overflow: hidden;
+      padding-top: 80px;
     }
 
     .hero-canvas {
@@ -104,16 +131,29 @@
       position: relative;
       z-index: 10;
       text-align: center;
-      max-width: 1000px;
+      max-width: 1100px;
       padding: 0 65px;
+    }
+
+    .hero-label {
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      color: var(--color-cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 24px;
     }
 
     .hero h1 {
       font-size: 88px;
       font-weight: 800;
-      line-height: 0.98;
+      line-height: 1.0;
       letter-spacing: -3px;
       margin-bottom: 32px;
+    }
+
+    .hero h1 span {
       background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 50%, var(--color-cyan) 100%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -121,11 +161,14 @@
     }
 
     .hero-subtitle {
-      font-size: 24px;
+      font-size: 22px;
       color: var(--text-secondary);
       margin-bottom: 48px;
       font-weight: 300;
       line-height: 1.6;
+      max-width: 900px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     .btn-group {
@@ -144,18 +187,18 @@
       font-family: 'Fira Code', monospace;
       text-transform: uppercase;
       letter-spacing: 1px;
+      cursor: pointer;
+      border: none;
     }
 
     .btn-primary {
       background: var(--color-primary);
       color: var(--bg-dark);
-      border: 2px solid var(--color-primary);
     }
 
     .btn-primary:hover {
-      background: transparent;
-      color: var(--color-primary);
-      box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 107, 107, 0.4);
     }
 
     .btn-outline {
@@ -184,115 +227,148 @@
       margin-bottom: 80px;
     }
 
+    .section-label {
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      color: var(--color-cyan);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 16px;
+    }
+
     .section-title {
-      font-size: 58px;
+      font-size: 56px;
       font-weight: 800;
       margin-bottom: 24px;
       letter-spacing: -2px;
     }
 
     .section-description {
-      font-size: 20px;
+      font-size: 19px;
       color: var(--text-secondary);
       max-width: 800px;
       margin: 0 auto;
       line-height: 1.7;
     }
 
-    /* Features Grid */
-    .features-grid {
+    /* Why Cards */
+    .why-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      grid-template-columns: repeat(3, 1fr);
       gap: 40px;
       max-width: 1400px;
       margin: 0 auto;
     }
 
-    .feature-card {
+    .why-card {
       background: rgba(255, 255, 255, 0.03);
       border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 12px;
-      padding: 40px;
+      padding: 50px 40px;
       transition: all 0.3s;
       position: relative;
       overflow: hidden;
     }
 
-    .feature-card:hover {
+    .why-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--color-primary), var(--color-purple));
+      transform: scaleX(0);
+      transition: transform 0.3s;
+    }
+
+    .why-card:hover::before {
+      transform: scaleX(1);
+    }
+
+    .why-card:hover {
       background: rgba(255, 255, 255, 0.05);
       border-color: var(--color-primary);
       transform: translateY(-8px);
-      box-shadow: 0 20px 60px rgba(255, 107, 107, 0.3);
+      box-shadow: 0 20px 60px rgba(255, 107, 107, 0.25);
     }
 
-    .feature-icon {
-      width: 120px;
-      height: 120px;
+    .why-icon {
+      width: 100px;
+      height: 100px;
       margin-bottom: 30px;
       background: #000;
-      border-radius: 12px;
+      border-radius: 8px;
     }
 
-    .feature-title {
-      font-size: 24px;
+    .why-title {
+      font-size: 26px;
       font-weight: 700;
       margin-bottom: 16px;
     }
 
-    .feature-description {
+    .why-description {
       font-size: 16px;
       color: var(--text-secondary);
       line-height: 1.7;
     }
 
-    /* How It Works */
-    .steps-container {
-      max-width: 1200px;
+    /* Architecture Grid */
+    .architecture-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 40px;
+      max-width: 1400px;
       margin: 0 auto;
-      display: grid;
-      gap: 60px;
     }
 
-    .step {
-      display: grid;
-      grid-template-columns: 200px 1fr;
-      gap: 50px;
-      align-items: center;
-    }
-
-    .step-visual {
-      width: 200px;
-      height: 200px;
-      background: #000;
+    .architecture-card {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
+      padding: 45px;
+      transition: all 0.3s;
     }
 
-    .step-content h3 {
-      font-size: 32px;
+    .architecture-card:hover {
+      background: rgba(255, 255, 255, 0.04);
+      border-color: var(--color-purple);
+    }
+
+    .architecture-title {
+      font-size: 28px;
       font-weight: 700;
-      margin-bottom: 16px;
+      margin-bottom: 20px;
       color: var(--color-primary);
     }
 
-    .step-content .step-number {
-      font-size: 14px;
-      font-family: 'Fira Code', monospace;
-      color: var(--text-muted);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
+    .architecture-list {
+      list-style: none;
+      padding: 0;
     }
 
-    .step-content p {
-      font-size: 18px;
+    .architecture-list li {
+      font-size: 15px;
       color: var(--text-secondary);
-      line-height: 1.7;
+      padding: 12px 0;
+      padding-left: 24px;
+      position: relative;
+      line-height: 1.6;
+    }
+
+    .architecture-list li::before {
+      content: '▸';
+      position: absolute;
+      left: 0;
+      color: var(--color-cyan);
+      font-size: 14px;
     }
 
     /* Tech Stack */
     .tech-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(4, 1fr);
       gap: 30px;
       max-width: 1400px;
       margin: 0 auto;
@@ -302,9 +378,12 @@
       background: rgba(255, 255, 255, 0.02);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 12px;
-      padding: 40px;
+      padding: 35px 30px;
       text-align: center;
       transition: all 0.3s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .tech-card:hover {
@@ -313,55 +392,92 @@
       transform: translateY(-5px);
     }
 
-    .tech-icon {
-      font-size: 48px;
+    .tech-icon-container {
+      width: 80px;
+      height: 80px;
       margin-bottom: 20px;
+      background: #000;
+      border-radius: 8px;
     }
 
     .tech-name {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       font-family: 'Fira Code', monospace;
-      margin-bottom: 12px;
+      margin-bottom: 8px;
     }
 
-    .tech-description {
-      font-size: 14px;
-      color: var(--text-muted);
-    }
-
-    /* Stats Section */
-    .stats-section {
-      padding: 100px 65px;
-      background: linear-gradient(135deg, rgba(255, 107, 107, 0.1) 0%, rgba(183, 148, 246, 0.1) 100%);
-    }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 50px;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    .stat-card {
-      text-align: center;
-    }
-
-    .stat-value {
-      font-size: 64px;
-      font-weight: 800;
-      font-family: 'Fira Code', monospace;
-      color: var(--color-primary);
-      margin-bottom: 12px;
-      line-height: 1;
-    }
-
-    .stat-label {
-      font-size: 14px;
+    .tech-label {
+      font-size: 12px;
       color: var(--text-muted);
       text-transform: uppercase;
-      letter-spacing: 1.5px;
+      letter-spacing: 1px;
+    }
+
+    /* White Label Section */
+    .white-label-section {
+      padding: 120px 65px;
+      background: linear-gradient(135deg, rgba(255, 107, 107, 0.08) 0%, rgba(183, 148, 246, 0.08) 100%);
+    }
+
+    .white-label-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      max-width: 1400px;
+      margin: 0 auto;
+      align-items: center;
+    }
+
+    .white-label-visual {
+      width: 100%;
+      height: 500px;
+      background: #000;
+      border-radius: 12px;
+    }
+
+    .white-label-text h2 {
+      font-size: 52px;
+      font-weight: 800;
+      margin-bottom: 24px;
+      letter-spacing: -2px;
+    }
+
+    .white-label-text h3 {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--color-primary);
+      margin-bottom: 24px;
+    }
+
+    .white-label-text p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      margin-bottom: 32px;
+      line-height: 1.7;
+    }
+
+    .white-label-features {
+      list-style: none;
+      padding: 0;
+      margin-bottom: 40px;
+    }
+
+    .white-label-features li {
+      font-size: 16px;
+      color: var(--text-secondary);
+      padding: 10px 0;
+      padding-left: 30px;
+      position: relative;
+    }
+
+    .white-label-features li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--color-cyan);
+      font-weight: 700;
+      font-size: 18px;
     }
 
     /* CTA Section */
@@ -372,14 +488,14 @@
     }
 
     .cta-section h2 {
-      font-size: 72px;
+      font-size: 64px;
       font-weight: 800;
       margin-bottom: 32px;
       letter-spacing: -2px;
     }
 
     .cta-section p {
-      font-size: 24px;
+      font-size: 22px;
       color: var(--text-secondary);
       margin-bottom: 50px;
       max-width: 700px;
@@ -389,42 +505,129 @@
 
     /* Footer */
     footer {
-      padding: 60px 65px;
-      text-align: center;
-      font-family: 'Fira Code', monospace;
-      font-size: 12px;
-      color: var(--text-muted);
+      padding: 80px 65px 40px;
       border-top: 1px solid var(--border-color);
     }
 
+    .footer-content {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 60px;
+      max-width: 1400px;
+      margin: 0 auto 60px;
+    }
+
+    .footer-brand {
+      max-width: 350px;
+    }
+
+    .footer-logo {
+      font-size: 28px;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+
+    .footer-tagline {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+
+    .footer-section h4 {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--text-primary);
+      margin-bottom: 20px;
+    }
+
+    .footer-section ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .footer-section ul li {
+      margin-bottom: 12px;
+    }
+
+    .footer-section ul li a {
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .footer-section ul li a:hover {
+      color: var(--color-primary);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 40px;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .footer-bottom p {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+    }
+
+    .footer-bottom-links {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+
+    .footer-bottom-links a {
+      font-size: 13px;
+      color: var(--text-muted);
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-bottom-links a:hover {
+      color: var(--color-primary);
+    }
+
     /* Responsive */
-    @media (max-width: 1024px) {
-      .hero h1 { font-size: 56px; }
-      .section-title { font-size: 42px; }
-      .stats-grid { grid-template-columns: repeat(2, 1fr); }
-      .step { grid-template-columns: 1fr; }
-      .features-grid,
-      .tech-grid { grid-template-columns: 1fr; }
+    @media (max-width: 1200px) {
+      .why-grid { grid-template-columns: 1fr; }
+      .architecture-grid { grid-template-columns: 1fr; }
+      .tech-grid { grid-template-columns: repeat(2, 1fr); }
+      .white-label-content { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr 1fr; }
     }
 
     @media (max-width: 768px) {
       header { padding: 20px 30px; }
-      .section { padding: 80px 30px; }
-      .hero h1 { font-size: 42px; }
-      .btn-group { flex-direction: column; }
       nav { display: none; }
+      .section { padding: 80px 30px; }
+      .hero h1 { font-size: 48px; }
+      .section-title { font-size: 36px; }
+      .btn-group { flex-direction: column; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .footer-content { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 <body>
   <!-- Header -->
   <header>
-    <div class="logo">ASSET_HAUS</div>
+    <div>
+      <div class="logo">Asset Haus</div>
+      <div class="logo-subtext">by Restifi</div>
+    </div>
     <nav>
-      <a href="/">Home</a>
-      <a href="/platform" class="active">Platform</a>
-      <a href="/design-system-full.html">Design System</a>
+      <a href="#platform">Platform</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#how-it-works">How It Works</a>
       <a href="#contact">Contact</a>
+      <button class="btn-header">Client Access</button>
     </nav>
   </header>
 
@@ -432,199 +635,197 @@
   <section class="hero">
     <div class="hero-canvas" id="hero-canvas"></div>
     <div class="hero-content">
-      <h1>Tokenization<br>Platform</h1>
+      <div class="hero-label">Platform Overview</div>
+      <h1>
+        <span>Tokenization Infrastructure</span><br>
+        Built for Scale
+      </h1>
       <p class="hero-subtitle">
-        Transform real estate into liquid digital assets. Our blockchain-powered platform makes fractional property ownership accessible to everyone.
+        Asset Haus provides end-to-end tokenization infrastructure with 14+ blockchain integrations,
+        compliance automation, and institutional-grade security. Transform any asset into digital securities
+        with our comprehensive platform.
       </p>
       <div class="btn-group">
-        <a href="#features" class="btn btn-primary">Explore Features</a>
-        <a href="#contact" class="btn btn-outline">Get Started</a>
+        <button class="btn btn-primary">Request Demo</button>
+        <button class="btn btn-outline">View All Features</button>
       </div>
     </div>
   </section>
 
-  <!-- Stats Section -->
-  <section class="stats-section">
-    <div class="stats-grid">
-      <div class="stat-card">
-        <div class="stat-value">$4.2B</div>
-        <div class="stat-label">Assets Under Management</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">2,847</div>
-        <div class="stat-label">Properties Tokenized</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">89</div>
-        <div class="stat-label">Global Markets</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-value">50K+</div>
-        <div class="stat-label">Active Investors</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="section" id="features">
+  <!-- Why Asset Haus -->
+  <section class="section" id="why">
     <div class="section-header">
-      <h2 class="section-title">Platform Features</h2>
+      <div class="section-label">Why Asset Haus</div>
+      <h2 class="section-title">Built for institutions,<br>designed for scale</h2>
       <p class="section-description">
-        Enterprise-grade infrastructure for tokenizing and trading real estate assets on the blockchain.
+        Enterprise-grade infrastructure optimized for compliance and security
       </p>
     </div>
 
-    <div class="features-grid">
-      <div class="feature-card">
-        <div class="feature-icon" id="feature-1"></div>
-        <h3 class="feature-title">Smart Contract Engine</h3>
-        <p class="feature-description">
-          Automated compliance and governance through self-executing smart contracts. Built on Ethereum with multi-chain support.
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon" id="why-1"></div>
+        <h3 class="why-title">Compliance First</h3>
+        <p class="why-description">
+          Automated KYC/AML, accreditation verification, and multi-jurisdiction regulatory frameworks
+          built into every transaction.
         </p>
       </div>
 
-      <div class="feature-card">
-        <div class="feature-icon" id="feature-2"></div>
-        <h3 class="feature-title">Fractional Ownership</h3>
-        <p class="feature-description">
-          Divide high-value properties into tradeable tokens. Start investing with as little as $100 in premium real estate.
+      <div class="why-card">
+        <div class="why-icon" id="why-2"></div>
+        <h3 class="why-title">Multi-Chain Support</h3>
+        <p class="why-description">
+          Deploy across 14+ EVM networks including Ethereum, Polygon, Arbitrum, Base, and more.
+          Plus Bitcoin support.
         </p>
       </div>
 
-      <div class="feature-card">
-        <div class="feature-icon" id="feature-3"></div>
-        <h3 class="feature-title">Instant Liquidity</h3>
-        <p class="feature-description">
-          Trade property tokens 24/7 on our secondary marketplace. No lock-up periods, no intermediaries, instant settlement.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon" id="feature-4"></div>
-        <h3 class="feature-title">Automated Compliance</h3>
-        <p class="feature-description">
-          KYC/AML verification, accreditation checks, and regulatory compliance built into every transaction.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon" id="feature-5"></div>
-        <h3 class="feature-title">Portfolio Analytics</h3>
-        <p class="feature-description">
-          Real-time dashboards tracking property performance, rental income, market trends, and risk metrics.
-        </p>
-      </div>
-
-      <div class="feature-card">
-        <div class="feature-icon" id="feature-6"></div>
-        <h3 class="feature-title">Global Access</h3>
-        <p class="feature-description">
-          Invest in properties worldwide from a single platform. Cross-border transactions without currency friction.
+      <div class="why-card">
+        <div class="why-icon" id="why-3"></div>
+        <h3 class="why-title">Institutional Security</h3>
+        <p class="why-description">
+          Audited smart contracts, individual escrow per investment, multi-signature wallets,
+          and comprehensive security protocols.
         </p>
       </div>
     </div>
   </section>
 
-  <!-- How It Works -->
-  <section class="section dark-bg" id="how-it-works">
+  <!-- Platform Architecture -->
+  <section class="section dark-bg" id="architecture">
     <div class="section-header">
-      <h2 class="section-title">How It Works</h2>
-      <p class="section-description">
-        Four simple steps to tokenize and trade real estate assets.
-      </p>
+      <div class="section-label">Platform Architecture</div>
+      <h2 class="section-title">Modular infrastructure built on<br>battle-tested components</h2>
     </div>
 
-    <div class="steps-container">
-      <div class="step">
-        <div class="step-visual" id="step-1"></div>
-        <div class="step-content">
-          <div class="step-number">Step 01</div>
-          <h3>Asset Selection</h3>
-          <p>
-            Choose high-quality real estate assets for tokenization. Our team conducts thorough due diligence, legal review, and property valuation.
-          </p>
-        </div>
+    <div class="architecture-grid">
+      <div class="architecture-card">
+        <h3 class="architecture-title">Smart Contract Layer</h3>
+        <ul class="architecture-list">
+          <li>ERC-1404 restricted tokens with transfer rules</li>
+          <li>Individual escrow contracts per investment</li>
+          <li>Multi-signature treasury management</li>
+          <li>Automated distribution contracts</li>
+          <li>Upgradeable proxy patterns</li>
+          <li>Comprehensive audit coverage</li>
+        </ul>
       </div>
 
-      <div class="step">
-        <div class="step-visual" id="step-2"></div>
-        <div class="step-content">
-          <div class="step-number">Step 02</div>
-          <h3>Smart Contract Deployment</h3>
-          <p>
-            Deploy ERC-20 tokens representing fractional ownership. Smart contracts handle governance, revenue distribution, and compliance automatically.
-          </p>
-        </div>
+      <div class="architecture-card">
+        <h3 class="architecture-title">Application Layer</h3>
+        <ul class="architecture-list">
+          <li>Deal creation and management</li>
+          <li>Investor onboarding and KYC/AML</li>
+          <li>Payment processing (crypto + fiat)</li>
+          <li>Portfolio management and reporting</li>
+          <li>Secondary market trading</li>
+          <li>Admin dashboard and controls</li>
+        </ul>
       </div>
 
-      <div class="step">
-        <div class="step-visual" id="step-3"></div>
-        <div class="step-content">
-          <div class="step-number">Step 03</div>
-          <h3>Token Issuance</h3>
-          <p>
-            Accredited investors purchase tokens through our platform. All transactions are recorded immutably on the blockchain.
-          </p>
-        </div>
+      <div class="architecture-card">
+        <h3 class="architecture-title">Integration Layer</h3>
+        <ul class="architecture-list">
+          <li>RESTful API with comprehensive documentation</li>
+          <li>Webhook notifications for events</li>
+          <li>Third-party KYC/AML provider integrations</li>
+          <li>Payment gateway integrations</li>
+          <li>Blockchain node infrastructure</li>
+          <li>Data export and reporting tools</li>
+        </ul>
       </div>
 
-      <div class="step">
-        <div class="step-visual" id="step-4"></div>
-        <div class="step-content">
-          <div class="step-number">Step 04</div>
-          <h3>Secondary Trading</h3>
-          <p>
-            Token holders can trade on our marketplace or external exchanges. Rental income and appreciation are distributed automatically.
-          </p>
-        </div>
+      <div class="architecture-card">
+        <h3 class="architecture-title">Infrastructure Layer</h3>
+        <ul class="architecture-list">
+          <li>Multi-region deployment</li>
+          <li>Redundant blockchain nodes</li>
+          <li>Encrypted data storage</li>
+          <li>Real-time monitoring and alerts</li>
+          <li>Automated backups and recovery</li>
+          <li>99.9% uptime SLA</li>
+        </ul>
       </div>
     </div>
   </section>
 
   <!-- Technology Stack -->
-  <section class="section" id="technology">
+  <section class="section" id="tech-stack">
     <div class="section-header">
-      <h2 class="section-title">Technology Stack</h2>
-      <p class="section-description">
-        Built on industry-leading blockchain infrastructure and security protocols.
-      </p>
+      <div class="section-label">Enterprise Technology Stack</div>
+      <h2 class="section-title">Built with proven technologies<br>trusted by institutions</h2>
     </div>
 
     <div class="tech-grid">
       <div class="tech-card">
-        <div class="tech-icon">⬢</div>
+        <div class="tech-icon-container" id="tech-1"></div>
+        <div class="tech-name">Solidity</div>
+        <div class="tech-label">Smart Contracts</div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon-container" id="tech-2"></div>
+        <div class="tech-name">Next.js</div>
+        <div class="tech-label">Frontend</div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon-container" id="tech-3"></div>
+        <div class="tech-name">Node.js</div>
+        <div class="tech-label">Backend</div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon-container" id="tech-4"></div>
+        <div class="tech-name">PostgreSQL</div>
+        <div class="tech-label">Database</div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon-container" id="tech-5"></div>
+        <div class="tech-name">Redis</div>
+        <div class="tech-label">Caching</div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon-container" id="tech-6"></div>
+        <div class="tech-name">AWS</div>
+        <div class="tech-label">Infrastructure</div>
+      </div>
+
+      <div class="tech-card">
+        <div class="tech-icon-container" id="tech-7"></div>
         <div class="tech-name">Ethereum</div>
-        <p class="tech-description">Primary smart contract layer</p>
+        <div class="tech-label">Primary Chain</div>
       </div>
 
       <div class="tech-card">
-        <div class="tech-icon">◈</div>
-        <div class="tech-name">Polygon</div>
-        <p class="tech-description">Layer 2 scaling solution</p>
-      </div>
-
-      <div class="tech-card">
-        <div class="tech-icon">▲</div>
+        <div class="tech-icon-container" id="tech-8"></div>
         <div class="tech-name">IPFS</div>
-        <p class="tech-description">Decentralized file storage</p>
+        <div class="tech-label">Document Storage</div>
       </div>
+    </div>
+  </section>
 
-      <div class="tech-card">
-        <div class="tech-icon">●</div>
-        <div class="tech-name">Chainlink</div>
-        <p class="tech-description">Oracle network for data feeds</p>
-      </div>
-
-      <div class="tech-card">
-        <div class="tech-icon">✦</div>
-        <div class="tech-name">OpenZeppelin</div>
-        <p class="tech-description">Audited smart contract library</p>
-      </div>
-
-      <div class="tech-card">
-        <div class="tech-icon">◆</div>
-        <div class="tech-name">Web3.js</div>
-        <p class="tech-description">Blockchain integration layer</p>
+  <!-- White Label -->
+  <section class="white-label-section" id="white-label">
+    <div class="white-label-content">
+      <div class="white-label-visual" id="white-label-visual"></div>
+      <div class="white-label-text">
+        <div class="section-label">White-Label Solutions</div>
+        <h2>Your Brand,<br>Our Infrastructure</h2>
+        <p>
+          Launch your own branded tokenization platform with custom domain, logo, colors,
+          and complete UI customization. Full white-label support with your identity.
+        </p>
+        <ul class="white-label-features">
+          <li>Custom domain and branding</li>
+          <li>Tailored UI and email templates</li>
+          <li>Multi-tenant architecture</li>
+          <li>Dedicated support team</li>
+        </ul>
+        <button class="btn btn-primary">Learn more about white-label</button>
       </div>
     </div>
   </section>
@@ -632,17 +833,62 @@
   <!-- CTA Section -->
   <section class="cta-section">
     <h2>Ready to Get Started?</h2>
-    <p>Join thousands of investors tokenizing real estate on our platform.</p>
+    <p>Request a demo to see how Asset Haus can transform your tokenization strategy</p>
     <div class="btn-group">
-      <a href="#" class="btn btn-primary">Launch Platform</a>
-      <a href="#" class="btn btn-outline">View Documentation</a>
+      <button class="btn btn-primary">Request Demo</button>
+      <button class="btn btn-outline">View Documentation</button>
     </div>
   </section>
 
   <!-- Footer -->
   <footer>
-    <p>© 2025 ASSET_HAUS — Real Estate Tokenization Platform</p>
-    <p style="margin-top: 8px; opacity: 0.5;">Powered by Blockchain · Smart Contracts · Web3</p>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <div class="footer-logo">Asset Haus</div>
+        <div class="logo-subtext" style="margin-bottom: 16px;">by Restifi</div>
+        <p class="footer-tagline">
+          Enterprise-grade tokenization infrastructure for digital asset transformation.
+        </p>
+      </div>
+
+      <div class="footer-section">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#quick-start">Quick Start</a></li>
+          <li><a href="#request-demo">Request Demo</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Solutions</h4>
+        <ul>
+          <li><a href="#real-estate">Real Estate</a></li>
+          <li><a href="#private-equity">Private Equity</a></li>
+          <li><a href="#stablecoins">Stablecoins</a></li>
+          <li><a href="#all-solutions">View All Solutions</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section">
+        <h4>Company</h4>
+        <ul>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#case-studies">Case Studies</a></li>
+          <li><a href="#partners">Partners</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2025 Asset Haus by Restifi. All rights reserved.</p>
+      <div class="footer-bottom-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+      </div>
+    </div>
   </footer>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -710,7 +956,7 @@
     }
 
     // City scene for hero
-    function createCityScene(container, config) {
+    function createCityScene(container, config = {}) {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 1000);
 
@@ -723,16 +969,15 @@
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
       scene.add(ambientLight);
 
-      const pointLight = new THREE.PointLight(config.lightColor || 0xff6b6b, 1.2, 100);
+      const pointLight = new THREE.PointLight(0xff6b6b, 1.2, 100);
       pointLight.position.set(10, 10, 10);
       scene.add(pointLight);
 
       const buildings = [];
-      const gridSize = config.gridSize || 18;
-      const plotSize = config.plotSize || 1.2;
-      const spacing = config.spacing || 0.2;
+      const gridSize = 20;
+      const plotSize = 1.5;
+      const spacing = 0.3;
 
-      // City patterns
       function isStreet(x, z) {
         if (Math.abs(x - gridSize/2) <= 0.5 || Math.abs(z - gridSize/2) <= 0.5) return true;
         if (x % 4 === 0 || z % 4 === 0) return true;
@@ -797,11 +1042,11 @@
       gridHelper.position.y = -0.05;
       scene.add(gridHelper);
 
-      camera.position.set(25, 18, 25);
+      camera.position.set(28, 20, 28);
       camera.lookAt(0, 0, 0);
 
       let time = 0;
-      let cameraX = 25, cameraY = 18, cameraZ = 25;
+      let cameraX = 28, cameraY = 20, cameraZ = 28;
       let lookX = 0, lookY = 0, lookZ = 0;
       let animationId = null;
 
@@ -816,13 +1061,13 @@
         });
 
         const slowTime = time * 0.0008;
-        const scale = 25;
+        const scale = 28;
         const a = scale;
         const t = slowTime;
 
         const targetX = (a * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
         const targetZ = (a * Math.sin(t) * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
-        const targetY = 18 + Math.sin(slowTime * 1.2) * 3;
+        const targetY = 20 + Math.sin(slowTime * 1.2) * 3;
 
         cameraX += (targetX - cameraX) * 0.03;
         cameraZ += (targetZ - cameraZ) * 0.03;
@@ -852,9 +1097,11 @@
       }
 
       window.addEventListener('resize', () => {
-        camera.aspect = container.offsetWidth / container.offsetHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(container.offsetWidth, container.offsetHeight);
+        if (container.offsetWidth > 0) {
+          camera.aspect = container.offsetWidth / container.offsetHeight;
+          camera.updateProjectionMatrix();
+          renderer.setSize(container.offsetWidth, container.offsetHeight);
+        }
       });
     }
 
@@ -885,9 +1132,9 @@
       const meshes = [];
 
       if (type === 'single') {
-        const width = 1.0 + seededRandom(seed + 1) * 0.8;
-        const height = 1.2 + seededRandom(seed + 2) * 1.0;
-        const depth = 0.9 + seededRandom(seed + 3) * 0.7;
+        const width = 0.9 + seededRandom(seed + 1) * 0.7;
+        const height = 1.0 + seededRandom(seed + 2) * 0.9;
+        const depth = 0.8 + seededRandom(seed + 3) * 0.6;
 
         const geometry = new THREE.BoxGeometry(width, height, depth);
         const material = new THREE.MeshStandardMaterial({
@@ -905,7 +1152,7 @@
         const count = 3 + Math.floor(seededRandom(seed) * 2);
 
         for (let i = 0; i < count; i++) {
-          const size = 0.4 + seededRandom(seed + i * 7) * 0.5;
+          const size = 0.35 + seededRandom(seed + i * 7) * 0.4;
           const geometry = new THREE.BoxGeometry(size, size, size);
           const meshColor = colorOptions[Math.floor(seededRandom(seed + i * 5) * colorOptions.length)];
           const material = new THREE.MeshStandardMaterial({
@@ -918,9 +1165,9 @@
 
           const mesh = new THREE.Mesh(geometry, material);
           mesh.position.set(
-            (seededRandom(seed + i * 7) - 0.5) * 1.5,
-            (seededRandom(seed + i * 8) - 0.5) * 1.2,
-            (seededRandom(seed + i * 9) - 0.5) * 0.8
+            (seededRandom(seed + i * 7) - 0.5) * 1.3,
+            (seededRandom(seed + i * 8) - 0.5) * 1.0,
+            (seededRandom(seed + i * 9) - 0.5) * 0.7
           );
           mesh.rotation.set(
             seededRandom(seed + i * 4) * Math.PI * 0.5,
@@ -963,27 +1210,29 @@
     }
 
     // Initialize hero (always visible)
-    createCityScene(document.getElementById('hero-canvas'), {
-      gridSize: 18,
-      plotSize: 1.5,
-      spacing: 0.3
-    });
+    createCityScene(document.getElementById('hero-canvas'));
 
-    // Lazy load feature icons
-    for (let i = 1; i <= 6; i++) {
+    // Lazy load why icons
+    for (let i = 1; i <= 3; i++) {
       initLazyScene(
-        document.getElementById(`feature-${i}`),
+        document.getElementById(`why-${i}`),
         (c) => createSimpleForm(c, PAGE_SEED + i * 10, i % 2 === 0 ? 'cluster' : 'single')
       );
     }
 
-    // Lazy load step visuals
-    for (let i = 1; i <= 4; i++) {
+    // Lazy load tech icons
+    for (let i = 1; i <= 8; i++) {
       initLazyScene(
-        document.getElementById(`step-${i}`),
+        document.getElementById(`tech-${i}`),
         (c) => createSimpleForm(c, PAGE_SEED + i * 20, 'single')
       );
     }
+
+    // Lazy load white label visual
+    initLazyScene(
+      document.getElementById('white-label-visual'),
+      (c) => createSimpleForm(c, PAGE_SEED + 100, 'cluster')
+    );
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -991,7 +1240,7 @@
         e.preventDefault();
         const target = document.querySelector(this.getAttribute('href'));
         if (target) {
-          target.scrollIntoView({ behavior: 'smooth' });
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
       });
     });
