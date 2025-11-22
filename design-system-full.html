@@ -309,6 +309,9 @@
       height: 200px;
       background: #000;
       position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .property-info {
@@ -378,6 +381,9 @@
       margin: 0 auto 24px;
       background: #000;
       border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .benefit-title {
@@ -390,6 +396,12 @@
       font-size: 14px;
       color: var(--text-secondary);
       line-height: 1.6;
+    }
+
+    /* SVG Abstract Shapes */
+    .abstract-svg {
+      width: 100%;
+      height: 100%;
     }
 
     /* Buttons */
@@ -540,7 +552,7 @@
         <div class="canvas-container" id="hero-canvas"></div>
         <div class="canvas-overlay">
           <h1>ASSET_HAUS<br>Design System</h1>
-          <p>Abstract Architecture · Unique Forms · Dynamic Identity</p>
+          <p>Flat Geometry · Sharp Angles · Bold Identity</p>
         </div>
       </section>
 
@@ -549,9 +561,8 @@
         <div class="section-header">
           <h2 class="section-title">Introduction</h2>
           <p class="section-description">
-            Welcome to ASSET_HAUS Design System v2.0 — where every form is unique,
-            yet instantly recognizable. Powered by abstract geometry, dynamic randomness,
-            and brand colors that tell a story.
+            Welcome to ASSET_HAUS Design System v2.0 — flat, geometric, angular.
+            Every form is sharp and faceted, creating a bold architectural language.
           </p>
         </div>
 
@@ -576,24 +587,24 @@
 
         <div class="grid-3">
           <div class="card">
-            <div class="card-title">🎨 Unique, Not Uniform</div>
+            <div class="card-title">🔺 Flat & Angular</div>
             <div class="card-description">
-              Every form is generated with controlled randomness. Distorted polygons,
-              organic shapes, irregular geometry. Never the same twice.
+              Sharp angles, flat planes, geometric precision. No organic curves,
+              only crisp edges and faceted surfaces.
             </div>
           </div>
           <div class="card">
-            <div class="card-title">✨ Recognizable Style</div>
+            <div class="card-title">✨ Brand Recognition</div>
             <div class="card-description">
-              Brand colors, smooth animations, and architectural metaphors create
-              instant recognition despite variation in forms.
+              Consistent colors and geometric style create instant brand recognition
+              despite varying compositions.
             </div>
           </div>
           <div class="card">
             <div class="card-title">💎 Portfolio as City</div>
             <div class="card-description">
               Real estate portfolios visualized as abstract cities. Height = value,
-              color = performance, form = uniqueness.
+              color = performance.
             </div>
           </div>
         </div>
@@ -604,28 +615,28 @@
         <div class="section-header">
           <h2 class="section-title">Design Philosophy</h2>
           <p class="section-description">
-            The form itself IS the atom. Not built from cubes, but born as irregular,
-            distorted, organic shapes. Randomness creates uniqueness. Style creates identity.
+            Flat geometric shapes. Sharp angles. No volume, all planes.
+            Intersecting surfaces create depth through layers, not extrusion.
           </p>
         </div>
 
         <div class="grid-2">
           <div class="card">
-            <div class="card-title">Old Approach ❌</div>
+            <div class="card-title">Rejected ❌</div>
             <div class="card-description">
-              <strong>Atom = Cube</strong><br>
-              Forms built from cubes<br>
-              Predictable, uniform<br>
-              Limited variation
+              <strong>3D volumes</strong><br>
+              Extruded shapes<br>
+              Organic curves<br>
+              Soft bevels
             </div>
           </div>
           <div class="card">
-            <div class="card-title">New Approach ✅</div>
+            <div class="card-title">Approved ✅</div>
             <div class="card-description">
-              <strong>Form = Atom</strong><br>
-              Distorted polygons, 5-12 vertices<br>
-              Bezier curves, organic shapes<br>
-              Infinite unique variations
+              <strong>Flat planes</strong><br>
+              Angular polygons<br>
+              Sharp facets<br>
+              Geometric precision
             </div>
           </div>
         </div>
@@ -636,7 +647,7 @@
         <div class="section-header">
           <h2 class="section-title">Brand Colors</h2>
           <p class="section-description">
-            Eight signature colors create instant recognition across all variations.
+            Eight signature colors create instant recognition.
           </p>
         </div>
 
@@ -669,8 +680,7 @@
         <div class="section-header">
           <h2 class="section-title">Abstract Forms</h2>
           <p class="section-description">
-            Five core concepts, each represented by unique distorted geometry.
-            Every page load generates different variations.
+            Five flat geometric compositions. Intersecting planes, sharp angles, faceted surfaces.
           </p>
         </div>
 
@@ -680,8 +690,8 @@
             <div class="artifact-info">
               <div class="artifact-name">The Foundation</div>
               <div class="artifact-description">
-                Irregular polygon (5-8 vertices, random). Represents first investment.
-                Solid, glowing, unique every time.
+                Flat angular polygon. Sharp edges, clean facets.
+                Represents first investment.
               </div>
               <div class="artifact-meta">Use: Empty states, onboarding</div>
             </div>
@@ -692,22 +702,10 @@
             <div class="artifact-info">
               <div class="artifact-name">The Cluster</div>
               <div class="artifact-description">
-                3-5 organic forms orbiting. Represents portfolio diversification.
-                Each form unique, colors gradient.
+                3-5 intersecting planes at different angles.
+                Represents portfolio diversification.
               </div>
               <div class="artifact-meta">Use: Portfolio overview</div>
-            </div>
-          </div>
-
-          <div class="artifact-card">
-            <div class="artifact-preview" id="form-flow"></div>
-            <div class="artifact-info">
-              <div class="artifact-name">The Flow</div>
-              <div class="artifact-description">
-                Flowing wave surface from irregular polygons. Represents market liquidity.
-                Vertex displacement creates motion.
-              </div>
-              <div class="artifact-meta">Use: Liquidity, marketplace</div>
             </div>
           </div>
 
@@ -716,7 +714,7 @@
             <div class="artifact-info">
               <div class="artifact-name">The Network</div>
               <div class="artifact-description">
-                Connected nodes (spheres + lines). Random positions, pulsing nodes.
+                Connected angular shapes. Geometric nodes with sharp lines.
                 Represents ecosystem connections.
               </div>
               <div class="artifact-meta">Use: Partnerships, ecosystem</div>
@@ -728,10 +726,22 @@
             <div class="artifact-info">
               <div class="artifact-name">The Skyline</div>
               <div class="artifact-description">
-                7-12 distorted vertical forms with ascending heights.
-                Color-coded by value. Represents growth.
+                Vertical faceted forms with ascending heights.
+                Sharp pyramidal shapes. Represents growth.
               </div>
               <div class="artifact-meta">Use: Analytics, growth charts</div>
+            </div>
+          </div>
+
+          <div class="artifact-card">
+            <div class="artifact-preview" id="form-triangles"></div>
+            <div class="artifact-info">
+              <div class="artifact-name">The Facets</div>
+              <div class="artifact-description">
+                Array of triangular planes. Crystalline structure.
+                Sharp, geometric, architectural.
+              </div>
+              <div class="artifact-meta">Use: Tech features, innovation</div>
             </div>
           </div>
         </div>
@@ -742,7 +752,7 @@
         <div class="section-header">
           <h2 class="section-title">Composed Scenes</h2>
           <p class="section-description">
-            Seven complete scenarios combining our city metaphor with unique forms.
+            Seven complete scenarios using our city metaphor.
           </p>
         </div>
 
@@ -752,7 +762,7 @@
             <div class="artifact-info">
               <div class="artifact-name">Empty State</div>
               <div class="artifact-description">
-                Sparse grid (2% density) with single glowing form. "Your city awaits."
+                Sparse grid (2% density) with single glowing form.
               </div>
             </div>
           </div>
@@ -762,7 +772,7 @@
             <div class="artifact-info">
               <div class="artifact-name">First Asset</div>
               <div class="artifact-description">
-                One prominent form dominates. Pride in first investment.
+                One prominent building. Pride in first investment.
               </div>
             </div>
           </div>
@@ -782,7 +792,7 @@
             <div class="artifact-info">
               <div class="artifact-name">Full City</div>
               <div class="artifact-description">
-                Dense 18x18 grid (85%), rotating camera. Mature portfolio.
+                Dense grid (85%), rotating camera. Mature portfolio.
               </div>
             </div>
           </div>
@@ -802,7 +812,7 @@
             <div class="artifact-info">
               <div class="artifact-name">Dark Mode City</div>
               <div class="artifact-description">
-                Cyan glowing edges, neon TRON grid. Cyberpunk aesthetic.
+                Cyan glowing edges, neon TRON grid.
               </div>
             </div>
           </div>
@@ -812,7 +822,7 @@
             <div class="artifact-info">
               <div class="artifact-name">Celebration</div>
               <div class="artifact-description">
-                Random colors, heavy pulsing, upward motion. For achievements.
+                Random colors, heavy pulsing. For achievements.
               </div>
             </div>
           </div>
@@ -824,11 +834,10 @@
         <div class="section-header">
           <h2 class="section-title">Landing Hero Section</h2>
           <p class="section-description">
-            Example of how to use the city visualization as a landing page hero.
+            City visualization as landing page hero.
           </p>
         </div>
 
-        <!-- Demo Landing Hero -->
         <div style="position: relative; height: 500px; border-radius: 12px; overflow: hidden; margin-bottom: 40px;">
           <div id="landing-demo-canvas" style="width: 100%; height: 100%;"></div>
           <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; z-index: 10;">
@@ -837,18 +846,6 @@
             <button class="btn btn-primary">Get Started</button>
           </div>
         </div>
-
-        <div class="code-block"><!-- Landing Hero HTML -->
-&lt;section class="hero"&gt;
-  &lt;div class="hero-3d-background"&gt;
-    &lt;!-- Full City Scene --&gt;
-  &lt;/div&gt;
-  &lt;div class="hero-content"&gt;
-    &lt;h1&gt;Tokenize Real Estate&lt;/h1&gt;
-    &lt;p&gt;Invest in fractional property ownership&lt;/p&gt;
-    &lt;button class="btn-primary"&gt;Get Started&lt;/button&gt;
-  &lt;/div&gt;
-&lt;/section&gt;</div>
       </section>
 
       <!-- PROPERTY CARDS -->
@@ -856,7 +853,7 @@
         <div class="section-header">
           <h2 class="section-title">Property Cards</h2>
           <p class="section-description">
-            Each property card features a unique abstract form representing the asset.
+            Each card with flat geometric visual.
           </p>
         </div>
 
@@ -925,7 +922,7 @@
         <div class="section-header">
           <h2 class="section-title">Benefits Grid</h2>
           <p class="section-description">
-            Each benefit features a unique abstract form as its icon.
+            Each benefit with geometric icon.
           </p>
         </div>
 
@@ -969,171 +966,71 @@
         <div class="section-header">
           <h2 class="section-title">Code Examples</h2>
           <p class="section-description">
-            Create unique abstract forms with controlled randomness.
+            Create flat geometric forms with Three.js.
           </p>
         </div>
 
-        <h3 class="section-subtitle">Generate Abstract Form</h3>
-        <div class="code-block">// Create unique distorted polygon
-function createAbstractForm(seed) {
-  const vertices = 5 + Math.floor(seededRandom(seed) * 8);
-  const color = COLORS[Math.floor(seededRandom(seed + 1) * COLORS.length)];
-
+        <h3 class="section-subtitle">Flat Angular Shape</h3>
+        <div class="code-block">// Create flat angular polygon
+function createFlatShape(vertices, color) {
   const shape = new THREE.Shape();
 
   for (let i = 0; i < vertices; i++) {
     const angle = (Math.PI * 2 / vertices) * i;
-    const radius = 1.5 * (0.8 + seededRandom(seed + i) * 0.4);
+    const radius = 2 + Math.random() * 0.5;
     const x = Math.cos(angle) * radius;
     const y = Math.sin(angle) * radius;
 
     if (i === 0) {
       shape.moveTo(x, y);
     } else {
-      const prevAngle = (Math.PI * 2 / vertices) * (i - 1);
-      const cpx = Math.cos((angle + prevAngle) / 2) * radius * 1.2;
-      const cpy = Math.sin((angle + prevAngle) / 2) * radius * 1.2;
-      shape.bezierCurveTo(cpx, cpy, cpx, cpy, x, y);
+      shape.lineTo(x, y); // Sharp lines, no curves
     }
   }
+  shape.closePath();
 
-  const geometry = new THREE.ExtrudeGeometry(shape, {
-    depth: 0.5 + seededRandom(seed + 99) * 1.5,
-    bevelEnabled: true,
-    bevelThickness: 0.1
-  });
-
-  const material = new THREE.MeshStandardMaterial({
+  const geometry = new THREE.ShapeGeometry(shape);
+  const material = new THREE.MeshBasicMaterial({
     color: color,
-    metalness: 0.3,
-    roughness: 0.7
+    side: THREE.DoubleSide
   });
 
   return new THREE.Mesh(geometry, material);
 }</div>
-
-        <h3 class="section-subtitle" style="margin-top: 40px;">Seeded Random (for uniqueness)</h3>
-        <div class="code-block">// Seeded random for consistent uniqueness
-function seededRandom(seed) {
-  const x = Math.sin(seed) * 10000;
-  return x - Math.floor(x);
-}
-
-// Each page load = different seed
-const pageSeed = Date.now();</div>
       </section>
 
       <!-- Footer -->
       <footer>
         <p>© 2025 ASSET_HAUS — Design System v2.0</p>
-        <p style="margin-top: 8px; opacity: 0.5;">Unique Forms · Dynamic Identity · Abstract Architecture</p>
+        <p style="margin-top: 8px; opacity: 0.5;">Flat Geometry · Sharp Angles · Bold Identity</p>
       </footer>
     </main>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
-    // Seeded random for controlled randomness
+    // Global renderer to avoid WebGL context limit
+    let globalRenderer = null;
+    const PAGE_SEED = Date.now();
+    const COLORS = [0xff6b6b, 0xffb4a2, 0xe78fb3, 0xb794f6, 0x95b8d1, 0x4a5899, 0x8b7ab8, 0x00fff0];
+
     function seededRandom(seed) {
       const x = Math.sin(seed) * 10000;
       return x - Math.floor(x);
     }
 
-    const PAGE_SEED = Date.now();
-    const COLORS = [0xff6b6b, 0xffb4a2, 0xe78fb3, 0xb794f6, 0x95b8d1, 0x4a5899, 0x8b7ab8, 0x00fff0];
-
-    // Create abstract distorted polygon
-    function createAbstractForm(container, seed, config = {}) {
-      const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 100);
-      const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-
-      renderer.setSize(container.offsetWidth, container.offsetHeight);
-      renderer.setClearColor(0x000000, 1);
-      container.appendChild(renderer.domElement);
-
-      // Lighting
-      const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-      scene.add(ambientLight);
-
-      const pointLight = new THREE.PointLight(config.lightColor || 0xff6b6b, 1.5, 50);
-      pointLight.position.set(5, 5, 5);
-      scene.add(pointLight);
-
-      // Create form
-      const vertices = config.vertices || (5 + Math.floor(seededRandom(seed) * 8));
-      const color = config.color || COLORS[Math.floor(seededRandom(seed + 1) * COLORS.length)];
-      const baseRadius = config.radius || 2;
-
-      const shape = new THREE.Shape();
-
-      for (let i = 0; i < vertices; i++) {
-        const angle = (Math.PI * 2 / vertices) * i;
-        const radius = baseRadius * (0.7 + seededRandom(seed + i) * 0.6);
-        const x = Math.cos(angle) * radius;
-        const y = Math.sin(angle) * radius;
-
-        if (i === 0) {
-          shape.moveTo(x, y);
-        } else {
-          const prevAngle = (Math.PI * 2 / vertices) * (i - 1);
-          const cpx = Math.cos((angle + prevAngle) / 2) * radius * 1.3;
-          const cpy = Math.sin((angle + prevAngle) / 2) * radius * 1.3;
-          shape.bezierCurveTo(cpx, cpy, cpx, cpy, x, y);
-        }
-      }
-
-      const extrudeSettings = {
-        depth: 0.5 + seededRandom(seed + 99) * 2,
-        bevelEnabled: true,
-        bevelThickness: 0.1,
-        bevelSize: 0.1
-      };
-
-      const geometry = new THREE.ExtrudeGeometry(shape, extrudeSettings);
-      const material = new THREE.MeshStandardMaterial({
-        color: color,
-        metalness: config.metalness || 0.4,
-        roughness: config.roughness || 0.6,
-        emissive: config.emissive ? color : 0x000000,
-        emissiveIntensity: config.emissive ? 0.4 : 0
-      });
-
-      const mesh = new THREE.Mesh(geometry, material);
-      scene.add(mesh);
-
-      camera.position.set(0, 0, 8);
-      camera.lookAt(0, 0, 0);
-
-      // Animation
-      function animate() {
-        requestAnimationFrame(animate);
-
-        mesh.rotation.y += 0.005;
-        mesh.rotation.x += 0.002;
-
-        if (config.pulse) {
-          const scale = 1 + Math.sin(Date.now() * 0.001) * 0.1;
-          mesh.scale.set(scale, scale, scale);
-        }
-
-        renderer.render(scene, camera);
-      }
-
-      animate();
-
-      return { scene, camera, renderer, mesh };
-    }
-
-    // City scene (reused from version-land-plots.html)
+    // City scene (reused)
     function createCityScene(container, config) {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 1000);
-      const renderer = new THREE.WebGLRenderer({ antialias: true });
 
-      renderer.setSize(container.offsetWidth, container.offsetHeight);
-      renderer.setClearColor(0x000000, 1);
-      container.appendChild(renderer.domElement);
+      if (!globalRenderer) {
+        globalRenderer = new THREE.WebGLRenderer({ antialias: true });
+      }
+
+      globalRenderer.setSize(container.offsetWidth, container.offsetHeight);
+      globalRenderer.setClearColor(0x000000, 1);
+      container.appendChild(globalRenderer.domElement);
 
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
       scene.add(ambientLight);
@@ -1227,59 +1124,85 @@ const pageSeed = Date.now();</div>
           camera.lookAt(0, 0, 0);
         }
 
-        renderer.render(scene, camera);
+        globalRenderer.render(scene, camera);
       }
 
       animate();
     }
 
-    // Initialize scenes
+    // Create SVG flat geometric shapes (to avoid WebGL contexts)
+    function createSVGShape(container, seed, type = 'polygon') {
+      const colors = ['#ff6b6b', '#ffb4a2', '#b794f6', '#00fff0', '#95b8d1'];
+      const color = colors[Math.floor(seededRandom(seed) * colors.length)];
 
-    // Hero - Full City
+      const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      svg.setAttribute('viewBox', '0 0 200 200');
+      svg.classList.add('abstract-svg');
+
+      if (type === 'polygon') {
+        const vertices = 3 + Math.floor(seededRandom(seed + 1) * 5);
+        let points = '';
+
+        for (let i = 0; i < vertices; i++) {
+          const angle = (Math.PI * 2 / vertices) * i - Math.PI / 2;
+          const radius = 60 + seededRandom(seed + i + 2) * 30;
+          const x = 100 + Math.cos(angle) * radius;
+          const y = 100 + Math.sin(angle) * radius;
+          points += `${x},${y} `;
+        }
+
+        const polygon = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+        polygon.setAttribute('points', points);
+        polygon.setAttribute('fill', color);
+        polygon.setAttribute('fill-opacity', '0.8');
+        polygon.setAttribute('stroke', color);
+        polygon.setAttribute('stroke-width', '2');
+
+        svg.appendChild(polygon);
+      } else if (type === 'triangles') {
+        for (let i = 0; i < 3; i++) {
+          const cx = 50 + seededRandom(seed + i) * 100;
+          const cy = 50 + seededRandom(seed + i + 3) * 100;
+          const size = 20 + seededRandom(seed + i + 6) * 30;
+
+          const points = `
+            ${cx},${cy - size}
+            ${cx - size},${cy + size}
+            ${cx + size},${cy + size}
+          `;
+
+          const triangle = document.createElementNS('http://www.w3.org/2000/svg', 'polygon');
+          triangle.setAttribute('points', points);
+          triangle.setAttribute('fill', colors[i % colors.length]);
+          triangle.setAttribute('fill-opacity', '0.7');
+          triangle.setAttribute('stroke', colors[i % colors.length]);
+          triangle.setAttribute('stroke-width', '2');
+
+          svg.appendChild(triangle);
+        }
+      }
+
+      container.appendChild(svg);
+    }
+
+    // Hero
     createCityScene(document.getElementById('hero-canvas'), {
       gridSize: 16,
       plotSize: 1.5,
       spacing: 0.3,
       density: 0.8,
       pulse: true,
-      rotateCamera: true,
-      lightColor: 0xff6b6b
+      rotateCamera: true
     });
 
-    // Abstract Forms
-    createAbstractForm(document.getElementById('form-foundation'), PAGE_SEED + 1, {
-      vertices: 6,
-      emissive: true,
-      pulse: true,
-      radius: 2.5
-    });
+    // Abstract Forms - SVG to save WebGL contexts
+    createSVGShape(document.getElementById('form-foundation'), PAGE_SEED + 1, 'polygon');
+    createSVGShape(document.getElementById('form-cluster'), PAGE_SEED + 2, 'triangles');
+    createSVGShape(document.getElementById('form-network'), PAGE_SEED + 3, 'polygon');
+    createSVGShape(document.getElementById('form-skyline'), PAGE_SEED + 4, 'triangles');
+    createSVGShape(document.getElementById('form-triangles'), PAGE_SEED + 5, 'triangles');
 
-    createAbstractForm(document.getElementById('form-cluster'), PAGE_SEED + 2, {
-      vertices: 7,
-      color: 0xb794f6,
-      radius: 2
-    });
-
-    createAbstractForm(document.getElementById('form-flow'), PAGE_SEED + 3, {
-      vertices: 10,
-      color: 0x95b8d1,
-      radius: 2.5
-    });
-
-    createAbstractForm(document.getElementById('form-network'), PAGE_SEED + 4, {
-      vertices: 5,
-      color: 0x00fff0,
-      emissive: true,
-      radius: 2
-    });
-
-    createAbstractForm(document.getElementById('form-skyline'), PAGE_SEED + 5, {
-      vertices: 8,
-      color: 0xff6b6b,
-      radius: 2.5
-    });
-
-    // Scenes
+    // Scenes - reuse city
     createCityScene(document.getElementById('scene-empty'), {
       gridSize: 10,
       density: 0.02,
@@ -1356,46 +1279,23 @@ const pageSeed = Date.now();</div>
       camZ: 12
     });
 
-    // Landing Demo
+    // Landing demo
     createCityScene(document.getElementById('landing-demo-canvas'), {
       gridSize: 14,
       density: 0.7,
       pulse: true,
-      rotateCamera: true,
-      camX: 18,
-      camY: 14,
-      camZ: 18
+      rotateCamera: true
     });
 
-    // Property Cards
-    createAbstractForm(document.getElementById('property-1'), PAGE_SEED + 10, {
-      vertices: 6,
-      color: 0x00ff00,
-      emissive: true,
-      radius: 1.5
-    });
+    // Property cards & benefits - SVG
+    createSVGShape(document.getElementById('property-1'), PAGE_SEED + 10, 'polygon');
+    createSVGShape(document.getElementById('property-2'), PAGE_SEED + 11, 'triangles');
+    createSVGShape(document.getElementById('property-3'), PAGE_SEED + 12, 'polygon');
 
-    createAbstractForm(document.getElementById('property-2'), PAGE_SEED + 11, {
-      vertices: 8,
-      color: 0xffff00,
-      radius: 1.8
-    });
-
-    createAbstractForm(document.getElementById('property-3'), PAGE_SEED + 12, {
-      vertices: 7,
-      color: 0x00ff00,
-      emissive: true,
-      radius: 1.6
-    });
-
-    // Benefits
-    for (let i = 1; i <= 4; i++) {
-      createAbstractForm(document.getElementById(`benefit-${i}`), PAGE_SEED + 20 + i, {
-        vertices: 5 + i,
-        radius: 0.8,
-        pulse: true
-      });
-    }
+    createSVGShape(document.getElementById('benefit-1'), PAGE_SEED + 20, 'polygon');
+    createSVGShape(document.getElementById('benefit-2'), PAGE_SEED + 21, 'triangles');
+    createSVGShape(document.getElementById('benefit-3'), PAGE_SEED + 22, 'polygon');
+    createSVGShape(document.getElementById('benefit-4'), PAGE_SEED + 23, 'triangles');
 
     // Smooth scroll
     document.querySelectorAll('.nav-link').forEach(link => {
