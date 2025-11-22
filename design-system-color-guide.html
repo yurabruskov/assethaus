@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ASSET_HAUS — Design System Color Guide</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300;400;600;700;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      /* Brand Colors */
+      --color-primary: #ff6b6b;
+      --color-secondary: #ffb4a2;
+      --color-accent-pink: #e78fb3;
+      --color-purple: #b794f6;
+      --color-sky-blue: #95b8d1;
+      --color-deep-blue: #4a5899;
+      --color-lavender: #8b7ab8;
+      --color-cyan: #00fff0;
+
+      /* Surface Colors */
+      --bg-dark: #000000;
+      --bg-dark-secondary: #0a0e27;
+      --bg-dark-tertiary: #1e1b3c;
+
+      /* Text Colors */
+      --text-primary: #ffffff;
+      --text-secondary: rgba(255, 255, 255, 0.7);
+      --text-muted: rgba(255, 255, 255, 0.45);
+
+      /* Borders */
+      --border-color: rgba(255, 107, 107, 0.2);
+    }
+
+    body {
+      font-family: 'Work Sans', sans-serif;
+      background: var(--bg-dark);
+      color: var(--text-primary);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 280px;
+      background: rgba(0, 0, 0, 0.95);
+      border-right: 1px solid var(--border-color);
+      padding: 40px 0;
+      position: fixed;
+      height: 100vh;
+      overflow-y: auto;
+      z-index: 100;
+    }
+
+    .sidebar::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    .sidebar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .sidebar::-webkit-scrollbar-thumb {
+      background: var(--color-primary);
+      border-radius: 3px;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      font-family: 'Fira Code', monospace;
+      color: var(--color-primary);
+      padding: 0 30px;
+      margin-bottom: 8px;
+    }
+
+    .version {
+      font-size: 11px;
+      color: var(--text-muted);
+      font-family: 'Fira Code', monospace;
+      padding: 0 30px;
+      margin-bottom: 40px;
+    }
+
+    .nav-section {
+      margin-bottom: 30px;
+    }
+
+    .nav-section-title {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 0 30px;
+      margin-bottom: 12px;
+    }
+
+    .nav-link {
+      display: block;
+      padding: 10px 30px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      border-left: 3px solid transparent;
+    }
+
+    .nav-link:hover {
+      color: var(--color-primary);
+      background: rgba(255, 107, 107, 0.08);
+      border-left-color: var(--color-primary);
+    }
+
+    .nav-link.active {
+      color: var(--text-primary);
+      background: rgba(255, 107, 107, 0.15);
+      border-left-color: var(--color-primary);
+    }
+
+    /* Main Content */
+    .main-content {
+      flex: 1;
+      margin-left: 280px;
+      padding: 0;
+    }
+
+    /* 3D Canvas Section */
+    .canvas-section {
+      position: relative;
+      width: 100%;
+      height: 70vh;
+      background: linear-gradient(180deg, #0a0e27 0%, #4a5899 50%, #1e1b3c 100%);
+      overflow: hidden;
+    }
+
+    #canvas-container {
+      width: 100%;
+      height: 100%;
+    }
+
+    .canvas-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 10;
+      pointer-events: none;
+    }
+
+    .canvas-overlay h1 {
+      font-size: 72px;
+      font-weight: 800;
+      letter-spacing: -2px;
+      margin-bottom: 16px;
+      background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-purple) 50%, var(--color-cyan) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .canvas-overlay p {
+      font-size: 18px;
+      color: var(--text-secondary);
+      font-weight: 300;
+    }
+
+    /* Control Panel */
+    .control-panel {
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(12px);
+      border-top: 1px solid var(--border-color);
+      padding: 30px 40px;
+    }
+
+    .control-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      margin-bottom: 20px;
+    }
+
+    .control-row {
+      display: flex;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .control-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      min-width: 140px;
+    }
+
+    .slider {
+      flex: 1;
+      max-width: 300px;
+      height: 4px;
+      border-radius: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+    }
+
+    .slider::-moz-range-thumb {
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      cursor: pointer;
+      border: none;
+    }
+
+    .slider-value {
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: var(--color-primary);
+      min-width: 60px;
+    }
+
+    /* Content Sections */
+    .content-section {
+      padding: 80px 65px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .section-header {
+      margin-bottom: 50px;
+    }
+
+    .section-title {
+      font-size: 48px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      letter-spacing: -1px;
+    }
+
+    .section-description {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 700px;
+      line-height: 1.7;
+    }
+
+    /* Color Grid */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .color-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .color-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 40px rgba(255, 107, 107, 0.2);
+    }
+
+    .color-swatch {
+      height: 180px;
+      width: 100%;
+      position: relative;
+    }
+
+    .color-info {
+      padding: 24px;
+    }
+
+    .color-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .color-hex {
+      font-family: 'Fira Code', monospace;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+
+    .color-usage {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* Gradient Cards */
+    .gradient-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+
+    .gradient-card {
+      background: rgba(255, 255, 255, 0.03);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.3s;
+    }
+
+    .gradient-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .gradient-preview {
+      height: 200px;
+      position: relative;
+    }
+
+    .gradient-info {
+      padding: 24px;
+    }
+
+    .gradient-name {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .gradient-code {
+      background: rgba(0, 0, 0, 0.4);
+      padding: 16px;
+      border-radius: 6px;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--color-cyan);
+      overflow-x: auto;
+    }
+
+    /* Code Block */
+    .code-block {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 24px;
+      margin: 30px 0;
+      font-family: 'Fira Code', monospace;
+      font-size: 13px;
+      line-height: 1.8;
+      color: var(--color-cyan);
+      overflow-x: auto;
+    }
+
+    /* Button Styles */
+    .btn {
+      display: inline-block;
+      padding: 14px 32px;
+      font-size: 13px;
+      font-weight: 700;
+      font-family: 'Fira Code', monospace;
+      text-transform: uppercase;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: all 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: var(--bg-dark);
+    }
+
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--color-primary);
+      box-shadow: 0 0 30px rgba(255, 107, 107, 0.3);
+      border: 2px solid var(--color-primary);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-primary);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+    }
+
+    /* Footer */
+    footer {
+      padding: 60px 65px;
+      text-align: center;
+      font-family: 'Fira Code', monospace;
+      font-size: 12px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border-color);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .sidebar {
+        transform: translateX(-100%);
+      }
+
+      .main-content {
+        margin-left: 0;
+      }
+
+      .canvas-overlay h1 {
+        font-size: 48px;
+      }
+
+      .color-grid,
+      .gradient-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">ASSET_HAUS</div>
+      <div class="version">Design System v2.0</div>
+
+      <nav>
+        <div class="nav-section">
+          <div class="nav-section-title">— Overview —</div>
+          <a href="#introduction" class="nav-link">Introduction</a>
+          <a href="#how-to-use" class="nav-link">How to Use</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">— Foundations —</div>
+          <a href="#colors" class="nav-link active">Colors & Gradients</a>
+          <a href="#typography" class="nav-link">Typography</a>
+          <a href="#3d-materials" class="nav-link">3D Materials</a>
+          <a href="#animation" class="nav-link">Animation Principles</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">— Artifacts —</div>
+          <a href="#abstract-forms" class="nav-link">Abstract Forms</a>
+          <a href="#composed-scenes" class="nav-link">Composed Scenes</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">— Components —</div>
+          <a href="#buttons" class="nav-link">Buttons</a>
+          <a href="#cards" class="nav-link">Cards</a>
+          <a href="#forms" class="nav-link">Forms</a>
+        </div>
+
+        <div class="nav-section">
+          <div class="nav-section-title">— Resources —</div>
+          <a href="#downloads" class="nav-link">Downloads</a>
+          <a href="#code-snippets" class="nav-link">Code Snippets</a>
+        </div>
+      </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- 3D Canvas Hero -->
+      <section class="canvas-section">
+        <div id="canvas-container"></div>
+        <div class="canvas-overlay">
+          <h1>Color System</h1>
+          <p>Building Digital Trust Through Abstract Architecture</p>
+        </div>
+      </section>
+
+      <!-- Control Panel -->
+      <div class="control-panel">
+        <div class="control-title">Live 3D Controls</div>
+        <div class="control-row">
+          <span class="control-label">Rotation Speed</span>
+          <input type="range" class="slider" id="rotationSpeed" min="0" max="2" step="0.1" value="1">
+          <span class="slider-value" id="rotationValue">1.0x</span>
+        </div>
+        <div class="control-row">
+          <span class="control-label">Form Complexity</span>
+          <input type="range" class="slider" id="complexity" min="1" max="5" step="1" value="3">
+          <span class="slider-value" id="complexityValue">3</span>
+        </div>
+        <div class="control-row">
+          <span class="control-label">Color Shift</span>
+          <input type="range" class="slider" id="colorShift" min="0" max="360" step="10" value="0">
+          <span class="slider-value" id="colorValue">0°</span>
+        </div>
+      </div>
+
+      <!-- Brand Colors Section -->
+      <section class="content-section" id="colors">
+        <div class="section-header">
+          <h2 class="section-title">Brand Colors</h2>
+          <p class="section-description">
+            Our color palette reflects the bold, innovative spirit of real estate tokenization.
+            Each color carries meaning and purpose in our design system.
+          </p>
+        </div>
+
+        <div class="color-grid">
+          <div class="color-card" onclick="updateCanvasColor('#ff6b6b')">
+            <div class="color-swatch" style="background: #ff6b6b;"></div>
+            <div class="color-info">
+              <div class="color-name">Primary Coral</div>
+              <div class="color-hex">#FF6B6B</div>
+              <div class="color-usage">Primary CTAs, brand identity, important highlights</div>
+            </div>
+          </div>
+
+          <div class="color-card" onclick="updateCanvasColor('#ffb4a2')">
+            <div class="color-swatch" style="background: #ffb4a2;"></div>
+            <div class="color-info">
+              <div class="color-name">Secondary Peach</div>
+              <div class="color-hex">#FFB4A2</div>
+              <div class="color-usage">Secondary actions, warm accents, backgrounds</div>
+            </div>
+          </div>
+
+          <div class="color-card" onclick="updateCanvasColor('#e78fb3')">
+            <div class="color-swatch" style="background: #e78fb3;"></div>
+            <div class="color-info">
+              <div class="color-name">Accent Pink</div>
+              <div class="color-hex">#E78FB3</div>
+              <div class="color-usage">Special features, highlights, creative elements</div>
+            </div>
+          </div>
+
+          <div class="color-card" onclick="updateCanvasColor('#b794f6')">
+            <div class="color-swatch" style="background: #b794f6;"></div>
+            <div class="color-info">
+              <div class="color-name">Deep Purple</div>
+              <div class="color-hex">#B794F6</div>
+              <div class="color-usage">Premium features, gradient transitions</div>
+            </div>
+          </div>
+
+          <div class="color-card" onclick="updateCanvasColor('#95b8d1')">
+            <div class="color-swatch" style="background: #95b8d1;"></div>
+            <div class="color-info">
+              <div class="color-name">Sky Blue</div>
+              <div class="color-hex">#95B8D1</div>
+              <div class="color-usage">Trust indicators, calm elements, data visualization</div>
+            </div>
+          </div>
+
+          <div class="color-card" onclick="updateCanvasColor('#4a5899')">
+            <div class="color-swatch" style="background: #4a5899;"></div>
+            <div class="color-info">
+              <div class="color-name">Deep Blue</div>
+              <div class="color-hex">#4A5899</div>
+              <div class="color-usage">Dark mode backgrounds, depth, shadows</div>
+            </div>
+          </div>
+
+          <div class="color-card" onclick="updateCanvasColor('#8b7ab8')">
+            <div class="color-swatch" style="background: #8b7ab8;"></div>
+            <div class="color-info">
+              <div class="color-name">Lavender</div>
+              <div class="color-hex">#8B7AB8</div>
+              <div class="color-usage">Soft accents, hover states, subtle highlights</div>
+            </div>
+          </div>
+
+          <div class="color-card" onclick="updateCanvasColor('#00fff0')">
+            <div class="color-swatch" style="background: #00fff0;"></div>
+            <div class="color-info">
+              <div class="color-name">Neon Cyan</div>
+              <div class="color-hex">#00FFF0</div>
+              <div class="color-usage">Dark mode primary, tech elements, glows</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Gradients Section -->
+      <section class="content-section" id="gradients">
+        <div class="section-header">
+          <h2 class="section-title">Brand Gradients</h2>
+          <p class="section-description">
+            Our gradients create depth and visual interest while maintaining brand consistency.
+          </p>
+        </div>
+
+        <div class="gradient-grid">
+          <div class="gradient-card">
+            <div class="gradient-preview" style="background: linear-gradient(135deg, #ff6b6b 0%, #b794f6 50%, #95b8d1 100%);"></div>
+            <div class="gradient-info">
+              <div class="gradient-name">Primary Light Gradient</div>
+              <div class="gradient-code">background: linear-gradient(135deg, #ff6b6b 0%, #b794f6 50%, #95b8d1 100%);</div>
+            </div>
+          </div>
+
+          <div class="gradient-card">
+            <div class="gradient-preview" style="background: linear-gradient(135deg, #0a0e27 0%, #4a5899 50%, #1e1b3c 100%);"></div>
+            <div class="gradient-info">
+              <div class="gradient-name">Primary Dark Gradient</div>
+              <div class="gradient-code">background: linear-gradient(135deg, #0a0e27 0%, #4a5899 50%, #1e1b3c 100%);</div>
+            </div>
+          </div>
+
+          <div class="gradient-card">
+            <div class="gradient-preview" style="background: linear-gradient(90deg, #b794f6 0%, #00fff0 100%);"></div>
+            <div class="gradient-info">
+              <div class="gradient-name">Accent Gradient (Positive Data)</div>
+              <div class="gradient-code">background: linear-gradient(90deg, #b794f6 0%, #00fff0 100%);</div>
+            </div>
+          </div>
+
+          <div class="gradient-card">
+            <div class="gradient-preview" style="background: linear-gradient(90deg, #ffb4a2 0%, #ff6b6b 100%);"></div>
+            <div class="gradient-info">
+              <div class="gradient-name">Warning Gradient</div>
+              <div class="gradient-code">background: linear-gradient(90deg, #ffb4a2 0%, #ff6b6b 100%);</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Code Examples Section -->
+      <section class="content-section" id="code-examples">
+        <div class="section-header">
+          <h2 class="section-title">Three.js Implementation</h2>
+          <p class="section-description">
+            Example code for implementing abstract 3D forms in your projects.
+          </p>
+        </div>
+
+        <div class="code-block">// Create Abstract Form with Intersecting Planes
+const group = new THREE.Group();
+
+// Create multiple intersecting planes
+for (let i = 0; i < 5; i++) {
+  const geometry = new THREE.PlaneGeometry(2, 3);
+  const material = new THREE.MeshStandardMaterial({
+    color: 0xff6b6b,
+    side: THREE.DoubleSide,
+    transparent: true,
+    opacity: 0.7,
+    metalness: 0.5,
+    roughness: 0.2
+  });
+
+  const plane = new THREE.Mesh(geometry, material);
+  plane.rotation.y = (Math.PI * 2 / 5) * i;
+  plane.rotation.x = Math.sin(i) * 0.3;
+
+  group.add(plane);
+}
+
+// Add geometric accents
+const boxGeo = new THREE.BoxGeometry(0.5, 0.5, 0.5);
+const boxMat = new THREE.MeshStandardMaterial({
+  color: 0x00fff0,
+  emissive: 0x00fff0,
+  emissiveIntensity: 0.5
+});
+const cube = new THREE.Mesh(boxGeo, boxMat);
+group.add(cube);
+
+// Animate
+function animate() {
+  group.rotation.y += 0.005;
+  group.rotation.x += 0.002;
+  renderer.render(scene, camera);
+  requestAnimationFrame(animate);
+}</div>
+
+        <div style="margin-top: 30px; display: flex; gap: 16px;">
+          <button class="btn btn-primary" onclick="copyCode()">Copy Code</button>
+          <button class="btn btn-outline" onclick="alert('Export feature coming soon!')">Export as Module</button>
+        </div>
+      </section>
+
+      <!-- Footer -->
+      <footer>
+        <p>© 2025 ASSET_HAUS — Design System Color Guide</p>
+        <p style="margin-top: 8px; opacity: 0.5;">Built with Three.js & Modern Web Standards</p>
+      </footer>
+    </main>
+  </div>
+
+  <!-- Three.js Library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+  <script>
+    // Scene Setup
+    const container = document.getElementById('canvas-container');
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+
+    renderer.setSize(container.offsetWidth, container.offsetHeight);
+    renderer.setClearColor(0x0a0e27, 1);
+    container.appendChild(renderer.domElement);
+
+    // Lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+    scene.add(ambientLight);
+
+    const pointLight1 = new THREE.PointLight(0xff6b6b, 1.5, 100);
+    pointLight1.position.set(10, 10, 10);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0x00fff0, 1.2, 100);
+    pointLight2.position.set(-10, -10, -5);
+    scene.add(pointLight2);
+
+    // Create Abstract Form (Intersecting Planes + Geometric Elements)
+    const abstractForm = new THREE.Group();
+
+    // Intersecting Planes
+    const planeColors = [0xff6b6b, 0xb794f6, 0x00fff0, 0xe78fb3, 0x95b8d1];
+    const planes = [];
+
+    for (let i = 0; i < 5; i++) {
+      const planeGeo = new THREE.PlaneGeometry(3, 4);
+      const planeMat = new THREE.MeshStandardMaterial({
+        color: planeColors[i],
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.6,
+        metalness: 0.6,
+        roughness: 0.3,
+        emissive: planeColors[i],
+        emissiveIntensity: 0.2
+      });
+
+      const plane = new THREE.Mesh(planeGeo, planeMat);
+
+      // Position and rotate planes to create abstract composition
+      plane.rotation.y = (Math.PI * 2 / 5) * i;
+      plane.rotation.x = Math.sin(i * 0.5) * 0.4;
+      plane.position.x = Math.cos(i * 1.2) * 0.5;
+      plane.position.z = Math.sin(i * 1.2) * 0.5;
+
+      planes.push(plane);
+      abstractForm.add(plane);
+    }
+
+    // Add small geometric accents (cubes, spheres)
+    const accentGeo1 = new THREE.BoxGeometry(0.6, 0.6, 0.6);
+    const accentMat1 = new THREE.MeshStandardMaterial({
+      color: 0x00fff0,
+      emissive: 0x00fff0,
+      emissiveIntensity: 0.8,
+      metalness: 0.8,
+      roughness: 0.2
+    });
+    const accent1 = new THREE.Mesh(accentGeo1, accentMat1);
+    accent1.position.set(0, 0, 0);
+    abstractForm.add(accent1);
+
+    // Add cylinders at angles
+    for (let i = 0; i < 3; i++) {
+      const cylGeo = new THREE.CylinderGeometry(0.1, 0.1, 2, 8);
+      const cylMat = new THREE.MeshStandardMaterial({
+        color: planeColors[i],
+        metalness: 0.7,
+        roughness: 0.3
+      });
+      const cyl = new THREE.Mesh(cylGeo, cylMat);
+      cyl.rotation.z = Math.PI / 2;
+      cyl.rotation.x = i * Math.PI / 3;
+      cyl.position.y = Math.sin(i) * 1.5;
+      abstractForm.add(cyl);
+    }
+
+    // Add torus for extra complexity
+    const torusGeo = new THREE.TorusGeometry(1.5, 0.15, 16, 100);
+    const torusMat = new THREE.MeshStandardMaterial({
+      color: 0xffb4a2,
+      metalness: 0.8,
+      roughness: 0.2,
+      transparent: true,
+      opacity: 0.8
+    });
+    const torus = new THREE.Mesh(torusGeo, torusMat);
+    torus.rotation.x = Math.PI / 4;
+    abstractForm.add(torus);
+
+    scene.add(abstractForm);
+
+    // Position camera
+    camera.position.set(0, 3, 8);
+    camera.lookAt(0, 0, 0);
+
+    // Animation variables
+    let rotationSpeed = 1.0;
+    let colorShiftHue = 0;
+    let time = 0;
+
+    // Animation Loop
+    function animate() {
+      requestAnimationFrame(animate);
+      time += 0.01;
+
+      // Rotate the entire group
+      abstractForm.rotation.y += 0.003 * rotationSpeed;
+      abstractForm.rotation.x += 0.001 * rotationSpeed;
+
+      // Animate individual planes
+      planes.forEach((plane, i) => {
+        plane.rotation.z = Math.sin(time + i) * 0.1;
+        plane.position.y = Math.sin(time * 0.5 + i) * 0.3;
+      });
+
+      // Animate torus
+      torus.rotation.y += 0.005;
+      torus.rotation.z += 0.003;
+
+      // Pulsing effect on accent cube
+      accent1.scale.set(
+        1 + Math.sin(time * 2) * 0.1,
+        1 + Math.sin(time * 2) * 0.1,
+        1 + Math.sin(time * 2) * 0.1
+      );
+
+      // Animate lights
+      pointLight1.position.x = Math.sin(time * 0.5) * 10;
+      pointLight1.position.z = Math.cos(time * 0.5) * 10;
+
+      pointLight2.position.x = Math.cos(time * 0.7) * 8;
+      pointLight2.position.z = Math.sin(time * 0.7) * 8;
+
+      renderer.render(scene, camera);
+    }
+
+    animate();
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      camera.aspect = container.offsetWidth / container.offsetHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+    });
+
+    // Control Panel Event Listeners
+    document.getElementById('rotationSpeed').addEventListener('input', (e) => {
+      rotationSpeed = parseFloat(e.target.value);
+      document.getElementById('rotationValue').textContent = rotationSpeed.toFixed(1) + 'x';
+    });
+
+    document.getElementById('complexity').addEventListener('input', (e) => {
+      const complexity = parseInt(e.target.value);
+      document.getElementById('complexityValue').textContent = complexity;
+
+      // Adjust opacity and visibility based on complexity
+      planes.forEach((plane, i) => {
+        if (i < complexity) {
+          plane.visible = true;
+          plane.material.opacity = 0.6;
+        } else {
+          plane.visible = false;
+        }
+      });
+    });
+
+    document.getElementById('colorShift').addEventListener('input', (e) => {
+      colorShiftHue = parseInt(e.target.value);
+      document.getElementById('colorValue').textContent = colorShiftHue + '°';
+
+      // Shift hue of materials
+      planes.forEach((plane) => {
+        const color = new THREE.Color(plane.material.color);
+        const hsl = {};
+        color.getHSL(hsl);
+        color.setHSL((hsl.h + colorShiftHue / 360) % 1, hsl.s, hsl.l);
+        plane.material.color = color;
+        plane.material.emissive = color;
+      });
+    });
+
+    // Update canvas color on color card click
+    function updateCanvasColor(hexColor) {
+      const color = new THREE.Color(hexColor);
+
+      // Update accent cube color
+      accent1.material.color = color;
+      accent1.material.emissive = color;
+
+      // Update first plane color
+      if (planes[0]) {
+        planes[0].material.color = color;
+        planes[0].material.emissive = color;
+      }
+
+      // Update point light
+      pointLight1.color = color;
+    }
+
+    // Copy code function
+    function copyCode() {
+      const codeText = document.querySelector('.code-block').textContent;
+      navigator.clipboard.writeText(codeText).then(() => {
+        alert('Code copied to clipboard!');
+      });
+    }
+  </script>
+</body>
+</html>
