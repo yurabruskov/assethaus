@@ -1032,18 +1032,17 @@ function createFlatShape(vertices, color) {
       return x - Math.floor(x);
     }
 
-    // City scene (reused)
+    // City scene with patterns (streets, parks) and smooth camera
     function createCityScene(container, config) {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(60, container.offsetWidth / container.offsetHeight, 0.1, 1000);
 
-      if (!globalRenderer) {
-        globalRenderer = new THREE.WebGLRenderer({ antialias: true });
-      }
-
-      globalRenderer.setSize(container.offsetWidth, container.offsetHeight);
-      globalRenderer.setClearColor(0x000000, 1);
-      container.appendChild(globalRenderer.domElement);
+      // Create individual canvas for each container to avoid WebGL context limit
+      const canvas = document.createElement('canvas');
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+      renderer.setClearColor(0x000000, 1);
+      container.appendChild(canvas);
 
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
       scene.add(ambientLight);
@@ -1057,22 +1056,56 @@ function createFlatShape(vertices, color) {
       const plotSize = config.plotSize || 1.2;
       const spacing = config.spacing || 0.2;
 
+      // Helper function to detect streets (city pattern)
+      function isStreet(x, z) {
+        if (!config.usePatterns) return false;
+        // Main avenues
+        if (Math.abs(x - gridSize/2) <= 0.5 || Math.abs(z - gridSize/2) <= 0.5) return true;
+        // Regular streets every 4 blocks
+        if (x % 4 === 0 || z % 4 === 0) return true;
+        return false;
+      }
+
+      // Helper function to detect parks
+      function isPark(x, z) {
+        if (!config.usePatterns) return false;
+        const quarter = gridSize / 4;
+        return (x >= quarter && x <= quarter + 2 && z >= gridSize - quarter - 2 && z <= gridSize - quarter);
+      }
+
       for (let x = 0; x < gridSize; x++) {
         for (let z = 0; z < gridSize; z++) {
+          // Skip streets
+          if (isStreet(x, z)) continue;
+
           if (config.density && Math.random() > config.density) continue;
 
-          let height;
+          const park = isPark(x, z);
+          let height, width, depth;
+
           if (config.heightFunc) {
             height = config.heightFunc(x, z, gridSize);
           } else {
             const distFromCenter = Math.sqrt(Math.pow(x - gridSize/2, 2) + Math.pow(z - gridSize/2, 2));
             const centralFactor = 1 - (distFromCenter / (gridSize/2));
-            height = 0.5 + Math.random() * 3 + centralFactor * 2;
+
+            if (park) {
+              height = 0.3 + Math.random() * 0.5;
+            } else {
+              height = 0.5 + Math.random() * 3 + centralFactor * 2;
+            }
           }
+
+          // Vary building footprint for visual interest
+          const sizeVariation = park ? (0.9 + Math.random() * 0.2) : (0.7 + Math.random() * 0.6);
+          width = plotSize * sizeVariation;
+          depth = plotSize * (0.7 + Math.random() * 0.6);
 
           let color;
           if (config.colorFunc) {
             color = config.colorFunc(height, x, z);
+          } else if (park) {
+            color = 0x6bff8a; // Green for parks
           } else {
             const heightRatio = height / 5;
             const r = Math.floor(255 * heightRatio);
@@ -1081,7 +1114,7 @@ function createFlatShape(vertices, color) {
             color = (r << 16) | (g << 8) | b;
           }
 
-          const boxGeometry = new THREE.BoxGeometry(plotSize, height, plotSize);
+          const boxGeometry = new THREE.BoxGeometry(width, height, depth);
           const material = new THREE.MeshStandardMaterial({
             color: color,
             metalness: config.metalness || 0.3,
@@ -1095,6 +1128,7 @@ function createFlatShape(vertices, color) {
           building.position.y = height / 2;
           building.position.z = (z - gridSize / 2) * (plotSize + spacing);
           building.userData.baseHeight = height;
+          building.userData.isPark = park;
 
           scene.add(building);
           buildings.push(building);
@@ -1118,26 +1152,54 @@ function createFlatShape(vertices, color) {
       camera.lookAt(0, 0, 0);
 
       let time = 0;
+      let cameraX = config.camX || 15;
+      let cameraY = config.camY || 12;
+      let cameraZ = config.camZ || 15;
+      let lookX = 0, lookY = 0, lookZ = 0;
+
       function animate() {
         requestAnimationFrame(animate);
         time += 1;
 
         if (config.pulse) {
           buildings.forEach((building, i) => {
-            const pulse = Math.sin(time * 0.02 + i * 0.05) * 0.1;
+            const pulseAmount = building.userData.isPark ? 0.05 : 0.1;
+            const pulse = Math.sin(time * 0.02 + i * 0.05) * pulseAmount;
             building.position.y = (building.userData.baseHeight + pulse) / 2;
           });
         }
 
         if (config.rotateCamera) {
-          const angle = time * 0.001;
-          const radius = 15;
-          camera.position.x = Math.cos(angle) * radius;
-          camera.position.z = Math.sin(angle) * radius;
+          // Smooth figure-8 camera movement
+          const slowTime = time * 0.0008;
+          const scale = config.cameraRadius || 15;
+          const a = scale;
+          const t = slowTime;
+
+          const targetX = (a * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
+          const targetZ = (a * Math.sin(t) * Math.cos(t)) / (1 + Math.sin(t) * Math.sin(t));
+          const targetY = (config.camY || 12) + Math.sin(slowTime * 1.2) * 3;
+
+          // Smooth interpolation
+          cameraX += (targetX - cameraX) * 0.03;
+          cameraZ += (targetZ - cameraZ) * 0.03;
+          cameraY += (targetY - cameraY) * 0.03;
+
+          camera.position.set(cameraX, cameraY, cameraZ);
+
+          // Smooth look-at target
+          const targetLookX = Math.sin(slowTime * 0.3) * 2;
+          const targetLookZ = Math.cos(slowTime * 0.3) * 2;
+
+          lookX += (targetLookX - lookX) * 0.03;
+          lookZ += (targetLookZ - lookZ) * 0.03;
+
+          camera.lookAt(lookX, lookY, lookZ);
+        } else {
           camera.lookAt(0, 0, 0);
         }
 
-        globalRenderer.render(scene, camera);
+        renderer.render(scene, camera);
       }
 
       animate();
@@ -1148,24 +1210,12 @@ function createFlatShape(vertices, color) {
       const scene = new THREE.Scene();
       const camera = new THREE.PerspectiveCamera(50, container.offsetWidth / container.offsetHeight, 0.1, 100);
 
-      if (!globalRenderer) {
-        globalRenderer = new THREE.WebGLRenderer({ antialias: true });
-      }
-
-      // Reuse canvas or create new one
-      let canvas = container.querySelector('canvas');
-      if (!canvas) {
-        canvas = globalRenderer.domElement.cloneNode();
-        const tempRenderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true });
-        tempRenderer.setSize(container.offsetWidth, container.offsetHeight);
-        tempRenderer.setClearColor(0x000000, 1);
-        container.appendChild(canvas);
-
-        // Store renderer for this container
-        container._renderer = tempRenderer;
-      }
-
-      const renderer = container._renderer;
+      // Create individual canvas for each container
+      const canvas = document.createElement('canvas');
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, antialias: true, alpha: true });
+      renderer.setSize(container.offsetWidth, container.offsetHeight);
+      renderer.setClearColor(0x000000, 1);
+      container.appendChild(canvas);
 
       // Lighting
       const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
@@ -1413,7 +1463,9 @@ function createFlatShape(vertices, color) {
       spacing: 0.3,
       density: 0.8,
       pulse: true,
-      rotateCamera: true
+      rotateCamera: true,
+      usePatterns: true,
+      cameraRadius: 20
     });
 
     // Abstract Forms - 3D with flat geometries
@@ -1432,7 +1484,8 @@ function createFlatShape(vertices, color) {
       emissive: true,
       camX: 6,
       camY: 3,
-      camZ: 6
+      camZ: 6,
+      usePatterns: false
     });
 
     createCityScene(document.getElementById('scene-first'), {
@@ -1443,7 +1496,8 @@ function createFlatShape(vertices, color) {
       emissive: true,
       camX: 8,
       camY: 6,
-      camZ: 8
+      camZ: 8,
+      usePatterns: false
     });
 
     createCityScene(document.getElementById('scene-growing'), {
@@ -1452,7 +1506,8 @@ function createFlatShape(vertices, color) {
       pulse: true,
       camX: 12,
       camY: 8,
-      camZ: 12
+      camZ: 12,
+      usePatterns: true
     });
 
     createCityScene(document.getElementById('scene-city'), {
@@ -1460,6 +1515,8 @@ function createFlatShape(vertices, color) {
       density: 0.85,
       pulse: true,
       rotateCamera: true,
+      usePatterns: true,
+      cameraRadius: 25,
       camX: 25,
       camY: 18,
       camZ: 25
@@ -1472,7 +1529,8 @@ function createFlatShape(vertices, color) {
       pulse: true,
       camX: 15,
       camY: 12,
-      camZ: 15
+      camZ: 15,
+      usePatterns: true
     });
 
     createCityScene(document.getElementById('scene-dark'), {
@@ -1484,6 +1542,8 @@ function createFlatShape(vertices, color) {
       gridColor1: 0x00fff0,
       pulse: true,
       rotateCamera: true,
+      usePatterns: true,
+      cameraRadius: 18,
       camX: 18,
       camY: 14,
       camZ: 18
@@ -1497,7 +1557,8 @@ function createFlatShape(vertices, color) {
       pulse: true,
       camX: 12,
       camY: 10,
-      camZ: 12
+      camZ: 12,
+      usePatterns: false
     });
 
     // Landing demo
@@ -1505,7 +1566,9 @@ function createFlatShape(vertices, color) {
       gridSize: 14,
       density: 0.7,
       pulse: true,
-      rotateCamera: true
+      rotateCamera: true,
+      usePatterns: true,
+      cameraRadius: 16
     });
 
     // Property cards & benefits - 3D abstract forms
